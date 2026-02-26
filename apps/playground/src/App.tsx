@@ -18,7 +18,7 @@ export function App() {
         <header className="sticky top-0 z-50 flex items-center justify-between px-6 py-3 bg-brand-dark/80 backdrop-blur-[12px] border-b border-brand-gold/15 shrink-0">
           {/* Left — logo */}
           <div className="flex items-center gap-3">
-            <span className="text-xl">🌊</span>
+            <img src="/surf.png" alt="Surf Kit" className="w-7 h-7 rounded-md" />
             <span className="font-display font-bold text-base text-brand-cream">Surf Kit</span>
             <span className="text-brand-gold/30">/</span>
             <span className="text-brand-cream/50 font-body text-sm">Playground</span>

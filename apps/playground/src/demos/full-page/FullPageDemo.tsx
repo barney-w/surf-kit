@@ -180,7 +180,7 @@ export function FullPageDemo() {
             >
               {/* Pulsing icon */}
               <div className="w-14 h-14 rounded-2xl bg-brand-gold/10 border border-brand-gold/20 flex items-center justify-center pulse-glow">
-                <span className="text-brand-gold text-2xl">🌊</span>
+                <img src="/surf.png" alt="Surf Kit" className="w-9 h-9 rounded-md" />
               </div>
 
               <div className="flex flex-col gap-3">
