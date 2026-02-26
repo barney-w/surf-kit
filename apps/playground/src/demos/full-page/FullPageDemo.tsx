@@ -5,6 +5,7 @@ import {
   TypewriterText,
   type ChatMessage,
 } from '@surf-kit/agent'
+import { motion, AnimatePresence } from 'framer-motion'
 
 export const LIVE_API_URL = import.meta.env.VITE_SURF_API_URL as string | undefined
 
@@ -68,16 +69,26 @@ function MessageBubble({
 
   if (isUser) {
     return (
-      <div className="flex justify-end mb-1">
+      <motion.div
+        className="flex justify-end mb-1"
+        initial={{ opacity: 0, x: 20, y: 4 }}
+        animate={{ opacity: 1, x: 0, y: 0 }}
+        transition={{ duration: 0.25, ease: 'easeOut' }}
+      >
         <div className="max-w-[70%] px-4 py-2.5 rounded-[18px] rounded-br-[4px] bg-brand-blue text-brand-cream text-sm leading-relaxed whitespace-pre-wrap break-words">
           {msg.content}
         </div>
-      </div>
+      </motion.div>
     )
   }
 
   return (
-    <div className="flex flex-col items-start gap-1.5 mb-1">
+    <motion.div
+      className="flex flex-col items-start gap-1.5 mb-1"
+      initial={{ opacity: 0, x: -16, y: 8 }}
+      animate={{ opacity: 1, x: 0, y: 0 }}
+      transition={{ type: 'spring', damping: 28, stiffness: 220 }}
+    >
       {msg.agent && (
         <div className="text-[11px] font-display font-semibold uppercase tracking-[0.08em] text-brand-gold/55 px-1">
           {msg.agent.replace('_agent', '').replace('_', ' ')}
@@ -115,7 +126,7 @@ function MessageBubble({
           ))}
         </div>
       )}
-    </div>
+    </motion.div>
   )
 }
 
@@ -157,59 +168,85 @@ export function FullPageDemo() {
     <div className="flex flex-col h-full max-w-[860px] mx-auto px-4">
       {/* Message thread */}
       <div ref={threadRef} className="flex-1 overflow-y-auto py-6">
-        {isEmpty && (
-          <div className="flex flex-1 flex-col items-center justify-center gap-8 text-center h-full step-enter">
-            {/* Pulsing icon */}
-            <div className="w-14 h-14 rounded-2xl bg-brand-gold/10 border border-brand-gold/20 flex items-center justify-center pulse-glow">
-              <span className="text-brand-gold text-2xl">🌊</span>
-            </div>
+        <AnimatePresence mode="wait">
+          {isEmpty ? (
+            <motion.div
+              key="welcome"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.5, ease: 'easeOut' }}
+              className="flex flex-1 flex-col items-center justify-center gap-8 text-center h-full"
+            >
+              {/* Pulsing icon */}
+              <div className="w-14 h-14 rounded-2xl bg-brand-gold/10 border border-brand-gold/20 flex items-center justify-center pulse-glow">
+                <span className="text-brand-gold text-2xl">🌊</span>
+              </div>
 
-            <div className="flex flex-col gap-3">
-              <h2 className="font-display text-3xl font-bold text-brand-cream">
-                Surf Kit Agent
-              </h2>
-              <p className="text-brand-cream/60 text-base max-w-md leading-relaxed">
-                <TypewriterText
-                  text="Ask about council tax reduction, missed bin collections, or planning permission — and see agent responses with sources, confidence scores, and live verification."
-                  speed={18}
-                  showCursor={false}
+              <div className="flex flex-col gap-3">
+                <h2 className="font-display text-3xl font-bold text-brand-cream">
+                  Surf Kit Agent
+                </h2>
+                <p className="text-brand-cream/60 text-base max-w-md leading-relaxed">
+                  <TypewriterText
+                    text="Ask about council tax reduction, missed bin collections, or planning permission — and see agent responses with sources, confidence scores, and live verification."
+                    speed={18}
+                    showCursor={false}
+                  />
+                </p>
+              </div>
+
+              <div className="flex flex-wrap justify-center gap-2">
+                {['Council tax reduction', 'Missed bin collection', 'Planning permission'].map(chip => (
+                  <button
+                    key={chip}
+                    onClick={() => { actions.setInputValue(chip); inputRef.current?.focus() }}
+                    className="px-4 py-2 rounded-full text-sm border border-brand-gold/20 bg-transparent text-brand-cream/70 hover:bg-brand-gold/10 hover:border-brand-gold/40 hover:text-brand-cream focus-visible:outline-2 focus-visible:outline-brand-cyan transition-colors duration-200 cursor-pointer"
+                  >
+                    {chip}
+                  </button>
+                ))}
+              </div>
+            </motion.div>
+          ) : (
+            <motion.div
+              key="thread"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.2 }}
+            >
+              {state.messages.map(msg => (
+                <MessageBubble
+                  key={msg.id}
+                  msg={msg}
+                  isStreamingThisMsg={
+                    state.isLoading &&
+                    state.streamPhase === 'generating' &&
+                    msg.id === lastAssistantMsg?.id
+                  }
+                  onFollowUp={text => {
+                    actions.setInputValue(text)
+                    inputRef.current?.focus()
+                  }}
                 />
-              </p>
-            </div>
-
-            <div className="flex flex-wrap justify-center gap-2">
-              {['Council tax reduction', 'Missed bin collection', 'Planning permission'].map(chip => (
-                <button
-                  key={chip}
-                  onClick={() => { actions.setInputValue(chip); inputRef.current?.focus() }}
-                  className="px-4 py-2 rounded-full text-sm border border-brand-gold/20 bg-transparent text-brand-cream/70 hover:bg-brand-gold/10 hover:border-brand-gold/40 hover:text-brand-cream focus-visible:outline-2 focus-visible:outline-brand-cyan transition-colors duration-200 cursor-pointer"
-                >
-                  {chip}
-                </button>
               ))}
-            </div>
-          </div>
-        )}
+            </motion.div>
+          )}
+        </AnimatePresence>
 
-        {state.messages.map(msg => (
-          <MessageBubble
-            key={msg.id}
-            msg={msg}
-            isStreamingThisMsg={
-              state.isLoading &&
-              state.streamPhase === 'generating' &&
-              msg.id === lastAssistantMsg?.id
-            }
-            onFollowUp={text => {
-              actions.setInputValue(text)
-              inputRef.current?.focus()
-            }}
-          />
-        ))}
-
-        {state.isLoading && state.streamPhase !== 'generating' && (
-          <PhaseIndicator phase={state.streamPhase} />
-        )}
+        <AnimatePresence mode="wait">
+          {state.isLoading && state.streamPhase !== 'generating' && (
+            <motion.div
+              key="phase"
+              initial={{ opacity: 0, y: 6 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -4 }}
+              transition={{ duration: 0.2 }}
+            >
+              <PhaseIndicator phase={state.streamPhase} />
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {state.error && (
           <div className="px-4 py-3 rounded-xl bg-brand-watermelon/10 border border-brand-watermelon/30 text-sm mb-4">

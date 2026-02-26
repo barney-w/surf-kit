@@ -39,36 +39,36 @@ export function LayoutDemos() {
   const [activeConvId, setActiveConvId] = useState<string>('1')
 
   return (
-    <div style={{ padding: 24, display: 'flex', flexDirection: 'column', gap: 32, height: '100%', overflowY: 'auto' }}>
-      <h2 style={{ fontSize: 20, fontWeight: 700, marginBottom: 8 }}>Layout Component Demos</h2>
+    <div className="h-full overflow-y-auto bg-brand-dark p-8 flex flex-col gap-10">
+      <div>
+        <h2 className="font-display text-2xl font-bold text-brand-cream tracking-tight">
+          Layout Components
+        </h2>
+        <p className="text-brand-cream/50 text-sm font-body mt-1">
+          Live demonstrations of all agent layout variants
+        </p>
+      </div>
 
       {/* AgentPanel demo */}
-      <section>
-        <h3 style={{ fontSize: 16, fontWeight: 600, marginBottom: 8 }}>AgentPanel</h3>
-        <div style={{ display: 'flex', gap: 8 }}>
+      <section className="glass-panel p-6 flex flex-col gap-4">
+        <div>
+          <h3 className="font-display text-xs font-semibold uppercase tracking-[0.12em] text-brand-gold">
+            AgentPanel
+          </h3>
+          <p className="text-brand-cream/50 text-xs font-body mt-0.5">
+            Sliding side panel — left or right
+          </p>
+        </div>
+        <div className="flex gap-3">
           <button
+            className="px-4 py-2 rounded-xl text-sm font-display font-medium border border-brand-gold/25 text-brand-gold/80 hover:border-brand-gold hover:text-brand-gold hover:bg-brand-gold/10 transition-all duration-200"
             onClick={() => { setPanelSide('right'); setPanelOpen(true) }}
-            style={{
-              padding: '8px 16px',
-              borderRadius: 8,
-              border: '1px solid var(--surf-color-border-default)',
-              background: 'transparent',
-              cursor: 'pointer',
-              color: 'inherit',
-            }}
           >
             Open Right Panel
           </button>
           <button
+            className="px-4 py-2 rounded-xl text-sm font-display font-medium border border-brand-gold/25 text-brand-gold/80 hover:border-brand-gold hover:text-brand-gold hover:bg-brand-gold/10 transition-all duration-200"
             onClick={() => { setPanelSide('left'); setPanelOpen(true) }}
-            style={{
-              padding: '8px 16px',
-              borderRadius: 8,
-              border: '1px solid var(--surf-color-border-default)',
-              background: 'transparent',
-              cursor: 'pointer',
-              color: 'inherit',
-            }}
           >
             Open Left Panel
           </button>
@@ -83,23 +83,37 @@ export function LayoutDemos() {
       </section>
 
       {/* ConversationList demo */}
-      <section>
-        <h3 style={{ fontSize: 16, fontWeight: 600, marginBottom: 8 }}>ConversationList</h3>
-        <div style={{ width: 300, height: 300, border: '1px solid var(--surf-color-border-default)', borderRadius: 8, overflow: 'hidden' }}>
+      <section className="glass-panel p-6 flex flex-col gap-4">
+        <div>
+          <h3 className="font-display text-xs font-semibold uppercase tracking-[0.12em] text-brand-gold">
+            ConversationList
+          </h3>
+          <p className="text-brand-cream/50 text-xs font-body mt-0.5">
+            Sidebar list of past conversations
+          </p>
+        </div>
+        <div className="w-72 h-80 rounded-2xl overflow-hidden border border-brand-gold/15">
           <ConversationList
             conversations={sampleConversations}
             activeId={activeConvId}
             onSelect={setActiveConvId}
-            onDelete={(id) => console.log('Delete:', id)}
+            onDelete={(id: string) => console.log('Delete:', id)}
             onNew={() => console.log('New conversation')}
           />
         </div>
       </section>
 
       {/* AgentEmbed demo */}
-      <section>
-        <h3 style={{ fontSize: 16, fontWeight: 600, marginBottom: 8 }}>AgentEmbed</h3>
-        <div style={{ width: '100%', maxWidth: 600, height: 400, border: '1px solid var(--surf-color-border-default)', borderRadius: 8 }}>
+      <section className="glass-panel p-6 flex flex-col gap-4">
+        <div>
+          <h3 className="font-display text-xs font-semibold uppercase tracking-[0.12em] text-brand-gold">
+            AgentEmbed
+          </h3>
+          <p className="text-brand-cream/50 text-xs font-body mt-0.5">
+            Full embedded chat interface
+          </p>
+        </div>
+        <div className="w-full max-w-2xl h-[400px] rounded-2xl overflow-hidden border border-brand-gold/15">
           <AgentEmbed endpoint={DEMO_ENDPOINT} title="Embedded Chat" />
         </div>
       </section>
