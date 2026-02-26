@@ -8,4 +8,5 @@ export { multiTurnConversation } from './fixtures/conversations'
 export { streamingInProgressFixture } from './fixtures/streaming'
 
 // Matchers / Accessibility
-export { axe, toHaveNoViolations } from './matchers/toBeAccessible'
+export { axe } from './matchers/toBeAccessible'
+export type { toHaveNoViolations } from './matchers/toBeAccessible'

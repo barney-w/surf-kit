@@ -1,1 +1,2 @@
-export { axe, toHaveNoViolations } from 'vitest-axe'
+export { axe } from 'vitest-axe'
+export type { toHaveNoViolations } from 'vitest-axe/matchers'
