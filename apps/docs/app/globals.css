@@ -1,2 +1,16 @@
 @import "tailwindcss";
 @import "@surf-kit/tokens/css";
+
+@theme {
+  /* brand-* color palette — required by agent layout/feedback components */
+  --color-brand-blue:         #0091A5;
+  --color-brand-cyan:         #38BDD0;
+  --color-brand-gold:         #E1B989;
+  --color-brand-gold-light:   #F3D79C;
+  --color-brand-cream:        #F1F0E3;
+  --color-brand-cream-warm:   #F0E8B6;
+  --color-brand-dark:         #041F26;
+  --color-brand-dark-panel:   #0A3642;
+  --color-brand-charcoal:     #414142;
+  --color-brand-watermelon:   #E81152;
+}
