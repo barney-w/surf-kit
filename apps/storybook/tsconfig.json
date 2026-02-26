@@ -1,0 +1,4 @@
+{
+  "extends": "@surf-kit/tsconfig/react.json",
+  "include": ["stories", ".storybook"]
+}
