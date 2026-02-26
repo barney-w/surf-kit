@@ -50,7 +50,7 @@ function SourceList({
         type="button"
         onClick={() => setIsExpanded(prev => !prev)}
         aria-expanded={isExpanded}
-        className="flex items-center gap-1.5 text-xs font-display font-semibold uppercase tracking-wider text-brand-cream/50 hover:text-brand-gold mb-2 transition-colors duration-200"
+        className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-text-secondary hover:text-accent mb-2 transition-colors duration-200"
       >
         <svg
           className={`w-4 h-4 transition-transform ${isExpanded ? 'rotate-180' : ''}`}

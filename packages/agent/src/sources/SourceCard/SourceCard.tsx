@@ -35,8 +35,8 @@ function SourceCard({ source, variant = 'compact', onNavigate, className }: Sour
     <div
       className={twMerge(
         'rounded-xl border transition-all duration-200',
-        'bg-brand-dark-panel border-brand-gold/15',
-        onNavigate && 'cursor-pointer hover:border-brand-gold/30 hover:shadow-glow',
+        'bg-surface border-border',
+        onNavigate && 'cursor-pointer hover:border-border-strong',
         className,
       )}
       data-document-id={source.document_id}
@@ -60,11 +60,11 @@ function SourceCard({ source, variant = 'compact', onNavigate, className }: Sour
       >
         <div className="flex items-start justify-between gap-2">
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium text-brand-cream truncate">
+            <p className="text-sm font-medium text-text-primary truncate">
               {source.title}
             </p>
             {source.section && (
-              <p className="text-[11px] font-display font-semibold uppercase tracking-wider text-brand-gold/60 truncate mt-0.5">
+              <p className="text-[11px] font-semibold uppercase tracking-wider text-text-secondary truncate mt-0.5">
                 {source.section}
               </p>
             )}
@@ -77,7 +77,7 @@ function SourceCard({ source, variant = 'compact', onNavigate, className }: Sour
           </Badge>
         </div>
         {!isCompact && (
-          <p className="text-xs text-brand-cream/50 mt-2 line-clamp-3 leading-relaxed">
+          <p className="text-xs text-text-secondary mt-2 line-clamp-3 leading-relaxed">
             {source.snippet}
           </p>
         )}

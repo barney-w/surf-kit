@@ -23,10 +23,10 @@ function FollowUpChips({ suggestions, onSelect, className }: FollowUpChipsProps)
           type="button"
           onClick={() => onSelect(suggestion)}
           className={twMerge(
-            'px-4 py-1.5 rounded-full text-sm font-body shrink-0 whitespace-nowrap',
-            'border border-brand-gold/20 bg-transparent text-brand-cream/65',
-            'hover:bg-brand-gold/10 hover:border-brand-gold/40 hover:text-brand-cream',
-            'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-cyan',
+            'px-4 py-1.5 rounded-full text-sm shrink-0 whitespace-nowrap',
+            'border border-border bg-surface text-text-primary',
+            'hover:bg-surface-raised hover:border-interactive hover:text-text-primary',
+            'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent',
             'transition-all duration-200',
           )}
         >

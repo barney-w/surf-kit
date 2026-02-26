@@ -18,20 +18,20 @@ function ResponseMessage({ content, className }: ResponseMessageProps) {
   return (
     <div
       className={twMerge(
-        'text-sm leading-relaxed text-brand-cream font-body',
+        'text-sm leading-relaxed text-text-primary',
         '[&_p]:my-2',
         '[&_ul]:my-2 [&_ul]:list-disc [&_ul]:pl-6',
         '[&_ol]:my-2 [&_ol]:list-decimal [&_ol]:pl-6',
         '[&_li]:my-1',
-        '[&_strong]:text-brand-cream [&_strong]:font-semibold',
-        '[&_em]:text-brand-cream/80',
-        '[&_h1]:font-display [&_h1]:text-lg [&_h1]:font-semibold [&_h1]:text-brand-cream [&_h1]:mt-4 [&_h1]:mb-2',
-        '[&_h2]:font-display [&_h2]:text-base [&_h2]:font-semibold [&_h2]:text-brand-cream [&_h2]:mt-3 [&_h2]:mb-1.5',
-        '[&_h3]:font-display [&_h3]:text-sm [&_h3]:font-semibold [&_h3]:text-brand-gold [&_h3]:mt-2 [&_h3]:mb-1',
-        '[&_code]:bg-brand-dark-panel [&_code]:text-brand-cyan [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded [&_code]:text-xs [&_code]:font-mono',
-        '[&_pre]:bg-brand-dark-panel [&_pre]:border [&_pre]:border-brand-gold/15 [&_pre]:rounded-xl [&_pre]:p-4 [&_pre]:overflow-x-auto',
-        '[&_blockquote]:border-l-2 [&_blockquote]:border-brand-gold/40 [&_blockquote]:pl-4 [&_blockquote]:text-brand-cream/70',
-        '[&_a]:text-brand-cyan [&_a]:underline-offset-2 [&_a]:hover:text-brand-cyan/80',
+        '[&_strong]:text-text-primary [&_strong]:font-semibold',
+        '[&_em]:text-text-secondary',
+        '[&_h1]:text-lg [&_h1]:font-semibold [&_h1]:text-text-primary [&_h1]:mt-4 [&_h1]:mb-2',
+        '[&_h2]:text-base [&_h2]:font-semibold [&_h2]:text-text-primary [&_h2]:mt-3 [&_h2]:mb-1.5',
+        '[&_h3]:text-sm [&_h3]:font-semibold [&_h3]:text-accent [&_h3]:mt-2 [&_h3]:mb-1',
+        '[&_code]:bg-surface-raised [&_code]:text-accent [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded [&_code]:text-xs [&_code]:font-mono',
+        '[&_pre]:bg-surface-raised [&_pre]:border [&_pre]:border-border [&_pre]:rounded-xl [&_pre]:p-4 [&_pre]:overflow-x-auto',
+        '[&_blockquote]:border-l-2 [&_blockquote]:border-border-strong [&_blockquote]:pl-4 [&_blockquote]:text-text-secondary',
+        '[&_a]:text-accent [&_a]:underline-offset-2 [&_a]:hover:text-accent/80',
         className,
       )}
       data-testid="response-message"
