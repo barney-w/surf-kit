@@ -22,14 +22,14 @@ function ConversationList({
   return (
     <nav
       aria-label="Conversation list"
-      className={twMerge('flex flex-col h-full bg-brand-dark', className)}
+      className={twMerge('flex flex-col h-full bg-canvas', className)}
     >
       {onNew && (
         <div className="p-3 border-b border-border">
           <button
             type="button"
             onClick={onNew}
-            className="w-full px-4 py-2.5 rounded-xl text-sm font-display font-semibold bg-brand-blue text-brand-cream hover:bg-brand-cyan hover:shadow-glow-cyan transition-all duration-200"
+            className="w-full px-4 py-2.5 rounded-xl text-sm font-semibold bg-accent text-white hover:bg-accent-hover transition-all duration-200"
           >
             New conversation
           </button>
@@ -43,9 +43,9 @@ function ConversationList({
             <li
               key={conversation.id}
               className={twMerge(
-                'flex items-start border-b border-brand-gold/8 transition-colors duration-200',
-                'hover:bg-brand-dark-panel/50',
-                isActive && 'bg-brand-dark-panel/70 border-l-2 border-l-brand-gold',
+                'flex items-start border-b border-border transition-colors duration-200',
+                'hover:bg-surface',
+                isActive && 'bg-surface-raised border-l-2 border-l-accent',
               )}
             >
               <button

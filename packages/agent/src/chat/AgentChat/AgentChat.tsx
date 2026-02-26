@@ -50,13 +50,13 @@ function AgentChat({
   return (
     <div
       className={twMerge(
-        'flex flex-col h-full bg-brand-dark border border-brand-gold/15 rounded-2xl overflow-hidden',
+        'flex flex-col h-full bg-canvas border border-border rounded-xl overflow-hidden',
         className,
       )}
     >
       {showHeader && (
-        <div className="flex items-center justify-between border-b border-brand-gold/15 px-4 py-3 bg-brand-dark-panel/60 backdrop-blur-sm shrink-0">
-          <h1 className="text-base font-display font-semibold text-brand-cream">{title}</h1>
+        <div className="flex items-center justify-between border-b border-border px-4 py-3 bg-surface-raised shrink-0">
+          <h1 className="text-base font-semibold text-text-primary">{title}</h1>
         </div>
       )}
 

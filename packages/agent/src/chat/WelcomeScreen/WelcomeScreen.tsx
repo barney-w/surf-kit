@@ -25,7 +25,7 @@ function WelcomeScreen({
     >
       {/* Pulsing icon */}
       <div
-        className="w-14 h-14 rounded-2xl bg-brand-gold/10 border border-brand-gold/20 flex items-center justify-center pulse-glow"
+        className="w-14 h-14 rounded-2xl bg-accent/10 border border-border flex items-center justify-center pulse-glow"
         aria-hidden="true"
       >
         <span className="text-2xl">✦</span>
@@ -34,9 +34,9 @@ function WelcomeScreen({
       {/* Text */}
       <div className="flex flex-col gap-2">
         {title && (
-          <h2 className="font-display text-2xl font-bold text-brand-cream">{title}</h2>
+          <h2 className="text-2xl font-semibold text-text-primary">{title}</h2>
         )}
-        <p className="text-brand-cream/60 text-base leading-relaxed max-w-sm">{message}</p>
+        <p className="text-text-secondary text-base leading-relaxed max-w-sm">{message}</p>
       </div>
 
       {/* Suggested question chips */}
@@ -52,10 +52,10 @@ function WelcomeScreen({
               type="button"
               onClick={() => onQuestionSelect?.(question)}
               className={twMerge(
-                'px-4 py-2 rounded-full text-sm font-body',
-                'border border-brand-gold/20 bg-transparent text-brand-cream/65',
-                'hover:bg-brand-gold/10 hover:border-brand-gold/40 hover:text-brand-cream',
-                'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-cyan',
+                'px-4 py-2 rounded-full text-sm',
+                'border border-border bg-surface text-text-primary',
+                'hover:bg-surface-raised hover:border-interactive hover:text-text-primary',
+                'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent',
                 'transition-colors duration-200',
               )}
             >

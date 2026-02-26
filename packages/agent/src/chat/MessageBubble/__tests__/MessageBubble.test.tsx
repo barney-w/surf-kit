@@ -54,13 +54,13 @@ describe('MessageBubble', () => {
   it('applies accent background to user messages', () => {
     const { container } = render(<MessageBubble message={userMessage} />)
     const bubble = container.querySelector('[data-message-id="msg-1"]')?.firstElementChild
-    expect(bubble?.className).toContain('bg-brand-blue')
+    expect(bubble?.className).toContain('bg-accent')
   })
 
   it('applies surface background to assistant messages', () => {
     const { container } = render(<MessageBubble message={assistantMessage} />)
     const bubble = container.querySelector('[data-message-id="msg-2"]')?.firstElementChild
-    expect(bubble?.className).toContain('bg-brand-dark-panel/70')
+    expect(bubble?.className).toContain('bg-surface-raised')
   })
 
   it('shows agent name when showAgent is true', () => {
