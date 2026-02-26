@@ -1,0 +1,66 @@
+{
+  "color": {
+    "$type": "color",
+    "teal": {
+      "50": { "$value": "#F0FAFB" },
+      "100": { "$value": "#E0F5F7" },
+      "300": { "$value": "#66C2CC" },
+      "500": { "$value": "#0099A8" },
+      "600": { "$value": "#007F8C" },
+      "700": { "$value": "#006673" }
+    },
+    "charcoal": {
+      "50": { "$value": "#F5F5F5" },
+      "100": { "$value": "#E8E8E8" },
+      "300": { "$value": "#B0B0B0" },
+      "500": { "$value": "#787878" },
+      "700": { "$value": "#5A5A5A" },
+      "900": { "$value": "#3C3C3C" }
+    },
+    "watermelon": {
+      "100": { "$value": "#FDE8EF" },
+      "500": { "$value": "#E8175D" },
+      "700": { "$value": "#B8124A" }
+    },
+    "lime": {
+      "100": { "$value": "#F0F8E0" },
+      "500": { "$value": "#8DC21F" },
+      "700": { "$value": "#6B9317" }
+    },
+    "golden": {
+      "100": { "$value": "#FEF5E0" },
+      "500": { "$value": "#F8B800" },
+      "700": { "$value": "#C69300" }
+    },
+    "sky": {
+      "500": { "$value": "#5BC8F5" }
+    },
+    "magenta": {
+      "500": { "$value": "#9E1F82" }
+    },
+    "cyan": {
+      "500": { "$value": "#00B2AA" }
+    },
+    "hotpink": {
+      "500": { "$value": "#F0197C" }
+    },
+    "orangered": {
+      "500": { "$value": "#F05A22" }
+    },
+    "purple": {
+      "500": { "$value": "#3B1283" }
+    },
+    "neutral": {
+      "50": { "$value": "#FAFAFA" },
+      "100": { "$value": "#F5F5F5" },
+      "200": { "$value": "#E8E8E8" },
+      "300": { "$value": "#D4D4D4" },
+      "600": { "$value": "#6B6B6B" },
+      "800": { "$value": "#454545" },
+      "900": { "$value": "#3C3C3C" }
+    },
+    "white": {
+      "$value": "#FFFFFF"
+    }
+  }
+}

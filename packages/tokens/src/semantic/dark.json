@@ -1,0 +1,38 @@
+{
+  "color": {
+    "$type": "color",
+    "bg": {
+      "canvas": { "$value": "#1A1A1A" },
+      "surface": { "$value": "#2A2A2A" },
+      "surface-raised": { "$value": "#333333" },
+      "surface-sunken": { "$value": "#111111" }
+    },
+    "text": {
+      "primary": { "$value": "#F5F5F5" },
+      "secondary": { "$value": "#B0B0B0" },
+      "muted": { "$value": "#6B6B6B" },
+      "inverse": { "$value": "{color.charcoal.900}" }
+    },
+    "accent": {
+      "primary": { "$value": "{color.teal.500}" },
+      "primary-hover": { "$value": "{color.teal.600}" },
+      "primary-active": { "$value": "{color.teal.700}" },
+      "primary-subtle": { "$value": "{color.teal.100}" },
+      "primary-subtlest": { "$value": "{color.teal.50}" }
+    },
+    "border": {
+      "default": { "$value": "#404040" },
+      "strong": { "$value": "#555555" },
+      "interactive": { "$value": "{color.teal.500}" }
+    },
+    "status": {
+      "success": { "$value": "{color.lime.500}" },
+      "success-subtle": { "$value": "{color.lime.100}" },
+      "warning": { "$value": "{color.golden.500}" },
+      "warning-subtle": { "$value": "{color.golden.100}" },
+      "error": { "$value": "{color.watermelon.500}" },
+      "error-subtle": { "$value": "{color.watermelon.100}" },
+      "info": { "$value": "{color.sky.500}" }
+    }
+  }
+}

@@ -1,0 +1,6 @@
+export { ThemeProvider } from './ThemeProvider'
+export { useTheme } from './useTheme'
+export { useColorMode } from './useColorMode'
+export { createTheme } from './createTheme'
+export { surfKitPreset } from './tailwind-preset'
+export type { Theme, ThemeConfig, ColorMode } from './types'

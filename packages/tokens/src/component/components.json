@@ -1,0 +1,85 @@
+{
+  "button": {
+    "$type": "color",
+    "bg": {
+      "primary": { "$value": "{color.accent.primary}" },
+      "primary-hover": { "$value": "{color.accent.primary-hover}" }
+    },
+    "text": {
+      "primary": { "$value": "#FFFFFF" }
+    },
+    "radius": { "$type": "dimension", "$value": "{radius.md}" }
+  },
+  "input": {
+    "$type": "color",
+    "border": { "$value": "{color.border.default}" },
+    "border-focus": { "$value": "{color.border.interactive}" },
+    "bg": { "$value": "{color.bg.surface}" }
+  },
+  "confidence": {
+    "high": {
+      "bg": { "$type": "color", "$value": "{color.status.success-subtle}" },
+      "text": { "$type": "color", "$value": "{color.lime.700}" },
+      "border": { "$type": "color", "$value": "{color.status.success}" }
+    },
+    "medium": {
+      "bg": { "$type": "color", "$value": "{color.status.warning-subtle}" },
+      "text": { "$type": "color", "$value": "{color.golden.700}" },
+      "border": { "$type": "color", "$value": "{color.status.warning}" }
+    },
+    "low": {
+      "bg": { "$type": "color", "$value": "{color.status.error-subtle}" },
+      "text": { "$type": "color", "$value": "{color.watermelon.700}" },
+      "border": { "$type": "color", "$value": "{color.status.error}" }
+    }
+  },
+  "verification": {
+    "passed": {
+      "icon": { "$type": "color", "$value": "{color.status.success}" },
+      "bg": { "$type": "color", "$value": "{color.status.success-subtle}" }
+    },
+    "flagged": {
+      "icon": { "$type": "color", "$value": "{color.status.warning}" },
+      "bg": { "$type": "color", "$value": "{color.status.warning-subtle}" }
+    },
+    "failed": {
+      "icon": { "$type": "color", "$value": "{color.status.error}" },
+      "bg": { "$type": "color", "$value": "{color.status.error-subtle}" }
+    }
+  },
+  "source": {
+    "card": {
+      "bg": { "$type": "color", "$value": "{color.bg.surface}" },
+      "border": { "$type": "color", "$value": "{color.border.default}" },
+      "border-hover": { "$type": "color", "$value": "{color.border.strong}" }
+    }
+  },
+  "agent": {
+    "coordinator": { "accent": { "$type": "color", "$value": "{color.teal.500}" } },
+    "hr": { "accent": { "$type": "color", "$value": "{color.watermelon.500}" } },
+    "it": { "accent": { "$type": "color", "$value": "{color.sky.500}" } },
+    "governance": { "accent": { "$type": "color", "$value": "{color.purple.500}" } },
+    "finance": { "accent": { "$type": "color", "$value": "{color.golden.500}" } },
+    "facilities": { "accent": { "$type": "color", "$value": "{color.lime.500}" } },
+    "general": { "accent": { "$type": "color", "$value": "{color.charcoal.500}" } }
+  },
+  "message": {
+    "user": {
+      "bg": { "$type": "color", "$value": "{color.accent.primary}" },
+      "text": { "$type": "color", "$value": "#FFFFFF" }
+    },
+    "assistant": {
+      "bg": { "$type": "color", "$value": "{color.bg.surface-raised}" },
+      "text": { "$type": "color", "$value": "{color.text.primary}" },
+      "border": { "$type": "color", "$value": "{color.border.default}" }
+    }
+  },
+  "streaming": {
+    "cursor": { "color": { "$type": "color", "$value": "{color.accent.primary}" } },
+    "phase": {
+      "bg": { "$type": "color", "$value": "{color.accent.primary-subtlest}" },
+      "text": { "$type": "color", "$value": "{color.accent.primary}" },
+      "icon": { "$type": "color", "$value": "{color.accent.primary}" }
+    }
+  }
+}

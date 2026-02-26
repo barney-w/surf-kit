@@ -1,0 +1,24 @@
+{
+  "name": "@surf-kit/tokens",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "dist/ts/tokens.js",
+  "types": "dist/ts/tokens.d.ts",
+  "exports": {
+    "./css": "./dist/css/variables.css",
+    "./css/dark": "./dist/css/variables-dark.css",
+    "./ts": "./dist/ts/tokens.ts",
+    "./json": "./dist/json/tokens.json",
+    ".": "./dist/ts/tokens.js"
+  },
+  "scripts": {
+    "build": "tsx src/config.ts",
+    "clean": "rm -rf dist"
+  },
+  "devDependencies": {
+    "style-dictionary": "^4.0.0",
+    "tsx": "^4.0.0",
+    "@surf-kit/tsconfig": "workspace:*"
+  }
+}
