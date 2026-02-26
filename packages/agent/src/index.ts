@@ -76,3 +76,59 @@ export type { SourceDrawerProps } from './sources/SourceDrawer'
 
 export { SourceBadge } from './sources/SourceBadge'
 export type { SourceBadgeProps } from './sources/SourceBadge'
+
+// Confidence Components
+export { ConfidenceBadge } from './confidence/ConfidenceBadge'
+export type { ConfidenceBadgeProps } from './confidence/ConfidenceBadge'
+
+export { ConfidenceBreakdown as ConfidenceBreakdownView } from './confidence/ConfidenceBreakdown'
+export type { ConfidenceBreakdownProps } from './confidence/ConfidenceBreakdown'
+
+export { ConfidenceMeter } from './confidence/ConfidenceMeter'
+export type { ConfidenceMeterProps } from './confidence/ConfidenceMeter'
+
+// Verification Components
+export { VerificationBadge } from './confidence/VerificationBadge'
+export type { VerificationBadgeProps } from './confidence/VerificationBadge'
+
+export { VerificationDetail } from './confidence/VerificationDetail'
+export type { VerificationDetailProps } from './confidence/VerificationDetail'
+
+// Agent Identity Components
+export { AgentAvatar } from './agent-identity/AgentAvatar'
+export type { AgentAvatarProps } from './agent-identity/AgentAvatar'
+
+export { AgentLabel } from './agent-identity/AgentLabel'
+export type { AgentLabelProps } from './agent-identity/AgentLabel'
+
+export { AgentHandoff } from './agent-identity/AgentHandoff'
+export type { AgentHandoffProps } from './agent-identity/AgentHandoff'
+
+export { RoutingIndicator } from './agent-identity/RoutingIndicator'
+export type { RoutingIndicatorProps } from './agent-identity/RoutingIndicator'
+
+// Streaming Components
+export { StreamingMessage } from './streaming/StreamingMessage'
+export type { StreamingMessageProps } from './streaming/StreamingMessage'
+
+export { ThinkingIndicator } from './streaming/ThinkingIndicator'
+export type { ThinkingIndicatorProps } from './streaming/ThinkingIndicator'
+
+export { ToolExecution } from './streaming/ToolExecution'
+export type { ToolExecutionProps } from './streaming/ToolExecution'
+
+export { RetrievalProgress } from './streaming/RetrievalProgress'
+export type { RetrievalProgressProps } from './streaming/RetrievalProgress'
+
+export { VerificationProgress } from './streaming/VerificationProgress'
+export type { VerificationProgressProps } from './streaming/VerificationProgress'
+
+// Feedback Components
+export { ThumbsFeedback } from './feedback/ThumbsFeedback'
+export type { ThumbsFeedbackProps, FeedbackRating } from './feedback/ThumbsFeedback'
+
+export { FeedbackDialog } from './feedback/FeedbackDialog'
+export type { FeedbackDialogProps } from './feedback/FeedbackDialog'
+
+export { FeedbackConfirmation } from './feedback/FeedbackConfirmation'
+export type { FeedbackConfirmationProps } from './feedback/FeedbackConfirmation'
