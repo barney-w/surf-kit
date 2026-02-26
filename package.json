@@ -4,6 +4,8 @@
   "packageManager": "pnpm@9.15.4",
   "scripts": {
     "build": "turbo build",
+    "build:storybook": "pnpm --filter storybook build",
+    "dev:storybook": "pnpm --filter storybook dev",
     "lint": "turbo lint",
     "test": "turbo test",
     "typecheck": "turbo typecheck",

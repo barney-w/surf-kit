@@ -1,0 +1,10 @@
+@config "../tailwind.config.ts";
+@import "tailwindcss";
+@import "@surf-kit/tokens/css";
+
+html,
+body {
+  background: var(--surf-color-bg-canvas);
+  color: var(--surf-color-text-primary);
+  font-family: var(--surf-font-family-sans);
+}

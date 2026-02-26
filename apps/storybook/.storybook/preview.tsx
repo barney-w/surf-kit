@@ -1,6 +1,7 @@
 import type { Preview } from '@storybook/react'
 import { ThemeProvider } from '@surf-kit/theme'
 import React from 'react'
+import './preview.css'
 
 const preview: Preview = {
   decorators: [
