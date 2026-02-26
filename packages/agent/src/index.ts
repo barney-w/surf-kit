@@ -123,6 +123,9 @@ export type { RetrievalProgressProps } from './streaming/RetrievalProgress'
 export { VerificationProgress } from './streaming/VerificationProgress'
 export type { VerificationProgressProps } from './streaming/VerificationProgress'
 
+export { TypewriterText } from './streaming/TypewriterText'
+export type { TypewriterTextProps } from './streaming/TypewriterText'
+
 // Conversation Components
 export { ConversationList } from './chat/ConversationList'
 export type { ConversationListProps } from './chat/ConversationList'

@@ -1,169 +1,24 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef } from 'react'
 import {
   useAgentChat,
+  AgentResponseView,
+  TypewriterText,
   type ChatMessage,
-  type AgentResponse,
-  type ConfidenceBreakdown,
-  type VerificationResult,
-  type Source,
 } from '@surf-kit/agent'
 
+export const LIVE_API_URL = import.meta.env.VITE_SURF_API_URL as string | undefined
+
 const CHAT_CONFIG = {
-  apiUrl: '/api/v1',
-  streamPath: '/chat',
+  apiUrl: LIVE_API_URL ?? '/api/v1',
+  streamPath: '/chat/stream',
   feedbackPath: '/feedback',
   conversationsPath: '/conversations',
   timeout: 60000,
 }
 
 /* ------------------------------------------------------------------ */
-/*  Sub-components                                                     */
+/*  Phase indicator                                                      */
 /* ------------------------------------------------------------------ */
-
-function ConfidenceBadge({ confidence }: { confidence: ConfidenceBreakdown }) {
-  const colors: Record<string, string> = {
-    high: '#16a34a',
-    medium: '#ca8a04',
-    low: '#dc2626',
-  }
-  const color = colors[confidence.overall] ?? '#6b7280'
-  return (
-    <span
-      style={{
-        display: 'inline-flex',
-        alignItems: 'center',
-        gap: 4,
-        padding: '2px 8px',
-        borderRadius: 12,
-        fontSize: 12,
-        fontWeight: 600,
-        backgroundColor: `${color}18`,
-        color,
-        border: `1px solid ${color}40`,
-      }}
-    >
-      <span
-        style={{
-          width: 6,
-          height: 6,
-          borderRadius: '50%',
-          backgroundColor: color,
-        }}
-      />
-      {confidence.overall} confidence
-    </span>
-  )
-}
-
-function VerificationBadge({ verification }: { verification: VerificationResult }) {
-  const config: Record<string, { color: string; icon: string; label: string }> = {
-    passed: { color: '#16a34a', icon: '\u2713', label: 'Verified' },
-    flagged: { color: '#ca8a04', icon: '\u26a0', label: 'Flagged' },
-    failed: { color: '#dc2626', icon: '\u2717', label: 'Failed' },
-  }
-  const { color, icon, label } = config[verification.status] ?? config.failed
-  return (
-    <span
-      style={{
-        display: 'inline-flex',
-        alignItems: 'center',
-        gap: 4,
-        padding: '2px 8px',
-        borderRadius: 12,
-        fontSize: 12,
-        fontWeight: 600,
-        backgroundColor: `${color}18`,
-        color,
-        border: `1px solid ${color}40`,
-      }}
-    >
-      {icon} {label} ({verification.claims_verified}/{verification.claims_checked} claims)
-    </span>
-  )
-}
-
-function SourceCard({ source }: { source: Source }) {
-  return (
-    <a
-      href={source.url}
-      target="_blank"
-      rel="noopener noreferrer"
-      style={{
-        display: 'block',
-        padding: '8px 12px',
-        borderRadius: 8,
-        border: '1px solid var(--border-color, #e5e7eb)',
-        textDecoration: 'none',
-        color: 'inherit',
-        fontSize: 13,
-        lineHeight: 1.4,
-      }}
-    >
-      <div style={{ fontWeight: 600, marginBottom: 2 }}>{source.title}</div>
-      {source.section && (
-        <div style={{ fontSize: 11, opacity: 0.7, marginBottom: 4 }}>{source.section}</div>
-      )}
-      <div style={{ opacity: 0.8, fontSize: 12 }}>{source.snippet}</div>
-    </a>
-  )
-}
-
-function ThumbsFeedback({
-  messageId,
-  onFeedback,
-}: {
-  messageId: string
-  onFeedback: (messageId: string, rating: 'positive' | 'negative') => void
-}) {
-  const [selected, setSelected] = useState<'positive' | 'negative' | null>(null)
-
-  const handleClick = (rating: 'positive' | 'negative') => {
-    setSelected(rating)
-    onFeedback(messageId, rating)
-  }
-
-  return (
-    <div style={{ display: 'flex', gap: 4, marginTop: 8 }}>
-      <button
-        onClick={() => handleClick('positive')}
-        disabled={selected !== null}
-        style={{
-          padding: '4px 8px',
-          borderRadius: 6,
-          border: '1px solid var(--border-color, #e5e7eb)',
-          background: selected === 'positive' ? '#16a34a22' : 'transparent',
-          cursor: selected !== null ? 'default' : 'pointer',
-          fontSize: 16,
-          opacity: selected !== null && selected !== 'positive' ? 0.3 : 1,
-        }}
-        aria-label="Thumbs up"
-      >
-        👍
-      </button>
-      <button
-        onClick={() => handleClick('negative')}
-        disabled={selected !== null}
-        style={{
-          padding: '4px 8px',
-          borderRadius: 6,
-          border: '1px solid var(--border-color, #e5e7eb)',
-          background: selected === 'negative' ? '#dc262622' : 'transparent',
-          cursor: selected !== null ? 'default' : 'pointer',
-          fontSize: 16,
-          opacity: selected !== null && selected !== 'negative' ? 0.3 : 1,
-        }}
-        aria-label="Thumbs down"
-      >
-        👎
-      </button>
-      {selected && (
-        <span style={{ fontSize: 12, opacity: 0.6, alignSelf: 'center', marginLeft: 4 }}>
-          Thanks for your feedback!
-        </span>
-      )}
-    </div>
-  )
-}
 
 function PhaseIndicator({ phase }: { phase: string }) {
   if (phase === 'idle') return null
@@ -172,170 +27,92 @@ function PhaseIndicator({ phase }: { phase: string }) {
     thinking: 'Thinking...',
     retrieving: 'Searching knowledge base...',
     generating: 'Writing response...',
-    verifying: 'Verifying claims...',
   }
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        gap: 8,
-        padding: '12px 16px',
-        fontSize: 14,
-        opacity: 0.7,
-      }}
-    >
-      <span className="phase-spinner" />
-      {labels[phase] ?? phase}
-    </div>
-  )
-}
-
-function FollowUpChips({
-  suggestions,
-  onSelect,
-}: {
-  suggestions: string[]
-  onSelect: (text: string) => void
-}) {
-  if (!suggestions.length) return null
-  return (
-    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginTop: 8 }}>
-      {suggestions.map((s) => (
-        <button
-          key={s}
-          onClick={() => onSelect(s)}
-          style={{
-            padding: '6px 12px',
-            borderRadius: 16,
-            border: '1px solid var(--border-color, #e5e7eb)',
-            background: 'transparent',
-            cursor: 'pointer',
-            fontSize: 13,
-            color: 'var(--text-color, inherit)',
-          }}
-        >
-          {s}
-        </button>
-      ))}
+    <div className="flex items-center gap-3 py-3 px-1 step-enter">
+      {phase === 'verifying' ? (
+        <>
+          <div className="brand-spinner brand-spinner-sm" aria-hidden="true" />
+          <span className="text-sm text-brand-cyan/70 font-body animate-pulse">
+            Checking accuracy...
+          </span>
+        </>
+      ) : (
+        <>
+          <div className="brand-spinner brand-spinner-sm" aria-hidden="true" />
+          <span className="text-sm text-brand-cream/50 font-body animate-pulse">
+            {labels[phase] ?? phase}
+          </span>
+        </>
+      )}
     </div>
   )
 }
 
 /* ------------------------------------------------------------------ */
-/*  Message rendering                                                  */
+/*  Message bubble                                                      */
 /* ------------------------------------------------------------------ */
 
 function MessageBubble({
   msg,
-  onFeedback,
+  isStreamingThisMsg,
   onFollowUp,
 }: {
   msg: ChatMessage
-  onFeedback: (messageId: string, rating: 'positive' | 'negative') => void
+  isStreamingThisMsg: boolean
   onFollowUp: (text: string) => void
 }) {
   const isUser = msg.role === 'user'
+  const suggestions = msg.response?.follow_up_suggestions ?? []
+
+  if (isUser) {
+    return (
+      <div className="flex justify-end mb-1">
+        <div className="max-w-[70%] px-4 py-2.5 rounded-[18px] rounded-br-[4px] bg-brand-blue text-brand-cream text-sm leading-relaxed whitespace-pre-wrap break-words">
+          {msg.content}
+        </div>
+      </div>
+    )
+  }
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: isUser ? 'flex-end' : 'flex-start',
-        marginBottom: 16,
-        maxWidth: '100%',
-      }}
-    >
-      {/* Agent label */}
-      {!isUser && msg.agent && (
-        <div
-          style={{
-            fontSize: 11,
-            fontWeight: 600,
-            textTransform: 'uppercase',
-            letterSpacing: '0.05em',
-            marginBottom: 4,
-            opacity: 0.5,
-          }}
-        >
-          {msg.agent}
+    <div className="flex flex-col items-start gap-1.5 mb-1">
+      {msg.agent && (
+        <div className="text-[11px] font-display font-semibold uppercase tracking-[0.08em] text-brand-gold/55 px-1">
+          {msg.agent.replace('_agent', '').replace('_', ' ')}
         </div>
       )}
 
-      {/* Bubble */}
-      <div
-        style={{
-          maxWidth: isUser ? '70%' : '85%',
-          padding: '12px 16px',
-          borderRadius: isUser ? '16px 16px 4px 16px' : '16px 16px 16px 4px',
-          backgroundColor: isUser
-            ? 'var(--user-bubble, #2563eb)'
-            : 'var(--assistant-bubble, #f3f4f6)',
-          color: isUser ? '#fff' : 'var(--text-color, #111827)',
-          fontSize: 14,
-          lineHeight: 1.6,
-          whiteSpace: 'pre-wrap',
-          wordBreak: 'break-word',
-        }}
-      >
-        {msg.content}
+      <div className="w-full max-w-[88%] px-4 py-3 rounded-[18px] rounded-tl-[4px] bg-brand-dark-panel/70 border border-brand-gold/15 backdrop-blur-[8px]">
+        {isStreamingThisMsg ? (
+          <p className="text-sm text-brand-cream leading-relaxed m-0">
+            {msg.content}
+            <span className="typewriter-cursor" aria-hidden="true" />
+          </p>
+        ) : msg.response ? (
+          <AgentResponseView
+            response={msg.response}
+            showSources
+            showConfidence
+            showVerification
+          />
+        ) : (
+          <p className="text-sm text-brand-cream leading-relaxed m-0">{msg.content}</p>
+        )}
       </div>
 
-      {/* Response metadata */}
-      {!isUser && msg.response && (
-        <div style={{ maxWidth: '85%', marginTop: 8 }}>
-          {/* Badges */}
-          <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 8 }}>
-            <ConfidenceBadge confidence={msg.response.confidence} />
-            <VerificationBadge verification={msg.response.verification} />
-          </div>
-
-          {/* Flagged warnings */}
-          {msg.response.verification.flags.length > 0 && (
-            <div
-              style={{
-                padding: '8px 12px',
-                borderRadius: 8,
-                backgroundColor: '#fef3c7',
-                border: '1px solid #fcd34d',
-                fontSize: 12,
-                marginBottom: 8,
-                color: '#92400e',
-              }}
+      {suggestions.length > 0 && (
+        <div className="flex flex-wrap gap-2 mt-3">
+          {suggestions.map(s => (
+            <button
+              key={s}
+              onClick={() => onFollowUp(s)}
+              className="px-4 py-1.5 rounded-full text-sm border border-brand-gold/20 bg-transparent text-brand-cream/65 hover:bg-brand-gold/10 hover:border-brand-gold/40 hover:text-brand-cream transition-colors duration-200 cursor-pointer"
             >
-              <strong>Flags:</strong>
-              <ul style={{ margin: '4px 0 0 16px', padding: 0 }}>
-                {msg.response.verification.flags.map((f, i) => (
-                  <li key={i}>{f}</li>
-                ))}
-              </ul>
-            </div>
-          )}
-
-          {/* Sources */}
-          {msg.response.sources.length > 0 && (
-            <div style={{ marginBottom: 8 }}>
-              <div style={{ fontSize: 12, fontWeight: 600, marginBottom: 4, opacity: 0.6 }}>
-                Sources
-              </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-                {msg.response.sources.map((src) => (
-                  <SourceCard key={src.document_id} source={src} />
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Follow-up suggestions */}
-          <FollowUpChips
-            suggestions={msg.response.follow_up_suggestions}
-            onSelect={onFollowUp}
-          />
-
-          {/* Feedback */}
-          <ThumbsFeedback messageId={msg.id} onFeedback={onFeedback} />
+              {s}
+            </button>
+          ))}
         </div>
       )}
     </div>
@@ -343,7 +120,7 @@ function MessageBubble({
 }
 
 /* ------------------------------------------------------------------ */
-/*  FullPageDemo                                                       */
+/*  FullPageDemo                                                        */
 /* ------------------------------------------------------------------ */
 
 export function FullPageDemo() {
@@ -351,12 +128,9 @@ export function FullPageDemo() {
   const threadRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLTextAreaElement>(null)
 
-  // Auto-scroll on new messages or streaming
   useEffect(() => {
     const el = threadRef.current
-    if (el) {
-      el.scrollTop = el.scrollHeight
-    }
+    if (el) el.scrollTop = el.scrollHeight
   }, [state.messages, state.streamPhase])
 
   const handleSend = useCallback(() => {
@@ -375,104 +149,76 @@ export function FullPageDemo() {
     [handleSend],
   )
 
-  const handleFeedback = useCallback(
-    (messageId: string, rating: 'positive' | 'negative') => {
-      actions.submitFeedback(messageId, rating)
-    },
-    [actions],
-  )
-
-  const handleFollowUp = useCallback(
-    (text: string) => {
-      actions.setInputValue(text)
-      // Focus the input so the user can review before sending
-      inputRef.current?.focus()
-    },
-    [actions],
-  )
-
   const isEmpty = state.messages.length === 0 && !state.isLoading
 
+  const lastAssistantMsg = [...state.messages].reverse().find(m => m.role === 'assistant')
+
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        height: '100%',
-        maxWidth: 800,
-        margin: '0 auto',
-        padding: '0 16px',
-      }}
-    >
+    <div className="flex flex-col h-full max-w-[860px] mx-auto px-4">
       {/* Message thread */}
-      <div
-        ref={threadRef}
-        style={{
-          flex: 1,
-          overflowY: 'auto',
-          padding: '24px 0',
-        }}
-      >
+      <div ref={threadRef} className="flex-1 overflow-y-auto py-6">
         {isEmpty && (
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
-              height: '100%',
-              textAlign: 'center',
-              opacity: 0.5,
-            }}
-          >
-            <div style={{ fontSize: 48, marginBottom: 16 }}>🏄</div>
-            <h2 style={{ fontSize: 20, fontWeight: 600, marginBottom: 8 }}>
-              Surf Kit Agent Playground
-            </h2>
-            <p style={{ fontSize: 14, maxWidth: 400 }}>
-              Ask about leave policy, password resets, or upcoming meetings to see different agent
-              responses with sources, confidence, and verification.
-            </p>
+          <div className="flex flex-1 flex-col items-center justify-center gap-8 text-center h-full step-enter">
+            {/* Pulsing icon */}
+            <div className="w-14 h-14 rounded-2xl bg-brand-gold/10 border border-brand-gold/20 flex items-center justify-center pulse-glow">
+              <span className="text-brand-gold text-2xl">🌊</span>
+            </div>
+
+            <div className="flex flex-col gap-3">
+              <h2 className="font-display text-3xl font-bold text-brand-cream">
+                Surf Kit Agent
+              </h2>
+              <p className="text-brand-cream/60 text-base max-w-md leading-relaxed">
+                <TypewriterText
+                  text="Ask about council tax reduction, missed bin collections, or planning permission — and see agent responses with sources, confidence scores, and live verification."
+                  speed={18}
+                  showCursor={false}
+                />
+              </p>
+            </div>
+
+            <div className="flex flex-wrap justify-center gap-2">
+              {['Council tax reduction', 'Missed bin collection', 'Planning permission'].map(chip => (
+                <button
+                  key={chip}
+                  onClick={() => { actions.setInputValue(chip); inputRef.current?.focus() }}
+                  className="px-4 py-2 rounded-full text-sm border border-brand-gold/20 bg-transparent text-brand-cream/70 hover:bg-brand-gold/10 hover:border-brand-gold/40 hover:text-brand-cream focus-visible:outline-2 focus-visible:outline-brand-cyan transition-colors duration-200 cursor-pointer"
+                >
+                  {chip}
+                </button>
+              ))}
+            </div>
           </div>
         )}
 
-        {state.messages.map((msg) => (
+        {state.messages.map(msg => (
           <MessageBubble
             key={msg.id}
             msg={msg}
-            onFeedback={handleFeedback}
-            onFollowUp={handleFollowUp}
+            isStreamingThisMsg={
+              state.isLoading &&
+              state.streamPhase === 'generating' &&
+              msg.id === lastAssistantMsg?.id
+            }
+            onFollowUp={text => {
+              actions.setInputValue(text)
+              inputRef.current?.focus()
+            }}
           />
         ))}
 
-        {state.isLoading && <PhaseIndicator phase={state.streamPhase} />}
+        {state.isLoading && state.streamPhase !== 'generating' && (
+          <PhaseIndicator phase={state.streamPhase} />
+        )}
 
         {state.error && (
-          <div
-            style={{
-              padding: '12px 16px',
-              borderRadius: 8,
-              backgroundColor: '#fef2f2',
-              border: '1px solid #fca5a5',
-              color: '#dc2626',
-              fontSize: 14,
-              marginBottom: 16,
-            }}
-          >
-            <strong>Error:</strong> {state.error.message}
+          <div className="px-4 py-3 rounded-xl bg-brand-watermelon/10 border border-brand-watermelon/30 text-sm mb-4">
+            <span className="font-display font-semibold text-brand-watermelon">Error: </span>
+            <span className="text-brand-watermelon/80">{state.error.message}</span>
             {state.error.retryable && (
               <button
                 onClick={() => actions.retry()}
-                style={{
-                  marginLeft: 8,
-                  padding: '4px 12px',
-                  borderRadius: 6,
-                  border: '1px solid #dc2626',
-                  background: 'transparent',
-                  color: '#dc2626',
-                  cursor: 'pointer',
-                  fontSize: 13,
-                }}
+                className="ml-3 px-3 py-1 rounded-lg text-sm border border-brand-watermelon/40 text-brand-watermelon hover:bg-brand-watermelon/10 transition-colors duration-200"
               >
                 Retry
               </button>
@@ -482,48 +228,26 @@ export function FullPageDemo() {
       </div>
 
       {/* Composer */}
-      <div
-        style={{
-          borderTop: '1px solid var(--border-color, #e5e7eb)',
-          padding: '12px 0',
-          display: 'flex',
-          gap: 8,
-          alignItems: 'flex-end',
-        }}
-      >
+      <div className="flex items-end gap-3 border-t border-brand-gold/12 py-3 shrink-0">
         <textarea
           ref={inputRef}
           value={state.inputValue}
-          onChange={(e) => actions.setInputValue(e.target.value)}
+          onChange={e => actions.setInputValue(e.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder="Ask a question... (try: leave policy, password reset, board meetings)"
+          placeholder="Ask a question..."
           rows={1}
-          style={{
-            flex: 1,
-            padding: '10px 14px',
-            borderRadius: 12,
-            border: '1px solid var(--border-color, #e5e7eb)',
-            fontSize: 14,
-            resize: 'none',
-            outline: 'none',
-            fontFamily: 'inherit',
-            backgroundColor: 'var(--input-bg, #fff)',
-            color: 'var(--text-color, #111827)',
-          }}
+          className="flex-1 px-4 py-2.5 rounded-xl resize-none text-sm font-body bg-brand-dark-panel/80 border border-brand-gold/15 text-brand-cream placeholder:text-brand-charcoal outline-none focus:border-transparent focus:ring-2 focus:ring-brand-gold/40 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+          style={{ colorScheme: 'dark' }}
+          disabled={state.isLoading}
         />
         <button
           onClick={handleSend}
           disabled={!state.inputValue.trim() || state.isLoading}
-          style={{
-            padding: '10px 20px',
-            borderRadius: 12,
-            border: 'none',
-            backgroundColor: state.inputValue.trim() && !state.isLoading ? '#2563eb' : '#93c5fd',
-            color: '#fff',
-            fontWeight: 600,
-            fontSize: 14,
-            cursor: state.inputValue.trim() && !state.isLoading ? 'pointer' : 'not-allowed',
-          }}
+          className={`px-5 py-2.5 rounded-xl text-sm font-display font-semibold text-brand-cream transition-all duration-200 shrink-0 focus-visible:outline-2 focus-visible:outline-brand-cyan ${
+            state.inputValue.trim() && !state.isLoading
+              ? 'bg-brand-blue hover:bg-brand-cyan hover:shadow-glow-cyan hover:scale-[1.02] active:scale-[0.98]'
+              : 'bg-brand-blue/30 text-brand-cream/40 cursor-not-allowed'
+          }`}
         >
           Send
         </button>
