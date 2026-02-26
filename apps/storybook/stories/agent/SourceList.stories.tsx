@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { SourceList } from '@surf-kit/agent'
-import { fn } from '@storybook/test'
 
 const meta: Meta<typeof SourceList> = {
   title: 'Agent/SourceList',
@@ -56,5 +55,5 @@ export const CollapsedByDefault: Story = {
 }
 
 export const WithNavigation: Story = {
-  args: { sources, onNavigate: fn() },
+  args: { sources, onNavigate: () => {} },
 }

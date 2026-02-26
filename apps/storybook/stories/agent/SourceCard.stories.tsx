@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { SourceCard } from '@surf-kit/agent'
-import { fn } from '@storybook/test'
 
 const meta: Meta<typeof SourceCard> = {
   title: 'Agent/SourceCard',
@@ -40,6 +39,6 @@ export const Clickable: Story = {
   args: {
     source,
     variant: 'expanded',
-    onNavigate: fn(),
+    onNavigate: () => {},
   },
 }

@@ -1,6 +1,9 @@
-@config "../tailwind.config.ts";
 @import "tailwindcss";
 @import "@surf-kit/tokens/css";
+@config "../tailwind.config.ts";
+@source "../stories";
+@source "../../../packages/core/src";
+@source "../../../packages/agent/src";
 
 html,
 body {

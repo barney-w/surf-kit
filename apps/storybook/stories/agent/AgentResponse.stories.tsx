@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { AgentResponseView } from '@surf-kit/agent'
 import type { AgentResponse } from '@surf-kit/agent'
-import { fn } from '@storybook/test'
 
 const meta: Meta<typeof AgentResponseView> = {
   title: 'Agent/AgentResponse',
@@ -66,7 +65,7 @@ export const WithMetadata: Story = {
     response,
     showConfidence: true,
     showVerification: true,
-    onFollowUp: fn(),
+    onFollowUp: () => {},
   },
 }
 
@@ -74,6 +73,6 @@ export const WithoutSources: Story = {
   args: {
     response,
     showSources: false,
-    onFollowUp: fn(),
+    onFollowUp: () => {},
   },
 }

@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { WelcomeScreen } from '@surf-kit/agent'
-import { action } from '@storybook/addon-actions'
 
 const meta: Meta<typeof WelcomeScreen> = {
   title: 'Agent/WelcomeScreen',
@@ -22,7 +21,7 @@ export const WithSuggestions: Story = {
       'Summarize this document',
       'Compare these two topics',
     ],
-    onQuestionSelect: action('onQuestionSelect'),
+    onQuestionSelect: () => {},
   },
 }
 
@@ -31,6 +30,6 @@ export const Custom: Story = {
     title: 'Support Bot',
     message: 'Need help? I am here for you.',
     suggestedQuestions: ['Reset password', 'Billing question', 'Report a bug'],
-    onQuestionSelect: action('onQuestionSelect'),
+    onQuestionSelect: () => {},
   },
 }

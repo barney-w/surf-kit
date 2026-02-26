@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { Alert } from '@surf-kit/core'
-import { fn } from '@storybook/test'
 
 const meta: Meta<typeof Alert> = {
   title: 'Core/Alert',
@@ -36,6 +35,6 @@ export const Dismissible: Story = {
     intent: 'info',
     title: 'Dismissible',
     children: 'Click the X to dismiss this alert.',
-    onDismiss: fn(),
+    onDismiss: () => {},
   },
 }

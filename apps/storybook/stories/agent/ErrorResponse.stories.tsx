@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { ErrorResponse } from '@surf-kit/agent'
-import { fn } from '@storybook/test'
 
 const meta: Meta<typeof ErrorResponse> = {
   title: 'Agent/ErrorResponse',
@@ -16,7 +15,7 @@ export const RetryableError: Story = {
       message: 'Failed to connect to the server. Please check your network connection.',
       retryable: true,
     },
-    onRetry: fn(),
+    onRetry: () => {},
   },
 }
 
@@ -37,6 +36,6 @@ export const TimeoutError: Story = {
       message: 'The request timed out. The server may be experiencing high load.',
       retryable: true,
     },
-    onRetry: fn(),
+    onRetry: () => {},
   },
 }

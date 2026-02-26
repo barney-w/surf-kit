@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { FollowUpChips } from '@surf-kit/agent'
-import { fn } from '@storybook/test'
 
 const meta: Meta<typeof FollowUpChips> = {
   title: 'Agent/FollowUpChips',
@@ -16,7 +15,7 @@ export const Default: Story = {
       'What happens to unused annual leave?',
       'Can I cash out my annual leave?',
     ],
-    onSelect: fn(),
+    onSelect: () => {},
   },
 }
 
@@ -31,6 +30,6 @@ export const ManySuggestions: Story = {
       'Suggestion 6',
       'A much longer suggestion that tests overflow behavior',
     ],
-    onSelect: fn(),
+    onSelect: () => {},
   },
 }

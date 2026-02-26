@@ -1,3 +1,2 @@
-@config "../tailwind.config.ts";
 @import "tailwindcss";
 @import "@surf-kit/tokens/css";

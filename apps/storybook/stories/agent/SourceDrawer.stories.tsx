@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { SourceDrawer } from '@surf-kit/agent'
-import { fn } from '@storybook/test'
 
 const meta: Meta<typeof SourceDrawer> = {
   title: 'Agent/SourceDrawer',
@@ -20,7 +19,7 @@ export const Open: Story = {
       snippet: 'All full-time employees are entitled to four weeks (20 days) of paid annual leave per year of service. Part-time employees receive a pro-rata entitlement. Leave requests should be submitted through the self-service portal at least two weeks in advance.',
     },
     isOpen: true,
-    onClose: fn(),
+    onClose: () => {},
   },
 }
 
@@ -35,6 +34,6 @@ export const LowConfidence: Story = {
       snippet: 'Passwords must be at least 12 characters long and include a mix of uppercase, lowercase, numbers, and symbols.',
     },
     isOpen: true,
-    onClose: fn(),
+    onClose: () => {},
   },
 }
