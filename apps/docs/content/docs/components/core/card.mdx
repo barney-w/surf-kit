@@ -1,0 +1,129 @@
+---
+title: Card
+description: A contained surface component for grouping related content with optional header, body, and footer sections.
+---
+
+# Card
+
+A versatile container for grouping related content. Cards support optional header, body, and footer sections and can be interactive or static.
+
+## Import
+
+```tsx
+import { Card, CardHeader, CardBody, CardFooter } from '@surf-kit/core';
+```
+
+## Props
+
+### Card (root)
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `'elevated' \| 'outlined' \| 'filled'` | `'elevated'` | Visual style of the card. |
+| `isInteractive` | `boolean` | `false` | Whether the card shows hover and press states. |
+| `onPress` | `() => void` | — | Handler for interactive cards. |
+| `className` | `string` | — | Additional CSS classes. |
+| `children` | `ReactNode` | — | Card content. |
+
+### CardHeader
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `children` | `ReactNode` | — | Header content, typically a title. |
+
+### CardBody
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `children` | `ReactNode` | — | Main card content. |
+
+### CardFooter
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `children` | `ReactNode` | — | Footer content, typically actions. |
+
+## Usage
+
+### Basic
+
+```tsx
+<Card>
+  <CardHeader>Project summary</CardHeader>
+  <CardBody>
+    <p>A brief overview of the current project status and next steps.</p>
+  </CardBody>
+</Card>
+```
+
+### With footer actions
+
+```tsx
+<Card>
+  <CardHeader>Invite team member</CardHeader>
+  <CardBody>
+    <TextInput label="Email" type="email" placeholder="colleague@council.gov" />
+  </CardBody>
+  <CardFooter>
+    <Button intent="secondary">Cancel</Button>
+    <Button intent="primary">Send invite</Button>
+  </CardFooter>
+</Card>
+```
+
+### Interactive card
+
+```tsx
+<Card isInteractive onPress={() => navigate('/project/123')}>
+  <CardHeader>Q4 Report</CardHeader>
+  <CardBody>
+    <p>Click to view the full quarterly report.</p>
+  </CardBody>
+</Card>
+```
+
+## Variants showcase
+
+### Elevated (default)
+
+A card with a subtle shadow, providing visual depth.
+
+```tsx
+<Card variant="elevated">
+  <CardBody>Elevated card content.</CardBody>
+</Card>
+```
+
+### Outlined
+
+A card with a border and no shadow. Suitable for flat design layouts.
+
+```tsx
+<Card variant="outlined">
+  <CardBody>Outlined card content.</CardBody>
+</Card>
+```
+
+### Filled
+
+A card with a tinted background and no border or shadow. Useful for grouping on white backgrounds.
+
+```tsx
+<Card variant="filled">
+  <CardBody>Filled card content.</CardBody>
+</Card>
+```
+
+## Accessibility
+
+- Static cards render as `<div>` elements with no interactive role.
+- Interactive cards (`isInteractive`) receive `role="button"`, `tabIndex={0}`, and keyboard activation via `Enter` and `Space`.
+- When interactive, the card supports `onPress` via React Aria `useButton`.
+- `CardHeader` content can be linked to the card via `aria-labelledby` for interactive cards.
+- Focus ring is visible on interactive cards when navigating with the keyboard.
+- Colour contrast meets **WCAG 2.2 AA** standards across all variants and themes.
+
+## Related
+
+- [Table](/docs/components/core/table) — For structured, tabular data layouts.
+- [SourceCard](/docs/components/agent/source-card) — Agent-specific card for displaying source citations.

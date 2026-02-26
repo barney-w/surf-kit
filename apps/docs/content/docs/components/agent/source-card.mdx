@@ -1,0 +1,133 @@
+---
+title: SourceCard
+description: A citation card that displays the origin of an AI agent response, including title, URL, and relevance score.
+---
+
+# SourceCard
+
+A compact card component for displaying source citations alongside AI agent responses. Shows the source title, URL, and an optional relevance score to help users verify information.
+
+## Import
+
+```tsx
+import { SourceCard } from '@surf-kit/agent';
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `title` | `string` | — | Title of the source document or page. |
+| `url` | `string` | — | URL of the source. |
+| `snippet` | `string` | — | Short excerpt from the source. |
+| `relevance` | `number` | — | Relevance score from 0 to 1. |
+| `favicon` | `string` | — | URL of the source site favicon. |
+| `index` | `number` | — | Citation number for numbered references. |
+| `isCompact` | `boolean` | `false` | Whether to show a condensed version. |
+| `onPress` | `() => void` | — | Handler called when the card is clicked. |
+| `className` | `string` | — | Additional CSS classes. |
+
+## Usage
+
+### Basic
+
+```tsx
+<SourceCard
+  title="Planning Application Guidelines"
+  url="https://council.gov/planning/guidelines"
+  snippet="All planning applications must include a site plan drawn to scale…"
+/>
+```
+
+### With relevance score
+
+```tsx
+<SourceCard
+  title="Council Tax Bands Explained"
+  url="https://council.gov/council-tax/bands"
+  snippet="Council tax bands are based on property valuations…"
+  relevance={0.92}
+  index={1}
+/>
+```
+
+### Compact mode
+
+```tsx
+<SourceCard
+  title="FAQ: Waste Collection"
+  url="https://council.gov/waste/faq"
+  isCompact
+  index={2}
+/>
+```
+
+### Multiple sources
+
+```tsx
+<div className="flex flex-col gap-2">
+  <SourceCard
+    title="Housing Benefit Eligibility"
+    url="https://council.gov/benefits/housing"
+    relevance={0.95}
+    index={1}
+  />
+  <SourceCard
+    title="Universal Credit and Housing"
+    url="https://gov.uk/universal-credit"
+    relevance={0.78}
+    index={2}
+  />
+</div>
+```
+
+## Variants showcase
+
+### Default
+
+Full card with title, snippet, and URL. Shows the favicon when available.
+
+```tsx
+<SourceCard
+  title="Recycling Guide"
+  url="https://council.gov/recycling"
+  snippet="Learn what goes in each bin and collection schedules."
+  favicon="https://council.gov/favicon.ico"
+/>
+```
+
+### With relevance badge
+
+When `relevance` is provided, a colour-coded badge appears showing the relevance percentage.
+
+```tsx
+<SourceCard
+  title="Parking Permits"
+  url="https://council.gov/parking/permits"
+  relevance={0.85}
+  index={1}
+/>
+```
+
+### Compact
+
+A single-line reference, suitable for inline citations.
+
+```tsx
+<SourceCard title="Source document" url="https://example.com" isCompact index={3} />
+```
+
+## Accessibility
+
+- The card is rendered as an `<a>` element when `url` is provided, making it natively focusable and navigable.
+- `aria-label` includes the source title and citation index (e.g., "Source 1: Planning Application Guidelines").
+- The relevance score is announced as a percentage (e.g., "92% relevant").
+- External links include `rel="noopener noreferrer"` and an external link icon with `aria-hidden="true"`.
+- Focus ring is visible when navigating with the keyboard.
+- Colour contrast meets **WCAG 2.2 AA** standards.
+
+## Related
+
+- [AgentChat](/docs/components/agent/agent-chat) — The chat interface that displays source cards.
+- [Source Attribution Pattern](/docs/patterns/source-attribution) — Detailed guide on attribution approaches.
+- [Card](/docs/components/core/card) — The base card component.

@@ -123,6 +123,23 @@ export type { RetrievalProgressProps } from './streaming/RetrievalProgress'
 export { VerificationProgress } from './streaming/VerificationProgress'
 export type { VerificationProgressProps } from './streaming/VerificationProgress'
 
+// Conversation Components
+export { ConversationList } from './chat/ConversationList'
+export type { ConversationListProps } from './chat/ConversationList'
+
+// Layout Components
+export { AgentFullPage } from './layouts/AgentFullPage'
+export type { AgentFullPageProps } from './layouts/AgentFullPage'
+
+export { AgentPanel } from './layouts/AgentPanel'
+export type { AgentPanelProps } from './layouts/AgentPanel'
+
+export { AgentWidget } from './layouts/AgentWidget'
+export type { AgentWidgetProps } from './layouts/AgentWidget'
+
+export { AgentEmbed } from './layouts/AgentEmbed'
+export type { AgentEmbedProps } from './layouts/AgentEmbed'
+
 // Feedback Components
 export { ThumbsFeedback } from './feedback/ThumbsFeedback'
 export type { ThumbsFeedbackProps, FeedbackRating } from './feedback/ThumbsFeedback'

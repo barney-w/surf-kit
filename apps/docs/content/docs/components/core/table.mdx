@@ -1,0 +1,169 @@
+---
+title: Table
+description: A data table component with sorting, row selection, and responsive layout.
+---
+
+# Table
+
+A structured data table for displaying tabular information. Supports column sorting, row selection, and responsive stacking on small screens.
+
+## Import
+
+```tsx
+import { Table, TableHeader, TableBody, TableRow, TableCell, TableColumn } from '@surf-kit/core';
+```
+
+## Props
+
+### Table (root)
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `aria-label` | `string` | — | Accessible label for the table. |
+| `selectionMode` | `'none' \| 'single' \| 'multiple'` | `'none'` | Row selection mode. |
+| `selectedKeys` | `Set<string>` | — | Controlled set of selected row keys. |
+| `onSelectionChange` | `(keys: Set<string>) => void` | — | Handler called when selection changes. |
+| `sortDescriptor` | `{ column: string; direction: 'ascending' \| 'descending' }` | — | Current sort state. |
+| `onSortChange` | `(descriptor: SortDescriptor) => void` | — | Handler called when a column header is clicked for sorting. |
+| `className` | `string` | — | Additional CSS classes. |
+
+### TableColumn
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `id` | `string` | — | Unique column identifier. |
+| `allowsSorting` | `boolean` | `false` | Whether the column is sortable. |
+| `children` | `ReactNode` | — | Column header content. |
+
+### TableRow
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `id` | `string` | — | Unique row identifier. |
+| `children` | `ReactNode` | — | Row cells. |
+
+### TableCell
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `children` | `ReactNode` | — | Cell content. |
+
+## Usage
+
+### Basic
+
+```tsx
+<Table aria-label="Users">
+  <TableHeader>
+    <TableColumn id="name">Name</TableColumn>
+    <TableColumn id="email">Email</TableColumn>
+    <TableColumn id="role">Role</TableColumn>
+  </TableHeader>
+  <TableBody>
+    <TableRow id="1">
+      <TableCell>Jane Smith</TableCell>
+      <TableCell>jane@example.com</TableCell>
+      <TableCell>Admin</TableCell>
+    </TableRow>
+    <TableRow id="2">
+      <TableCell>Alex Johnson</TableCell>
+      <TableCell>alex@example.com</TableCell>
+      <TableCell>Editor</TableCell>
+    </TableRow>
+  </TableBody>
+</Table>
+```
+
+### With sorting
+
+```tsx
+function SortableTable() {
+  const [sort, setSort] = React.useState({
+    column: 'name',
+    direction: 'ascending' as const,
+  });
+
+  return (
+    <Table
+      aria-label="Sortable users"
+      sortDescriptor={sort}
+      onSortChange={setSort}
+    >
+      <TableHeader>
+        <TableColumn id="name" allowsSorting>Name</TableColumn>
+        <TableColumn id="email" allowsSorting>Email</TableColumn>
+        <TableColumn id="role">Role</TableColumn>
+      </TableHeader>
+      <TableBody>
+        <TableRow id="1">
+          <TableCell>Jane Smith</TableCell>
+          <TableCell>jane@example.com</TableCell>
+          <TableCell>Admin</TableCell>
+        </TableRow>
+      </TableBody>
+    </Table>
+  );
+}
+```
+
+### With row selection
+
+```tsx
+<Table
+  aria-label="Selectable users"
+  selectionMode="multiple"
+  onSelectionChange={(keys) => console.log('Selected:', keys)}
+>
+  <TableHeader>
+    <TableColumn id="name">Name</TableColumn>
+    <TableColumn id="status">Status</TableColumn>
+  </TableHeader>
+  <TableBody>
+    <TableRow id="1">
+      <TableCell>Jane Smith</TableCell>
+      <TableCell><Badge intent="success">Active</Badge></TableCell>
+    </TableRow>
+    <TableRow id="2">
+      <TableCell>Alex Johnson</TableCell>
+      <TableCell><Badge intent="warning">Pending</Badge></TableCell>
+    </TableRow>
+  </TableBody>
+</Table>
+```
+
+## Variants showcase
+
+### Striped rows
+
+Apply alternating row backgrounds for improved readability.
+
+```tsx
+<Table aria-label="Striped table" className="table-striped">
+  {/* ... */}
+</Table>
+```
+
+### Compact
+
+Use smaller padding for dense data displays.
+
+```tsx
+<Table aria-label="Compact table" className="table-compact">
+  {/* ... */}
+</Table>
+```
+
+## Accessibility
+
+- Built on **React Aria** `useTable` for full WAI-ARIA grid pattern compliance.
+- Arrow keys navigate between cells; `Enter` activates sortable column headers.
+- `aria-sort` is applied to sorted column headers (`ascending` or `descending`).
+- Row selection is announced via `aria-selected`.
+- The `aria-label` prop on `Table` provides an accessible name for the entire table.
+- Checkboxes for multi-select include accessible labels.
+- Colour contrast meets **WCAG 2.2 AA** standards.
+
+## Related
+
+- [Card](/docs/components/core/card) — For less structured data presentation.
+- [Badge](/docs/components/core/badge) — Combine with table cells for status indicators.

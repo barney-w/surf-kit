@@ -1,11 +1,14 @@
 import React, { useState } from 'react'
 import { ThemeProvider } from '@surf-kit/theme'
 import { FullPageDemo } from './demos/full-page/FullPageDemo'
+import { LayoutDemos } from './demos/layouts/LayoutDemos'
 
 type ColorMode = 'light' | 'dark'
+type DemoView = 'full-page' | 'layouts'
 
 export function App() {
   const [colorMode, setColorMode] = useState<ColorMode>('light')
+  const [view, setView] = useState<DemoView>('full-page')
 
   const toggleTheme = () => {
     setColorMode((prev) => (prev === 'light' ? 'dark' : 'light'))
@@ -44,26 +47,45 @@ export function App() {
             <span style={{ fontSize: 20 }}>🏄</span>
             <h1 style={{ fontSize: 16, fontWeight: 700 }}>Surf Kit Playground</h1>
           </div>
-          <button
-            onClick={toggleTheme}
-            style={{
-              padding: '6px 14px',
-              borderRadius: 8,
-              border: '1px solid var(--border-color, #e5e7eb)',
-              background: 'transparent',
-              cursor: 'pointer',
-              fontSize: 14,
-              color: 'inherit',
-            }}
-            aria-label={`Switch to ${colorMode === 'light' ? 'dark' : 'light'} mode`}
-          >
-            {colorMode === 'light' ? '🌙 Dark' : '☀️ Light'}
-          </button>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <select
+              value={view}
+              onChange={(e) => setView(e.target.value as DemoView)}
+              style={{
+                padding: '6px 14px',
+                borderRadius: 8,
+                border: '1px solid var(--border-color, #e5e7eb)',
+                background: 'transparent',
+                cursor: 'pointer',
+                fontSize: 14,
+                color: 'inherit',
+              }}
+              aria-label="Select demo view"
+            >
+              <option value="full-page">Full Page Chat</option>
+              <option value="layouts">Layout Components</option>
+            </select>
+            <button
+              onClick={toggleTheme}
+              style={{
+                padding: '6px 14px',
+                borderRadius: 8,
+                border: '1px solid var(--border-color, #e5e7eb)',
+                background: 'transparent',
+                cursor: 'pointer',
+                fontSize: 14,
+                color: 'inherit',
+              }}
+              aria-label={`Switch to ${colorMode === 'light' ? 'dark' : 'light'} mode`}
+            >
+              {colorMode === 'light' ? '🌙 Dark' : '☀️ Light'}
+            </button>
+          </div>
         </header>
 
         {/* Main content */}
         <main style={{ flex: 1, overflow: 'hidden' }}>
-          <FullPageDemo />
+          {view === 'full-page' ? <FullPageDemo /> : <LayoutDemos />}
         </main>
       </div>
 

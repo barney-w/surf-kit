@@ -1,0 +1,130 @@
+---
+title: Token Architecture
+description: Understanding the layered token architecture that powers surf-kit theming.
+---
+
+# Token Architecture
+
+surf-kit uses a layered design token system that maps abstract values to CSS custom properties. This architecture enables theming, dark mode, and council-specific branding without changing component code.
+
+## Token layers
+
+```
+Global tokens  →  Semantic tokens  →  Component tokens
+(raw values)      (purpose-based)     (component-specific)
+```
+
+### Global tokens
+
+Raw design values that define the visual language. These are not used directly in components.
+
+```css
+--color-blue-600: #2563eb;
+--color-gray-100: #f3f4f6;
+--spacing-4: 1rem;
+--radius-md: 0.375rem;
+--font-size-base: 1rem;
+```
+
+### Semantic tokens
+
+Purpose-based tokens that map to global tokens. These are what components reference.
+
+```css
+--color-accent: var(--color-blue-600);
+--color-surface: var(--color-white);
+--color-text-primary: var(--color-gray-900);
+--color-text-secondary: var(--color-gray-600);
+--color-border: var(--color-gray-200);
+--color-status-success: var(--color-green-600);
+--color-status-warning: var(--color-amber-600);
+--color-status-error: var(--color-red-600);
+```
+
+### Component tokens
+
+Specific overrides for individual components, built on semantic tokens.
+
+```css
+--button-bg: var(--color-accent);
+--button-text: var(--color-white);
+--button-radius: var(--radius-md);
+--input-border: var(--color-border);
+--input-focus-ring: var(--color-accent);
+```
+
+## How theming works
+
+The `ThemeProvider` applies a set of CSS custom properties to the document root. Switching themes changes the semantic token values, which cascade through to component tokens.
+
+```tsx
+import { ThemeProvider } from '@surf-kit/theme';
+
+// The provider sets CSS variables on <html>
+<ThemeProvider defaultTheme="light">
+  {children}
+</ThemeProvider>
+```
+
+### Light mode
+
+```css
+:root {
+  --color-surface: #ffffff;
+  --color-text-primary: #111827;
+  --color-accent: #2563eb;
+}
+```
+
+### Dark mode
+
+```css
+:root.dark {
+  --color-surface: #0f172a;
+  --color-text-primary: #f8fafc;
+  --color-accent: #60a5fa;
+}
+```
+
+## Token categories
+
+| Category | Examples | Usage |
+| --- | --- | --- |
+| Colour | `--color-accent`, `--color-surface` | Backgrounds, text, borders |
+| Typography | `--font-size-base`, `--font-weight-bold` | Text sizing and weight |
+| Spacing | `--spacing-1` through `--spacing-16` | Padding, margin, gaps |
+| Radius | `--radius-sm`, `--radius-md`, `--radius-lg` | Border radius |
+| Shadow | `--shadow-sm`, `--shadow-md` | Box shadows |
+| Motion | `--duration-fast`, `--duration-normal` | Animation timing |
+
+## Tailwind integration
+
+The `surfKitPreset` registers all tokens as Tailwind utilities:
+
+```tsx
+// Use tokens via Tailwind classes
+<div className="bg-surface text-text-primary p-spacing-4 rounded-radius-md">
+  Content
+</div>
+```
+
+## Accessing tokens in code
+
+```tsx
+// Via CSS custom properties
+const styles = {
+  backgroundColor: 'var(--color-accent)',
+  padding: 'var(--spacing-4)',
+};
+
+// Via the tokens object
+import { tokens } from '@surf-kit/tokens';
+
+console.log(tokens.color.accent); // 'var(--color-accent)'
+```
+
+## Related
+
+- [Creating Themes](/docs/theming/creating-themes) — Build custom themes with `createTheme`.
+- [Custom Branding](/docs/theming/custom-branding) — Quick branding guide for council deployments.
+- [Design Tokens](/docs/tokens) — Full token reference.

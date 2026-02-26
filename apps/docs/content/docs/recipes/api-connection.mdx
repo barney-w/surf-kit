@@ -1,0 +1,339 @@
+---
+title: API Connection
+description: Connecting the surf-kit agent interface to various LLM backends and APIs.
+---
+
+# API Connection
+
+This recipe covers how to connect the surf-kit chat interface to different LLM backends. The `useAgentStream` hook expects a Server-Sent Events endpoint that follows a simple protocol.
+
+## Protocol overview
+
+The SSE endpoint receives a POST request and returns a stream of JSON events:
+
+```
+data: {"phase": "thinking"}
+
+data: {"phase": "writing", "content": "The "}
+data: {"phase": "writing", "content": "council "}
+data: {"phase": "writing", "content": "tax "}
+
+data: {"phase": "citing", "sources": [...]}
+data: {"phase": "complete", "confidence": 0.87}
+```
+
+## OpenAI-compatible APIs
+
+### API route
+
+```tsx title="app/api/agent/route.ts"
+import { NextRequest } from 'next/server';
+import OpenAI from 'openai';
+
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+});
+
+const SYSTEM_PROMPT = `You are a helpful council assistant. Answer questions about local digital services accurately and cite your sources when possible.`;
+
+export async function POST(request: NextRequest) {
+  const { message, history } = await request.json();
+
+  const encoder = new TextEncoder();
+  const stream = new ReadableStream({
+    async start(controller) {
+      controller.enqueue(
+        encoder.encode(`data: ${JSON.stringify({ phase: 'thinking' })}\n\n`)
+      );
+
+      const completion = await openai.chat.completions.create({
+        model: 'gpt-4o',
+        messages: [
+          { role: 'system', content: SYSTEM_PROMPT },
+          ...history,
+          { role: 'user', content: message },
+        ],
+        stream: true,
+      });
+
+      for await (const chunk of completion) {
+        const content = chunk.choices[0]?.delta?.content;
+        if (content) {
+          controller.enqueue(
+            encoder.encode(
+              `data: ${JSON.stringify({ phase: 'writing', content })}\n\n`
+            )
+          );
+        }
+      }
+
+      controller.enqueue(
+        encoder.encode(
+          `data: ${JSON.stringify({ phase: 'complete' })}\n\n`
+        )
+      );
+
+      controller.close();
+    },
+  });
+
+  return new Response(stream, {
+    headers: {
+      'Content-Type': 'text/event-stream',
+      'Cache-Control': 'no-cache',
+    },
+  });
+}
+```
+
+## Anthropic Claude
+
+```tsx title="app/api/agent/route.ts"
+import Anthropic from '@anthropic-ai/sdk';
+
+const anthropic = new Anthropic({
+  apiKey: process.env.ANTHROPIC_API_KEY,
+});
+
+export async function POST(request: NextRequest) {
+  const { message, history } = await request.json();
+
+  const encoder = new TextEncoder();
+  const stream = new ReadableStream({
+    async start(controller) {
+      controller.enqueue(
+        encoder.encode(`data: ${JSON.stringify({ phase: 'thinking' })}\n\n`)
+      );
+
+      const response = await anthropic.messages.stream({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 2048,
+        system: 'You are a helpful council assistant.',
+        messages: [
+          ...history,
+          { role: 'user', content: message },
+        ],
+      });
+
+      for await (const event of response) {
+        if (
+          event.type === 'content_block_delta' &&
+          event.delta.type === 'text_delta'
+        ) {
+          controller.enqueue(
+            encoder.encode(
+              `data: ${JSON.stringify({
+                phase: 'writing',
+                content: event.delta.text,
+              })}\n\n`
+            )
+          );
+        }
+      }
+
+      controller.enqueue(
+        encoder.encode(
+          `data: ${JSON.stringify({ phase: 'complete' })}\n\n`
+        )
+      );
+
+      controller.close();
+    },
+  });
+
+  return new Response(stream, {
+    headers: {
+      'Content-Type': 'text/event-stream',
+      'Cache-Control': 'no-cache',
+    },
+  });
+}
+```
+
+## RAG (Retrieval-Augmented Generation)
+
+For responses with source citations, add a retrieval step:
+
+```tsx title="app/api/agent/route.ts"
+import { searchDocuments } from '@/lib/vector-store';
+
+export async function POST(request: NextRequest) {
+  const { message } = await request.json();
+
+  const encoder = new TextEncoder();
+  const stream = new ReadableStream({
+    async start(controller) {
+      // Phase 1: Thinking — retrieve relevant documents
+      controller.enqueue(
+        encoder.encode(`data: ${JSON.stringify({ phase: 'thinking' })}\n\n`)
+      );
+
+      const documents = await searchDocuments(message, { topK: 5 });
+
+      // Phase 2: Writing — generate response with context
+      const context = documents
+        .map((doc) => `[${doc.title}]: ${doc.content}`)
+        .join('\n\n');
+
+      const completion = await openai.chat.completions.create({
+        model: 'gpt-4o',
+        messages: [
+          {
+            role: 'system',
+            content: `Answer the user's question using the following context. Cite sources using [1], [2] etc.\n\n${context}`,
+          },
+          { role: 'user', content: message },
+        ],
+        stream: true,
+      });
+
+      for await (const chunk of completion) {
+        const content = chunk.choices[0]?.delta?.content;
+        if (content) {
+          controller.enqueue(
+            encoder.encode(
+              `data: ${JSON.stringify({ phase: 'writing', content })}\n\n`
+            )
+          );
+        }
+      }
+
+      // Phase 3: Citing — send source metadata
+      const sources = documents.map((doc, i) => ({
+        title: doc.title,
+        url: doc.url,
+        snippet: doc.content.slice(0, 200),
+        relevance: doc.score,
+        index: i + 1,
+      }));
+
+      controller.enqueue(
+        encoder.encode(
+          `data: ${JSON.stringify({ phase: 'citing', sources })}\n\n`
+        )
+      );
+
+      // Phase 4: Complete
+      controller.enqueue(
+        encoder.encode(
+          `data: ${JSON.stringify({ phase: 'complete', confidence: documents[0]?.score ?? 0.5 })}\n\n`
+        )
+      );
+
+      controller.close();
+    },
+  });
+
+  return new Response(stream, {
+    headers: {
+      'Content-Type': 'text/event-stream',
+      'Cache-Control': 'no-cache',
+    },
+  });
+}
+```
+
+## Custom backend
+
+If you have an existing API that does not use SSE, wrap it in an adapter:
+
+```tsx title="app/api/agent/route.ts"
+export async function POST(request: NextRequest) {
+  const { message } = await request.json();
+
+  const encoder = new TextEncoder();
+  const stream = new ReadableStream({
+    async start(controller) {
+      controller.enqueue(
+        encoder.encode(`data: ${JSON.stringify({ phase: 'thinking' })}\n\n`)
+      );
+
+      // Call your existing non-streaming API
+      const response = await fetch(process.env.BACKEND_API_URL!, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query: message }),
+      });
+
+      const data = await response.json();
+
+      // Simulate streaming by sending the full response at once
+      controller.enqueue(
+        encoder.encode(
+          `data: ${JSON.stringify({
+            phase: 'writing',
+            content: data.answer,
+          })}\n\n`
+        )
+      );
+
+      if (data.sources) {
+        controller.enqueue(
+          encoder.encode(
+            `data: ${JSON.stringify({
+              phase: 'citing',
+              sources: data.sources,
+            })}\n\n`
+          )
+        );
+      }
+
+      controller.enqueue(
+        encoder.encode(
+          `data: ${JSON.stringify({
+            phase: 'complete',
+            confidence: data.confidence,
+          })}\n\n`
+        )
+      );
+
+      controller.close();
+    },
+  });
+
+  return new Response(stream, {
+    headers: {
+      'Content-Type': 'text/event-stream',
+      'Cache-Control': 'no-cache',
+    },
+  });
+}
+```
+
+## Error handling in API routes
+
+```tsx
+export async function POST(request: NextRequest) {
+  try {
+    const { message } = await request.json();
+
+    if (!message || typeof message !== 'string') {
+      return Response.json(
+        { error: 'Message is required' },
+        { status: 400 }
+      );
+    }
+
+    if (message.length > 5000) {
+      return Response.json(
+        { error: 'Message is too long (maximum 5000 characters)' },
+        { status: 400 }
+      );
+    }
+
+    // ... streaming logic
+  } catch (error) {
+    console.error('Agent API error:', error);
+    return Response.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
+  }
+}
+```
+
+## Related
+
+- [Next.js Integration](/docs/recipes/nextjs-integration) — Full Next.js setup.
+- [Streaming Pattern](/docs/patterns/streaming) — Client-side streaming implementation.
+- [Error Handling](/docs/patterns/error-handling) — Handling API errors gracefully.

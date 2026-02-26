@@ -1,0 +1,103 @@
+---
+title: ConfidenceBadge
+description: A visual indicator showing the confidence level of an AI agent response.
+---
+
+# ConfidenceBadge
+
+Displays a confidence score as a colour-coded badge. Helps users understand how certain the AI agent is about its response, supporting transparency and trust.
+
+## Import
+
+```tsx
+import { ConfidenceBadge } from '@surf-kit/agent';
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `score` | `number` | — | Confidence score from 0 to 1. |
+| `showLabel` | `boolean` | `true` | Whether to show a text label alongside the indicator. |
+| `showPercentage` | `boolean` | `false` | Whether to show the numeric percentage. |
+| `size` | `'sm' \| 'md'` | `'md'` | Size of the badge. |
+| `variant` | `'badge' \| 'bar' \| 'dot'` | `'badge'` | Visual presentation style. |
+| `thresholds` | `{ low: number; medium: number }` | `{ low: 0.4, medium: 0.7 }` | Score thresholds for colour mapping. |
+| `className` | `string` | — | Additional CSS classes. |
+
+## Usage
+
+### Basic
+
+```tsx
+<ConfidenceBadge score={0.85} />
+```
+
+### With percentage
+
+```tsx
+<ConfidenceBadge score={0.92} showPercentage />
+```
+
+### Different confidence levels
+
+```tsx
+<ConfidenceBadge score={0.95} /> {/* High — green */}
+<ConfidenceBadge score={0.65} /> {/* Medium — amber */}
+<ConfidenceBadge score={0.25} /> {/* Low — red */}
+```
+
+### Custom thresholds
+
+```tsx
+<ConfidenceBadge
+  score={0.6}
+  thresholds={{ low: 0.5, medium: 0.8 }}
+/>
+```
+
+### Without label
+
+```tsx
+<ConfidenceBadge score={0.75} showLabel={false} showPercentage />
+```
+
+## Variants showcase
+
+### Badge (default)
+
+A compact badge with background colour and text label.
+
+```tsx
+<ConfidenceBadge variant="badge" score={0.88} />
+```
+
+### Bar
+
+A horizontal progress bar showing the confidence level.
+
+```tsx
+<ConfidenceBadge variant="bar" score={0.72} />
+```
+
+### Dot
+
+A minimal coloured dot indicator, suitable for inline use.
+
+```tsx
+<ConfidenceBadge variant="dot" score={0.45} />
+```
+
+## Accessibility
+
+- The badge includes `aria-label` with the confidence level (e.g., "High confidence: 85%").
+- Colour is supplemented by a text label (`High`, `Medium`, `Low`) — colour is never the sole indicator.
+- The bar variant includes `role="meter"`, `aria-valuenow`, `aria-valuemin`, and `aria-valuemax`.
+- Custom thresholds are reflected in the accessible label.
+- Colour contrast meets **WCAG 2.2 AA** standards across all confidence levels.
+
+## Related
+
+- [Badge](/docs/components/core/badge) — The base badge component.
+- [Confidence Display Pattern](/docs/patterns/confidence-display) — Detailed guide on presenting confidence information.
+- [AgentChat](/docs/components/agent/agent-chat) — The chat interface that can display confidence scores.

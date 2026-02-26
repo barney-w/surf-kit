@@ -1,4 +1,4 @@
 {
   "title": "Documentation",
-  "pages": ["getting-started", "design-principles", "tokens", "components"]
+  "pages": ["getting-started", "design-principles", "tokens", "components", "patterns", "theming", "recipes"]
 }

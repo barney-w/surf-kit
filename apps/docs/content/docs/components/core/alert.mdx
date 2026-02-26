@@ -1,0 +1,125 @@
+---
+title: Alert
+description: A prominent message banner for informational, success, warning, and error states.
+---
+
+# Alert
+
+A banner component for displaying important messages to the user. Alerts can be dismissible and support multiple semantic intents.
+
+## Import
+
+```tsx
+import { Alert } from '@surf-kit/core';
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `intent` | `'info' \| 'success' \| 'warning' \| 'error'` | `'info'` | Semantic intent controlling colour and icon. |
+| `title` | `string` | — | Optional bold heading for the alert. |
+| `isDismissible` | `boolean` | `false` | Whether a close button is shown. |
+| `onDismiss` | `() => void` | — | Handler called when the alert is dismissed. |
+| `className` | `string` | — | Additional CSS classes. |
+| `children` | `ReactNode` | — | Alert body content. |
+
+## Usage
+
+### Basic
+
+```tsx
+<Alert>This is an informational message.</Alert>
+```
+
+### With title
+
+```tsx
+<Alert intent="success" title="Submission received">
+  Your form has been submitted successfully.
+</Alert>
+```
+
+### Warning
+
+```tsx
+<Alert intent="warning" title="Rate limit approaching">
+  You have used 90% of your API quota for this billing period.
+</Alert>
+```
+
+### Error
+
+```tsx
+<Alert intent="error" title="Connection failed">
+  Unable to reach the server. Please check your network connection and try again.
+</Alert>
+```
+
+### Dismissible
+
+```tsx
+function Example() {
+  const [visible, setVisible] = React.useState(true);
+
+  if (!visible) return null;
+
+  return (
+    <Alert
+      intent="info"
+      isDismissible
+      onDismiss={() => setVisible(false)}
+    >
+      You can dismiss this message.
+    </Alert>
+  );
+}
+```
+
+## Variants showcase
+
+### Info (default)
+
+Blue-tinted background with an information icon.
+
+```tsx
+<Alert intent="info">A new version is available.</Alert>
+```
+
+### Success
+
+Green-tinted background with a checkmark icon.
+
+```tsx
+<Alert intent="success">Changes saved successfully.</Alert>
+```
+
+### Warning
+
+Amber-tinted background with a warning icon.
+
+```tsx
+<Alert intent="warning">This action cannot be undone.</Alert>
+```
+
+### Error
+
+Red-tinted background with an error icon.
+
+```tsx
+<Alert intent="error">Failed to load data.</Alert>
+```
+
+## Accessibility
+
+- Renders with `role="alert"` for error and warning intents, causing screen readers to announce the content immediately.
+- Info and success alerts use `role="status"` for polite announcements.
+- The dismiss button includes `aria-label="Dismiss alert"`.
+- Colour is supported by an icon and text; colour is never the sole indicator.
+- Focus is managed when alerts are dismissed — focus returns to the triggering element.
+- Colour contrast meets **WCAG 2.2 AA** standards across all intents and themes.
+
+## Related
+
+- [Toast](/docs/components/core/badge) — For transient notifications that auto-dismiss.
+- [Error Handling](/docs/patterns/error-handling) — Patterns for handling network errors and retries.

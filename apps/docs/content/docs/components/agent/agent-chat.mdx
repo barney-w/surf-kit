@@ -1,0 +1,151 @@
+---
+title: AgentChat
+description: A full-featured chat interface for conversing with AI agents, with message history, input, and streaming support.
+---
+
+# AgentChat
+
+The primary chat interface component for AI agent interactions. It combines a message list, user input area, and streaming message support into a cohesive conversation experience.
+
+## Import
+
+```tsx
+import { AgentChat } from '@surf-kit/agent';
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `agentName` | `string` | `'Assistant'` | Display name of the AI agent. |
+| `agentAvatar` | `string` | — | URL for the agent avatar image. |
+| `messages` | `Message[]` | `[]` | Array of message objects to display. |
+| `onSendMessage` | `(content: string) => void` | — | Handler called when the user sends a message. |
+| `isStreaming` | `boolean` | `false` | Whether the agent is currently generating a response. |
+| `streamingContent` | `string` | — | Partial content being streamed from the agent. |
+| `placeholder` | `string` | `'Type a message…'` | Placeholder text for the input field. |
+| `showSources` | `boolean` | `true` | Whether to display source citations on agent messages. |
+| `layout` | `'full-page' \| 'panel' \| 'widget'` | `'full-page'` | Layout mode of the chat interface. |
+| `theme` | `AgentTheme` | — | Custom theme overrides for agent branding. |
+| `className` | `string` | — | Additional CSS classes. |
+
+### Message type
+
+```tsx
+interface Message {
+  id: string;
+  role: 'user' | 'agent';
+  content: string;
+  timestamp: Date;
+  sources?: Source[];
+  confidence?: number;
+}
+```
+
+## Usage
+
+### Basic
+
+```tsx
+function ChatPage() {
+  const [messages, setMessages] = React.useState<Message[]>([]);
+
+  const handleSend = (content: string) => {
+    setMessages((prev) => [
+      ...prev,
+      { id: crypto.randomUUID(), role: 'user', content, timestamp: new Date() },
+    ]);
+    // Send to your API and handle the agent response
+  };
+
+  return (
+    <AgentChat
+      agentName="Council Assistant"
+      messages={messages}
+      onSendMessage={handleSend}
+    />
+  );
+}
+```
+
+### Panel layout
+
+```tsx
+<AgentChat
+  layout="panel"
+  agentName="Help Bot"
+  messages={messages}
+  onSendMessage={handleSend}
+/>
+```
+
+### Widget layout
+
+A compact, floating chat widget for embedding in existing pages.
+
+```tsx
+<AgentChat
+  layout="widget"
+  agentName="Quick Help"
+  messages={messages}
+  onSendMessage={handleSend}
+  placeholder="Ask a quick question…"
+/>
+```
+
+### With streaming
+
+```tsx
+<AgentChat
+  agentName="Planning Assistant"
+  messages={messages}
+  onSendMessage={handleSend}
+  isStreaming={isStreaming}
+  streamingContent={partialResponse}
+/>
+```
+
+## Variants showcase
+
+### Full-page
+
+Takes the full viewport height. Suitable for dedicated chat pages.
+
+```tsx
+<AgentChat layout="full-page" agentName="Assistant" messages={messages} onSendMessage={handleSend} />
+```
+
+### Panel
+
+A contained panel, typically in a sidebar or split view. Has a fixed height and scrollable message area.
+
+```tsx
+<div className="h-[600px]">
+  <AgentChat layout="panel" agentName="Assistant" messages={messages} onSendMessage={handleSend} />
+</div>
+```
+
+### Widget
+
+A small, floating chat window. Includes a header bar with the agent name and a minimise button.
+
+```tsx
+<AgentChat layout="widget" agentName="Assistant" messages={messages} onSendMessage={handleSend} />
+```
+
+## Accessibility
+
+- The message list has `role="log"` with `aria-live="polite"` so new messages are announced.
+- The input field has an associated label (visually hidden if not provided).
+- Keyboard shortcut: `Enter` sends the message; `Shift+Enter` inserts a new line.
+- Agent messages include `aria-label` with the agent name and timestamp.
+- Source citations within messages are focusable links.
+- The widget layout includes a button to minimise/maximise that is keyboard accessible.
+- Focus is managed when new messages arrive — focus stays in the input field unless the user has scrolled up.
+- Colour contrast meets **WCAG 2.2 AA** standards across all layouts and themes.
+
+## Related
+
+- [StreamingMessage](/docs/components/agent/streaming-message) — The streaming message renderer used internally.
+- [SourceCard](/docs/components/agent/source-card) — Used to display source citations.
+- [Agent Chat Pattern](/docs/patterns/agent-chat) — Full-page, panel, and widget integration guides.

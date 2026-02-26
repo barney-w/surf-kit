@@ -1,0 +1,91 @@
+---
+title: Spinner
+description: An animated loading indicator for asynchronous operations.
+---
+
+# Spinner
+
+An animated circular spinner that communicates loading or processing state. Use it inline, inside buttons, or as a full-page overlay.
+
+## Import
+
+```tsx
+import { Spinner } from '@surf-kit/core';
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Diameter of the spinner. |
+| `label` | `string` | `'Loading'` | Accessible label announced to screen readers. |
+| `className` | `string` | — | Additional CSS classes. |
+
+## Usage
+
+### Basic
+
+```tsx
+<Spinner />
+```
+
+### With sizes
+
+```tsx
+<Spinner size="sm" />
+<Spinner size="md" />
+<Spinner size="lg" />
+```
+
+### With custom label
+
+```tsx
+<Spinner label="Fetching results…" />
+```
+
+### Inside a button
+
+```tsx
+<Button isDisabled>
+  <Spinner size="sm" label="Saving" /> Saving…
+</Button>
+```
+
+## Variants showcase
+
+### Small
+
+16px spinner, ideal for inline indicators and buttons.
+
+```tsx
+<Spinner size="sm" />
+```
+
+### Medium (default)
+
+24px spinner, suitable for content areas.
+
+```tsx
+<Spinner size="md" />
+```
+
+### Large
+
+40px spinner, used for page-level or section-level loading states.
+
+```tsx
+<Spinner size="lg" />
+```
+
+## Accessibility
+
+- Renders with `role="status"` so screen readers announce the loading state.
+- The `label` prop is applied as `aria-label` for screen reader users.
+- Uses CSS animation rather than JavaScript for smooth performance.
+- Respects `prefers-reduced-motion: reduce` — animation is paused and a static indicator is shown.
+- Colour contrast meets **WCAG 2.2 AA** standards.
+
+## Related
+
+- [StreamingMessage](/docs/components/agent/streaming-message) — Uses a spinner during the initial connection phase.
+- [Button](/docs/components/core/button) — Combine with `Spinner` for loading button states.

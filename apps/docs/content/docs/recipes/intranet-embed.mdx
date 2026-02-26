@@ -1,0 +1,243 @@
+---
+title: Intranet Embed
+description: Embedding the AgentChat widget in existing intranet pages via iframe.
+---
+
+# Intranet Embed
+
+Many organisations have existing intranet systems (SharePoint, Drupal, WordPress) that cannot easily adopt a React framework. This recipe shows how to embed the surf-kit agent as a standalone widget via iframe.
+
+## Architecture
+
+```
+┌──────────────────────────────────┐
+│  Existing Intranet Page          │
+│                                  │
+│  ┌────────────────────────────┐  │
+│  │  iframe                    │  │
+│  │  ┌──────────────────────┐  │  │
+│  │  │  AgentChat (widget)  │  │  │
+│  │  └──────────────────────┘  │  │
+│  └────────────────────────────┘  │
+│                                  │
+└──────────────────────────────────┘
+```
+
+The agent chat runs as a separate Next.js application. The intranet page embeds it via an iframe or a JavaScript snippet.
+
+## Step 1: Create the embed page
+
+```tsx title="app/embed/page.tsx"
+'use client';
+
+import { AgentChat } from '@surf-kit/agent';
+import { ThemeProvider } from '@surf-kit/theme';
+import { useAgentStream } from '@/hooks/useAgentStream';
+
+export default function EmbedPage() {
+  const { messages, sendMessage, isStreaming, streamingContent } =
+    useAgentStream('/api/agent');
+
+  return (
+    <ThemeProvider defaultTheme="light">
+      <AgentChat
+        layout="widget"
+        agentName="Council Assistant"
+        messages={messages}
+        onSendMessage={sendMessage}
+        isStreaming={isStreaming}
+        streamingContent={streamingContent}
+      />
+    </ThemeProvider>
+  );
+}
+```
+
+### Embed page metadata
+
+```tsx title="app/embed/layout.tsx"
+export const metadata = {
+  title: 'Council Assistant Widget',
+  robots: 'noindex', // Do not index the embed page
+};
+
+export default function EmbedLayout({ children }) {
+  return (
+    <html lang="en">
+      <body className="bg-transparent">{children}</body>
+    </html>
+  );
+}
+```
+
+## Step 2: Embed via iframe
+
+### Basic iframe
+
+```html
+<iframe
+  src="https://assistant.council.gov/embed"
+  title="Council Assistant"
+  width="400"
+  height="600"
+  style="border: none; position: fixed; bottom: 16px; right: 16px; z-index: 9999;"
+  allow="clipboard-write"
+></iframe>
+```
+
+### Responsive iframe
+
+```html
+<style>
+  .agent-widget-frame {
+    border: none;
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+    z-index: 9999;
+    width: 400px;
+    height: 600px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgb(0 0 0 / 0.15);
+  }
+
+  @media (max-width: 480px) {
+    .agent-widget-frame {
+      width: calc(100vw - 32px);
+      height: calc(100vh - 32px);
+      bottom: 16px;
+      right: 16px;
+    }
+  }
+</style>
+
+<iframe
+  src="https://assistant.council.gov/embed"
+  title="Council Assistant"
+  class="agent-widget-frame"
+  allow="clipboard-write"
+></iframe>
+```
+
+## Step 3: JavaScript embed snippet
+
+For a more polished integration, provide a JavaScript snippet that intranet admins can paste:
+
+```html title="Embed snippet for intranet admins"
+<script>
+  (function () {
+    var iframe = document.createElement('iframe');
+    iframe.src = 'https://assistant.council.gov/embed';
+    iframe.title = 'Council Assistant';
+    iframe.style.cssText =
+      'border:none;position:fixed;bottom:16px;right:16px;z-index:9999;' +
+      'width:400px;height:600px;border-radius:12px;' +
+      'box-shadow:0 10px 25px rgb(0 0 0/0.15);';
+    iframe.allow = 'clipboard-write';
+    document.body.appendChild(iframe);
+  })();
+</script>
+```
+
+## Step 4: Toggle button
+
+Add a button that shows and hides the widget:
+
+```html title="Embed snippet with toggle"
+<script>
+  (function () {
+    // Create toggle button
+    var btn = document.createElement('button');
+    btn.textContent = 'Chat with us';
+    btn.setAttribute('aria-label', 'Open Council Assistant chat');
+    btn.setAttribute('aria-expanded', 'false');
+    btn.style.cssText =
+      'position:fixed;bottom:16px;right:16px;z-index:10000;' +
+      'background:#1a5c3a;color:#fff;border:none;padding:12px 20px;' +
+      'border-radius:999px;cursor:pointer;font-size:14px;font-weight:600;';
+
+    // Create iframe (hidden initially)
+    var iframe = document.createElement('iframe');
+    iframe.src = 'https://assistant.council.gov/embed';
+    iframe.title = 'Council Assistant';
+    iframe.style.cssText =
+      'border:none;position:fixed;bottom:80px;right:16px;z-index:9999;' +
+      'width:400px;height:600px;border-radius:12px;display:none;' +
+      'box-shadow:0 10px 25px rgb(0 0 0/0.15);';
+    iframe.allow = 'clipboard-write';
+
+    var isOpen = false;
+    btn.addEventListener('click', function () {
+      isOpen = !isOpen;
+      iframe.style.display = isOpen ? 'block' : 'none';
+      btn.textContent = isOpen ? 'Close chat' : 'Chat with us';
+      btn.setAttribute('aria-expanded', String(isOpen));
+    });
+
+    document.body.appendChild(iframe);
+    document.body.appendChild(btn);
+  })();
+</script>
+```
+
+## Cross-origin communication
+
+Use `postMessage` to pass context from the intranet page to the widget:
+
+### Parent page
+
+```js
+// Pass user context to the widget
+var iframe = document.querySelector('iframe[title="Council Assistant"]');
+iframe.contentWindow.postMessage(
+  {
+    type: 'user-context',
+    data: {
+      page: window.location.pathname,
+      department: 'Housing',
+    },
+  },
+  'https://assistant.council.gov'
+);
+```
+
+### Embed page
+
+```tsx title="app/embed/page.tsx"
+React.useEffect(() => {
+  function handleMessage(event: MessageEvent) {
+    // Verify origin
+    if (event.origin !== 'https://intranet.council.gov') return;
+
+    if (event.data.type === 'user-context') {
+      setUserContext(event.data.data);
+    }
+  }
+
+  window.addEventListener('message', handleMessage);
+  return () => window.removeEventListener('message', handleMessage);
+}, []);
+```
+
+## Security considerations
+
+- **CSP frame-ancestors**: Restrict which domains can embed the widget.
+  ```
+  Content-Security-Policy: frame-ancestors 'self' https://intranet.council.gov;
+  ```
+- **Origin validation**: Always validate `event.origin` in `postMessage` handlers.
+- **HTTPS**: Both the intranet and the widget must use HTTPS.
+- **Authentication**: If the intranet requires authentication, pass a session token via `postMessage` (never via URL parameters).
+
+## Accessibility
+
+- The iframe must have a descriptive `title` attribute.
+- The toggle button must have `aria-label` and `aria-expanded`.
+- Keyboard users must be able to Tab into and out of the iframe.
+- The widget itself follows all surf-kit accessibility standards internally.
+
+## Related
+
+- [Agent Chat Pattern](/docs/patterns/agent-chat) — Layout options for the chat interface.
+- [Next.js Integration](/docs/recipes/nextjs-integration) — Full Next.js setup guide.
+- [Custom Branding](/docs/theming/custom-branding) — Match the widget to your organisation brand.

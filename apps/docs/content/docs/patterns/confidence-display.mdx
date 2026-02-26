@@ -1,0 +1,172 @@
+---
+title: Confidence Display
+description: Strategies for presenting AI confidence scores — badge, breakdown, and hidden options.
+---
+
+# Confidence Display
+
+AI agent responses often include a confidence score. How you present this score affects user trust and behaviour. This guide covers three approaches.
+
+## Badge approach
+
+Display a simple colour-coded badge alongside each agent message.
+
+### When to use
+
+- General-purpose chat interfaces
+- When users need a quick trust signal
+- When the confidence model outputs a single score
+
+### Implementation
+
+```tsx
+import { ConfidenceBadge } from '@surf-kit/agent';
+
+function MessageWithBadge({ message }) {
+  return (
+    <div className="flex items-start gap-3">
+      <div className="flex-1">
+        <div className="prose">{message.content}</div>
+      </div>
+      {message.confidence != null && (
+        <ConfidenceBadge score={message.confidence} size="sm" />
+      )}
+    </div>
+  );
+}
+```
+
+### Design considerations
+
+- **High confidence (above 70%)**: Green badge, "High confidence" label. Users can proceed with trust.
+- **Medium confidence (40–70%)**: Amber badge, "Medium confidence" label. Users should verify.
+- **Low confidence (below 40%)**: Red badge, "Low confidence" label. Users should seek alternative sources.
+
+## Breakdown approach
+
+Show a detailed breakdown of confidence by category or source.
+
+### When to use
+
+- Expert users who need detailed information
+- Internal tools for council staff
+- When the model provides per-source confidence scores
+
+### Implementation
+
+```tsx
+import { ConfidenceBadge } from '@surf-kit/agent';
+import { Card, CardBody } from '@surf-kit/core';
+
+interface ConfidenceBreakdown {
+  overall: number;
+  categories: { label: string; score: number }[];
+}
+
+function DetailedConfidence({ breakdown }: { breakdown: ConfidenceBreakdown }) {
+  return (
+    <Card variant="outlined">
+      <CardBody>
+        <div className="flex items-center justify-between mb-3">
+          <span className="text-sm font-medium">Overall confidence</span>
+          <ConfidenceBadge score={breakdown.overall} showPercentage />
+        </div>
+        <div className="space-y-2">
+          {breakdown.categories.map((cat) => (
+            <div key={cat.label} className="flex items-center justify-between">
+              <span className="text-sm text-muted-foreground">{cat.label}</span>
+              <ConfidenceBadge
+                score={cat.score}
+                variant="bar"
+                size="sm"
+                showPercentage
+              />
+            </div>
+          ))}
+        </div>
+      </CardBody>
+    </Card>
+  );
+}
+```
+
+### Example data
+
+```tsx
+const breakdown = {
+  overall: 0.85,
+  categories: [
+    { label: 'Source relevance', score: 0.92 },
+    { label: 'Information freshness', score: 0.78 },
+    { label: 'Answer completeness', score: 0.84 },
+  ],
+};
+```
+
+## Hidden approach
+
+Do not show confidence scores to end users; use them internally for routing and escalation.
+
+### When to use
+
+- Public-facing interfaces where confidence scores might confuse users
+- When the model's confidence calibration is not well-tested
+- When low confidence triggers an automatic handoff to a human
+
+### Implementation
+
+```tsx
+function SmartRouter({ message, confidence }) {
+  // Use confidence internally for routing decisions
+  if (confidence < 0.4) {
+    return <AgentHandoff
+      fromAgent={{ name: 'Assistant' }}
+      toAgent={{ name: 'Customer Service' }}
+      reason="Let me connect you with a team member who can help."
+      status="pending"
+      isHumanEscalation
+    />;
+  }
+
+  if (confidence < 0.7) {
+    return (
+      <div>
+        <div className="prose">{message.content}</div>
+        <Alert intent="info">
+          This information may not be complete. Consider contacting us directly
+          for confirmation.
+        </Alert>
+      </div>
+    );
+  }
+
+  return <div className="prose">{message.content}</div>;
+}
+```
+
+## Choosing an approach
+
+| Approach | Audience | Complexity | Trust signal |
+| --- | --- | --- | --- |
+| Badge | General public | Low | Explicit |
+| Breakdown | Staff/experts | High | Detailed |
+| Hidden | General public | Medium | Implicit |
+
+## Customising thresholds
+
+```tsx
+// Custom thresholds for a more conservative system
+<ConfidenceBadge
+  score={0.6}
+  thresholds={{ low: 0.5, medium: 0.8 }}
+/>
+```
+
+For government use, consider higher thresholds (e.g., `medium: 0.8`) to ensure only well-supported answers are shown as "high confidence".
+
+## Accessibility
+
+- Never rely solely on colour to communicate confidence levels. Always include a text label.
+- The bar variant should use `role="meter"` with appropriate ARIA attributes.
+- Screen readers should announce the confidence level in plain language (e.g., "High confidence, 85%").
+- When confidence triggers routing (hidden approach), ensure the user is informed about what is happening and why.

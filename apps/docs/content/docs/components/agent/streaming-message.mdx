@@ -1,0 +1,156 @@
+---
+title: StreamingMessage
+description: A message component that renders AI agent responses as they stream in, with typing indicators and phase transitions.
+---
+
+# StreamingMessage
+
+Renders AI agent responses incrementally as they are received from the server. Supports multiple phases (thinking, writing, citing sources) and provides a natural streaming experience.
+
+## Import
+
+```tsx
+import { StreamingMessage } from '@surf-kit/agent';
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` | `string` | `''` | The current streamed content to display. |
+| `isStreaming` | `boolean` | `false` | Whether content is still being received. |
+| `phase` | `'connecting' \| 'thinking' \| 'writing' \| 'citing' \| 'complete'` | `'connecting'` | Current phase of the response generation. |
+| `agentName` | `string` | `'Assistant'` | Name of the agent for display. |
+| `agentAvatar` | `string` | — | URL for the agent avatar. |
+| `sources` | `Source[]` | `[]` | Sources to display once the citing phase begins. |
+| `confidence` | `number` | — | Confidence score to display on completion. |
+| `onRetry` | `() => void` | — | Handler for retry action on error. |
+| `error` | `string` | — | Error message if streaming failed. |
+| `className` | `string` | — | Additional CSS classes. |
+
+## Usage
+
+### Basic streaming
+
+```tsx
+<StreamingMessage
+  content={streamedText}
+  isStreaming={true}
+  phase="writing"
+  agentName="Council Assistant"
+/>
+```
+
+### Thinking phase
+
+```tsx
+<StreamingMessage
+  content=""
+  isStreaming={true}
+  phase="thinking"
+  agentName="Planning Agent"
+/>
+```
+
+### Complete with sources
+
+```tsx
+<StreamingMessage
+  content="Based on the organisation guidelines, you need to submit form PL-01..."
+  isStreaming={false}
+  phase="complete"
+  agentName="Planning Agent"
+  sources={[
+    { title: 'Planning Guide', url: 'https://council.gov/planning' },
+  ]}
+  confidence={0.91}
+/>
+```
+
+### Error state
+
+```tsx
+<StreamingMessage
+  content="Based on the organisation gui"
+  isStreaming={false}
+  phase="writing"
+  error="Connection lost. Please try again."
+  onRetry={handleRetry}
+/>
+```
+
+## Variants showcase
+
+### Connecting
+
+Shows a spinner and "Connecting..." text.
+
+```tsx
+<StreamingMessage isStreaming phase="connecting" agentName="Assistant" />
+```
+
+### Thinking
+
+An animated indicator showing the agent is processing.
+
+```tsx
+<StreamingMessage isStreaming phase="thinking" agentName="Assistant" />
+```
+
+### Writing
+
+Content appears character by character with a blinking cursor.
+
+```tsx
+<StreamingMessage
+  content="The council tax band for your property..."
+  isStreaming
+  phase="writing"
+  agentName="Assistant"
+/>
+```
+
+### Citing
+
+Sources are revealed after the main content finishes.
+
+```tsx
+<StreamingMessage
+  content="Full response text here."
+  isStreaming
+  phase="citing"
+  agentName="Assistant"
+  sources={sources}
+/>
+```
+
+### Complete
+
+The final state with all content, sources, and confidence displayed.
+
+```tsx
+<StreamingMessage
+  content="Full response text here."
+  isStreaming={false}
+  phase="complete"
+  agentName="Assistant"
+  sources={sources}
+  confidence={0.88}
+/>
+```
+
+## Accessibility
+
+- The message container has `aria-live="polite"` so screen readers announce content as it appears.
+- Phase transitions are announced via `aria-label` updates (e.g., "Assistant is thinking").
+- The streaming cursor animation respects `prefers-reduced-motion`.
+- Error states are announced immediately with `role="alert"`.
+- The retry button is keyboard accessible with a clear label.
+- Source citations are rendered as focusable links once the citing phase begins.
+- Colour contrast meets **WCAG 2.2 AA** standards.
+
+## Related
+
+- [AgentChat](/docs/components/agent/agent-chat) — The parent chat interface.
+- [Spinner](/docs/components/core/spinner) — Used during the connecting phase.
+- [Streaming Pattern](/docs/patterns/streaming) — SSE setup and phase configuration guide.

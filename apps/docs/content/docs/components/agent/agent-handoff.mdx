@@ -1,0 +1,151 @@
+---
+title: AgentHandoff
+description: A transition component for smoothly transferring a conversation between AI agents or from AI to a human operator.
+---
+
+# AgentHandoff
+
+Manages the visual and interactive transition when a conversation is transferred between agents or escalated to a human operator. Provides clear feedback about what is happening and why.
+
+## Import
+
+```tsx
+import { AgentHandoff } from '@surf-kit/agent';
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `fromAgent` | `{ name: string; avatar?: string }` | — | The agent handing off the conversation. |
+| `toAgent` | `{ name: string; avatar?: string }` | — | The agent or operator receiving the conversation. |
+| `reason` | `string` | — | Explanation for why the handoff is occurring. |
+| `status` | `'pending' \| 'in-progress' \| 'complete' \| 'failed'` | `'pending'` | Current state of the handoff. |
+| `isHumanEscalation` | `boolean` | `false` | Whether this is an escalation to a human operator. |
+| `estimatedWait` | `string` | — | Estimated wait time for human escalation. |
+| `onCancel` | `() => void` | — | Handler to cancel the handoff. |
+| `onRetry` | `() => void` | — | Handler to retry a failed handoff. |
+| `className` | `string` | — | Additional CSS classes. |
+
+## Usage
+
+### Agent-to-agent handoff
+
+```tsx
+<AgentHandoff
+  fromAgent={{ name: 'General Assistant' }}
+  toAgent={{ name: 'Planning Specialist' }}
+  reason="Your question is about planning permissions. Transferring to our specialist."
+  status="in-progress"
+/>
+```
+
+### Human escalation
+
+```tsx
+<AgentHandoff
+  fromAgent={{ name: 'Council Assistant' }}
+  toAgent={{ name: 'Customer Service' }}
+  reason="This query requires a human review. Connecting you with a customer service representative."
+  status="pending"
+  isHumanEscalation
+  estimatedWait="Approximately 5 minutes"
+/>
+```
+
+### Completed handoff
+
+```tsx
+<AgentHandoff
+  fromAgent={{ name: 'General Assistant' }}
+  toAgent={{ name: 'Benefits Specialist' }}
+  reason="Transferred to our benefits team for detailed assistance."
+  status="complete"
+/>
+```
+
+### Failed handoff
+
+```tsx
+<AgentHandoff
+  fromAgent={{ name: 'General Assistant' }}
+  toAgent={{ name: 'Planning Specialist' }}
+  reason="Unable to connect to the specialist agent."
+  status="failed"
+  onRetry={handleRetry}
+  onCancel={handleCancel}
+/>
+```
+
+## Variants showcase
+
+### Pending
+
+A pulsing indicator with the handoff reason displayed.
+
+```tsx
+<AgentHandoff
+  fromAgent={{ name: 'Bot A' }}
+  toAgent={{ name: 'Bot B' }}
+  reason="Transferring to a specialist."
+  status="pending"
+/>
+```
+
+### In progress
+
+An animated transition showing the agent avatars with a connecting line.
+
+```tsx
+<AgentHandoff
+  fromAgent={{ name: 'Bot A' }}
+  toAgent={{ name: 'Bot B' }}
+  reason="Transferring to a specialist."
+  status="in-progress"
+/>
+```
+
+### Complete
+
+A confirmation message with the new agent introduced.
+
+```tsx
+<AgentHandoff
+  fromAgent={{ name: 'Bot A' }}
+  toAgent={{ name: 'Bot B' }}
+  reason="You are now speaking with Bot B."
+  status="complete"
+/>
+```
+
+### Human escalation
+
+Includes estimated wait time and a cancel option.
+
+```tsx
+<AgentHandoff
+  fromAgent={{ name: 'Bot' }}
+  toAgent={{ name: 'Human Agent' }}
+  reason="Connecting you to a human agent."
+  status="pending"
+  isHumanEscalation
+  estimatedWait="About 3 minutes"
+  onCancel={handleCancel}
+/>
+```
+
+## Accessibility
+
+- The handoff container has `role="status"` with `aria-live="polite"` so transitions are announced.
+- Status changes trigger screen reader announcements (e.g., "Transfer to Planning Specialist in progress").
+- The reason text is always visible and announced — the handoff is never communicated through animation alone.
+- Cancel and retry buttons are keyboard accessible with clear labels.
+- Human escalation estimated wait times are announced.
+- The transition animation respects `prefers-reduced-motion`.
+- Colour contrast meets **WCAG 2.2 AA** standards.
+
+## Related
+
+- [AgentChat](/docs/components/agent/agent-chat) — The chat interface where handoffs occur.
+- [Multi-Agent Pattern](/docs/patterns/multi-agent) — Guide for designing multi-agent experiences.
+- [Spinner](/docs/components/core/spinner) — Used during the in-progress state.

@@ -1,0 +1,116 @@
+---
+title: TextInput
+description: A text input field with label, description, and error message support, built on React Aria.
+---
+
+# TextInput
+
+A styled text input with integrated label, description, and validation messaging. Built on [React Aria](https://react-spectrum.adobe.com/react-aria/) for full accessibility.
+
+## Import
+
+```tsx
+import { TextInput } from '@surf-kit/core';
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `label` | `string` | — | Visible label for the input. |
+| `description` | `string` | — | Help text displayed below the input. |
+| `errorMessage` | `string` | — | Validation error message. Replaces description when present. |
+| `placeholder` | `string` | — | Placeholder text shown when the input is empty. |
+| `value` | `string` | — | Controlled value. |
+| `defaultValue` | `string` | — | Uncontrolled default value. |
+| `onChange` | `(value: string) => void` | — | Handler called when the value changes. |
+| `isDisabled` | `boolean` | `false` | Whether the input is disabled. |
+| `isRequired` | `boolean` | `false` | Whether the input is required. |
+| `type` | `'text' \| 'email' \| 'password' \| 'url' \| 'tel'` | `'text'` | HTML input type. |
+| `className` | `string` | — | Additional CSS classes. |
+
+## Usage
+
+### Basic
+
+```tsx
+<TextInput label="Full name" placeholder="Jane Smith" />
+```
+
+### With description
+
+```tsx
+<TextInput
+  label="Email address"
+  type="email"
+  description="We will never share your email."
+  placeholder="jane@example.com"
+/>
+```
+
+### With error message
+
+```tsx
+<TextInput
+  label="Username"
+  errorMessage="Username is already taken."
+  value="admin"
+/>
+```
+
+### Required
+
+```tsx
+<TextInput label="Password" type="password" isRequired />
+```
+
+### Disabled
+
+```tsx
+<TextInput label="Read-only field" value="Cannot edit" isDisabled />
+```
+
+## Variants showcase
+
+### Default state
+
+A clean input with a subtle border and label positioned above.
+
+```tsx
+<TextInput label="Project name" placeholder="Enter project name" />
+```
+
+### Error state
+
+When `errorMessage` is provided, the border turns red and the error text appears below the input.
+
+```tsx
+<TextInput
+  label="API key"
+  errorMessage="Invalid API key format."
+  value="abc"
+/>
+```
+
+### Disabled state
+
+Reduced opacity with a `not-allowed` cursor.
+
+```tsx
+<TextInput label="Locked field" value="System-generated" isDisabled />
+```
+
+## Accessibility
+
+- Built on **React Aria** `useTextField` for standards-compliant labelling and error association.
+- The `label` is automatically linked to the input via `aria-labelledby`.
+- `description` text is linked via `aria-describedby`.
+- `errorMessage` is announced to screen readers via `aria-describedby` and sets `aria-invalid="true"`.
+- `isRequired` sets the `aria-required` attribute.
+- Focus ring is visible when navigating with the keyboard (`focus-visible`).
+- Colour contrast meets **WCAG 2.2 AA** standards in all themes.
+
+## Related
+
+- [Select](/docs/components/core/select) — For choosing from a list of options.
+- [Design Tokens](/docs/tokens) — Customise input appearance with component tokens.

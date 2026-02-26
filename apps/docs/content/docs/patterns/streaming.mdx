@@ -1,0 +1,261 @@
+---
+title: Streaming
+description: Setting up Server-Sent Events (SSE) for real-time AI agent responses with phase configuration.
+---
+
+# Streaming
+
+Real-time streaming creates a natural conversation experience. Instead of waiting for the full response, users see content appear as the agent generates it. This guide covers SSE setup, phase configuration, and error recovery.
+
+## Server-Sent Events setup
+
+### Server endpoint (Next.js App Router)
+
+```tsx title="app/api/agent/route.ts"
+import { NextRequest } from 'next/server';
+
+export async function POST(request: NextRequest) {
+  const { message } = await request.json();
+
+  const encoder = new TextEncoder();
+  const stream = new ReadableStream({
+    async start(controller) {
+      // Phase 1: Thinking
+      controller.enqueue(
+        encoder.encode(`data: ${JSON.stringify({ phase: 'thinking' })}\n\n`)
+      );
+
+      // Call your LLM
+      const llmStream = await callLLM(message);
+
+      // Phase 2: Writing — stream tokens
+      for await (const token of llmStream) {
+        controller.enqueue(
+          encoder.encode(
+            `data: ${JSON.stringify({ phase: 'writing', content: token })}\n\n`
+          )
+        );
+      }
+
+      // Phase 3: Citing — send sources
+      const sources = await fetchSources(message);
+      controller.enqueue(
+        encoder.encode(
+          `data: ${JSON.stringify({ phase: 'citing', sources })}\n\n`
+        )
+      );
+
+      // Phase 4: Complete
+      controller.enqueue(
+        encoder.encode(
+          `data: ${JSON.stringify({ phase: 'complete', confidence: 0.87 })}\n\n`
+        )
+      );
+
+      controller.close();
+    },
+  });
+
+  return new Response(stream, {
+    headers: {
+      'Content-Type': 'text/event-stream',
+      'Cache-Control': 'no-cache',
+      Connection: 'keep-alive',
+    },
+  });
+}
+```
+
+### Client hook
+
+```tsx title="hooks/useAgentStream.ts"
+import React from 'react';
+
+interface StreamState {
+  content: string;
+  phase: 'idle' | 'connecting' | 'thinking' | 'writing' | 'citing' | 'complete';
+  sources: Source[];
+  confidence: number | null;
+  error: string | null;
+}
+
+export function useAgentStream(endpoint: string) {
+  const [state, setState] = React.useState<StreamState>({
+    content: '',
+    phase: 'idle',
+    sources: [],
+    confidence: null,
+    error: null,
+  });
+
+  const send = React.useCallback(
+    async (message: string) => {
+      setState({
+        content: '',
+        phase: 'connecting',
+        sources: [],
+        confidence: null,
+        error: null,
+      });
+
+      try {
+        const response = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message }),
+        });
+
+        if (!response.ok) {
+          throw new Error(`Server error: ${response.status}`);
+        }
+
+        const reader = response.body!.getReader();
+        const decoder = new TextDecoder();
+        let buffer = '';
+
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+
+          buffer += decoder.decode(value, { stream: true });
+          const lines = buffer.split('\n\n');
+          buffer = lines.pop() || '';
+
+          for (const line of lines) {
+            if (!line.startsWith('data: ')) continue;
+            const data = JSON.parse(line.slice(6));
+
+            setState((prev) => ({
+              ...prev,
+              phase: data.phase ?? prev.phase,
+              content: data.content
+                ? prev.content + data.content
+                : prev.content,
+              sources: data.sources ?? prev.sources,
+              confidence: data.confidence ?? prev.confidence,
+            }));
+          }
+        }
+      } catch (error) {
+        setState((prev) => ({
+          ...prev,
+          phase: 'complete',
+          error: error instanceof Error ? error.message : 'Unknown error',
+        }));
+      }
+    },
+    [endpoint]
+  );
+
+  return { ...state, send };
+}
+```
+
+## Phase configuration
+
+The `StreamingMessage` component supports five phases:
+
+| Phase | Description | Visual indicator |
+| --- | --- | --- |
+| `connecting` | Establishing connection to the server | Spinner with "Connecting..." |
+| `thinking` | Agent is processing the request | Animated dots |
+| `writing` | Tokens are being streamed | Text with blinking cursor |
+| `citing` | Sources are being loaded | Source cards appear |
+| `complete` | Response is finished | Cursor disappears, confidence shown |
+
+### Custom phase durations
+
+You can set minimum durations for phases to avoid flickering:
+
+```tsx
+<StreamingMessage
+  phase={phase}
+  content={content}
+  isStreaming={isStreaming}
+  phaseConfig={{
+    thinking: { minDuration: 1000 }, // Show thinking for at least 1s
+    connecting: { minDuration: 500 },
+  }}
+/>
+```
+
+## Error recovery
+
+### Automatic retry
+
+```tsx
+function useStreamWithRetry(endpoint: string, maxRetries = 3) {
+  const stream = useAgentStream(endpoint);
+  const retryCount = React.useRef(0);
+
+  const sendWithRetry = React.useCallback(
+    async (message: string) => {
+      retryCount.current = 0;
+
+      const attempt = async () => {
+        try {
+          await stream.send(message);
+        } catch (error) {
+          if (retryCount.current < maxRetries) {
+            retryCount.current++;
+            const delay = Math.min(1000 * 2 ** retryCount.current, 10000);
+            await new Promise((resolve) => setTimeout(resolve, delay));
+            await attempt();
+          } else {
+            throw error;
+          }
+        }
+      };
+
+      await attempt();
+    },
+    [stream, maxRetries]
+  );
+
+  return { ...stream, send: sendWithRetry };
+}
+```
+
+### Partial content recovery
+
+If the stream is interrupted, display what was received with an error indicator:
+
+```tsx
+<StreamingMessage
+  content={partialContent}
+  isStreaming={false}
+  phase="writing"
+  error="Connection lost. The response may be incomplete."
+  onRetry={() => resend(lastMessage)}
+/>
+```
+
+## Performance tips
+
+- **Debounce rendering**: If tokens arrive very fast, batch state updates using `requestAnimationFrame`.
+- **Virtualise messages**: For long conversations, use virtual scrolling to render only visible messages.
+- **AbortController**: Cancel in-flight requests when the user sends a new message.
+
+```tsx
+const abortRef = React.useRef<AbortController>();
+
+const send = async (message: string) => {
+  abortRef.current?.abort();
+  abortRef.current = new AbortController();
+
+  const response = await fetch(endpoint, {
+    method: 'POST',
+    body: JSON.stringify({ message }),
+    signal: abortRef.current.signal,
+  });
+  // ... process stream
+};
+```
+
+## Accessibility
+
+- Use `aria-live="polite"` on the streaming message container.
+- Announce phase transitions to screen readers.
+- Ensure the streaming cursor animation respects `prefers-reduced-motion`.
+- Provide a "Stop generating" button that is keyboard accessible.
+- Error messages should use `role="alert"` for immediate announcement.

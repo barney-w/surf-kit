@@ -1,0 +1,239 @@
+---
+title: Multi-Agent
+description: Patterns for managing conversations across multiple AI agents with theming and handoff handling.
+---
+
+# Multi-Agent
+
+Many digital services require multiple specialist agents. A planning agent, a benefits agent, and a general assistant might all serve different parts of the same council website. This guide covers how to theme and manage multi-agent experiences.
+
+## Agent themes
+
+Each agent can have its own visual identity while sharing the base design system.
+
+### Defining agent themes
+
+```tsx
+import { createAgentTheme } from '@surf-kit/agent';
+
+const planningAgent = createAgentTheme({
+  name: 'Planning Assistant',
+  avatar: '/agents/planning.svg',
+  accentColor: 'var(--color-teal-600)',
+  bubbleColor: 'var(--color-teal-50)',
+  greeting: 'Hello! I can help with planning applications, building regulations, and land use queries.',
+});
+
+const benefitsAgent = createAgentTheme({
+  name: 'Benefits Advisor',
+  avatar: '/agents/benefits.svg',
+  accentColor: 'var(--color-purple-600)',
+  bubbleColor: 'var(--color-purple-50)',
+  greeting: 'Hi there. I can help you understand your benefit entitlements and how to apply.',
+});
+
+const generalAgent = createAgentTheme({
+  name: 'Council Assistant',
+  avatar: '/agents/general.svg',
+  accentColor: 'var(--color-blue-600)',
+  bubbleColor: 'var(--color-blue-50)',
+  greeting: 'Welcome! How can I help you today?',
+});
+```
+
+### Applying themes
+
+```tsx
+<AgentChat
+  theme={planningAgent}
+  agentName={planningAgent.name}
+  messages={messages}
+  onSendMessage={sendMessage}
+/>
+```
+
+### Theme switching during handoff
+
+When a handoff occurs, the theme transitions smoothly:
+
+```tsx
+function MultiAgentChat() {
+  const [activeTheme, setActiveTheme] = React.useState(generalAgent);
+  const [messages, setMessages] = React.useState([]);
+
+  const handleHandoff = (toAgent) => {
+    setActiveTheme(toAgent);
+    // The AgentHandoff component handles the visual transition
+  };
+
+  return (
+    <AgentChat
+      theme={activeTheme}
+      agentName={activeTheme.name}
+      messages={messages}
+      onSendMessage={sendMessage}
+    />
+  );
+}
+```
+
+## Handoff handling
+
+### Automatic routing
+
+Use the agent response to determine when a handoff is needed:
+
+```tsx
+async function handleAgentResponse(response) {
+  if (response.handoff) {
+    const { targetAgent, reason } = response.handoff;
+
+    // Show the handoff transition
+    setHandoffState({
+      fromAgent: activeAgent,
+      toAgent: agents[targetAgent],
+      reason,
+      status: 'in-progress',
+    });
+
+    // Connect to the new agent
+    try {
+      await connectToAgent(targetAgent);
+      setHandoffState((prev) => ({ ...prev, status: 'complete' }));
+      setActiveAgent(agents[targetAgent]);
+    } catch (error) {
+      setHandoffState((prev) => ({ ...prev, status: 'failed' }));
+    }
+  }
+}
+```
+
+### Manual routing
+
+Allow users to choose a specialist agent:
+
+```tsx
+import { Select, SelectItem } from '@surf-kit/core';
+
+function AgentSelector({ agents, onSelect }) {
+  return (
+    <Select label="Talk to" onSelectionChange={onSelect}>
+      {agents.map((agent) => (
+        <SelectItem key={agent.id} id={agent.id}>
+          {agent.name}
+        </SelectItem>
+      ))}
+    </Select>
+  );
+}
+```
+
+### Human escalation
+
+When AI cannot help, escalate to a human operator:
+
+```tsx
+function EscalationHandler({ confidence, message }) {
+  if (confidence < 0.3) {
+    return (
+      <AgentHandoff
+        fromAgent={{ name: 'Council Assistant' }}
+        toAgent={{ name: 'Customer Service Team' }}
+        reason="I'm not confident I can answer this correctly. Let me connect you with a team member."
+        isHumanEscalation
+        estimatedWait="Approximately 5 minutes"
+        status="pending"
+      />
+    );
+  }
+
+  return <MessageBubble message={message} />;
+}
+```
+
+## Conversation context preservation
+
+When handing off between agents, preserve the conversation context:
+
+```tsx
+interface HandoffPayload {
+  conversationId: string;
+  messages: Message[];
+  metadata: {
+    fromAgent: string;
+    toAgent: string;
+    reason: string;
+    userContext: Record<string, unknown>;
+  };
+}
+
+async function performHandoff(payload: HandoffPayload) {
+  const response = await fetch('/api/agent/handoff', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  });
+
+  return response.json();
+}
+```
+
+## Visual differentiation
+
+### Message bubbles
+
+Each agent can have distinctly styled message bubbles:
+
+```tsx
+function AgentMessage({ message, theme }) {
+  return (
+    <div
+      className="rounded-lg p-3"
+      style={{
+        backgroundColor: theme.bubbleColor,
+        borderLeft: `3px solid ${theme.accentColor}`,
+      }}
+    >
+      <div className="flex items-center gap-2 mb-1">
+        <img src={theme.avatar} alt="" className="w-5 h-5 rounded-full" />
+        <span className="text-sm font-medium">{theme.name}</span>
+      </div>
+      <div className="prose prose-sm">{message.content}</div>
+    </div>
+  );
+}
+```
+
+### Conversation timeline
+
+Show which agent responded at each point:
+
+```tsx
+function ConversationTimeline({ messages }) {
+  let lastAgent = null;
+
+  return messages.map((message) => {
+    const showAgentChange = message.role === 'agent' && message.agentId !== lastAgent;
+    if (message.role === 'agent') lastAgent = message.agentId;
+
+    return (
+      <div key={message.id}>
+        {showAgentChange && (
+          <div className="text-center text-sm text-muted-foreground my-4">
+            Now speaking with {message.agentName}
+          </div>
+        )}
+        <MessageBubble message={message} />
+      </div>
+    );
+  });
+}
+```
+
+## Accessibility
+
+- Each agent should have a distinct name announced to screen readers.
+- Handoff transitions must be announced via `aria-live` regions.
+- Agent theme colours must all meet WCAG 2.2 AA contrast requirements.
+- Visual differentiation between agents should not rely solely on colour — use names, avatars, and labels.
+- The conversation timeline should be navigable with keyboard arrow keys.

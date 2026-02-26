@@ -1,0 +1,50 @@
+name: Deploy Docs
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'apps/docs/**'
+      - 'packages/**'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deploy-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+
+      # Build the docs site
+      - name: Build docs
+        run: pnpm --filter docs build
+
+      # -----------------------------------------------------------
+      # Deploy step placeholder — uncomment ONE of the following
+      # depending on your hosting provider.
+      # -----------------------------------------------------------
+
+      # Option A: GitHub Pages
+      # - uses: actions/upload-pages-artifact@v3
+      #   with:
+      #     path: apps/docs/dist
+      # - uses: actions/deploy-pages@v4
+
+      # Option B: Vercel
+      # - name: Deploy to Vercel
+      #   run: npx vercel --prod --token=${{ secrets.VERCEL_TOKEN }}
+
+      # Option C: Netlify
+      # - name: Deploy to Netlify
+      #   run: npx netlify deploy --prod --dir=apps/docs/dist
+      #   env:
+      #     NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+      #     NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}

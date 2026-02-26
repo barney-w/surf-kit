@@ -1,0 +1,240 @@
+---
+title: Agent Chat Pattern
+description: Layout patterns for integrating the AgentChat component as a full page, side panel, or floating widget.
+---
+
+# Agent Chat Pattern
+
+The `AgentChat` component supports three layout modes. This guide covers when to use each, how to set them up, and how to connect them to your backend.
+
+## Full-page layout
+
+A full-page chat occupies the entire viewport. This is the primary interface when the chat is the main content of the page.
+
+### When to use
+
+- Dedicated chat pages (e.g., `/chat` or `/support`)
+- Intranet portals where the agent is the primary interaction model
+- Mobile-first experiences
+
+### Setup
+
+```tsx title="app/chat/page.tsx"
+'use client';
+
+import { AgentChat } from '@surf-kit/agent';
+import { useAgentConnection } from '@surf-kit/agent/hooks';
+
+export default function ChatPage() {
+  const { messages, sendMessage, isStreaming, streamingContent } =
+    useAgentConnection({ endpoint: '/api/agent' });
+
+  return (
+    <AgentChat
+      layout="full-page"
+      agentName="Council Assistant"
+      messages={messages}
+      onSendMessage={sendMessage}
+      isStreaming={isStreaming}
+      streamingContent={streamingContent}
+    />
+  );
+}
+```
+
+### Styling tips
+
+- The full-page layout uses `height: 100dvh` for mobile-safe viewport height.
+- The message list scrolls independently from the input area.
+- Add a header above the chat using a flex column layout.
+
+```tsx
+<div className="flex flex-col h-dvh">
+  <header className="border-b px-4 py-3">
+    <h1 className="text-lg font-semibold">Council Assistant</h1>
+  </header>
+  <AgentChat layout="full-page" className="flex-1" /* ... */ />
+</div>
+```
+
+## Panel layout
+
+A contained panel embedded alongside other content, typically in a sidebar or split view.
+
+### When to use
+
+- Dashboards with a chat sidebar
+- Case management tools with contextual help
+- Knowledge base pages with embedded Q&A
+
+### Setup
+
+```tsx title="components/ChatPanel.tsx"
+'use client';
+
+import { AgentChat } from '@surf-kit/agent';
+import { useAgentConnection } from '@surf-kit/agent/hooks';
+
+export function ChatPanel() {
+  const { messages, sendMessage, isStreaming, streamingContent } =
+    useAgentConnection({ endpoint: '/api/agent' });
+
+  return (
+    <aside className="w-96 h-full border-l">
+      <AgentChat
+        layout="panel"
+        agentName="Help Bot"
+        messages={messages}
+        onSendMessage={sendMessage}
+        isStreaming={isStreaming}
+        streamingContent={streamingContent}
+      />
+    </aside>
+  );
+}
+```
+
+### Layout integration
+
+```tsx title="app/dashboard/layout.tsx"
+export default function DashboardLayout({ children }) {
+  return (
+    <div className="flex h-screen">
+      <main className="flex-1 overflow-auto">{children}</main>
+      <ChatPanel />
+    </div>
+  );
+}
+```
+
+## Widget layout
+
+A floating chat widget that can be minimised, suitable for embedding on any page.
+
+### When to use
+
+- Public-facing council websites where chat is a secondary feature
+- Pages where the user might need help but the chat is not the primary focus
+- Existing websites where you want to add AI assistance without redesigning
+
+### Setup
+
+```tsx title="components/ChatWidget.tsx"
+'use client';
+
+import { AgentChat } from '@surf-kit/agent';
+import { useAgentConnection } from '@surf-kit/agent/hooks';
+
+export function ChatWidget() {
+  const { messages, sendMessage, isStreaming, streamingContent } =
+    useAgentConnection({ endpoint: '/api/agent' });
+
+  return (
+    <div className="fixed bottom-4 right-4 z-50">
+      <AgentChat
+        layout="widget"
+        agentName="Quick Help"
+        messages={messages}
+        onSendMessage={sendMessage}
+        isStreaming={isStreaming}
+        streamingContent={streamingContent}
+      />
+    </div>
+  );
+}
+```
+
+### Widget behaviour
+
+- The widget starts minimised, showing only a button.
+- Clicking the button expands the chat to a 400x500px panel.
+- The widget remembers its open/closed state in `sessionStorage`.
+- On mobile, the widget expands to a near-full-screen overlay.
+
+## Handling message state
+
+All layouts share the same message model. Here is a complete example with optimistic updates:
+
+```tsx
+'use client';
+
+import { AgentChat } from '@surf-kit/agent';
+import React from 'react';
+
+interface Message {
+  id: string;
+  role: 'user' | 'agent';
+  content: string;
+  timestamp: Date;
+}
+
+export function ChatWithState() {
+  const [messages, setMessages] = React.useState<Message[]>([]);
+  const [isStreaming, setIsStreaming] = React.useState(false);
+  const [streamingContent, setStreamingContent] = React.useState('');
+
+  const handleSend = async (content: string) => {
+    const userMessage: Message = {
+      id: crypto.randomUUID(),
+      role: 'user',
+      content,
+      timestamp: new Date(),
+    };
+    setMessages((prev) => [...prev, userMessage]);
+    setIsStreaming(true);
+    setStreamingContent('');
+
+    try {
+      const response = await fetch('/api/agent', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: content }),
+      });
+
+      const reader = response.body!.getReader();
+      const decoder = new TextDecoder();
+      let fullContent = '';
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        const chunk = decoder.decode(value);
+        fullContent += chunk;
+        setStreamingContent(fullContent);
+      }
+
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: crypto.randomUUID(),
+          role: 'agent',
+          content: fullContent,
+          timestamp: new Date(),
+        },
+      ]);
+    } finally {
+      setIsStreaming(false);
+      setStreamingContent('');
+    }
+  };
+
+  return (
+    <AgentChat
+      layout="full-page"
+      agentName="Council Assistant"
+      messages={messages}
+      onSendMessage={handleSend}
+      isStreaming={isStreaming}
+      streamingContent={streamingContent}
+    />
+  );
+}
+```
+
+## Accessibility considerations
+
+- All layouts maintain the same accessibility features (live regions, keyboard navigation, focus management).
+- The widget layout adds a floating trigger button with `aria-label="Open chat"` and `aria-expanded` state.
+- Panel layouts should include `role="complementary"` on the aside element.
+- Ensure the chat does not trap focus when used alongside other interactive content.
+- Test with screen readers in all three layouts to verify announcement behaviour.

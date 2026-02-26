@@ -1,0 +1,148 @@
+---
+title: Select
+description: A dropdown select component for choosing a single option from a list.
+---
+
+# Select
+
+A dropdown select built on React Aria for accessible option selection. Supports labels, descriptions, error messages, and sections.
+
+## Import
+
+```tsx
+import { Select, SelectItem, SelectSection } from '@surf-kit/core';
+```
+
+## Props
+
+### Select (root)
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `label` | `string` | — | Visible label for the select. |
+| `description` | `string` | — | Help text below the trigger. |
+| `errorMessage` | `string` | — | Validation error message. |
+| `placeholder` | `string` | `'Select an option'` | Placeholder text when no value is selected. |
+| `selectedKey` | `string` | — | Controlled selected value. |
+| `defaultSelectedKey` | `string` | — | Default selected value. |
+| `onSelectionChange` | `(key: string) => void` | — | Handler called when the selection changes. |
+| `isDisabled` | `boolean` | `false` | Whether the select is disabled. |
+| `isRequired` | `boolean` | `false` | Whether a selection is required. |
+| `className` | `string` | — | Additional CSS classes. |
+
+### SelectItem
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `id` | `string` | — | Unique value for the option. |
+| `children` | `ReactNode` | — | Option label content. |
+| `isDisabled` | `boolean` | `false` | Whether the option is disabled. |
+
+### SelectSection
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `title` | `string` | — | Section heading. |
+| `children` | `ReactNode` | — | Section items. |
+
+## Usage
+
+### Basic
+
+```tsx
+<Select label="Department">
+  <SelectItem id="planning">Planning</SelectItem>
+  <SelectItem id="housing">Housing</SelectItem>
+  <SelectItem id="transport">Transport</SelectItem>
+  <SelectItem id="education">Education</SelectItem>
+</Select>
+```
+
+### With sections
+
+```tsx
+<Select label="Assign to agent">
+  <SelectSection title="General">
+    <SelectItem id="info-bot">Info Bot</SelectItem>
+    <SelectItem id="faq-bot">FAQ Bot</SelectItem>
+  </SelectSection>
+  <SelectSection title="Specialist">
+    <SelectItem id="planning-agent">Planning Agent</SelectItem>
+    <SelectItem id="benefits-agent">Benefits Agent</SelectItem>
+  </SelectSection>
+</Select>
+```
+
+### With error
+
+```tsx
+<Select
+  label="Priority"
+  isRequired
+  errorMessage="Please select a priority level."
+>
+  <SelectItem id="low">Low</SelectItem>
+  <SelectItem id="medium">Medium</SelectItem>
+  <SelectItem id="high">High</SelectItem>
+</Select>
+```
+
+### Controlled
+
+```tsx
+function Example() {
+  const [value, setValue] = React.useState('medium');
+
+  return (
+    <Select
+      label="Priority"
+      selectedKey={value}
+      onSelectionChange={setValue}
+    >
+      <SelectItem id="low">Low</SelectItem>
+      <SelectItem id="medium">Medium</SelectItem>
+      <SelectItem id="high">High</SelectItem>
+    </Select>
+  );
+}
+```
+
+## Variants showcase
+
+### Default
+
+A select with a border trigger and dropdown listbox.
+
+```tsx
+<Select label="Region">
+  <SelectItem id="north">North</SelectItem>
+  <SelectItem id="south">South</SelectItem>
+</Select>
+```
+
+### With disabled options
+
+```tsx
+<Select label="Service">
+  <SelectItem id="web">Web portal</SelectItem>
+  <SelectItem id="phone">Phone line</SelectItem>
+  <SelectItem id="in-person" isDisabled>In-person (unavailable)</SelectItem>
+</Select>
+```
+
+## Accessibility
+
+- Built on **React Aria** `useSelect` for WAI-ARIA Listbox pattern compliance.
+- Trigger is focusable and opens with `Enter`, `Space`, or arrow keys.
+- Arrow keys navigate options; `Enter` selects; `Escape` closes the listbox.
+- Type-ahead search: typing characters filters options.
+- `label` is linked via `aria-labelledby`.
+- `errorMessage` is linked via `aria-describedby` and sets `aria-invalid="true"`.
+- Disabled options are announced as disabled and cannot be selected.
+- Focus ring is visible when navigating with the keyboard.
+- Colour contrast meets **WCAG 2.2 AA** standards.
+
+## Related
+
+- [TextInput](/docs/components/core/text-input) — For free-text input.
+- [Design Tokens](/docs/tokens) — Customise select appearance with component tokens.

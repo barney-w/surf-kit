@@ -1,0 +1,195 @@
+---
+title: Custom Branding
+description: A quick guide to applying council-specific branding to surf-kit interfaces.
+---
+
+# Custom Branding
+
+Most councils have established brand guidelines. This guide shows how to apply organisation branding to surf-kit in under 10 minutes.
+
+## What you need
+
+From your organisation's brand guidelines, gather:
+
+1. **Primary brand colour** (hex code)
+2. **Logo** (SVG preferred)
+3. **Font** (if custom, otherwise the default will work)
+4. **Secondary/accent colour** (optional)
+
+## Quick start
+
+### Step 1: Create the theme
+
+```tsx title="lib/theme.ts"
+import { createTheme } from '@surf-kit/theme';
+
+export const councilTheme = createTheme({
+  name: 'my-council',
+  colors: {
+    accent: '#1a5c3a', // Your primary brand colour
+  },
+});
+```
+
+That is it for a minimal setup. `createTheme` generates all other colours from the accent.
+
+### Step 2: Apply the theme
+
+```tsx title="app/layout.tsx"
+import { ThemeProvider } from '@surf-kit/theme';
+import { councilTheme } from '@/lib/theme';
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en">
+      <body>
+        <ThemeProvider theme={councilTheme} defaultTheme="system">
+          {children}
+        </ThemeProvider>
+      </body>
+    </html>
+  );
+}
+```
+
+### Step 3: Add the logo
+
+```tsx title="components/Header.tsx"
+export function Header() {
+  return (
+    <header className="flex items-center gap-3 px-4 py-3 border-b">
+      <img
+        src="/council-logo.svg"
+        alt="My Council"
+        className="h-8"
+      />
+      <span className="font-semibold">Council Assistant</span>
+    </header>
+  );
+}
+```
+
+## Common organisation branding scenarios
+
+### Custom font
+
+If your organisation uses a specific typeface:
+
+```tsx
+const councilTheme = createTheme({
+  name: 'my-council',
+  colors: { accent: '#1a5c3a' },
+  typography: {
+    fontFamily: '"Frutiger", "Helvetica Neue", Arial, sans-serif',
+  },
+});
+```
+
+Load the font in your CSS or `<head>`:
+
+```css title="app/globals.css"
+@font-face {
+  font-family: 'Frutiger';
+  src: url('/fonts/frutiger-regular.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+```
+
+### Two-colour branding
+
+Some councils have a primary and secondary brand colour:
+
+```tsx
+const councilTheme = createTheme({
+  name: 'my-council',
+  colors: {
+    accent: '#1a5c3a',        // Primary — used for buttons, links, focus rings
+    info: '#0e4d92',          // Secondary — used for informational elements
+  },
+});
+```
+
+### Dark mode customisation
+
+By default, dark mode is auto-generated. Override specific values if needed:
+
+```tsx
+const councilTheme = createTheme({
+  name: 'my-council',
+  colors: {
+    accent: '#1a5c3a',
+    accentDark: '#86efac',        // Lighter green for dark backgrounds
+    surfaceDark: '#0a1f0f',       // Council-branded dark background
+  },
+});
+```
+
+### Agent branding
+
+Give each agent a distinct look within the organisation brand:
+
+```tsx
+import { createAgentTheme } from '@surf-kit/agent';
+
+export const planningBot = createAgentTheme({
+  name: 'Planning Assistant',
+  avatar: '/agents/planning.svg',
+  accentColor: '#1a5c3a',      // Council green
+  greeting: 'I can help with planning applications and building regulations.',
+});
+
+export const revenuesBot = createAgentTheme({
+  name: 'Council Tax Advisor',
+  avatar: '/agents/revenues.svg',
+  accentColor: '#0e4d92',      // Council blue
+  greeting: 'I can help with council tax queries and payment options.',
+});
+```
+
+## GOV.UK-style theming
+
+For councils that align with GOV.UK design patterns:
+
+```tsx
+const govStyle = createTheme({
+  name: 'gov-aligned',
+  colors: {
+    accent: '#1d70b8',           // GOV.UK blue
+    textPrimary: '#0b0c0c',     // GOV.UK black
+    surface: '#ffffff',
+  },
+  typography: {
+    fontFamily: '"GDS Transport", Arial, sans-serif',
+  },
+  radius: {
+    sm: '0',
+    md: '0',
+    lg: '0',                    // GOV.UK uses no border radius
+  },
+});
+```
+
+## Verifying contrast
+
+After creating your theme, verify that all colour combinations meet WCAG 2.2 AA:
+
+```bash
+# Use the built-in contrast checker
+pnpm surf-kit check-contrast --theme ./lib/theme.ts
+```
+
+Or manually check key combinations:
+
+| Combination | Required ratio |
+| --- | --- |
+| Accent on surface | 4.5:1 for text, 3:1 for UI |
+| Text primary on surface | 4.5:1 |
+| Text secondary on surface | 4.5:1 |
+| Accent on dark surface | 4.5:1 for text, 3:1 for UI |
+
+## Related
+
+- [Token Architecture](/docs/theming/overview) — Understanding the full token system.
+- [Creating Themes](/docs/theming/creating-themes) — Detailed `createTheme` API guide.
+- [Accessibility](/docs/patterns/accessibility) — Full WCAG 2.2 AA checklist.

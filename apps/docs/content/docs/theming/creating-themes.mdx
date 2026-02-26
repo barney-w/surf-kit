@@ -1,0 +1,204 @@
+---
+title: Creating Themes
+description: How to create custom themes using the createTheme API.
+---
+
+# Creating Themes
+
+The `createTheme` function generates a complete set of CSS custom properties from a minimal configuration. You define your brand colours and the function produces light and dark mode tokens.
+
+## Import
+
+```tsx
+import { createTheme } from '@surf-kit/theme';
+```
+
+## Basic usage
+
+```tsx
+const myTheme = createTheme({
+  name: 'my-council',
+  colors: {
+    accent: '#1a73e8',
+    accentForeground: '#ffffff',
+    surface: '#ffffff',
+    surfaceDark: '#0f172a',
+  },
+});
+```
+
+## Applying the theme
+
+Pass the theme to `ThemeProvider`:
+
+```tsx
+import { ThemeProvider } from '@surf-kit/theme';
+
+export default function Layout({ children }) {
+  return (
+    <ThemeProvider theme={myTheme} defaultTheme="system">
+      {children}
+    </ThemeProvider>
+  );
+}
+```
+
+## Full configuration
+
+```tsx
+const theme = createTheme({
+  name: 'westshire-council',
+
+  colors: {
+    // Primary accent
+    accent: '#1a5c3a',
+    accentForeground: '#ffffff',
+
+    // Surfaces
+    surface: '#ffffff',
+    surfaceDark: '#0c1a12',
+    surfaceElevated: '#f8faf9',
+    surfaceElevatedDark: '#162418',
+
+    // Text
+    textPrimary: '#111827',
+    textPrimaryDark: '#f0fdf4',
+    textSecondary: '#4b5563',
+    textSecondaryDark: '#9ca3af',
+
+    // Borders
+    border: '#d1d5db',
+    borderDark: '#374151',
+
+    // Status
+    success: '#16a34a',
+    warning: '#d97706',
+    error: '#dc2626',
+    info: '#2563eb',
+  },
+
+  typography: {
+    fontFamily: '"Inter", system-ui, sans-serif',
+    fontFamilyMono: '"JetBrains Mono", monospace',
+  },
+
+  radius: {
+    sm: '0.25rem',
+    md: '0.375rem',
+    lg: '0.5rem',
+    full: '9999px',
+  },
+
+  shadows: {
+    sm: '0 1px 2px 0 rgb(0 0 0 / 0.05)',
+    md: '0 4px 6px -1px rgb(0 0 0 / 0.1)',
+    lg: '0 10px 15px -3px rgb(0 0 0 / 0.1)',
+  },
+});
+```
+
+## What createTheme generates
+
+The function outputs a `Theme` object containing:
+
+1. **CSS variables** for both light and dark modes
+2. **Tailwind config overrides** for the preset
+3. **Metadata** (name, description)
+
+```tsx
+// The generated theme object
+{
+  name: 'westshire-council',
+  cssVariables: {
+    light: {
+      '--color-accent': '#1a5c3a',
+      '--color-surface': '#ffffff',
+      // ... all tokens
+    },
+    dark: {
+      '--color-accent': '#4ade80',
+      '--color-surface': '#0c1a12',
+      // ... all tokens
+    },
+  },
+  tailwindConfig: { /* ... */ },
+}
+```
+
+## Automatic dark mode colours
+
+If you only provide light mode colours, `createTheme` automatically generates dark mode variants by:
+
+1. Inverting surface lightness
+2. Adjusting accent colour for sufficient contrast on dark backgrounds
+3. Generating dark mode text colours that meet WCAG 2.2 AA contrast ratios
+
+You can override any automatic colour by providing explicit dark mode values:
+
+```tsx
+const theme = createTheme({
+  name: 'my-council',
+  colors: {
+    accent: '#1a73e8',        // Light mode accent
+    accentDark: '#8ab4f8',    // Override the auto-generated dark accent
+  },
+});
+```
+
+## Component token overrides
+
+Override tokens for specific components:
+
+```tsx
+const theme = createTheme({
+  name: 'my-council',
+  colors: { accent: '#1a73e8' },
+  components: {
+    button: {
+      borderRadius: '9999px',    // Fully rounded buttons
+      fontWeight: '600',
+    },
+    input: {
+      borderRadius: '0.5rem',
+      borderWidth: '2px',
+    },
+    card: {
+      shadow: '0 2px 8px rgb(0 0 0 / 0.08)',
+    },
+  },
+});
+```
+
+## Extending an existing theme
+
+```tsx
+import { defaultTheme, createTheme } from '@surf-kit/theme';
+
+const extendedTheme = createTheme({
+  ...defaultTheme,
+  name: 'extended',
+  colors: {
+    ...defaultTheme.colors,
+    accent: '#7c3aed', // Only change the accent colour
+  },
+});
+```
+
+## Testing your theme
+
+Use the theme preview utility to visualise your theme:
+
+```tsx
+import { ThemePreview } from '@surf-kit/theme/dev';
+
+export default function ThemeTestPage() {
+  return <ThemePreview theme={myTheme} />;
+}
+```
+
+This renders a page with all components in both light and dark mode, allowing you to verify contrast ratios and visual consistency.
+
+## Related
+
+- [Token Architecture](/docs/theming/overview) — Understanding the token system.
+- [Custom Branding](/docs/theming/custom-branding) — Quick start for council-specific theming.

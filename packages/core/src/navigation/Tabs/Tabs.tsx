@@ -2,7 +2,6 @@ import { twMerge } from 'tailwind-merge'
 import React, { useRef } from 'react'
 import { useTabList, useTab, useTabPanel } from 'react-aria'
 import { useTabListState, Item } from 'react-stately'
-import type { TabListStateOptions } from 'react-stately'
 import type { AriaTabListProps } from 'react-aria'
 import type { Node } from 'react-stately'
 
@@ -68,7 +67,7 @@ function Tabs({
     items,
   }
 
-  const state = useTabListState(ariaProps as TabListStateOptions<TabItem>)
+  const state = useTabListState(ariaProps as Parameters<typeof useTabListState>[0])
   const { tabListProps } = useTabList(ariaProps, state, ref)
 
   return (

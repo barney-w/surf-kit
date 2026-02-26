@@ -1,0 +1,134 @@
+---
+title: Dialog
+description: A modal dialog overlay for confirmations, forms, and focused interactions.
+---
+
+# Dialog
+
+A modal dialog that overlays the page content. Built on React Aria for focus trapping, keyboard navigation, and screen reader support.
+
+## Import
+
+```tsx
+import { Dialog } from '@surf-kit/core';
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `isOpen` | `boolean` | — | Whether the dialog is visible. |
+| `onClose` | `() => void` | — | Handler called when the dialog should close. |
+| `title` | `string` | — | Dialog heading displayed at the top. |
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Width of the dialog. |
+| `isDismissable` | `boolean` | `true` | Whether clicking the backdrop or pressing Escape closes the dialog. |
+| `className` | `string` | — | Additional CSS classes for the dialog panel. |
+| `children` | `ReactNode` | — | Dialog body content. |
+
+## Usage
+
+### Basic
+
+```tsx
+function Example() {
+  const [isOpen, setIsOpen] = React.useState(false);
+
+  return (
+    <>
+      <Button onPress={() => setIsOpen(true)}>Open dialog</Button>
+      <Dialog
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        title="Confirm action"
+      >
+        <p>Are you sure you want to proceed?</p>
+        <div className="mt-4 flex gap-2 justify-end">
+          <Button intent="secondary" onPress={() => setIsOpen(false)}>
+            Cancel
+          </Button>
+          <Button intent="primary" onPress={() => setIsOpen(false)}>
+            Confirm
+          </Button>
+        </div>
+      </Dialog>
+    </>
+  );
+}
+```
+
+### Small dialog
+
+```tsx
+<Dialog isOpen={isOpen} onClose={onClose} title="Delete item?" size="sm">
+  <p>This action is permanent.</p>
+</Dialog>
+```
+
+### Large dialog with form
+
+```tsx
+<Dialog isOpen={isOpen} onClose={onClose} title="Edit profile" size="lg">
+  <TextInput label="Display name" />
+  <TextInput label="Bio" />
+</Dialog>
+```
+
+### Non-dismissable
+
+```tsx
+<Dialog
+  isOpen={isOpen}
+  onClose={onClose}
+  title="Terms of Service"
+  isDismissable={false}
+>
+  <p>You must accept the terms to continue.</p>
+  <Button onPress={onClose}>I accept</Button>
+</Dialog>
+```
+
+## Variants showcase
+
+### Confirmation dialog
+
+A small dialog with a destructive action.
+
+```tsx
+<Dialog isOpen={isOpen} onClose={onClose} title="Delete project?" size="sm">
+  <p>All data will be permanently removed.</p>
+  <div className="mt-4 flex gap-2 justify-end">
+    <Button intent="secondary" onPress={onClose}>Cancel</Button>
+    <Button intent="danger" onPress={handleDelete}>Delete</Button>
+  </div>
+</Dialog>
+```
+
+### Information dialog
+
+A medium dialog showing read-only content.
+
+```tsx
+<Dialog isOpen={isOpen} onClose={onClose} title="Keyboard shortcuts">
+  <table>
+    <tbody>
+      <tr><td>Ctrl + K</td><td>Open search</td></tr>
+      <tr><td>Escape</td><td>Close dialog</td></tr>
+    </tbody>
+  </table>
+</Dialog>
+```
+
+## Accessibility
+
+- Built on **React Aria** `useDialog` and `useModalOverlay` for robust focus management.
+- Focus is trapped within the dialog while it is open.
+- Pressing `Escape` closes the dialog (when `isDismissable` is `true`).
+- The `title` prop is rendered as an `<h2>` and linked via `aria-labelledby`.
+- When closed, focus returns to the element that triggered the dialog.
+- The backdrop prevents interaction with the underlying page and is announced as a modal.
+- Colour contrast meets **WCAG 2.2 AA** standards.
+
+## Related
+
+- [Button](/docs/components/core/button) — Typically used for dialog actions.
+- [Alert](/docs/components/core/alert) — For non-blocking messages that do not require user action.

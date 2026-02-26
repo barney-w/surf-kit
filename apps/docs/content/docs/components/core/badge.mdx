@@ -1,0 +1,94 @@
+---
+title: Badge
+description: A small label component for status indicators, counts, and category tags.
+---
+
+# Badge
+
+A compact label for conveying status, counts, or categories. Badges are non-interactive by default and render as inline elements.
+
+## Import
+
+```tsx
+import { Badge } from '@surf-kit/core';
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `intent` | `'neutral' \| 'info' \| 'success' \| 'warning' \| 'error'` | `'neutral'` | Semantic colour intent. |
+| `size` | `'sm' \| 'md'` | `'md'` | Size of the badge. |
+| `variant` | `'solid' \| 'outline' \| 'subtle'` | `'subtle'` | Visual style variant. |
+| `className` | `string` | — | Additional CSS classes. |
+| `children` | `ReactNode` | — | Badge content. |
+
+## Usage
+
+### Basic
+
+```tsx
+<Badge>Default</Badge>
+```
+
+### With intent
+
+```tsx
+<Badge intent="info">Info</Badge>
+<Badge intent="success">Active</Badge>
+<Badge intent="warning">Pending</Badge>
+<Badge intent="error">Failed</Badge>
+```
+
+### With variant
+
+```tsx
+<Badge variant="solid" intent="success">Solid</Badge>
+<Badge variant="outline" intent="info">Outline</Badge>
+<Badge variant="subtle" intent="warning">Subtle</Badge>
+```
+
+### Small size
+
+```tsx
+<Badge size="sm" intent="info">3</Badge>
+```
+
+## Variants showcase
+
+### Solid
+
+A filled background with white text. Use for high-emphasis status labels.
+
+```tsx
+<Badge variant="solid" intent="success">Approved</Badge>
+```
+
+### Outline
+
+A transparent background with a coloured border and text. Use for medium-emphasis labels.
+
+```tsx
+<Badge variant="outline" intent="warning">Review</Badge>
+```
+
+### Subtle
+
+A tinted background with coloured text. The default variant, suitable for most cases.
+
+```tsx
+<Badge variant="subtle" intent="error">Rejected</Badge>
+```
+
+## Accessibility
+
+- Renders as a `<span>` element; it is not focusable or interactive.
+- Use `aria-label` on the parent element when the badge conveys essential information that is not available in surrounding text.
+- Colour is never the sole indicator of meaning — text content provides the semantic meaning.
+- Colour contrast meets **WCAG 2.2 AA** standards across all intents and variants.
+- When used as a notification count, consider wrapping with `aria-live="polite"` for dynamic updates.
+
+## Related
+
+- [ConfidenceBadge](/docs/components/agent/confidence-badge) — Agent-specific badge showing AI confidence scores.
+- [Design Tokens](/docs/tokens) — Customise badge colours with status tokens.

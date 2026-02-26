@@ -1,0 +1,124 @@
+---
+title: Accordion
+description: A collapsible section component for progressively revealing content.
+---
+
+# Accordion
+
+A vertically stacked set of collapsible sections. Each section has a header that can be expanded to reveal its content. Useful for FAQs, settings, and long-form content organisation.
+
+## Import
+
+```tsx
+import { Accordion, AccordionItem } from '@surf-kit/core';
+```
+
+## Props
+
+### Accordion (root)
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `type` | `'single' \| 'multiple'` | `'single'` | Whether one or multiple items can be expanded at once. |
+| `defaultExpandedKeys` | `string[]` | `[]` | Items expanded by default. |
+| `expandedKeys` | `string[]` | — | Controlled expanded items. |
+| `onExpandedChange` | `(keys: string[]) => void` | — | Handler called when expanded items change. |
+| `className` | `string` | — | Additional CSS classes. |
+
+### AccordionItem
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `id` | `string` | — | Unique key for the item. |
+| `title` | `string` | — | Header text for the collapsible section. |
+| `isDisabled` | `boolean` | `false` | Whether the item can be toggled. |
+| `children` | `ReactNode` | — | Collapsible content. |
+
+## Usage
+
+### Basic
+
+```tsx
+<Accordion>
+  <AccordionItem id="what" title="What is surf-kit?">
+    surf-kit is a design system for building AI agent interfaces in local
+    government applications.
+  </AccordionItem>
+  <AccordionItem id="install" title="How do I install it?">
+    Run <code>pnpm add @surf-kit/core @surf-kit/tokens @surf-kit/theme</code>.
+  </AccordionItem>
+  <AccordionItem id="support" title="What frameworks are supported?">
+    surf-kit works with React 18+ and Next.js 14+.
+  </AccordionItem>
+</Accordion>
+```
+
+### Multiple expanded
+
+```tsx
+<Accordion type="multiple" defaultExpandedKeys={['section1', 'section2']}>
+  <AccordionItem id="section1" title="General settings">
+    General configuration options.
+  </AccordionItem>
+  <AccordionItem id="section2" title="Advanced settings">
+    Advanced configuration options.
+  </AccordionItem>
+  <AccordionItem id="section3" title="Experimental">
+    Experimental features.
+  </AccordionItem>
+</Accordion>
+```
+
+### With disabled item
+
+```tsx
+<Accordion>
+  <AccordionItem id="available" title="Available section">
+    This section can be toggled.
+  </AccordionItem>
+  <AccordionItem id="locked" title="Locked section" isDisabled>
+    This section cannot be toggled.
+  </AccordionItem>
+</Accordion>
+```
+
+## Variants showcase
+
+### Single expand (default)
+
+Only one section can be open at a time. Opening a new section closes the previous one.
+
+```tsx
+<Accordion type="single">
+  <AccordionItem id="a" title="First">Content A</AccordionItem>
+  <AccordionItem id="b" title="Second">Content B</AccordionItem>
+</Accordion>
+```
+
+### Multiple expand
+
+Multiple sections can be open simultaneously.
+
+```tsx
+<Accordion type="multiple">
+  <AccordionItem id="a" title="First">Content A</AccordionItem>
+  <AccordionItem id="b" title="Second">Content B</AccordionItem>
+</Accordion>
+```
+
+## Accessibility
+
+- Built on **React Aria** disclosure pattern for WAI-ARIA compliance.
+- Each header is a focusable button with `aria-expanded` indicating the current state.
+- `aria-controls` links the header to its content panel.
+- Content panels have `role="region"` and `aria-labelledby` pointing to the header.
+- `Enter` and `Space` toggle the section.
+- Arrow keys navigate between headers; `Home` and `End` move to the first and last header.
+- Disabled items are announced as disabled and cannot be toggled.
+- The expand/collapse animation respects `prefers-reduced-motion`.
+- Colour contrast meets **WCAG 2.2 AA** standards.
+
+## Related
+
+- [Tabs](/docs/components/core/tabs) — For switching between views where only one panel is relevant at a time.
+- [Dialog](/docs/components/core/dialog) — For focused interactions that require immediate attention.

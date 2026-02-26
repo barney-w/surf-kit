@@ -1,4 +1,4 @@
 {
   "title": "Core",
-  "pages": ["button"]
+  "pages": ["button", "text-input", "select", "badge", "spinner", "alert", "dialog", "tabs", "table", "card", "accordion"]
 }

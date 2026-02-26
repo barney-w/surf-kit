@@ -1,0 +1,244 @@
+---
+title: Next.js Integration
+description: Setting up surf-kit with Next.js App Router for a full-stack AI agent application.
+---
+
+# Next.js Integration
+
+This recipe walks through setting up surf-kit with Next.js 14+ App Router, including server components, streaming API routes, and the ThemeProvider.
+
+## Prerequisites
+
+- Node.js 18+
+- Next.js 14+ with App Router
+- pnpm (recommended)
+
+## Step 1: Install packages
+
+```bash
+pnpm add @surf-kit/core @surf-kit/tokens @surf-kit/theme @surf-kit/agent
+```
+
+## Step 2: Configure Tailwind
+
+```ts title="tailwind.config.ts"
+import { surfKitPreset } from '@surf-kit/tokens/tailwind';
+import type { Config } from 'tailwindcss';
+
+const config: Config = {
+  content: [
+    './app/**/*.{ts,tsx}',
+    './components/**/*.{ts,tsx}',
+    './node_modules/@surf-kit/core/dist/**/*.js',
+    './node_modules/@surf-kit/agent/dist/**/*.js',
+  ],
+  presets: [surfKitPreset],
+};
+
+export default config;
+```
+
+## Step 3: Set up the root layout
+
+```tsx title="app/layout.tsx"
+import { ThemeProvider } from '@surf-kit/theme';
+import './globals.css';
+
+export const metadata = {
+  title: 'Council Assistant',
+  description: 'AI-powered assistant for council services',
+};
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="en" suppressHydrationWarning>
+      <body>
+        <ThemeProvider defaultTheme="system">
+          {children}
+        </ThemeProvider>
+      </body>
+    </html>
+  );
+}
+```
+
+The `suppressHydrationWarning` attribute prevents a React warning caused by the theme script that runs before hydration.
+
+## Step 4: Create the chat API route
+
+```tsx title="app/api/agent/route.ts"
+import { NextRequest } from 'next/server';
+
+export const runtime = 'edge'; // Optional: use edge runtime for lower latency
+
+export async function POST(request: NextRequest) {
+  const { message, conversationId } = await request.json();
+
+  const encoder = new TextEncoder();
+  const stream = new ReadableStream({
+    async start(controller) {
+      // Emit thinking phase
+      controller.enqueue(
+        encoder.encode(`data: ${JSON.stringify({ phase: 'thinking' })}\n\n`)
+      );
+
+      // Call your LLM backend
+      const response = await fetch(process.env.LLM_API_URL!, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${process.env.LLM_API_KEY}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          messages: [{ role: 'user', content: message }],
+          stream: true,
+        }),
+      });
+
+      const reader = response.body!.getReader();
+      const decoder = new TextDecoder();
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        const chunk = decoder.decode(value);
+        controller.enqueue(
+          encoder.encode(
+            `data: ${JSON.stringify({ phase: 'writing', content: chunk })}\n\n`
+          )
+        );
+      }
+
+      // Emit completion
+      controller.enqueue(
+        encoder.encode(
+          `data: ${JSON.stringify({ phase: 'complete', confidence: 0.85 })}\n\n`
+        )
+      );
+
+      controller.close();
+    },
+  });
+
+  return new Response(stream, {
+    headers: {
+      'Content-Type': 'text/event-stream',
+      'Cache-Control': 'no-cache',
+      'Connection': 'keep-alive',
+    },
+  });
+}
+```
+
+## Step 5: Create the chat page
+
+```tsx title="app/chat/page.tsx"
+'use client';
+
+import { AgentChat } from '@surf-kit/agent';
+import { useAgentStream } from '@/hooks/useAgentStream';
+
+export default function ChatPage() {
+  const {
+    messages,
+    sendMessage,
+    isStreaming,
+    streamingContent,
+    phase,
+  } = useAgentStream('/api/agent');
+
+  return (
+    <div className="h-dvh">
+      <AgentChat
+        layout="full-page"
+        agentName="Council Assistant"
+        messages={messages}
+        onSendMessage={sendMessage}
+        isStreaming={isStreaming}
+        streamingContent={streamingContent}
+      />
+    </div>
+  );
+}
+```
+
+## Step 6: Server-side data with RSC
+
+Use Server Components for non-interactive parts of the page:
+
+```tsx title="app/chat/layout.tsx"
+import { ChatPanel } from '@/components/ChatPanel';
+
+// This is a Server Component — it can fetch data directly
+async function getRecentTopics() {
+  const res = await fetch(`${process.env.API_URL}/topics`, {
+    next: { revalidate: 3600 },
+  });
+  return res.json();
+}
+
+export default async function ChatLayout({ children }) {
+  const topics = await getRecentTopics();
+
+  return (
+    <div className="flex h-screen">
+      <aside className="w-64 border-r p-4">
+        <h2 className="font-semibold mb-3">Popular topics</h2>
+        <ul className="space-y-2">
+          {topics.map((topic) => (
+            <li key={topic.id}>
+              <a href={`/chat?topic=${topic.slug}`} className="text-accent hover:underline">
+                {topic.title}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </aside>
+      <main className="flex-1">{children}</main>
+    </div>
+  );
+}
+```
+
+## Environment variables
+
+```env title=".env.local"
+LLM_API_URL=https://api.your-llm-provider.com/v1/chat
+LLM_API_KEY=your-api-key
+```
+
+## Production considerations
+
+- **Rate limiting**: Add rate limiting middleware to the API route.
+- **Authentication**: Protect the API route with session-based authentication.
+- **Logging**: Log all conversations for audit and improvement purposes.
+- **CSP headers**: Configure Content Security Policy to allow the streaming connection.
+
+```tsx title="next.config.ts"
+const nextConfig = {
+  headers: async () => [
+    {
+      source: '/(.*)',
+      headers: [
+        {
+          key: 'Content-Security-Policy',
+          value: "default-src 'self'; connect-src 'self' https://api.your-llm-provider.com;",
+        },
+      ],
+    },
+  ],
+};
+
+export default nextConfig;
+```
+
+## Related
+
+- [Installation](/docs/getting-started/installation) — Initial setup guide.
+- [Streaming Pattern](/docs/patterns/streaming) — Detailed SSE configuration.
+- [API Connection](/docs/recipes/api-connection) — Connecting to various LLM backends.

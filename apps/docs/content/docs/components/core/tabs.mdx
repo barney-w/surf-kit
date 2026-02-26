@@ -1,0 +1,140 @@
+---
+title: Tabs
+description: A tabbed interface for organising content into switchable panels.
+---
+
+# Tabs
+
+A tabbed navigation component for switching between content panels. Built on React Aria for keyboard navigation and ARIA compliance.
+
+## Import
+
+```tsx
+import { Tabs, TabList, Tab, TabPanel } from '@surf-kit/core';
+```
+
+## Props
+
+### Tabs (root)
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `selectedKey` | `string` | — | Controlled selected tab key. |
+| `defaultSelectedKey` | `string` | — | Default selected tab key. |
+| `onSelectionChange` | `(key: string) => void` | — | Handler called when the selected tab changes. |
+| `orientation` | `'horizontal' \| 'vertical'` | `'horizontal'` | Layout direction of the tab list. |
+| `className` | `string` | — | Additional CSS classes. |
+
+### Tab
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `id` | `string` | — | Unique key for the tab. |
+| `isDisabled` | `boolean` | `false` | Whether the tab is disabled. |
+| `children` | `ReactNode` | — | Tab label content. |
+
+### TabPanel
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `id` | `string` | — | Must match the corresponding `Tab` id. |
+| `children` | `ReactNode` | — | Panel content. |
+
+## Usage
+
+### Basic
+
+```tsx
+<Tabs>
+  <TabList>
+    <Tab id="overview">Overview</Tab>
+    <Tab id="usage">Usage</Tab>
+    <Tab id="api">API</Tab>
+  </TabList>
+  <TabPanel id="overview">Overview content here.</TabPanel>
+  <TabPanel id="usage">Usage content here.</TabPanel>
+  <TabPanel id="api">API reference here.</TabPanel>
+</Tabs>
+```
+
+### Controlled
+
+```tsx
+function Example() {
+  const [selected, setSelected] = React.useState('overview');
+
+  return (
+    <Tabs selectedKey={selected} onSelectionChange={setSelected}>
+      <TabList>
+        <Tab id="overview">Overview</Tab>
+        <Tab id="settings">Settings</Tab>
+      </TabList>
+      <TabPanel id="overview">Overview content.</TabPanel>
+      <TabPanel id="settings">Settings content.</TabPanel>
+    </Tabs>
+  );
+}
+```
+
+### With disabled tab
+
+```tsx
+<Tabs>
+  <TabList>
+    <Tab id="active">Active</Tab>
+    <Tab id="coming-soon" isDisabled>Coming soon</Tab>
+  </TabList>
+  <TabPanel id="active">This tab is available.</TabPanel>
+  <TabPanel id="coming-soon">This tab is not available yet.</TabPanel>
+</Tabs>
+```
+
+## Variants showcase
+
+### Horizontal (default)
+
+Tabs appear in a row above the content panels.
+
+```tsx
+<Tabs orientation="horizontal">
+  <TabList>
+    <Tab id="tab1">First</Tab>
+    <Tab id="tab2">Second</Tab>
+  </TabList>
+  <TabPanel id="tab1">First panel.</TabPanel>
+  <TabPanel id="tab2">Second panel.</TabPanel>
+</Tabs>
+```
+
+### Vertical
+
+Tabs appear in a column to the left of the content panels.
+
+```tsx
+<Tabs orientation="vertical">
+  <TabList>
+    <Tab id="general">General</Tab>
+    <Tab id="security">Security</Tab>
+    <Tab id="notifications">Notifications</Tab>
+  </TabList>
+  <TabPanel id="general">General settings.</TabPanel>
+  <TabPanel id="security">Security settings.</TabPanel>
+  <TabPanel id="notifications">Notification settings.</TabPanel>
+</Tabs>
+```
+
+## Accessibility
+
+- Built on **React Aria** `useTabList` for WAI-ARIA Tabs pattern compliance.
+- Arrow keys navigate between tabs (left/right for horizontal, up/down for vertical).
+- `Home` and `End` keys move to the first and last tab.
+- Only the active tab is in the tab order; other tabs are navigated via arrow keys.
+- `TabPanel` is linked to its `Tab` via `aria-labelledby`.
+- Disabled tabs are announced as disabled and skipped during arrow key navigation.
+- Focus ring is visible when navigating with the keyboard.
+- Colour contrast meets **WCAG 2.2 AA** standards.
+
+## Related
+
+- [Accordion](/docs/components/core/accordion) — For collapsible sections when all content should be accessible without switching.
+- [Card](/docs/components/core/card) — Combine with tabs for tabbed card layouts.
