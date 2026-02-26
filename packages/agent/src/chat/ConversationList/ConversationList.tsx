@@ -22,14 +22,14 @@ function ConversationList({
   return (
     <nav
       aria-label="Conversation list"
-      className={twMerge('flex flex-col h-full', className)}
+      className={twMerge('flex flex-col h-full bg-brand-dark', className)}
     >
       {onNew && (
         <div className="p-3 border-b border-border">
           <button
             type="button"
             onClick={onNew}
-            className="w-full px-3 py-2 text-sm font-medium rounded-lg bg-brand text-white hover:bg-brand/90 transition-colors"
+            className="w-full px-4 py-2.5 rounded-xl text-sm font-display font-semibold bg-brand-blue text-brand-cream hover:bg-brand-cyan hover:shadow-glow-cyan transition-all duration-200"
           >
             New conversation
           </button>
@@ -43,8 +43,9 @@ function ConversationList({
             <li
               key={conversation.id}
               className={twMerge(
-                'flex items-start border-b border-border transition-colors hover:bg-surface-hover',
-                isActive && 'bg-surface-hover',
+                'flex items-start border-b border-brand-gold/8 transition-colors duration-200',
+                'hover:bg-brand-dark-panel/50',
+                isActive && 'bg-brand-dark-panel/70 border-l-2 border-l-brand-gold',
               )}
             >
               <button
@@ -53,10 +54,10 @@ function ConversationList({
                 aria-current={isActive ? 'true' : undefined}
                 className="flex-1 min-w-0 text-left px-4 py-3"
               >
-                <div className="text-sm font-medium text-text-primary truncate">
+                <div className="text-sm font-medium text-brand-cream truncate">
                   {conversation.title}
                 </div>
-                <div className="text-xs text-text-secondary truncate mt-0.5">
+                <div className="text-xs text-brand-cream/40 truncate mt-0.5 leading-relaxed">
                   {conversation.lastMessage}
                 </div>
               </button>
@@ -65,7 +66,7 @@ function ConversationList({
                   type="button"
                   onClick={() => onDelete(conversation.id)}
                   aria-label={`Delete ${conversation.title}`}
-                  className="shrink-0 p-1 m-3 rounded text-text-secondary hover:text-text-primary transition-colors"
+                  className="shrink-0 p-1.5 m-2 rounded-lg text-brand-cream/25 hover:text-brand-watermelon hover:bg-brand-watermelon/10 transition-colors duration-200"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -89,8 +90,8 @@ function ConversationList({
         })}
 
         {conversations.length === 0 && (
-          <li className="px-4 py-8 text-center text-sm text-text-secondary">
-            No conversations yet
+          <li className="px-4 py-8 text-center">
+            <span className="text-sm text-brand-cream/30 font-body">No conversations yet</span>
           </li>
         )}
       </ul>

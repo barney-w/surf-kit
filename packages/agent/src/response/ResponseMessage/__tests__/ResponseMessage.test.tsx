@@ -47,6 +47,16 @@ describe('ResponseMessage', () => {
     expect(screen.getByText('Item 1')).toBeDefined()
     expect(screen.getByText('Item 2')).toBeDefined()
     expect(screen.getByText('Item 3')).toBeDefined()
+    expect(screen.getByRole('list')).toBeDefined()
+  })
+
+  it('normalizes compact inline lists from provider responses', () => {
+    const content =
+      'Employees are entitled to: - **Four weeks** (20 days) - Pro-rata for part-time staff'
+    render(<ResponseMessage content={content} />)
+    expect(screen.getByRole('list')).toBeDefined()
+    expect(screen.getByText(/Four weeks/)).toBeDefined()
+    expect(screen.getByText(/Pro-rata/)).toBeDefined()
   })
 
   it('has no accessibility violations', async () => {

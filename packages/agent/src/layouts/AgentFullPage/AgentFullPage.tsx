@@ -39,7 +39,7 @@ function AgentFullPage({
 
   return (
     <div
-      className={twMerge('flex h-screen w-full overflow-hidden', className)}
+      className={twMerge('flex h-screen w-full overflow-hidden bg-brand-dark', className)}
       data-testid="agent-full-page"
     >
       {/* Sidebar */}
@@ -48,7 +48,7 @@ function AgentFullPage({
           {/* Mobile overlay */}
           {sidebarOpen && (
             <div
-              className="fixed inset-0 bg-black/50 z-30 md:hidden"
+              className="fixed inset-0 bg-brand-dark/80 backdrop-blur-sm z-30 md:hidden"
               onClick={() => setSidebarOpen(false)}
               data-testid="sidebar-overlay"
             />
@@ -57,7 +57,7 @@ function AgentFullPage({
           {/* Sidebar panel */}
           <aside
             className={twMerge(
-              'bg-surface border-r border-border w-72 shrink-0 flex-col z-40',
+              'bg-brand-dark border-r border-brand-gold/15 w-72 shrink-0 flex-col z-40',
               // Desktop: always visible
               'hidden md:flex',
               // Mobile: overlay when open
@@ -77,15 +77,15 @@ function AgentFullPage({
       )}
 
       {/* Main chat area */}
-      <div className="flex-1 flex flex-col min-w-0">
+      <div className="flex-1 flex flex-col min-w-0 bg-brand-dark">
         {/* Mobile sidebar toggle */}
         {showConversationList && (
-          <div className="md:hidden flex items-center border-b border-border px-3 py-2">
+          <div className="md:hidden flex items-center border-b border-brand-gold/15 px-3 py-2 bg-brand-dark-panel/60 backdrop-blur-sm">
             <button
               type="button"
               onClick={() => setSidebarOpen(true)}
               aria-label="Open conversations sidebar"
-              className="p-2 rounded-lg hover:bg-surface-hover transition-colors"
+              className="p-2 rounded-xl text-brand-cream/60 hover:text-brand-cream hover:bg-brand-dark-panel transition-colors duration-200"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"

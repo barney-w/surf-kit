@@ -39,36 +39,41 @@ function MessageComposer({
   return (
     <div
       className={twMerge(
-        'flex items-end gap-2 border-t border-border p-4 bg-surface',
+        'flex items-end gap-3 border-t border-brand-gold/12 px-4 py-3 bg-brand-dark/80 backdrop-blur-sm',
         className,
       )}
     >
       <textarea
         ref={textareaRef}
         value={value}
-        onChange={(e) => setValue(e.target.value)}
+        onChange={e => setValue(e.target.value)}
         onKeyDown={handleKeyDown}
         placeholder={placeholder}
         rows={1}
-        aria-label="Message input"
-        className={twMerge(
-          'flex-1 resize-none rounded-lg border border-border bg-surface px-3 py-2 text-sm text-text-primary',
-          'focus:border-interactive focus:ring-2 focus:ring-accent/20 focus:outline-none',
-          'disabled:opacity-50 disabled:cursor-not-allowed',
-        )}
         disabled={isLoading}
+        className={twMerge(
+          'flex-1 resize-none rounded-xl border border-brand-gold/15 bg-brand-dark-panel/80',
+          'px-4 py-2.5 text-sm text-brand-cream placeholder:text-brand-charcoal font-body',
+          'focus:border-transparent focus:ring-2 focus:ring-brand-gold/40 focus:outline-none',
+          'disabled:opacity-50 disabled:cursor-not-allowed',
+          'transition-all duration-200',
+        )}
+        style={{ colorScheme: 'dark' }}
+        aria-label="Message input"
       />
       <button
         type="button"
         onClick={handleSend}
-        disabled={!canSend}
+        disabled={!value.trim() || isLoading}
         aria-label="Send message"
         className={twMerge(
-          'inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm font-medium',
-          'bg-accent text-white transition-colors',
-          'hover:bg-accent-hover',
-          'disabled:opacity-50 disabled:cursor-not-allowed',
-          'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent',
+          'inline-flex items-center justify-center rounded-xl px-5 py-2.5',
+          'text-sm font-display font-semibold text-brand-cream shrink-0',
+          'transition-all duration-200',
+          'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-cyan',
+          value.trim() && !isLoading
+            ? 'bg-brand-blue hover:bg-brand-cyan hover:shadow-glow-cyan hover:scale-[1.02] active:scale-[0.98]'
+            : 'bg-brand-blue/30 text-brand-cream/40 cursor-not-allowed',
         )}
       >
         Send

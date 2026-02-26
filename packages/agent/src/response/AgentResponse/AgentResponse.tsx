@@ -49,7 +49,7 @@ function AgentResponse({
 
       {/* Confidence & Verification badges */}
       {(showConfidence || showVerification) && (
-        <div className="flex items-center gap-2" data-testid="response-meta">
+        <div className="flex flex-wrap items-center gap-2 mt-1" data-testid="response-meta">
           {showConfidence && (
             <Badge
               intent={getConfidenceIntent(response.confidence.overall)}

@@ -12,23 +12,23 @@ const DEMO_ENDPOINT = '/api/v1'
 const sampleConversations: ConversationSummary[] = [
   {
     id: '1',
-    title: 'Leave policy question',
-    lastMessage: 'How many days of PTO do I have remaining?',
-    updatedAt: new Date('2025-06-15'),
+    title: 'Council tax reduction check',
+    lastMessage: 'Can I apply online if I already receive Universal Credit?',
+    updatedAt: new Date('2026-02-24'),
     messageCount: 4,
   },
   {
     id: '2',
-    title: 'Password reset',
-    lastMessage: 'I need to reset my VPN password',
-    updatedAt: new Date('2025-06-14'),
+    title: 'Missed recycling collection',
+    lastMessage: 'Bin was out by 6am but not collected',
+    updatedAt: new Date('2026-02-23'),
     messageCount: 6,
   },
   {
     id: '3',
-    title: 'Q3 board meeting notes',
-    lastMessage: 'Can you summarize the board meeting?',
-    updatedAt: new Date('2025-06-13'),
+    title: 'Rear extension planning advice',
+    lastMessage: 'Do we need full planning or householder permission?',
+    updatedAt: new Date('2026-02-22'),
     messageCount: 2,
   },
 ]
@@ -51,7 +51,7 @@ export function LayoutDemos() {
             style={{
               padding: '8px 16px',
               borderRadius: 8,
-              border: '1px solid var(--border-color, #e5e7eb)',
+              border: '1px solid var(--surf-color-border-default)',
               background: 'transparent',
               cursor: 'pointer',
               color: 'inherit',
@@ -64,7 +64,7 @@ export function LayoutDemos() {
             style={{
               padding: '8px 16px',
               borderRadius: 8,
-              border: '1px solid var(--border-color, #e5e7eb)',
+              border: '1px solid var(--surf-color-border-default)',
               background: 'transparent',
               cursor: 'pointer',
               color: 'inherit',
@@ -85,7 +85,7 @@ export function LayoutDemos() {
       {/* ConversationList demo */}
       <section>
         <h3 style={{ fontSize: 16, fontWeight: 600, marginBottom: 8 }}>ConversationList</h3>
-        <div style={{ width: 300, height: 300, border: '1px solid var(--border-color, #e5e7eb)', borderRadius: 8 }}>
+        <div style={{ width: 300, height: 300, border: '1px solid var(--surf-color-border-default)', borderRadius: 8, overflow: 'hidden' }}>
           <ConversationList
             conversations={sampleConversations}
             activeId={activeConvId}
@@ -99,7 +99,7 @@ export function LayoutDemos() {
       {/* AgentEmbed demo */}
       <section>
         <h3 style={{ fontSize: 16, fontWeight: 600, marginBottom: 8 }}>AgentEmbed</h3>
-        <div style={{ width: '100%', maxWidth: 600, height: 400, border: '1px solid var(--border-color, #e5e7eb)', borderRadius: 8 }}>
+        <div style={{ width: '100%', maxWidth: 600, height: 400, border: '1px solid var(--surf-color-border-default)', borderRadius: 8 }}>
           <AgentEmbed endpoint={DEMO_ENDPOINT} title="Embedded Chat" />
         </div>
       </section>

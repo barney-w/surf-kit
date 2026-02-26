@@ -24,7 +24,7 @@ function SourceList({
   if (sources.length === 0) return null
 
   const content = (
-    <div className="flex flex-col gap-2" data-testid="source-list-items">
+    <div className="flex flex-col gap-1.5" data-testid="source-list-items">
       {sources.map((source) => (
         <SourceCard
           key={source.document_id}
@@ -48,9 +48,9 @@ function SourceList({
     <div className={className} data-testid="source-list">
       <button
         type="button"
-        onClick={() => setIsExpanded((prev) => !prev)}
+        onClick={() => setIsExpanded(prev => !prev)}
         aria-expanded={isExpanded}
-        className="flex items-center gap-1 text-sm font-medium text-text-primary mb-2 hover:text-accent transition-colors"
+        className="flex items-center gap-1.5 text-xs font-display font-semibold uppercase tracking-wider text-brand-cream/50 hover:text-brand-gold mb-2 transition-colors duration-200"
       >
         <svg
           className={`w-4 h-4 transition-transform ${isExpanded ? 'rotate-180' : ''}`}

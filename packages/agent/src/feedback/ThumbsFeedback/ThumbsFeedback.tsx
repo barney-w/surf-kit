@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { Button } from '@surf-kit/core'
 
 type FeedbackRating = 'positive' | 'negative'
 
@@ -30,7 +29,7 @@ function ThumbsFeedback({
 
   return (
     <div
-      className={`inline-flex items-center gap-1 ${className ?? ''}`}
+      className={`inline-flex items-center gap-0.5 ${className ?? ''}`}
       role="group"
       aria-label="Rate this response"
       data-testid="thumbs-feedback"
@@ -40,10 +39,10 @@ function ThumbsFeedback({
         onClick={() => handleClick('positive')}
         aria-label="Thumbs up"
         aria-pressed={selected === 'positive'}
-        className={`p-1.5 rounded-md transition-colors ${
+        className={`p-1.5 rounded-md transition-colors duration-200 ${
           selected === 'positive'
-            ? 'text-accent bg-accent/10'
-            : 'text-text-secondary hover:text-text-primary hover:bg-surface-hover'
+            ? 'text-brand-cyan bg-brand-cyan/15'
+            : 'text-brand-cream/30 hover:text-brand-cyan hover:bg-brand-cyan/10'
         }`}
         data-testid="thumbs-up"
       >
@@ -67,10 +66,10 @@ function ThumbsFeedback({
         onClick={() => handleClick('negative')}
         aria-label="Thumbs down"
         aria-pressed={selected === 'negative'}
-        className={`p-1.5 rounded-md transition-colors ${
+        className={`p-1.5 rounded-md transition-colors duration-200 ${
           selected === 'negative'
-            ? 'text-error bg-error/10'
-            : 'text-text-secondary hover:text-text-primary hover:bg-surface-hover'
+            ? 'text-brand-watermelon bg-brand-watermelon/15'
+            : 'text-brand-cream/30 hover:text-brand-watermelon hover:bg-brand-watermelon/10'
         }`}
         data-testid="thumbs-down"
       >

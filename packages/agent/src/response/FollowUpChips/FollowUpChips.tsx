@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button } from '@surf-kit/core'
+import { twMerge } from 'tailwind-merge'
 
 type FollowUpChipsProps = {
   suggestions: string[]
@@ -12,21 +12,26 @@ function FollowUpChips({ suggestions, onSelect, className }: FollowUpChipsProps)
 
   return (
     <div
+      className={`flex gap-2 overflow-x-auto py-1 ${className ?? ''}`}
       role="group"
       aria-label="Follow-up suggestions"
-      className={`flex gap-2 overflow-x-auto ${className ?? ''}`}
       data-testid="follow-up-chips"
     >
-      {suggestions.map((suggestion) => (
-        <Button
+      {suggestions.map(suggestion => (
+        <button
           key={suggestion}
-          intent="secondary"
-          size="sm"
-          onPress={() => onSelect(suggestion)}
-          className="whitespace-nowrap flex-shrink-0"
+          type="button"
+          onClick={() => onSelect(suggestion)}
+          className={twMerge(
+            'px-4 py-1.5 rounded-full text-sm font-body shrink-0 whitespace-nowrap',
+            'border border-brand-gold/20 bg-transparent text-brand-cream/65',
+            'hover:bg-brand-gold/10 hover:border-brand-gold/40 hover:text-brand-cream',
+            'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-cyan',
+            'transition-all duration-200',
+          )}
         >
           {suggestion}
-        </Button>
+        </button>
       ))}
     </div>
   )

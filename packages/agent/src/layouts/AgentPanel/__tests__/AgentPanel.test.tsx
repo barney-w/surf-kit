@@ -30,7 +30,7 @@ vi.mock('../../../hooks/useAgentChat', () => ({
 }))
 
 describe('AgentPanel', () => {
-  it('renders nothing when not open', () => {
+  it('renders panel hidden when not open', () => {
     const { container } = render(
       <AgentPanel
         endpoint="https://api.test.com"
@@ -38,7 +38,11 @@ describe('AgentPanel', () => {
         onClose={vi.fn()}
       />,
     )
-    expect(container.innerHTML).toBe('')
+    // Panel is always in the DOM but hidden via CSS transforms and aria-hidden
+    const root = container.firstElementChild as HTMLElement
+    expect(root).not.toBeNull()
+    expect(root.getAttribute('aria-hidden')).toBe('true')
+    expect(root.className).toContain('pointer-events-none')
   })
 
   it('renders dialog when open', () => {

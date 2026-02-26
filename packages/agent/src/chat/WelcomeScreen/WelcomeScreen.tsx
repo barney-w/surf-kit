@@ -19,25 +19,44 @@ function WelcomeScreen({
   return (
     <div
       className={twMerge(
-        'flex flex-1 flex-col items-center justify-center gap-6 p-8 text-center',
+        'flex flex-1 flex-col items-center justify-center gap-8 p-8 text-center',
         className,
       )}
     >
-      <div className="flex flex-col gap-2">
-        <h2 className="text-2xl font-semibold text-text-primary">{title}</h2>
-        <p className="text-base text-text-secondary">{message}</p>
+      {/* Pulsing icon */}
+      <div
+        className="w-14 h-14 rounded-2xl bg-brand-gold/10 border border-brand-gold/20 flex items-center justify-center pulse-glow"
+        aria-hidden="true"
+      >
+        <span className="text-2xl">✦</span>
       </div>
+
+      {/* Text */}
+      <div className="flex flex-col gap-2">
+        {title && (
+          <h2 className="font-display text-2xl font-bold text-brand-cream">{title}</h2>
+        )}
+        <p className="text-brand-cream/60 text-base leading-relaxed max-w-sm">{message}</p>
+      </div>
+
+      {/* Suggested question chips */}
       {suggestedQuestions.length > 0 && (
-        <div className="flex flex-wrap justify-center gap-2" role="group" aria-label="Suggested questions">
-          {suggestedQuestions.map((question) => (
+        <div
+          className="flex flex-wrap justify-center gap-2 max-w-md"
+          role="group"
+          aria-label="Suggested questions"
+        >
+          {suggestedQuestions.map(question => (
             <button
               key={question}
               type="button"
               onClick={() => onQuestionSelect?.(question)}
               className={twMerge(
-                'rounded-full border border-border bg-surface px-4 py-2 text-sm text-text-primary',
-                'transition-colors hover:bg-surface-raised hover:border-interactive',
-                'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent',
+                'px-4 py-2 rounded-full text-sm font-body',
+                'border border-brand-gold/20 bg-transparent text-brand-cream/65',
+                'hover:bg-brand-gold/10 hover:border-brand-gold/40 hover:text-brand-cream',
+                'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-cyan',
+                'transition-colors duration-200',
               )}
             >
               {question}

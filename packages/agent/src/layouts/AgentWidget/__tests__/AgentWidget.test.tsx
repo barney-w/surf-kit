@@ -32,41 +32,41 @@ vi.mock('../../../hooks/useAgentChat', () => ({
 describe('AgentWidget', () => {
   it('renders a floating trigger button when closed', () => {
     render(<AgentWidget endpoint="https://api.test.com" />)
-    expect(screen.getByLabelText('Chat')).toBeDefined()
+    expect(screen.getByRole('button', { name: 'Chat' })).toBeDefined()
   })
 
   it('renders with custom trigger label', () => {
     render(
       <AgentWidget endpoint="https://api.test.com" triggerLabel="Ask AI" />,
     )
-    expect(screen.getByLabelText('Ask AI')).toBeDefined()
+    expect(screen.getByRole('button', { name: 'Ask AI' })).toBeDefined()
   })
 
   it('opens chat panel when trigger button is clicked', async () => {
     const user = userEvent.setup()
     render(<AgentWidget endpoint="https://api.test.com" title="Widget Chat" />)
-    await user.click(screen.getByLabelText('Chat'))
+    await user.click(screen.getByRole('button', { name: 'Chat' }))
     expect(screen.getByRole('dialog', { name: 'Widget Chat' })).toBeDefined()
   })
 
   it('closes chat panel when minimize button is clicked', async () => {
     const user = userEvent.setup()
     render(<AgentWidget endpoint="https://api.test.com" />)
-    await user.click(screen.getByLabelText('Chat'))
-    expect(screen.getByRole('dialog')).toBeDefined()
+    await user.click(screen.getByRole('button', { name: 'Chat' }))
+    const dialog = screen.getByRole('dialog')
+    expect(dialog).toBeDefined()
     await user.click(screen.getByLabelText('Minimize chat'))
-    expect(screen.queryByRole('dialog')).toBeNull()
+    // Popover is always in DOM but hidden via aria-hidden
+    expect(dialog.getAttribute('aria-hidden')).toBe('true')
   })
 
   it('sets aria-expanded on trigger button', async () => {
     const user = userEvent.setup()
     render(<AgentWidget endpoint="https://api.test.com" />)
-    const trigger = screen.getByLabelText('Chat')
+    const trigger = screen.getByRole('button', { name: 'Chat' })
     expect(trigger.getAttribute('aria-expanded')).toBe('false')
     await user.click(trigger)
     // After open, the trigger label changes
-    const closeTrigger = screen.getByRole('button', { name: 'Close chat' })
-    // The floating button should have aria-expanded=true
     const floatingButtons = screen.getAllByRole('button')
     const expandedButton = floatingButtons.find(
       (b) => b.getAttribute('aria-expanded') === 'true',
@@ -76,7 +76,7 @@ describe('AgentWidget', () => {
 
   it('positions on the bottom-right by default', () => {
     render(<AgentWidget endpoint="https://api.test.com" />)
-    const trigger = screen.getByLabelText('Chat')
+    const trigger = screen.getByRole('button', { name: 'Chat' })
     expect(trigger.className).toContain('right-4')
     expect(trigger.className).toContain('bottom-4')
   })
@@ -85,7 +85,7 @@ describe('AgentWidget', () => {
     render(
       <AgentWidget endpoint="https://api.test.com" position="bottom-left" />,
     )
-    const trigger = screen.getByLabelText('Chat')
+    const trigger = screen.getByRole('button', { name: 'Chat' })
     expect(trigger.className).toContain('left-4')
     expect(trigger.className).toContain('bottom-4')
   })

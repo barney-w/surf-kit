@@ -9,8 +9,11 @@ import type { ChatMessage } from '../../types/chat'
 export type AgentChatProps = {
   endpoint: string
   title?: string
+  welcomeTitle?: string
   welcomeMessage?: string
   suggestedQuestions?: string[]
+  showHeader?: boolean
+  showWelcomeTitle?: boolean
   showSources?: boolean
   showConfidence?: boolean
   showVerification?: boolean
@@ -22,8 +25,14 @@ export type AgentChatProps = {
 function AgentChat({
   endpoint,
   title = 'Chat',
+  welcomeTitle,
   welcomeMessage = 'How can I help you today?',
   suggestedQuestions = [],
+  showHeader = true,
+  showWelcomeTitle = true,
+  showSources,
+  showConfidence,
+  showVerification,
   className,
 }: AgentChatProps) {
   const { state, actions } = useAgentChat({ apiUrl: endpoint })
@@ -41,19 +50,26 @@ function AgentChat({
   return (
     <div
       className={twMerge(
-        'flex flex-col h-full bg-surface border border-border rounded-xl overflow-hidden',
+        'flex flex-col h-full bg-brand-dark border border-brand-gold/15 rounded-2xl overflow-hidden',
         className,
       )}
     >
-      <div className="flex items-center border-b border-border px-4 py-3">
-        <h1 className="text-lg font-semibold text-text-primary">{title}</h1>
-      </div>
+      {showHeader && (
+        <div className="flex items-center justify-between border-b border-brand-gold/15 px-4 py-3 bg-brand-dark-panel/60 backdrop-blur-sm shrink-0">
+          <h1 className="text-base font-display font-semibold text-brand-cream">{title}</h1>
+        </div>
+      )}
 
       {hasMessages ? (
-        <MessageThread messages={state.messages} />
+        <MessageThread
+          messages={state.messages}
+          showSources={showSources}
+          showConfidence={showConfidence}
+          showVerification={showVerification}
+        />
       ) : (
         <WelcomeScreen
-          title={title}
+          title={showWelcomeTitle ? (welcomeTitle ?? title) : ''}
           message={welcomeMessage}
           suggestedQuestions={suggestedQuestions}
           onQuestionSelect={handleQuestionSelect}

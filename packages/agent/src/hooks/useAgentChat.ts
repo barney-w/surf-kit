@@ -143,7 +143,7 @@ export function useAgentChat(config: AgentChatConfig) {
           },
           body: JSON.stringify({
             message: content,
-            conversationId: state.conversationId,
+            conversation_id: state.conversationId,
           }),
           signal: controller.signal,
         })
@@ -175,6 +175,7 @@ export function useAgentChat(config: AgentChatConfig) {
         let buffer = ''
         let accumulatedContent = ''
         let agentResponse: AgentResponse | null = null
+        let capturedAgent: string | null = null
 
         while (true) {
           const { done, value } = await reader.read()
@@ -192,6 +193,9 @@ export function useAgentChat(config: AgentChatConfig) {
             try {
               const event = JSON.parse(data)
               switch (event.type) {
+                case 'agent':
+                  capturedAgent = event.agent as string
+                  break
                 case 'phase':
                   dispatch({ type: 'STREAM_PHASE', phase: event.phase })
                   break
@@ -216,6 +220,7 @@ export function useAgentChat(config: AgentChatConfig) {
           role: 'assistant',
           content: agentResponse?.message ?? accumulatedContent,
           response: agentResponse ?? undefined,
+          agent: capturedAgent ?? undefined,
           timestamp: new Date(),
         }
 

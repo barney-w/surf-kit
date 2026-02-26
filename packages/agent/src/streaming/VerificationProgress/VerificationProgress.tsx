@@ -1,5 +1,4 @@
 import React from 'react'
-import { Spinner } from '@surf-kit/core'
 
 type VerificationProgressProps = {
   isActive: boolean
@@ -16,14 +15,12 @@ function VerificationProgress({
 
   return (
     <div
-      className={`flex items-center gap-2 text-sm text-text-secondary ${className ?? ''}`}
+      className={`flex items-center gap-2 text-sm font-body ${className ?? ''}`}
       role="status"
       data-testid="verification-progress"
     >
-      <span aria-hidden="true">
-        <Spinner size="sm" />
-      </span>
-      <span>{label}</span>
+      <div className="brand-spinner brand-spinner-sm" aria-hidden="true" />
+      <span className="text-brand-cyan/70 animate-pulse">{label}</span>
     </div>
   )
 }

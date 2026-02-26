@@ -48,19 +48,19 @@ describe('MessageBubble', () => {
   it('left-aligns assistant messages', () => {
     const { container } = render(<MessageBubble message={assistantMessage} />)
     const wrapper = container.querySelector('[data-message-id="msg-2"]')
-    expect(wrapper?.className).toContain('justify-start')
+    expect(wrapper?.className).toContain('items-start')
   })
 
   it('applies accent background to user messages', () => {
     const { container } = render(<MessageBubble message={userMessage} />)
     const bubble = container.querySelector('[data-message-id="msg-1"]')?.firstElementChild
-    expect(bubble?.className).toContain('bg-accent')
+    expect(bubble?.className).toContain('bg-brand-blue')
   })
 
   it('applies surface background to assistant messages', () => {
     const { container } = render(<MessageBubble message={assistantMessage} />)
     const bubble = container.querySelector('[data-message-id="msg-2"]')?.firstElementChild
-    expect(bubble?.className).toContain('bg-surface-raised')
+    expect(bubble?.className).toContain('bg-brand-dark-panel/70')
   })
 
   it('shows agent name when showAgent is true', () => {
