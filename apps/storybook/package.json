@@ -8,6 +8,7 @@
     "build": "storybook build -o dist"
   },
   "dependencies": {
+    "@surf-kit/agent": "workspace:*",
     "@surf-kit/core": "workspace:*",
     "@surf-kit/theme": "workspace:*",
     "@surf-kit/tokens": "workspace:*",
