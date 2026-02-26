@@ -1,0 +1,53 @@
+---
+title: Design Principles
+description: The five core principles that guide every decision in surf-kit.
+---
+
+# Design Principles
+
+surf-kit is built on five core principles. Every component, token, and API decision is evaluated against these tenets.
+
+## 1. AI-first, not AI-added
+
+surf-kit is purpose-built for agent interfaces, not a general-purpose UI library with AI features bolted on as an afterthought. Every component is designed with AI interaction patterns in mind: streaming responses, tool calls, multi-turn conversations, and autonomous agent workflows.
+
+This means components like `AgentChat`, source citations, and confidence indicators are first-class citizens, not add-ons.
+
+## 2. Trust through transparency
+
+Users must trust AI-generated output. surf-kit makes this possible by ensuring every response can show its sources, confidence level, and verification status. Components expose attribution metadata, reasoning traces, and actionable feedback mechanisms.
+
+Design decisions favour explicitness over brevity. When in doubt, surface more information rather than less.
+
+## 3. Accessible by default
+
+Every component meets **WCAG 2.2 AA** standards out of the box. This includes:
+
+- Full keyboard navigation
+- Screen reader compatibility via ARIA attributes (powered by React Aria)
+- Reduced motion support with `prefers-reduced-motion`
+- Sufficient colour contrast ratios across all themes
+- Focus management for modals, dialogs, and overlays
+
+Accessibility is not optional. It is tested in CI with automated axe checks and manual screen reader verification.
+
+## 4. Enterprise-grade theming
+
+surf-kit uses a **token-based theming system** with three tiers:
+
+- **Primitive tokens** — Raw values (hex colours, pixel sizes)
+- **Semantic tokens** — Contextual meanings (background, text-primary, accent)
+- **Component tokens** — Component-specific overrides (button-bg, input-border)
+
+This architecture supports multi-theme deployments, dark/light mode, and white-labelling for enterprise customers. Themes are applied via CSS custom properties and can be swapped at runtime.
+
+See the [Tokens](/docs/tokens) page for the full architecture.
+
+## 5. Composable architecture
+
+surf-kit supports two usage patterns:
+
+- **Full-page layouts** — Drop in `AgentChat` or `AgentDashboard` for a complete experience with sensible defaults.
+- **Individual components** — Import only what you need (`Button`, `Card`, `TextInput`) and compose your own layouts.
+
+Components are designed as small, focused units with clear props and no hidden coupling. Higher-level compositions are built from the same primitives that you can use directly.

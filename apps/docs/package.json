@@ -1,0 +1,33 @@
+{
+  "name": "docs",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@surf-kit/core": "workspace:*",
+    "@surf-kit/theme": "workspace:*",
+    "@surf-kit/tokens": "workspace:*",
+    "fumadocs-core": "14.7.7",
+    "fumadocs-mdx": "11.10.1",
+    "fumadocs-ui": "14.7.7",
+    "next": "^15.3.0",
+    "react": "^18.3.0",
+    "react-dom": "^18.3.0"
+  },
+  "devDependencies": {
+    "@surf-kit/tsconfig": "workspace:*",
+    "@types/mdx": "^2.0.0",
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
+    "autoprefixer": "^10.4.0",
+    "postcss": "^8.4.0",
+    "tailwindcss": "^3.4.0",
+    "typescript": "^5.5.0"
+  }
+}

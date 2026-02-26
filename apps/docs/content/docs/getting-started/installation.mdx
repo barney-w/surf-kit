@@ -1,0 +1,108 @@
+---
+title: Installation
+description: Install surf-kit packages and configure your project.
+---
+
+# Installation
+
+## Install packages
+
+Install the core packages with your preferred package manager:
+
+```bash title="pnpm"
+pnpm add @surf-kit/core @surf-kit/tokens @surf-kit/theme
+```
+
+```bash title="npm"
+npm install @surf-kit/core @surf-kit/tokens @surf-kit/theme
+```
+
+```bash title="yarn"
+yarn add @surf-kit/core @surf-kit/tokens @surf-kit/theme
+```
+
+For the high-level agent interface (coming soon):
+
+```bash title="pnpm"
+pnpm add @surf-kit/agent
+```
+
+```bash title="npm"
+npm install @surf-kit/agent
+```
+
+```bash title="yarn"
+yarn add @surf-kit/agent
+```
+
+## Configure Tailwind CSS
+
+Add the surf-kit preset to your `tailwind.config.ts`:
+
+```ts title="tailwind.config.ts"
+import { surfKitPreset } from '@surf-kit/tokens/tailwind';
+import type { Config } from 'tailwindcss';
+
+const config: Config = {
+  content: [
+    './app/**/*.{ts,tsx}',
+    './components/**/*.{ts,tsx}',
+    './node_modules/@surf-kit/core/dist/**/*.js',
+  ],
+  presets: [surfKitPreset],
+};
+
+export default config;
+```
+
+This preset registers all surf-kit design tokens as Tailwind utilities, including colours, spacing, typography scales, and border radii.
+
+## Set up the ThemeProvider
+
+Wrap your application root with the `ThemeProvider` from `@surf-kit/theme`:
+
+```tsx title="app/layout.tsx"
+import { ThemeProvider } from '@surf-kit/theme';
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="en">
+      <body>
+        <ThemeProvider defaultTheme="system">
+          {children}
+        </ThemeProvider>
+      </body>
+    </html>
+  );
+}
+```
+
+The `ThemeProvider` handles:
+- Dark and light mode switching
+- System preference detection
+- Token-based theme application via CSS custom properties
+- Persistence of user preference in `localStorage`
+
+## Verify the installation
+
+Create a simple page to verify everything works:
+
+```tsx title="app/page.tsx"
+import { Button } from '@surf-kit/core';
+
+export default function Home() {
+  return (
+    <main className="flex min-h-screen items-center justify-center">
+      <Button intent="primary" size="md">
+        surf-kit is working
+      </Button>
+    </main>
+  );
+}
+```
+
+If you see a styled button, you are all set. Head to the [Quick Start](/docs/getting-started/quick-start) guide to build your first agent interface.

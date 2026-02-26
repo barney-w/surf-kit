@@ -1,0 +1,110 @@
+---
+title: Quick Start
+description: Build your first agent interface with surf-kit in minutes.
+---
+
+# Quick Start
+
+This guide walks you through building an agent chat interface using surf-kit components.
+
+## Drop-in AgentChat
+
+The fastest way to add an agent interface is with the `AgentChat` component (coming in `@surf-kit/agent`):
+
+```tsx title="app/agent/page.tsx"
+import { AgentChat } from '@surf-kit/agent';
+
+export default function AgentPage() {
+  return (
+    <AgentChat
+      endpoint="/api/agent"
+      title="AI Assistant"
+      placeholder="Ask me anything..."
+      showSources
+      showConfidence
+    />
+  );
+}
+```
+
+This single component provides:
+- A full chat interface with message history
+- Source attribution for every response
+- Confidence indicators
+- Keyboard navigation and screen reader support
+- Dark/light mode via the theme provider
+
+## Composing a custom layout
+
+For more control, compose your own agent interface from individual components:
+
+```tsx title="app/agent/page.tsx"
+import {
+  Card,
+  TextArea,
+  Button,
+  Badge,
+  Stack,
+  Text,
+  Sidebar,
+} from '@surf-kit/core';
+
+export default function CustomAgentPage() {
+  return (
+    <div className="flex h-screen">
+      {/* Conversation sidebar */}
+      <Sidebar className="w-64 border-r">
+        <Sidebar.Section title="Recent">
+          <Sidebar.Item active>Today's conversation</Sidebar.Item>
+          <Sidebar.Item>Yesterday's summary</Sidebar.Item>
+        </Sidebar.Section>
+      </Sidebar>
+
+      {/* Main chat area */}
+      <main className="flex flex-1 flex-col">
+        {/* Message list */}
+        <div className="flex-1 overflow-y-auto p-6">
+          <Stack gap="md">
+            {/* Agent message */}
+            <Card variant="filled">
+              <Stack gap="sm">
+                <Text>
+                  Here is the analysis you requested. I found three
+                  relevant sources that support this conclusion.
+                </Text>
+                <div className="flex gap-2">
+                  <Badge intent="info">3 sources</Badge>
+                  <Badge intent="success">High confidence</Badge>
+                </div>
+              </Stack>
+            </Card>
+
+            {/* User message */}
+            <Card className="ml-auto max-w-lg">
+              <Text>Can you summarise the key findings?</Text>
+            </Card>
+          </Stack>
+        </div>
+
+        {/* Input area */}
+        <div className="border-t p-4">
+          <Stack direction="row" gap="sm" align="end">
+            <TextArea
+              placeholder="Type your message..."
+              className="flex-1"
+              aria-label="Message input"
+            />
+            <Button intent="primary">Send</Button>
+          </Stack>
+        </div>
+      </main>
+    </div>
+  );
+}
+```
+
+## Next steps
+
+- Browse the [Component documentation](/docs/components/core/button) to see all available components.
+- Read the [Design Principles](/docs/design-principles) to understand the philosophy behind surf-kit.
+- Check the [Tokens](/docs/tokens) page to learn about the three-tier token architecture.

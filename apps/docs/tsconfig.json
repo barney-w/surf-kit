@@ -1,0 +1,41 @@
+{
+  "extends": "@surf-kit/tsconfig/react.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": ".",
+    "baseUrl": ".",
+    "noEmit": true,
+    "declaration": false,
+    "declarationMap": false,
+    "skipLibCheck": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@/*": [
+        "./*"
+      ],
+      "@/.source": [
+        "./.source"
+      ]
+    },
+    "allowJs": true,
+    "incremental": true,
+    "jsx": "preserve"
+  },
+  "include": [
+    "**/*.mjs",
+    "**/*.ts",
+    "**/*.tsx",
+    ".source/**/*.ts",
+    "next-env.d.ts",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    ".next",
+    "dist"
+  ]
+}

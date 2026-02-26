@@ -1,0 +1,110 @@
+---
+title: Tokens
+description: The three-tier token architecture powering surf-kit's theming system.
+---
+
+# Design Tokens
+
+surf-kit uses a three-tier token architecture that separates raw values from their semantic meaning and component-level usage. This enables robust theming, dark/light mode, and enterprise white-labelling.
+
+## Three-tier architecture
+
+### Tier 1: Primitive tokens
+
+Primitive tokens are the raw design values. They have no semantic meaning and are never used directly in components.
+
+| Token | Value |
+| --- | --- |
+| `blue-500` | `#3B82F6` |
+| `gray-900` | `#111827` |
+| `space-4` | `16px` |
+| `radius-lg` | `12px` |
+| `font-size-base` | `16px` |
+
+### Tier 2: Semantic tokens
+
+Semantic tokens map primitives to their purpose. These are the tokens you use in custom styles.
+
+| Token | Light | Dark |
+| --- | --- | --- |
+| `--color-background` | `white` | `gray-950` |
+| `--color-surface` | `gray-50` | `gray-900` |
+| `--color-surface-raised` | `white` | `gray-800` |
+| `--color-text-primary` | `gray-900` | `gray-50` |
+| `--color-text-secondary` | `gray-600` | `gray-400` |
+| `--color-accent` | `blue-500` | `blue-400` |
+| `--color-border` | `gray-200` | `gray-700` |
+| `--color-status-success` | `green-500` | `green-400` |
+| `--color-status-error` | `red-500` | `red-400` |
+| `--color-status-warning` | `amber-500` | `amber-400` |
+| `--color-status-info` | `blue-500` | `blue-400` |
+
+### Tier 3: Component tokens
+
+Component tokens allow fine-grained overrides for specific components without affecting the global theme.
+
+| Token | Default |
+| --- | --- |
+| `--button-bg` | `var(--color-accent)` |
+| `--button-text` | `white` |
+| `--input-border` | `var(--color-border)` |
+| `--input-bg` | `var(--color-surface)` |
+| `--card-bg` | `var(--color-surface-raised)` |
+| `--card-border` | `var(--color-border)` |
+
+## Colour swatches
+
+### Brand
+
+| Swatch | Token | Light value |
+| --- | --- | --- |
+| | `accent` | `#3B82F6` |
+| | `accent-hover` | `#2563EB` |
+
+### Status
+
+| Swatch | Token | Light value |
+| --- | --- | --- |
+| | `status-success` | `#22C55E` |
+| | `status-error` | `#EF4444` |
+| | `status-warning` | `#F59E0B` |
+| | `status-info` | `#3B82F6` |
+
+### Surface
+
+| Swatch | Token | Light value |
+| --- | --- | --- |
+| | `background` | `#FFFFFF` |
+| | `surface` | `#F9FAFB` |
+| | `surface-raised` | `#FFFFFF` |
+| | `border` | `#E5E7EB` |
+
+## Using tokens in your code
+
+### With Tailwind CSS
+
+The `surfKitPreset` registers all semantic tokens as Tailwind utilities:
+
+```tsx
+<div className="bg-background text-text-primary border-border">
+  <p className="text-text-secondary">
+    This uses semantic tokens via Tailwind classes.
+  </p>
+</div>
+```
+
+### With CSS custom properties
+
+Access tokens directly in CSS:
+
+```css
+.custom-component {
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-primary);
+}
+```
+
+## Storybook
+
+Browse all tokens with live previews in the [Storybook](http://localhost:6006/?path=/docs/tokens--docs) development environment. The Storybook includes interactive token tables and theme switchers.
