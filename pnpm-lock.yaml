@@ -127,6 +127,9 @@ importers:
       vitest:
         specifier: ^2.0.0
         version: 2.1.9(jsdom@25.0.1)
+      vitest-axe:
+        specifier: ^0.1.0
+        version: 0.1.0(vitest@2.1.9(jsdom@25.0.1))
 
   packages/hooks:
     devDependencies:
@@ -8713,6 +8716,16 @@ snapshots:
       fsevents: 2.3.3
       tsx: 4.21.0
       yaml: 2.8.2
+
+  vitest-axe@0.1.0(vitest@2.1.9(jsdom@25.0.1)):
+    dependencies:
+      aria-query: 5.3.2
+      axe-core: 4.11.1
+      chalk: 5.6.2
+      dom-accessibility-api: 0.5.16
+      lodash-es: 4.17.23
+      redent: 3.0.0
+      vitest: 2.1.9(jsdom@25.0.1)
 
   vitest-axe@0.1.0(vitest@4.0.18(jsdom@25.0.1)(tsx@4.21.0)(yaml@2.8.2)):
     dependencies:
