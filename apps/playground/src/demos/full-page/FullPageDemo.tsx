@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useAgentChat, useCharacterDrain } from "@surf-kit/agent/hooks";
 import {
-  useAgentChat,
   AgentResponseView,
   TypewriterText,
   type ChatMessage,
@@ -132,6 +132,46 @@ function MessageBubble({
 }
 
 /* ------------------------------------------------------------------ */
+/*  Streaming content bubble with character drain                       */
+/* ------------------------------------------------------------------ */
+
+function StreamingBubble({
+  streamingContent,
+  onDrainingChange,
+}: {
+  streamingContent: string;
+  onDrainingChange: (isDraining: boolean) => void;
+}) {
+  const { displayed: displayedContent, isDraining } =
+    useCharacterDrain(streamingContent);
+
+  // Always notify parent of the current draining state, including on mount.
+  // The previous prevDrainingRef pattern skipped the initial notification
+  // when isDraining was true at mount time, leaving the parent stuck at false.
+  useEffect(() => {
+    onDrainingChange(isDraining);
+  }, [isDraining, onDrainingChange]);
+
+  if (!displayedContent) return null;
+
+  return (
+    <motion.div
+      className="flex flex-col items-start gap-1.5 mb-1"
+      initial={{ opacity: 0, x: -16, y: 8 }}
+      animate={{ opacity: 1, x: 0, y: 0 }}
+      transition={{ type: "spring", damping: 28, stiffness: 220 }}
+    >
+      <div className="w-full max-w-[88%] px-4 py-3 rounded-[18px] rounded-tl-[4px] bg-brand-dark-panel border border-brand-gold/15">
+        <p className="text-sm text-brand-cream leading-relaxed m-0">
+          {displayedContent}
+          <span className="typewriter-cursor" aria-hidden="true" />
+        </p>
+      </div>
+    </motion.div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
 /*  Background slideshow — isolated so state changes don't re-render  */
 /*  the chat UI and re-trigger framer-motion animations.              */
 /* ------------------------------------------------------------------ */
@@ -177,9 +217,17 @@ export function FullPageDemo() {
   const { state, actions } = useAgentChat(CHAT_CONFIG);
   const threadRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+  const [isDraining, setIsDraining] = useState(false);
   const prevIsLoadingRef = useRef(state.isLoading);
+  const prevIsDrainingRef = useRef(isDraining);
   const justStoppedLoading = prevIsLoadingRef.current && !state.isLoading;
+  const justStoppedDraining = prevIsDrainingRef.current && !isDraining;
   prevIsLoadingRef.current = state.isLoading;
+  prevIsDrainingRef.current = isDraining;
+
+  const handleDrainingChange = useCallback((draining: boolean) => {
+    setIsDraining(draining);
+  }, []);
 
   useEffect(() => {
     const el = threadRef.current;
@@ -212,7 +260,10 @@ export function FullPageDemo() {
       <BackgroundSlideshow />
 
       {/* Message thread */}
-      <div ref={threadRef} className="flex-1 overflow-y-auto overflow-x-hidden py-6">
+      <div
+        ref={threadRef}
+        className="flex-1 overflow-y-auto overflow-x-hidden py-6"
+      >
         <AnimatePresence mode="wait">
           {isEmpty ? (
             <motion.div
@@ -232,11 +283,11 @@ export function FullPageDemo() {
 
               <div className="flex flex-col gap-3">
                 <h2 className="font-display text-3xl font-bold text-brand-cream">
-                  Surf
+                  Hi, I'm Surf.
                 </h2>
                 <p className="text-brand-cream/60 text-base max-w-md leading-relaxed">
                   <TypewriterText
-                    text="Ask about pricing plans, getting started, or API rate limits."
+                    text="Ask me about any of my knowledge sources, or how to get started. I'll orchestrate your request with my agent team."
                     speed={22}
                     delay={500}
                   />
@@ -269,37 +320,45 @@ export function FullPageDemo() {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.2 }}
             >
-              {state.messages.map((msg, i) => (
-                <MessageBubble
-                  key={msg.id}
-                  msg={msg}
-                  noEntryAnimation={
-                    justStoppedLoading &&
-                    i === state.messages.length - 1 &&
-                    msg.role === "assistant"
-                  }
-                  onFollowUp={(text) => {
-                    actions.setInputValue(text);
-                    inputRef.current?.focus();
-                  }}
-                />
-              ))}
+              {state.messages.map((msg, i) => {
+                // Hide the final assistant message while the drain animation
+                // is still typing it out — prevents the jump from streaming
+                // bubble to fully-rendered message.
+                const isLastAssistant =
+                  i === state.messages.length - 1 && msg.role === "assistant";
+                if (isLastAssistant && isDraining) return null;
+
+                return (
+                  <MessageBubble
+                    key={msg.id}
+                    msg={msg}
+                    noEntryAnimation={
+                      (justStoppedLoading || justStoppedDraining) && isLastAssistant
+                    }
+                    onFollowUp={(text) => {
+                      actions.setInputValue(text);
+                      inputRef.current?.focus();
+                    }}
+                  />
+                );
+              })}
             </motion.div>
           )}
         </AnimatePresence>
 
         <AnimatePresence>
-          {state.isLoading && state.streamPhase !== "generating" && !state.streamingContent && (
-            <motion.div
-              key="phase"
-              initial={{ opacity: 0, y: 6 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -4 }}
-              transition={{ duration: 0.2 }}
-            >
-              <PhaseIndicator phase={state.streamPhase} />
-            </motion.div>
-          )}
+          {state.isLoading &&
+            !state.streamingContent && (
+              <motion.div
+                key="phase"
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -4 }}
+                transition={{ duration: 0.2 }}
+              >
+                <PhaseIndicator phase={state.streamPhase} />
+              </motion.div>
+            )}
           {state.error && (
             <motion.div
               key="error"
@@ -312,7 +371,9 @@ export function FullPageDemo() {
               <span className="font-display font-semibold text-brand-watermelon">
                 Error:{" "}
               </span>
-              <span className="text-brand-watermelon/80">{state.error.message}</span>
+              <span className="text-brand-watermelon/80">
+                {state.error.message}
+              </span>
               {state.error.retryable && (
                 <button
                   onClick={() => actions.retry()}
@@ -325,22 +386,24 @@ export function FullPageDemo() {
           )}
         </AnimatePresence>
 
-        {state.streamingContent && (
-          <motion.div
-            className="flex flex-col items-start gap-1.5 mb-1"
-            initial={{ opacity: 0, x: -16, y: 8 }}
-            animate={{ opacity: 1, x: 0, y: 0 }}
-            transition={{ type: "spring", damping: 28, stiffness: 220 }}
-          >
-            <div className="w-full max-w-[88%] px-4 py-3 rounded-[18px] rounded-tl-[4px] bg-brand-dark-panel border border-brand-gold/15">
-              <p className="text-sm text-brand-cream leading-relaxed m-0">
-                {state.streamingContent}
-                <span className="typewriter-cursor" aria-hidden="true" />
-              </p>
-            </div>
-          </motion.div>
+        {(state.streamingContent || isDraining) && (
+          <StreamingBubble
+            streamingContent={state.streamingContent}
+            onDrainingChange={handleDrainingChange}
+          />
         )}
 
+        {state.streamPhase === "verifying" && state.streamingContent && (
+          <motion.div
+            key="verifying"
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -4 }}
+            transition={{ duration: 0.2 }}
+          >
+            <PhaseIndicator phase="verifying" />
+          </motion.div>
+        )}
       </div>
 
       {/* Composer */}
@@ -369,9 +432,10 @@ export function FullPageDemo() {
               : "text-brand-cream/40 cursor-not-allowed"
           }`}
           style={{
-            backgroundColor: state.inputValue.trim() && !state.isLoading
-              ? "var(--color-brand-cyan)"
-              : "rgba(56,189,208,0.3)",
+            backgroundColor:
+              state.inputValue.trim() && !state.isLoading
+                ? "var(--color-brand-cyan)"
+                : "rgba(56,189,208,0.3)",
           }}
         >
           Send

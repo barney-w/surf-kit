@@ -16,14 +16,14 @@
     "react-dom": "^18.3.0"
   },
   "devDependencies": {
-    "@storybook/react": "^10.2.0",
-    "@storybook/react-vite": "^10.2.0",
+    "@storybook/react": "^10.2.13",
+    "@storybook/react-vite": "^10.2.13",
+    "@surf-kit/tsconfig": "workspace:*",
     "@tailwindcss/postcss": "^4.0.0",
     "postcss": "^8.4.0",
+    "storybook": "^10.2.13",
     "tailwindcss": "^4.0.0",
-    "storybook": "^10.2.0",
-    "vite": "^5.4.0",
     "typescript": "^5.5.0",
-    "@surf-kit/tsconfig": "workspace:*"
+    "vite": "^5.4.0"
   }
 }
