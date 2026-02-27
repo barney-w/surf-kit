@@ -8,4 +8,5 @@ coverage
 .env.local
 .DS_Store
 apps/docs/.next/
+apps/docs/.source/
 CLAUDE.md
