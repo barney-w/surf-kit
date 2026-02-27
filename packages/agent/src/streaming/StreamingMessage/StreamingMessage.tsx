@@ -11,6 +11,7 @@ type StreamingMessageProps = {
 
 const phaseLabels: Record<StreamState['phase'], string> = {
   idle: '',
+  waiting: 'Waiting',
   thinking: 'Thinking',
   retrieving: 'Searching',
   generating: 'Writing',

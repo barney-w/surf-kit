@@ -75,7 +75,6 @@ function reducer(state: AgentChatState, action: Action): AgentChatState {
         ...state,
         isLoading: false,
         error: action.error,
-        streamPhase: 'idle',
         streamingContent: '',
       }
 

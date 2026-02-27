@@ -67,9 +67,11 @@ function PhaseIndicator({ phase }: { phase: string }) {
 function MessageBubble({
   msg,
   onFollowUp,
+  noEntryAnimation = false,
 }: {
   msg: ChatMessage;
   onFollowUp: (text: string) => void;
+  noEntryAnimation?: boolean;
 }) {
   const isUser = msg.role === "user";
   const suggestions = msg.response?.follow_up_suggestions ?? [];
@@ -92,7 +94,7 @@ function MessageBubble({
   return (
     <motion.div
       className="flex flex-col items-start gap-1.5 mb-1"
-      initial={{ opacity: 0, x: -16, y: 8 }}
+      initial={noEntryAnimation ? false : { opacity: 0, x: -16, y: 8 }}
       animate={{ opacity: 1, x: 0, y: 0 }}
       transition={{ type: "spring", damping: 28, stiffness: 220 }}
     >
@@ -175,6 +177,9 @@ export function FullPageDemo() {
   const { state, actions } = useAgentChat(CHAT_CONFIG);
   const threadRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+  const prevIsLoadingRef = useRef(state.isLoading);
+  const justStoppedLoading = prevIsLoadingRef.current && !state.isLoading;
+  prevIsLoadingRef.current = state.isLoading;
 
   useEffect(() => {
     const el = threadRef.current;
@@ -264,10 +269,15 @@ export function FullPageDemo() {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.2 }}
             >
-              {state.messages.map((msg) => (
+              {state.messages.map((msg, i) => (
                 <MessageBubble
                   key={msg.id}
                   msg={msg}
+                  noEntryAnimation={
+                    justStoppedLoading &&
+                    i === state.messages.length - 1 &&
+                    msg.role === "assistant"
+                  }
                   onFollowUp={(text) => {
                     actions.setInputValue(text);
                     inputRef.current?.focus();
@@ -278,7 +288,7 @@ export function FullPageDemo() {
           )}
         </AnimatePresence>
 
-        <AnimatePresence mode="wait">
+        <AnimatePresence>
           {state.isLoading && state.streamPhase !== "generating" && !state.streamingContent && (
             <motion.div
               key="phase"
@@ -288,6 +298,29 @@ export function FullPageDemo() {
               transition={{ duration: 0.2 }}
             >
               <PhaseIndicator phase={state.streamPhase} />
+            </motion.div>
+          )}
+          {state.error && (
+            <motion.div
+              key="error"
+              initial={{ opacity: 0, y: 4 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="px-4 py-3 rounded-xl bg-brand-watermelon/10 border border-brand-watermelon/30 text-sm mb-4"
+            >
+              <span className="font-display font-semibold text-brand-watermelon">
+                Error:{" "}
+              </span>
+              <span className="text-brand-watermelon/80">{state.error.message}</span>
+              {state.error.retryable && (
+                <button
+                  onClick={() => actions.retry()}
+                  className="ml-3 px-3 py-1 rounded-lg text-sm border border-brand-watermelon/40 text-brand-watermelon hover:bg-brand-watermelon/10 transition-colors duration-200"
+                >
+                  Retry
+                </button>
+              )}
             </motion.div>
           )}
         </AnimatePresence>
@@ -308,22 +341,6 @@ export function FullPageDemo() {
           </motion.div>
         )}
 
-        {state.error && (
-          <div className="px-4 py-3 rounded-xl bg-brand-watermelon/10 border border-brand-watermelon/30 text-sm mb-4">
-            <span className="font-display font-semibold text-brand-watermelon">
-              Error:{" "}
-            </span>
-            <span className="text-brand-watermelon/80">{state.error.message}</span>
-            {state.error.retryable && (
-              <button
-                onClick={() => actions.retry()}
-                className="ml-3 px-3 py-1 rounded-lg text-sm border border-brand-watermelon/40 text-brand-watermelon hover:bg-brand-watermelon/10 transition-colors duration-200"
-              >
-                Retry
-              </button>
-            )}
-          </div>
-        )}
       </div>
 
       {/* Composer */}
