@@ -1,10 +1,10 @@
 import { defineConfig } from 'tsup'
-export default defineConfig({
+export default defineConfig((options) => ({
   entry: ['src/index.ts'],
   format: ['esm', 'cjs'],
-  dts: true,
+  dts: !options.watch,
   splitting: false,
   sourcemap: true,
-  clean: true,
-  external: ['react', 'react-dom'],
-})
+  clean: !options.watch,
+  external: ['react', 'react-dom', /^@surf-kit\//],
+}))
