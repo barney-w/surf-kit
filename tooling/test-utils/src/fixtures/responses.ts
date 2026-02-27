@@ -103,7 +103,7 @@ export const failedVerificationResponse = {
       url: 'https://internal.example.com/docs/handbook-2022',
       confidence: 0.41,
       snippet:
-        'The company observes 8 public holidays per year as gazetted by the relevant state government.',
+        'The company observes 8 public holidays per year as designated by the applicable regional authority.',
     },
   ],
   confidence: {

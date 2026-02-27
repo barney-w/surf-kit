@@ -13,6 +13,14 @@
     "./json": "./dist/json/tokens.json",
     ".": "./dist/ts/tokens.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/barney-w/surf-kit.git",
+    "directory": "packages/tokens"
+  },
+  "homepage": "https://github.com/barney-w/surf-kit#readme",
+  "bugs": { "url": "https://github.com/barney-w/surf-kit/issues" },
+  "license": "MIT",
   "scripts": {
     "build": "tsx src/config.ts",
     "clean": "rm -rf dist"

@@ -1,0 +1,18 @@
+# Default owner for everything
+* @barney-w
+
+# Package-level ownership
+packages/tokens/    @barney-w
+packages/theme/     @barney-w
+packages/core/      @barney-w
+packages/agent/     @barney-w
+packages/hooks/     @barney-w
+packages/icons/     @barney-w
+
+# Apps
+apps/docs/          @barney-w
+apps/playground/    @barney-w
+apps/storybook/     @barney-w
+
+# CI/CD
+.github/            @barney-w

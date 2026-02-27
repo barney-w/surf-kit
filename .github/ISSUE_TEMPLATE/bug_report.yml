@@ -1,0 +1,80 @@
+name: Bug Report
+description: Report a bug in surf-kit
+title: "[bug]: "
+labels: ["bug", "triage"]
+body:
+  - type: dropdown
+    id: package
+    attributes:
+      label: Package
+      description: Which package is affected?
+      options:
+        - "@surf-kit/core"
+        - "@surf-kit/agent"
+        - "@surf-kit/theme"
+        - "@surf-kit/tokens"
+        - "@surf-kit/hooks"
+        - "@surf-kit/icons"
+        - "apps/docs"
+        - "apps/playground"
+        - "apps/storybook"
+        - "Not sure"
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: A clear description of what the bug is
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to Reproduce
+      description: Minimal steps to reproduce the behaviour
+      placeholder: |
+        1. Import `X` from `@surf-kit/...`
+        2. Render `<X prop="value" />`
+        3. See error
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behaviour
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual Behaviour
+    validations:
+      required: true
+  - type: input
+    id: reproduction-link
+    attributes:
+      label: Reproduction Link
+      description: StackBlitz or CodeSandbox link (strongly encouraged)
+      placeholder: https://stackblitz.com/...
+  - type: input
+    id: version
+    attributes:
+      label: surf-kit Version
+    validations:
+      required: true
+  - type: dropdown
+    id: browser
+    attributes:
+      label: Browser
+      multiple: true
+      options:
+        - Chrome
+        - Firefox
+        - Safari
+        - Edge
+        - Other
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional Context
