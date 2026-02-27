@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import { Spinner } from '@surf-kit/core'
 import type { StreamState } from '../../types/streaming'
+import { useCharacterDrain } from '../../hooks/useCharacterDrain'
 
 type StreamingMessageProps = {
   stream: StreamState
@@ -36,6 +37,7 @@ function StreamingMessage({
   }, [stream.active])
 
   const phaseLabel = phaseLabels[stream.phase]
+  const { displayed: displayedContent } = useCharacterDrain(stream.content)
 
   return (
     <div className={className} data-testid="streaming-message">
@@ -58,7 +60,7 @@ function StreamingMessage({
       )}
 
       <div className="text-text-primary whitespace-pre-wrap">
-        {stream.content}
+        {displayedContent}
         {stream.active && (
           <span
             className="inline-block w-0.5 h-4 bg-accent align-text-bottom animate-pulse ml-0.5"

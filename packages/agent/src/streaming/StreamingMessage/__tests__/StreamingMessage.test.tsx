@@ -6,6 +6,12 @@ import { axe } from 'vitest-axe'
 import { StreamingMessage } from '../StreamingMessage'
 import type { StreamState } from '../../../types/streaming'
 
+// Mock useCharacterDrain to pass through the target string directly in tests,
+// since requestAnimationFrame doesn't behave the same in jsdom.
+vi.mock('../../../hooks/useCharacterDrain', () => ({
+  useCharacterDrain: (target: string) => ({ displayed: target, isDraining: false }),
+}))
+
 expect.extend(vitestAxe)
 
 beforeAll(() => {

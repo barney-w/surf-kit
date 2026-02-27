@@ -8,7 +8,7 @@ export type StreamEvent =
   | { type: 'agent'; agent: string }
   | { type: 'verification'; result: VerificationResult }
   | { type: 'confidence'; breakdown: ConfidenceBreakdown }
-  | { type: 'done'; response: AgentResponse }
+  | { type: 'done'; response: AgentResponse; conversation_id?: string }
   | { type: 'error'; error: ChatError }
 
 export interface StreamState {
