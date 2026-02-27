@@ -33,7 +33,7 @@ type Action =
   | { type: 'SEND_START'; message: ChatMessage }
   | { type: 'STREAM_PHASE'; phase: StreamState['phase'] }
   | { type: 'STREAM_CONTENT'; content: string }
-  | { type: 'SEND_SUCCESS'; message: ChatMessage; streamingContent: string }
+  | { type: 'SEND_SUCCESS'; message: ChatMessage; streamingContent: string; conversationId: string | null }
   | { type: 'SEND_ERROR'; error: ChatError }
   | { type: 'LOAD_CONVERSATION'; conversationId: string; messages: ChatMessage[] }
   | { type: 'RESET' }
@@ -65,6 +65,7 @@ function reducer(state: AgentChatState, action: Action): AgentChatState {
       return {
         ...state,
         messages: [...state.messages, action.message],
+        conversationId: action.conversationId ?? state.conversationId,
         isLoading: false,
         streamPhase: 'idle',
         streamingContent: '',
@@ -75,6 +76,7 @@ function reducer(state: AgentChatState, action: Action): AgentChatState {
         ...state,
         isLoading: false,
         error: action.error,
+        streamPhase: 'idle',
         streamingContent: '',
       }
 
@@ -180,6 +182,7 @@ export function useAgentChat(config: AgentChatConfig) {
         let accumulatedContent = ''
         let agentResponse: AgentResponse | null = null
         let capturedAgent: string | null = null
+        let capturedConversationId: string | null = null
 
         while (true) {
           const { done, value } = await reader.read()
@@ -209,6 +212,7 @@ export function useAgentChat(config: AgentChatConfig) {
                   break
                 case 'done':
                   agentResponse = event.response
+                  capturedConversationId = (event.conversation_id as string) ?? null
                   break
                 case 'error':
                   dispatch({ type: 'SEND_ERROR', error: event.error })
@@ -229,7 +233,12 @@ export function useAgentChat(config: AgentChatConfig) {
           timestamp: new Date(),
         }
 
-        dispatch({ type: 'SEND_SUCCESS', message: assistantMessage, streamingContent: accumulatedContent })
+        dispatch({
+          type: 'SEND_SUCCESS',
+          message: assistantMessage,
+          streamingContent: accumulatedContent,
+          conversationId: capturedConversationId,
+        })
       } catch (err: unknown) {
         clearTimeout(timeoutId)
         if ((err as Error).name === 'AbortError') {

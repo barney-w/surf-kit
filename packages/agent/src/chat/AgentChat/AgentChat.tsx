@@ -4,6 +4,7 @@ import { useAgentChat } from '../../hooks/useAgentChat'
 import { MessageThread } from '../MessageThread'
 import { MessageComposer } from '../MessageComposer'
 import { WelcomeScreen } from '../WelcomeScreen'
+import { StreamingMessage } from '../../streaming/StreamingMessage'
 import type { ChatMessage } from '../../types/chat'
 
 export type AgentChatProps = {
@@ -63,6 +64,20 @@ function AgentChat({
       {hasMessages ? (
         <MessageThread
           messages={state.messages}
+          streamingSlot={
+            state.isLoading ? (
+              <StreamingMessage
+                stream={{
+                  active: state.isLoading,
+                  phase: state.streamPhase,
+                  content: state.streamingContent,
+                  sources: [],
+                  agent: null,
+                  agentLabel: null,
+                }}
+              />
+            ) : undefined
+          }
           showSources={showSources}
           showConfidence={showConfidence}
           showVerification={showVerification}

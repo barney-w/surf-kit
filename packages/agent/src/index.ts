@@ -13,21 +13,13 @@ export type { StreamEvent, StreamState } from './types/streaming'
 
 export type { AgentChatConfig } from './types/config'
 
-// Hooks
-export { useAgentChat } from './hooks/useAgentChat'
+// Hook types (runtime hooks available via '@surf-kit/agent/hooks')
 export type { AgentChatState, AgentChatActions } from './hooks/useAgentChat'
-
-export { useStreaming } from './hooks/useStreaming'
 export type { UseStreamingOptions } from './hooks/useStreaming'
-
-export { useConversation } from './hooks/useConversation'
 export type { Conversation, UseConversationOptions } from './hooks/useConversation'
-
-export { useFeedback } from './hooks/useFeedback'
 export type { FeedbackState, UseFeedbackOptions, FeedbackPayload } from './hooks/useFeedback'
-
-export { useAgentTheme } from './hooks/useAgentTheme'
 export type { AgentThemeResult } from './hooks/useAgentTheme'
+export type { CharacterDrainResult } from './hooks/useCharacterDrain'
 
 // Chat Components
 export { AgentChat } from './chat/AgentChat'
