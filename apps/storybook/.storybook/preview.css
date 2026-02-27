@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap");
 @import "tailwindcss";
 @import "@surf-kit/tokens/css";
+@import "@surf-kit/tokens/css/dark";
 @import "@surf-kit/tokens/css/brand";
 @config "../tailwind.config.ts";
 @source "../stories";

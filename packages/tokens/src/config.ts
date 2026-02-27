@@ -18,6 +18,21 @@ const primitives = [
 
 const componentTokens = resolve(root, "src/component/components.json");
 
+// Register custom format that wraps output in [data-color-mode="dark"] { ... }
+StyleDictionary.registerFormat({
+  name: "css/variables-dark",
+  format: ({ dictionary, options }) => {
+    const selector = '[data-color-mode="dark"]';
+    const vars = formattedVariables({
+      format: "css",
+      dictionary,
+      outputReferences: options?.outputReferences ?? false,
+      usesDtcg: true,
+    });
+    return `${selector} {\n${vars}\n}\n`;
+  },
+});
+
 // Register custom format that wraps output in [data-color-mode="brand"] { ... }
 StyleDictionary.registerFormat({
   name: "css/variables-brand",
@@ -102,9 +117,9 @@ async function build() {
         files: [
           {
             destination: "variables-dark.css",
-            format: "css/variables",
+            format: "css/variables-dark",
             options: {
-              outputReferences: true,
+              outputReferences: false,
             },
           },
         ],
