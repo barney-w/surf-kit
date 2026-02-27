@@ -29,7 +29,8 @@ pnpm test
 | `pnpm test` | Run all tests |
 | `pnpm typecheck` | Type-check all packages |
 | `pnpm dev` | Start dev mode with hot reload |
-| `pnpm storybook` | Launch Storybook locally |
+| `pnpm dev:storybook` | Launch Storybook locally |
+| `pnpm lint` | Lint all packages |
 
 ---
 

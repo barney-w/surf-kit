@@ -55,7 +55,7 @@ export default function App() {
 ## Documentation
 
 - **Docs site** -- coming soon
-- **Storybook** -- `pnpm storybook` (local) or see the hosted version (coming soon)
+- **Storybook** -- `pnpm dev:storybook` (local) or see the hosted version (coming soon)
 - **Playground** -- coming soon
 
 ---
@@ -67,7 +67,10 @@ git clone https://github.com/your-org/surf-kit.git
 cd surf-kit
 pnpm install
 pnpm build
+pnpm dev
 pnpm test
+pnpm lint
+pnpm typecheck
 ```
 
 See [CONTRIBUTING.md](./CONTRIBUTING.md) for detailed development guidelines.
