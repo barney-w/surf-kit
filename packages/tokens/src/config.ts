@@ -17,6 +17,7 @@ const primitives = [
 ];
 
 const componentTokens = resolve(root, "src/component/components.json");
+const brandComponentTokens = resolve(root, "src/component/components-brand.json");
 
 // Register custom format that wraps output in [data-color-mode="dark"] { ... }
 StyleDictionary.registerFormat({
@@ -51,8 +52,8 @@ StyleDictionary.registerFormat({
 async function build() {
   // ── Light build ──────────────────────────────────────────────
   const lightSD = new StyleDictionary({
+    include: primitives,
     source: [
-      ...primitives,
       resolve(root, "src/semantic/light.json"),
       componentTokens,
     ],
@@ -104,8 +105,8 @@ async function build() {
 
   // ── Dark build (CSS only) ────────────────────────────────────
   const darkSD = new StyleDictionary({
+    include: primitives,
     source: [
-      ...primitives,
       resolve(root, "src/semantic/dark.json"),
       componentTokens,
     ],
@@ -133,10 +134,10 @@ async function build() {
 
   // ── Brand build (CSS only) ──────────────────────────────────
   const brandSD = new StyleDictionary({
+    include: [...primitives, componentTokens],
     source: [
-      ...primitives,
       resolve(root, "src/semantic/brand.json"),
-      componentTokens,
+      brandComponentTokens,
     ],
     platforms: {
       css: {

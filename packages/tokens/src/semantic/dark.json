@@ -1,6 +1,5 @@
 {
   "color": {
-    "$type": "color",
     "bg": {
       "canvas": { "$value": "#1A1A1A" },
       "surface": { "$value": "#2A2A2A" },

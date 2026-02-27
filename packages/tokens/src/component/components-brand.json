@@ -1,0 +1,19 @@
+{
+  "confidence": {
+    "high": {
+      "bg": { "$type": "color", "$value": "rgba(56,189,208,0.15)" },
+      "text": { "$type": "color", "$value": "{color.brand.cyan}" },
+      "border": { "$type": "color", "$value": "{color.brand.cyan}" }
+    },
+    "medium": {
+      "bg": { "$type": "color", "$value": "rgba(225,185,137,0.10)" },
+      "text": { "$type": "color", "$value": "{color.brand.gold}" },
+      "border": { "$type": "color", "$value": "{color.brand.gold}" }
+    },
+    "low": {
+      "bg": { "$type": "color", "$value": "rgba(232,17,82,0.10)" },
+      "text": { "$type": "color", "$value": "{color.brand.watermelon}" },
+      "border": { "$type": "color", "$value": "{color.brand.watermelon}" }
+    }
+  }
+}
