@@ -61,6 +61,18 @@
     },
     "white": {
       "$value": "#FFFFFF"
+    },
+    "brand": {
+      "dark": { "$value": "#041F26" },
+      "dark-panel": { "$value": "#0A3642" },
+      "blue": { "$value": "#0091A5" },
+      "cyan": { "$value": "#38BDD0" },
+      "gold": { "$value": "#E1B989" },
+      "gold-light": { "$value": "#F3D79C" },
+      "cream": { "$value": "#F1F0E3" },
+      "cream-warm": { "$value": "#F0E8B6" },
+      "charcoal": { "$value": "#414142" },
+      "watermelon": { "$value": "#E81152" }
     }
   }
 }

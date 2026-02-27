@@ -63,7 +63,7 @@ export function ThemeProvider({
   }, [])
 
   const resolvedMode: ColorMode =
-    preference === 'system' ? systemPref : preference
+    preference === 'system' ? systemPref : (preference as ColorMode)
 
   // Apply data attributes and CSS variable overrides to wrapper div
   useEffect(() => {
@@ -96,7 +96,7 @@ export function ThemeProvider({
 
   return (
     <ThemeContext.Provider value={contextValue}>
-      <div ref={wrapperRef} data-color-mode={resolvedMode} data-theme={theme.name}>
+      <div ref={wrapperRef} data-color-mode={resolvedMode as string} data-theme={theme.name}>
         {children}
       </div>
     </ThemeContext.Provider>

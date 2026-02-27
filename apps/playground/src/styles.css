@@ -2,25 +2,12 @@
 
 @import "tailwindcss";
 @import "@surf-kit/tokens/css";
+@import "@surf-kit/tokens/css/brand";
 @source "../**/*.{ts,tsx}";
 @source "../../../packages/core/src/**/*.{ts,tsx}";
 @source "../../../packages/agent/src/**/*.{ts,tsx}";
 
 @theme {
-  /* ══════════════════════════════════════════
-     brand-* color palette
-  ══════════════════════════════════════════ */
-  --color-brand-blue:         #0091A5;
-  --color-brand-cyan:         #38BDD0;
-  --color-brand-gold:         #E1B989;
-  --color-brand-gold-light:   #F3D79C;
-  --color-brand-cream:        #F1F0E3;
-  --color-brand-cream-warm:   #F0E8B6;
-  --color-brand-dark:         #041F26;
-  --color-brand-dark-panel:   #0A3642;
-  --color-brand-charcoal:     #414142;
-  --color-brand-watermelon:   #E81152;
-
   /* ══════════════════════════════════════════
      Font families
   ══════════════════════════════════════════ */
@@ -36,61 +23,19 @@
   --shadow-glow-watermelon:   0 0 20px rgba(232, 17, 82, 0.3);
   --shadow-card:              0 8px 32px rgba(0, 0, 0, 0.3);
 
-  /* ══════════════════════════════════════════
-     Token remapping — existing agent/core
-     Tailwind classes get brand-* colors for free
-  ══════════════════════════════════════════ */
+  /* Tailwind brand-* color utilities (raw hex, for explicit usage in components) */
+  --color-brand-blue:         #0091A5;
+  --color-brand-cyan:         #38BDD0;
+  --color-brand-gold:         #E1B989;
+  --color-brand-gold-light:   #F3D79C;
+  --color-brand-cream:        #F1F0E3;
+  --color-brand-cream-warm:   #F0E8B6;
+  --color-brand-dark:         #041F26;
+  --color-brand-dark-panel:   #0A3642;
+  --color-brand-charcoal:     #414142;
+  --color-brand-watermelon:   #E81152;
 
-  /* Surfaces */
-  --color-surface:          #0A3642;
-  --color-surface-raised:   #0d3f4e;
-  --color-surface-sunken:   #031820;
-  --color-canvas:           #041F26;
-
-  /* Text */
-  --color-text-primary:     #F1F0E3;
-  --color-text-secondary:   rgba(241,240,227,0.6);
-  --color-text-muted:       rgba(241,240,227,0.4);
-  --color-text-inverse:     #041F26;
-
-  /* Accent */
-  --color-accent:           #0091A5;
-  --color-accent-hover:     #38BDD0;
-  --color-accent-active:    #38BDD0;
-  --color-accent-subtle:    rgba(0, 145, 165, 0.15);
-  --color-accent-subtlest:  rgba(0, 145, 165, 0.08);
-
-  /* Borders */
-  --color-border:           rgba(225, 185, 137, 0.15);
-  --color-border-strong:    rgba(225, 185, 137, 0.3);
-  --color-border-interactive: rgba(56, 189, 208, 0.5);
-
-  /* Status */
-  --color-status-success:         #38BDD0;
-  --color-status-success-subtle:  rgba(56,189,208,0.12);
-  --color-status-warning:         #E1B989;
-  --color-status-warning-subtle:  rgba(225,185,137,0.12);
-  --color-status-error:           #E81152;
-  --color-status-error-subtle:    rgba(232,17,82,0.12);
-  --color-status-info:            #0091A5;
-
-  /* Error alias */
-  --color-error:            #E81152;
-
-  /* Confidence levels (keep for backward compat) */
-  --color-confidence-high:     #38BDD0;
-  --color-confidence-high-bg:  rgba(56,189,208,0.12);
-  --color-confidence-medium:   #E1B989;
-  --color-confidence-medium-bg: rgba(225,185,137,0.12);
-  --color-confidence-low:      #E81152;
-  --color-confidence-low-bg:   rgba(232,17,82,0.12);
-
-  /* Verification */
-  --color-verification-passed:  #38BDD0;
-  --color-verification-flagged: #E1B989;
-  --color-verification-failed:  #E81152;
-
-  /* Agent identities (keep existing vars) */
+  /* Agent identities */
   --color-agent-coordinator: var(--surf-agent-coordinator-accent);
   --color-agent-hr:          var(--surf-agent-hr-accent);
   --color-agent-it:          var(--surf-agent-it-accent);
@@ -186,7 +131,7 @@
 }
 .pulse-glow { animation: pulseGlow 2s ease-in-out infinite; }
 
-/* Dual-ring gold spinner */
+/* Dual-ring brand spinner */
 @keyframes brand-spin { to { transform: rotate(360deg); } }
 
 .brand-spinner {

@@ -2,7 +2,7 @@ import type { Source, ConfidenceBreakdown, VerificationResult, AgentResponse } f
 import type { ChatError } from './chat'
 
 export type StreamEvent =
-  | { type: 'phase'; phase: 'thinking' | 'retrieving' | 'generating' | 'verifying' }
+  | { type: 'phase'; phase: 'thinking' | 'retrieving' | 'generating' | 'verifying' | 'waiting' }
   | { type: 'delta'; content: string }
   | { type: 'source'; source: Source }
   | { type: 'agent'; agent: string }
@@ -13,7 +13,7 @@ export type StreamEvent =
 
 export interface StreamState {
   active: boolean
-  phase: 'idle' | 'thinking' | 'retrieving' | 'generating' | 'verifying'
+  phase: 'idle' | 'thinking' | 'retrieving' | 'generating' | 'verifying' | 'waiting'
   content: string
   sources: Source[]
   agent: string | null

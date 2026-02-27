@@ -6,9 +6,9 @@ import './preview.css'
 const preview: Preview = {
   decorators: [
     (Story, context) => {
-      const colorMode = context.globals.colorMode || 'light'
+      const colorMode = context.globals.colorMode || 'brand'
       return (
-        <ThemeProvider colorMode={colorMode as 'light' | 'dark'}>
+        <ThemeProvider colorMode={colorMode as 'light' | 'dark' | 'brand'}>
           <Story />
         </ThemeProvider>
       )
@@ -22,13 +22,14 @@ const preview: Preview = {
         items: [
           { value: 'light', title: 'Light', icon: 'sun' },
           { value: 'dark', title: 'Dark', icon: 'moon' },
+          { value: 'brand', title: 'Brand Dark', icon: 'paintbrush' },
         ],
         dynamicTitle: true,
       },
     },
   },
   initialGlobals: {
-    colorMode: 'light',
+    colorMode: 'brand',
   },
 }
 export default preview

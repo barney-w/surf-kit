@@ -1,4 +1,5 @@
 import StyleDictionary from "style-dictionary";
+import { formattedVariables } from "style-dictionary/utils";
 import { fileURLToPath } from "url";
 import { dirname, resolve } from "path";
 
@@ -16,6 +17,21 @@ const primitives = [
 ];
 
 const componentTokens = resolve(root, "src/component/components.json");
+
+// Register custom format that wraps output in [data-color-mode="brand"] { ... }
+StyleDictionary.registerFormat({
+  name: "css/variables-brand",
+  format: ({ dictionary, options }) => {
+    const selector = '[data-color-mode="brand"]';
+    const vars = formattedVariables({
+      format: "css",
+      dictionary,
+      outputReferences: options?.outputReferences ?? false,
+      usesDtcg: true,
+    });
+    return `${selector} {\n${vars}\n}\n`;
+  },
+});
 
 async function build() {
   // ── Light build ──────────────────────────────────────────────
@@ -99,6 +115,35 @@ async function build() {
   await darkSD.hasInitialized;
   await darkSD.buildAllPlatforms();
   console.log("Dark build complete.");
+
+  // ── Brand build (CSS only) ──────────────────────────────────
+  const brandSD = new StyleDictionary({
+    source: [
+      ...primitives,
+      resolve(root, "src/semantic/brand.json"),
+      componentTokens,
+    ],
+    platforms: {
+      css: {
+        transformGroup: "css",
+        prefix: "surf",
+        buildPath: resolve(root, "dist/css") + "/",
+        files: [
+          {
+            destination: "variables-brand.css",
+            format: "css/variables-brand",
+            options: {
+              outputReferences: false,
+            },
+          },
+        ],
+      },
+    },
+  });
+
+  await brandSD.hasInitialized;
+  await brandSD.buildAllPlatforms();
+  console.log("Brand build complete.");
 
   console.log("All token builds complete.");
 }

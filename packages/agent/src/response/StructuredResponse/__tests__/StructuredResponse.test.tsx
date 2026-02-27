@@ -53,14 +53,14 @@ describe('StructuredResponse', () => {
     expect(screen.getByText('Bob')).toBeDefined()
   })
 
-  it('falls back to JSON display for unknown hints', () => {
-    render(
+  it('renders nothing for unknown hints', () => {
+    const { container } = render(
       <StructuredResponse
-        uiHint={'card' as any}
+        uiHint={'unknown' as any}
         data={{ key: 'value' }}
       />,
     )
-    expect(screen.getByTestId('structured-json')).toBeDefined()
+    expect(container.firstChild).toBeNull()
   })
 
   it('has no accessibility violations', async () => {

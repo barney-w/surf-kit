@@ -32,7 +32,7 @@ export default function ChatPage() {
   return (
     <AgentChat
       layout="full-page"
-      agentName="Council Assistant"
+      agentName="AI Assistant"
       messages={messages}
       onSendMessage={sendMessage}
       isStreaming={isStreaming}
@@ -51,7 +51,7 @@ export default function ChatPage() {
 ```tsx
 <div className="flex flex-col h-dvh">
   <header className="border-b px-4 py-3">
-    <h1 className="text-lg font-semibold">Council Assistant</h1>
+    <h1 className="text-lg font-semibold">AI Assistant</h1>
   </header>
   <AgentChat layout="full-page" className="flex-1" /* ... */ />
 </div>
@@ -113,7 +113,7 @@ A floating chat widget that can be minimised, suitable for embedding on any page
 
 ### When to use
 
-- Public-facing council websites where chat is a secondary feature
+- Public-facing platforms where chat is a secondary feature
 - Pages where the user might need help but the chat is not the primary focus
 - Existing websites where you want to add AI assistance without redesigning
 
@@ -221,7 +221,7 @@ export function ChatWithState() {
   return (
     <AgentChat
       layout="full-page"
-      agentName="Council Assistant"
+      agentName="AI Assistant"
       messages={messages}
       onSendMessage={handleSend}
       isStreaming={isStreaming}

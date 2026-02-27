@@ -2,6 +2,7 @@ import React from 'react'
 import { Badge } from '@surf-kit/core'
 import type { AgentResponse as AgentResponseType } from '../../types/agent'
 import { ResponseMessage } from '../ResponseMessage'
+import { StructuredResponse } from '../StructuredResponse'
 import { SourceList } from '../../sources/SourceList'
 import { FollowUpChips } from '../FollowUpChips'
 
@@ -44,8 +45,16 @@ function AgentResponse({
 }: AgentResponseProps) {
   return (
     <div className={`flex flex-col gap-4 ${className ?? ''}`} data-testid="agent-response">
-      {/* Main message */}
+      {/* Lead message — always shown as a short 1-3 sentence summary */}
       <ResponseMessage content={response.message} />
+
+      {/* Structured content — rendered when ui_hint is not plain text */}
+      {response.ui_hint !== 'text' && response.structured_data && (
+        <StructuredResponse
+          uiHint={response.ui_hint}
+          data={response.structured_data as Record<string, unknown>}
+        />
+      )}
 
       {/* Confidence & Verification badges */}
       {(showConfidence || showVerification) && (

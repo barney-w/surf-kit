@@ -8,6 +8,7 @@
   "exports": {
     "./css": "./dist/css/variables.css",
     "./css/dark": "./dist/css/variables-dark.css",
+    "./css/brand": "./dist/css/variables-brand.css",
     "./ts": "./dist/ts/tokens.ts",
     "./json": "./dist/json/tokens.json",
     ".": "./dist/ts/tokens.js"

@@ -53,6 +53,18 @@ export const surfKitPreset: Partial<Config> = {
           finance: 'var(--surf-agent-finance-accent)',
           facilities: 'var(--surf-agent-facilities-accent)',
         },
+        brand: {
+          dark: '#041F26',
+          'dark-panel': '#0A3642',
+          blue: '#0091A5',
+          cyan: '#38BDD0',
+          gold: '#E1B989',
+          'gold-light': '#F3D79C',
+          cream: '#F1F0E3',
+          'cream-warm': '#F0E8B6',
+          charcoal: '#414142',
+          watermelon: '#E81152',
+        },
       },
       spacing: {
         'surf-1': 'var(--surf-spacing-1)',
@@ -72,11 +84,43 @@ export const surfKitPreset: Partial<Config> = {
       fontFamily: {
         'surf-sans': 'var(--surf-font-family-sans)',
         'surf-mono': 'var(--surf-font-family-mono)',
+        'surf-display': 'var(--surf-font-family-display)',
       },
       boxShadow: {
         'surf-sm': 'var(--surf-shadow-sm)',
         'surf-md': 'var(--surf-shadow-md)',
         'surf-lg': 'var(--surf-shadow-lg)',
+        'glow': '0 0 20px rgba(225,185,137,0.4)',
+        'glow-strong': '0 0 30px rgba(225,185,137,0.6), 0 0 60px rgba(225,185,137,0.3)',
+        'glow-cyan': '0 0 15px rgba(56,189,208,0.5)',
+        'glow-watermelon': '0 0 15px rgba(232,17,82,0.5)',
+        'card': '0 4px 24px rgba(4,31,38,0.8)',
+      },
+      backdropBlur: {
+        'glass': '12px',
+      },
+      keyframes: {
+        blink: {
+          '0%, 50%': { opacity: '1' },
+          '51%, 100%': { opacity: '0' },
+        },
+        fadeSlideIn: {
+          from: { opacity: '0', transform: 'translateY(12px)' },
+          to: { opacity: '1', transform: 'translateY(0)' },
+        },
+        pulseGlow: {
+          '0%, 100%': { boxShadow: '0 0 20px rgba(225,185,137,0.2)' },
+          '50%': { boxShadow: '0 0 40px rgba(225,185,137,0.4)' },
+        },
+        'brand-spin': {
+          to: { transform: 'rotate(360deg)' },
+        },
+      },
+      animation: {
+        blink: 'blink 1s step-end infinite',
+        fadeSlideIn: 'fadeSlideIn 0.4s ease-out both',
+        pulseGlow: 'pulseGlow 2s ease-in-out infinite',
+        'brand-spin': 'brand-spin 1.2s linear infinite',
       },
     },
   },

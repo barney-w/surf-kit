@@ -3,7 +3,8 @@
     "family": {
       "$type": "fontFamily",
       "sans": { "$value": "Inter, system-ui, -apple-system, sans-serif" },
-      "mono": { "$value": "JetBrains Mono, Fira Code, monospace" }
+      "mono": { "$value": "JetBrains Mono, Fira Code, monospace" },
+      "display": { "$value": "'Space Grotesk', system-ui, sans-serif" }
     },
     "size": {
       "$type": "dimension",

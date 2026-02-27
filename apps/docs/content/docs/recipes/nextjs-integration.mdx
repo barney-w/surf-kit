@@ -45,8 +45,8 @@ import { ThemeProvider } from '@surf-kit/theme';
 import './globals.css';
 
 export const metadata = {
-  title: 'Council Assistant',
-  description: 'AI-powered assistant for council services',
+  title: 'AI Assistant',
+  description: 'AI-powered assistant for digital services',
 };
 
 export default function RootLayout({
@@ -156,7 +156,7 @@ export default function ChatPage() {
     <div className="h-dvh">
       <AgentChat
         layout="full-page"
-        agentName="Council Assistant"
+        agentName="AI Assistant"
         messages={messages}
         onSendMessage={sendMessage}
         isStreaming={isStreaming}

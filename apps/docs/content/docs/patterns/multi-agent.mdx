@@ -5,7 +5,7 @@ description: Patterns for managing conversations across multiple AI agents with 
 
 # Multi-Agent
 
-Many digital services require multiple specialist agents. A planning agent, a benefits agent, and a general assistant might all serve different parts of the same council website. This guide covers how to theme and manage multi-agent experiences.
+Many applications require multiple specialist agents. A planning agent, a support agent, and a general assistant might all serve different parts of the same platform. This guide covers how to theme and manage multi-agent experiences.
 
 ## Agent themes
 
@@ -33,7 +33,7 @@ const benefitsAgent = createAgentTheme({
 });
 
 const generalAgent = createAgentTheme({
-  name: 'Council Assistant',
+  name: 'AI Assistant',
   avatar: '/agents/general.svg',
   accentColor: 'var(--color-blue-600)',
   bubbleColor: 'var(--color-blue-50)',
@@ -137,7 +137,7 @@ function EscalationHandler({ confidence, message }) {
   if (confidence < 0.3) {
     return (
       <AgentHandoff
-        fromAgent={{ name: 'Council Assistant' }}
+        fromAgent={{ name: 'AI Assistant' }}
         toAgent={{ name: 'Customer Service Team' }}
         reason="I'm not confident I can answer this correctly. Let me connect you with a team member."
         isHumanEscalation

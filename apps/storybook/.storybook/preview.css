@@ -1,5 +1,7 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap");
 @import "tailwindcss";
 @import "@surf-kit/tokens/css";
+@import "@surf-kit/tokens/css/brand";
 @config "../tailwind.config.ts";
 @source "../stories";
 @source "../../../packages/core/src";
@@ -10,4 +12,38 @@ body {
   background: var(--surf-color-bg-canvas);
   color: var(--surf-color-text-primary);
   font-family: var(--surf-font-family-sans);
+}
+
+@layer components {
+  .glass-panel {
+    background: rgba(10,54,66,0.6);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(225,185,137,0.15);
+    border-radius: 1.5rem;
+  }
+}
+
+@layer utilities {
+  .text-glow { text-shadow: 0 0 20px rgba(241,240,227,0.3); }
+  .text-glow-gold { text-shadow: 0 0 20px rgba(225,185,137,0.4); }
+  .typewriter-cursor::after {
+    content: '|';
+    animation: blink 1s step-end infinite;
+    color: var(--surf-color-brand-gold, #E1B989);
+  }
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+@keyframes fadeSlideIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 20px rgba(225,185,137,0.2); }
+  50%      { box-shadow: 0 0 40px rgba(225,185,137,0.4); }
 }

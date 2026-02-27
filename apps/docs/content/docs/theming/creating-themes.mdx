@@ -17,7 +17,7 @@ import { createTheme } from '@surf-kit/theme';
 
 ```tsx
 const myTheme = createTheme({
-  name: 'my-council',
+  name: 'my-brand',
   colors: {
     accent: '#1a73e8',
     accentForeground: '#ffffff',
@@ -47,7 +47,7 @@ export default function Layout({ children }) {
 
 ```tsx
 const theme = createTheme({
-  name: 'westshire-council',
+  name: 'westshire-brand',
 
   colors: {
     // Primary accent
@@ -108,7 +108,7 @@ The function outputs a `Theme` object containing:
 ```tsx
 // The generated theme object
 {
-  name: 'westshire-council',
+  name: 'westshire-brand',
   cssVariables: {
     light: {
       '--color-accent': '#1a5c3a',
@@ -137,7 +137,7 @@ You can override any automatic colour by providing explicit dark mode values:
 
 ```tsx
 const theme = createTheme({
-  name: 'my-council',
+  name: 'my-brand',
   colors: {
     accent: '#1a73e8',        // Light mode accent
     accentDark: '#8ab4f8',    // Override the auto-generated dark accent
@@ -151,7 +151,7 @@ Override tokens for specific components:
 
 ```tsx
 const theme = createTheme({
-  name: 'my-council',
+  name: 'my-brand',
   colors: { accent: '#1a73e8' },
   components: {
     button: {
@@ -201,4 +201,4 @@ This renders a page with all components in both light and dark mode, allowing yo
 ## Related
 
 - [Token Architecture](/docs/theming/overview) — Understanding the token system.
-- [Custom Branding](/docs/theming/custom-branding) — Quick start for council-specific theming.
+- [Custom Branding](/docs/theming/custom-branding) — Quick start for custom branding.

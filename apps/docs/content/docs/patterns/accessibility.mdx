@@ -1,15 +1,11 @@
 ---
 title: Accessibility
-description: WCAG 2.2 AA compliance checklist and guidelines for AI agent interfaces in digital services.
+description: WCAG 2.2 AA compliance checklist and guidelines for AI agent interfaces.
 ---
 
 # Accessibility
 
-Digital services must meet **WCAG 2.2 Level AA** accessibility standards. AI agent interfaces introduce unique challenges. This guide provides a comprehensive checklist and practical guidance.
-
-## Legal requirements
-
-In the UK, the [Public Sector Bodies (Websites and Mobile Applications) Accessibility Regulations 2018](https://www.legislation.gov.uk/uksi/2018/952) requires all public sector websites to meet WCAG 2.2 AA. This includes AI-powered chat interfaces.
+AI agent interfaces must meet **WCAG 2.2 Level AA** accessibility standards. These interfaces introduce unique challenges around streaming content, dynamic responses, and confidence indicators. This guide provides a comprehensive checklist and practical guidance.
 
 ## WCAG 2.2 AA checklist for agent interfaces
 
@@ -121,12 +117,12 @@ pnpm dlx lighthouse https://localhost:3000/chat --only-categories=accessibility
 
 ## Accessibility statement
 
-Digital services must publish an accessibility statement. Include:
+Consider publishing an accessibility statement for your deployment. Include:
 
 - Conformance level (WCAG 2.2 AA)
 - Known issues and workarounds
 - How to report accessibility problems
-- Enforcement procedure contact details
+- Contact details for accessibility support
 
 ```tsx
 // Example: Accessibility statement page
@@ -135,8 +131,8 @@ export default function AccessibilityStatement() {
     <article>
       <h1>Accessibility statement</h1>
       <p>
-        This website is run by [Council Name]. We want as many people as
-        possible to be able to use this website, including the AI assistant
+        This service aims to meet WCAG 2.2 Level AA. We want as many people
+        as possible to be able to use this website, including the AI assistant
         feature.
       </p>
       <h2>Conformance status</h2>
@@ -152,5 +148,4 @@ export default function AccessibilityStatement() {
 ## Resources
 
 - [WCAG 2.2 specification](https://www.w3.org/TR/WCAG22/)
-- [GOV.UK accessibility requirements](https://www.gov.uk/guidance/accessibility-requirements-for-public-sector-websites-and-apps)
 - [React Aria accessibility documentation](https://react-spectrum.adobe.com/react-aria/)

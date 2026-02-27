@@ -1,5 +1,5 @@
 /** Resolved color mode applied to the DOM */
-export type ColorMode = 'light' | 'dark'
+export type ColorMode = 'light' | 'dark' | 'brand'
 
 /** User-facing color mode preference (includes 'system') */
 export type ColorModePreference = ColorMode | 'system'

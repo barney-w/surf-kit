@@ -71,7 +71,8 @@ describe('ConversationList', () => {
     expect(activeButton?.getAttribute('aria-current')).toBe('true')
     // The parent li should have the active background
     const activeLi = activeButton?.closest('li')
-    expect(activeLi?.className).toContain('bg-brand-dark-panel/70')
+    expect(activeLi?.className).toContain('bg-surface-raised')
+    expect(activeLi?.className).toContain('border-l-accent')
   })
 
   it('renders "New conversation" button when onNew is provided', async () => {

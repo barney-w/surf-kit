@@ -37,7 +37,7 @@ import { StreamingMessage } from '@surf-kit/agent';
   content={streamedText}
   isStreaming={true}
   phase="writing"
-  agentName="Council Assistant"
+  agentName="AI Assistant"
 />
 ```
 
@@ -56,12 +56,12 @@ import { StreamingMessage } from '@surf-kit/agent';
 
 ```tsx
 <StreamingMessage
-  content="Based on the organisation guidelines, you need to submit form PL-01..."
+  content="Based on the documentation, you need to submit form PL-01..."
   isStreaming={false}
   phase="complete"
   agentName="Planning Agent"
   sources={[
-    { title: 'Planning Guide', url: 'https://council.gov/planning' },
+    { title: 'Planning Guide', url: 'https://example.com/planning' },
   ]}
   confidence={0.91}
 />
@@ -71,7 +71,7 @@ import { StreamingMessage } from '@surf-kit/agent';
 
 ```tsx
 <StreamingMessage
-  content="Based on the organisation gui"
+  content="Based on the documentation gui"
   isStreaming={false}
   phase="writing"
   error="Connection lost. Please try again."
@@ -103,7 +103,7 @@ Content appears character by character with a blinking cursor.
 
 ```tsx
 <StreamingMessage
-  content="The council tax band for your property..."
+  content="The service fees band for your property..."
   isStreaming
   phase="writing"
   agentName="Assistant"

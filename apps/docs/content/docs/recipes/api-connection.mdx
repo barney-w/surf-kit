@@ -15,7 +15,7 @@ The SSE endpoint receives a POST request and returns a stream of JSON events:
 data: {"phase": "thinking"}
 
 data: {"phase": "writing", "content": "The "}
-data: {"phase": "writing", "content": "council "}
+data: {"phase": "writing", "content": "our "}
 data: {"phase": "writing", "content": "tax "}
 
 data: {"phase": "citing", "sources": [...]}
@@ -34,7 +34,7 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-const SYSTEM_PROMPT = `You are a helpful council assistant. Answer questions about local digital services accurately and cite your sources when possible.`;
+const SYSTEM_PROMPT = `You are a helpful AI assistant. Answer questions about our services accurately and cite your sources when possible.`;
 
 export async function POST(request: NextRequest) {
   const { message, history } = await request.json();
@@ -108,7 +108,7 @@ export async function POST(request: NextRequest) {
       const response = await anthropic.messages.stream({
         model: 'claude-sonnet-4-20250514',
         max_tokens: 2048,
-        system: 'You are a helpful council assistant.',
+        system: 'You are a helpful AI assistant.',
         messages: [
           ...history,
           { role: 'user', content: message },

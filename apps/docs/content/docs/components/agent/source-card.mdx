@@ -34,7 +34,7 @@ import { SourceCard } from '@surf-kit/agent';
 ```tsx
 <SourceCard
   title="Planning Application Guidelines"
-  url="https://council.gov/planning/guidelines"
+  url="https://example.com/planning/guidelines"
   snippet="All planning applications must include a site plan drawn to scale…"
 />
 ```
@@ -43,9 +43,9 @@ import { SourceCard } from '@surf-kit/agent';
 
 ```tsx
 <SourceCard
-  title="Council Tax Bands Explained"
-  url="https://council.gov/council-tax/bands"
-  snippet="Council tax bands are based on property valuations…"
+  title="Service Fees Explained"
+  url="https://example.com/pricing/plans"
+  snippet="Pricing plans are based on account tier…"
   relevance={0.92}
   index={1}
 />
@@ -56,7 +56,7 @@ import { SourceCard } from '@surf-kit/agent';
 ```tsx
 <SourceCard
   title="FAQ: Waste Collection"
-  url="https://council.gov/waste/faq"
+  url="https://example.com/waste/faq"
   isCompact
   index={2}
 />
@@ -68,7 +68,7 @@ import { SourceCard } from '@surf-kit/agent';
 <div className="flex flex-col gap-2">
   <SourceCard
     title="Housing Benefit Eligibility"
-    url="https://council.gov/benefits/housing"
+    url="https://example.com/benefits/housing"
     relevance={0.95}
     index={1}
   />
@@ -90,9 +90,9 @@ Full card with title, snippet, and URL. Shows the favicon when available.
 ```tsx
 <SourceCard
   title="Recycling Guide"
-  url="https://council.gov/recycling"
+  url="https://example.com/recycling"
   snippet="Learn what goes in each bin and collection schedules."
-  favicon="https://council.gov/favicon.ico"
+  favicon="https://example.com/favicon.ico"
 />
 ```
 
@@ -103,7 +103,7 @@ When `relevance` is provided, a colour-coded badge appears showing the relevance
 ```tsx
 <SourceCard
   title="Parking Permits"
-  url="https://council.gov/parking/permits"
+  url="https://example.com/parking/permits"
   relevance={0.85}
   index={1}
 />

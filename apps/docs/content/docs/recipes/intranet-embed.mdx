@@ -42,7 +42,7 @@ export default function EmbedPage() {
     <ThemeProvider defaultTheme="light">
       <AgentChat
         layout="widget"
-        agentName="Council Assistant"
+        agentName="AI Assistant"
         messages={messages}
         onSendMessage={sendMessage}
         isStreaming={isStreaming}
@@ -57,7 +57,7 @@ export default function EmbedPage() {
 
 ```tsx title="app/embed/layout.tsx"
 export const metadata = {
-  title: 'Council Assistant Widget',
+  title: 'AI Assistant Widget',
   robots: 'noindex', // Do not index the embed page
 };
 
@@ -76,8 +76,8 @@ export default function EmbedLayout({ children }) {
 
 ```html
 <iframe
-  src="https://assistant.council.gov/embed"
-  title="Council Assistant"
+  src="https://assistant.example.com/embed"
+  title="AI Assistant"
   width="400"
   height="600"
   style="border: none; position: fixed; bottom: 16px; right: 16px; z-index: 9999;"
@@ -112,8 +112,8 @@ export default function EmbedLayout({ children }) {
 </style>
 
 <iframe
-  src="https://assistant.council.gov/embed"
-  title="Council Assistant"
+  src="https://assistant.example.com/embed"
+  title="AI Assistant"
   class="agent-widget-frame"
   allow="clipboard-write"
 ></iframe>
@@ -127,8 +127,8 @@ For a more polished integration, provide a JavaScript snippet that intranet admi
 <script>
   (function () {
     var iframe = document.createElement('iframe');
-    iframe.src = 'https://assistant.council.gov/embed';
-    iframe.title = 'Council Assistant';
+    iframe.src = 'https://assistant.example.com/embed';
+    iframe.title = 'AI Assistant';
     iframe.style.cssText =
       'border:none;position:fixed;bottom:16px;right:16px;z-index:9999;' +
       'width:400px;height:600px;border-radius:12px;' +
@@ -149,7 +149,7 @@ Add a button that shows and hides the widget:
     // Create toggle button
     var btn = document.createElement('button');
     btn.textContent = 'Chat with us';
-    btn.setAttribute('aria-label', 'Open Council Assistant chat');
+    btn.setAttribute('aria-label', 'Open AI Assistant chat');
     btn.setAttribute('aria-expanded', 'false');
     btn.style.cssText =
       'position:fixed;bottom:16px;right:16px;z-index:10000;' +
@@ -158,8 +158,8 @@ Add a button that shows and hides the widget:
 
     // Create iframe (hidden initially)
     var iframe = document.createElement('iframe');
-    iframe.src = 'https://assistant.council.gov/embed';
-    iframe.title = 'Council Assistant';
+    iframe.src = 'https://assistant.example.com/embed';
+    iframe.title = 'AI Assistant';
     iframe.style.cssText =
       'border:none;position:fixed;bottom:80px;right:16px;z-index:9999;' +
       'width:400px;height:600px;border-radius:12px;display:none;' +
@@ -188,7 +188,7 @@ Use `postMessage` to pass context from the intranet page to the widget:
 
 ```js
 // Pass user context to the widget
-var iframe = document.querySelector('iframe[title="Council Assistant"]');
+var iframe = document.querySelector('iframe[title="AI Assistant"]');
 iframe.contentWindow.postMessage(
   {
     type: 'user-context',
@@ -197,7 +197,7 @@ iframe.contentWindow.postMessage(
       department: 'Housing',
     },
   },
-  'https://assistant.council.gov'
+  'https://assistant.example.com'
 );
 ```
 
@@ -207,7 +207,7 @@ iframe.contentWindow.postMessage(
 React.useEffect(() => {
   function handleMessage(event: MessageEvent) {
     // Verify origin
-    if (event.origin !== 'https://intranet.council.gov') return;
+    if (event.origin !== 'https://intranet.example.com') return;
 
     if (event.data.type === 'user-context') {
       setUserContext(event.data.data);
@@ -223,7 +223,7 @@ React.useEffect(() => {
 
 - **CSP frame-ancestors**: Restrict which domains can embed the widget.
   ```
-  Content-Security-Policy: frame-ancestors 'self' https://intranet.council.gov;
+  Content-Security-Policy: frame-ancestors 'self' https://intranet.example.com;
   ```
 - **Origin validation**: Always validate `event.origin` in `postMessage` handlers.
 - **HTTPS**: Both the intranet and the widget must use HTTPS.
@@ -240,4 +240,4 @@ React.useEffect(() => {
 
 - [Agent Chat Pattern](/docs/patterns/agent-chat) — Layout options for the chat interface.
 - [Next.js Integration](/docs/recipes/nextjs-integration) — Full Next.js setup guide.
-- [Custom Branding](/docs/theming/custom-branding) — Match the widget to your organisation brand.
+- [Custom Branding](/docs/theming/custom-branding) — Match the widget to your brand.

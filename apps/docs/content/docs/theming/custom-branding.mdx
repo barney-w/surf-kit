@@ -1,15 +1,15 @@
 ---
 title: Custom Branding
-description: A quick guide to applying council-specific branding to surf-kit interfaces.
+description: A quick guide to applying your own branding to surf-kit interfaces.
 ---
 
 # Custom Branding
 
-Most councils have established brand guidelines. This guide shows how to apply organisation branding to surf-kit in under 10 minutes.
+Most organisations have established brand guidelines. This guide shows how to apply your branding to surf-kit in under 10 minutes.
 
 ## What you need
 
-From your organisation's brand guidelines, gather:
+From your brand guidelines, gather:
 
 1. **Primary brand colour** (hex code)
 2. **Logo** (SVG preferred)
@@ -23,8 +23,8 @@ From your organisation's brand guidelines, gather:
 ```tsx title="lib/theme.ts"
 import { createTheme } from '@surf-kit/theme';
 
-export const councilTheme = createTheme({
-  name: 'my-council',
+export const brandTheme = createTheme({
+  name: 'my-brand',
   colors: {
     accent: '#1a5c3a', // Your primary brand colour
   },
@@ -37,13 +37,13 @@ That is it for a minimal setup. `createTheme` generates all other colours from t
 
 ```tsx title="app/layout.tsx"
 import { ThemeProvider } from '@surf-kit/theme';
-import { councilTheme } from '@/lib/theme';
+import { brandTheme } from '@/lib/theme';
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <ThemeProvider theme={councilTheme} defaultTheme="system">
+        <ThemeProvider theme={brandTheme} defaultTheme="system">
           {children}
         </ThemeProvider>
       </body>
@@ -59,25 +59,25 @@ export function Header() {
   return (
     <header className="flex items-center gap-3 px-4 py-3 border-b">
       <img
-        src="/council-logo.svg"
-        alt="My Council"
+        src="/brand-logo.svg"
+        alt="My Organisation"
         className="h-8"
       />
-      <span className="font-semibold">Council Assistant</span>
+      <span className="font-semibold">AI Assistant</span>
     </header>
   );
 }
 ```
 
-## Common organisation branding scenarios
+## Common branding scenarios
 
 ### Custom font
 
-If your organisation uses a specific typeface:
+If your brand uses a specific typeface:
 
 ```tsx
-const councilTheme = createTheme({
-  name: 'my-council',
+const brandTheme = createTheme({
+  name: 'my-brand',
   colors: { accent: '#1a5c3a' },
   typography: {
     fontFamily: '"Frutiger", "Helvetica Neue", Arial, sans-serif',
@@ -98,11 +98,11 @@ Load the font in your CSS or `<head>`:
 
 ### Two-colour branding
 
-Some councils have a primary and secondary brand colour:
+Some brands have a primary and secondary colour:
 
 ```tsx
-const councilTheme = createTheme({
-  name: 'my-council',
+const brandTheme = createTheme({
+  name: 'my-brand',
   colors: {
     accent: '#1a5c3a',        // Primary — used for buttons, links, focus rings
     info: '#0e4d92',          // Secondary — used for informational elements
@@ -115,58 +115,35 @@ const councilTheme = createTheme({
 By default, dark mode is auto-generated. Override specific values if needed:
 
 ```tsx
-const councilTheme = createTheme({
-  name: 'my-council',
+const brandTheme = createTheme({
+  name: 'my-brand',
   colors: {
     accent: '#1a5c3a',
     accentDark: '#86efac',        // Lighter green for dark backgrounds
-    surfaceDark: '#0a1f0f',       // Council-branded dark background
+    surfaceDark: '#0a1f0f',       // Brand-specific dark background
   },
 });
 ```
 
 ### Agent branding
 
-Give each agent a distinct look within the organisation brand:
+Give each agent a distinct look within your brand:
 
 ```tsx
 import { createAgentTheme } from '@surf-kit/agent';
 
-export const planningBot = createAgentTheme({
-  name: 'Planning Assistant',
-  avatar: '/agents/planning.svg',
-  accentColor: '#1a5c3a',      // Council green
-  greeting: 'I can help with planning applications and building regulations.',
+export const supportBot = createAgentTheme({
+  name: 'Support Assistant',
+  avatar: '/agents/support.svg',
+  accentColor: '#1a5c3a',
+  greeting: 'I can help with product support and troubleshooting.',
 });
 
-export const revenuesBot = createAgentTheme({
-  name: 'Council Tax Advisor',
-  avatar: '/agents/revenues.svg',
-  accentColor: '#0e4d92',      // Council blue
-  greeting: 'I can help with council tax queries and payment options.',
-});
-```
-
-## GOV.UK-style theming
-
-For councils that align with GOV.UK design patterns:
-
-```tsx
-const govStyle = createTheme({
-  name: 'gov-aligned',
-  colors: {
-    accent: '#1d70b8',           // GOV.UK blue
-    textPrimary: '#0b0c0c',     // GOV.UK black
-    surface: '#ffffff',
-  },
-  typography: {
-    fontFamily: '"GDS Transport", Arial, sans-serif',
-  },
-  radius: {
-    sm: '0',
-    md: '0',
-    lg: '0',                    // GOV.UK uses no border radius
-  },
+export const salesBot = createAgentTheme({
+  name: 'Sales Assistant',
+  avatar: '/agents/sales.svg',
+  accentColor: '#0e4d92',
+  greeting: 'I can help with pricing and product enquiries.',
 });
 ```
 

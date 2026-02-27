@@ -1,26 +1,26 @@
 import type { AgentResponse } from '@surf-kit/agent'
 
-export const councilTaxSupport: AgentResponse = {
+export const subscriptionPlanInfo: AgentResponse = {
   message:
-    'You may be able to reduce your organisation tax bill through **Council Tax Reduction** and related discounts.\n\nTypical options include:\n- **Council Tax Reduction (CTR)** for low-income households\n- **Single Person Discount** (25%) if only one adult lives in the property\n- **Severe Mental Impairment disregard** and some **carer/student disregards**\n- **Disabled Band Reduction** if your home has qualifying adaptations\n\nTo assess eligibility, the organisation usually checks household income, savings, rent/mortgage costs, and who lives at the address. Most councils ask for recent payslips or benefit statements and a tenancy agreement or proof of address.',
+    'You may be able to reduce your subscription costs by switching to an annual plan or applying eligible discounts.\n\nTypical options include:\n- **Annual billing discount** (up to 20% compared to monthly)\n- **Team plan** for 5+ seats with volume pricing\n- **Startup tier** for early-stage companies under 2 years old\n- **Non-profit rate** for registered charities and NGOs\n\nTo assess eligibility, simply review the pricing page or contact our sales team with details about your organisation. Most discounts require verification and take effect on the next billing cycle.',
   sources: [
     {
-      title: 'Council Tax Reduction Scheme',
-      section: 'Who can apply',
-      document_id: 'doc-ctr-scheme',
-      url: 'https://www.example-council.gov.uk/council-tax-reduction',
+      title: 'Pricing Plans Overview',
+      section: 'Who qualifies for discounts',
+      document_id: 'doc-pricing-plans',
+      url: 'https://example.com/pricing',
       confidence: 0.94,
       snippet:
-        'Council Tax Reduction may be available if you are on a low income or receive certain benefits, depending on household circumstances.',
+        'Annual billing, team plans, and special rates are available for qualifying organisations.',
     },
     {
-      title: 'Council Tax Discounts and Exemptions',
-      section: 'Discount types',
-      document_id: 'doc-tax-discounts',
-      url: 'https://www.example-council.gov.uk/council-tax-discounts',
+      title: 'Discount and Special Rates',
+      section: 'Eligibility criteria',
+      document_id: 'doc-discounts',
+      url: 'https://example.com/pricing/discounts',
       confidence: 0.89,
       snippet:
-        'Discounts can include Single Person Discount, student exemptions, and disabled band reductions where eligibility rules are met.',
+        'Discounts can include annual billing savings, volume pricing, and non-profit rates where eligibility rules are met.',
     },
   ],
   confidence: {
@@ -30,7 +30,7 @@ export const councilTaxSupport: AgentResponse = {
     answer_groundedness: 0.95,
     recency: 0.9,
     reasoning:
-      'Answer is grounded in council revenue guidance and standard UK discount categories, but eligibility always depends on local scheme rules.',
+      'Answer is grounded in current pricing documentation, but exact rates depend on your account tier and region.',
   },
   verification: {
     status: 'passed',
@@ -41,33 +41,33 @@ export const councilTaxSupport: AgentResponse = {
   ui_hint: 'text',
   structured_data: null,
   follow_up_suggestions: [
-    'What evidence do I need for a CTR application?',
-    'Can I backdate a council tax reduction claim?',
-    'How long does a council tax decision usually take?',
+    'How do I apply for a non-profit discount?',
+    'Can I switch from monthly to annual billing mid-cycle?',
+    'What happens to my data if I downgrade my plan?',
   ],
 }
 
-export const wasteCollectionInfo: AgentResponse = {
+export const onboardingGuide: AgentResponse = {
   message:
-    'For missed bin collections, the usual process is:\n\n1. Check your collection day and accepted materials\n2. Report the missed collection within the organisation reporting window (often 1-2 working days)\n3. Leave the bin at the boundary until instructions are updated\n\nMost councils will not return if:\n- The wrong materials were presented\n- The bin was not out by the stated time\n- Access was blocked\n\nIf repeated issues occur, request a service investigation and include photos of presentation and any contamination notices.',
+    'To get started with the product, follow these steps:\n\n1. Complete your profile and verify your email address\n2. Connect your first integration from the Integrations panel\n3. Invite team members from Settings > Team\n4. Run through the interactive quickstart guide in the dashboard\n\nIf you encounter any issues during setup:\n- Check the troubleshooting guide in our docs\n- Review integration requirements for your tech stack\n- Contact support with your account ID and a description of the issue\n\nMost onboarding issues are resolved within one business day.',
   sources: [
     {
-      title: 'Report a Missed Bin Collection',
-      section: 'Eligibility and deadlines',
-      document_id: 'doc-missed-bin',
-      url: 'https://www.example-council.gov.uk/bins/missed-collection',
+      title: 'Getting Started Guide',
+      section: 'Initial setup steps',
+      document_id: 'doc-onboarding',
+      url: 'https://example.com/docs/getting-started',
       confidence: 0.9,
       snippet:
-        'Missed collections should be reported within the published reporting window and bins should remain accessible for return.',
+        'Complete your profile, connect integrations, and invite team members to get the most out of the product.',
     },
     {
-      title: 'Recycling and Refuse Guide',
-      section: 'Contamination rules',
-      document_id: 'doc-recycling-guide',
-      url: 'https://www.example-council.gov.uk/bins/recycling-guide',
+      title: 'Integration Setup Guide',
+      section: 'Requirements and compatibility',
+      document_id: 'doc-integrations',
+      url: 'https://example.com/docs/integrations',
       confidence: 0.82,
       snippet:
-        'Loads can be rejected if incorrect items are found. Residents should remove contamination before the next scheduled collection.',
+        'Each integration has specific authentication and permission requirements. Check compatibility before connecting.',
     },
   ],
   confidence: {
@@ -77,13 +77,13 @@ export const wasteCollectionInfo: AgentResponse = {
     answer_groundedness: 0.8,
     recency: 0.78,
     reasoning:
-      'General missed-collection policy is stable, but specific cut-off times and return windows vary by council and service area.',
+      'Onboarding steps are generally stable, but UI details and integration options may change with product updates.',
   },
   verification: {
     status: 'flagged',
     flags: [
-      'Return window for missed collections varies by route',
-      'Garden and bulky waste follow separate service rules',
+      'Integration availability varies by plan tier',
+      'Team invite limits depend on subscription',
     ],
     claims_checked: 4,
     claims_verified: 3,
@@ -91,42 +91,42 @@ export const wasteCollectionInfo: AgentResponse = {
   ui_hint: 'steps',
   structured_data: null,
   follow_up_suggestions: [
-    'How do I check my bin collection day?',
-    'What items are not allowed in mixed recycling?',
-    'How do I order a replacement bin?',
+    'How do I connect a Slack integration?',
+    'What permissions do team members need?',
+    'How do I export my data?',
   ],
 }
 
-export const planningApplicationGuide: AgentResponse = {
+export const apiUsageGuide: AgentResponse = {
   message:
-    'Planning application pathways commonly include:\n\n| Application type | Typical use | Indicative target time |\n|---|---|---|\n| Householder | Extensions, loft conversions, outbuildings | 8 weeks |\n| Full Planning | New dwellings or major changes of use | 8-13 weeks |\n| Lawful Development Certificate | Confirming if works are permitted development | 8 weeks |\n\nBefore submitting, check local validation requirements, conservation area constraints, and whether your site is listed or in a protected zone. Most councils require scaled plans, ownership certificates, and the correct fee at submission.',
+    'API access tiers and rate limits are structured as follows:\n\n| Plan | Requests/min | Requests/day | Context window |\n|---|---|---|\n| Free | 10 | 1,000 | 8k tokens |\n| Pro | 60 | 50,000 | 32k tokens |\n| Enterprise | Custom | Unlimited | 128k tokens |\n\nBefore making requests, ensure you have:\n- Generated an API key from your dashboard\n- Set the correct base URL for your region\n- Included the `Authorization: Bearer <key>` header\n\nRate limit errors return HTTP 429 with a `Retry-After` header.',
   sources: [
     {
-      title: 'Apply for Planning Permission',
-      section: 'Application routes',
-      document_id: 'doc-planning-routes',
-      url: 'https://www.example-council.gov.uk/planning/apply',
+      title: 'API Reference',
+      section: 'Authentication',
+      document_id: 'doc-api-auth',
+      url: 'https://example.com/docs/api',
       confidence: 0.96,
       snippet:
-        'Householder, full, and certificate applications have different requirements and processing targets.',
+        'All API requests require a valid API key passed as a Bearer token in the Authorization header.',
     },
     {
-      title: 'Planning Validation Checklist',
-      section: 'Required documents',
-      document_id: 'doc-planning-validation',
-      url: 'https://www.example-council.gov.uk/planning/validation',
+      title: 'Rate Limits and Quotas',
+      section: 'Per-plan limits',
+      document_id: 'doc-rate-limits',
+      url: 'https://example.com/docs/api/rate-limits',
       confidence: 0.92,
       snippet:
-        'Applications are invalid unless mandatory plans, forms, certificates, and fees are provided at submission.',
+        'Rate limits are enforced per API key. Exceeding limits returns HTTP 429 with retry information.',
     },
     {
-      title: 'Planning Decision Timeframes',
-      section: 'Service standards',
-      document_id: 'doc-planning-timeframes',
-      url: 'https://www.example-council.gov.uk/planning/decision-times',
+      title: 'Enterprise API Guide',
+      section: 'Custom limits',
+      document_id: 'doc-enterprise-api',
+      url: 'https://example.com/docs/api/enterprise',
       confidence: 0.88,
       snippet:
-        'Most householder and minor planning applications have an 8-week target, subject to consultation and validation.',
+        'Enterprise plans support custom rate limits and dedicated infrastructure upon request.',
     },
   ],
   confidence: {
@@ -136,7 +136,7 @@ export const planningApplicationGuide: AgentResponse = {
     answer_groundedness: 0.96,
     recency: 0.87,
     reasoning:
-      'Application types and processing targets are strongly grounded in planning guidance, but case complexity and consultation can extend timelines.',
+      'Rate limits and plan details are strongly grounded in current documentation, but enterprise limits are negotiated per contract.',
   },
   verification: {
     status: 'passed',
@@ -146,22 +146,22 @@ export const planningApplicationGuide: AgentResponse = {
   },
   ui_hint: 'table',
   structured_data: {
-    application_types: [
-      { type: 'Householder', use: 'Domestic extensions and alterations', target_weeks: 8 },
-      { type: 'Full Planning', use: 'New build or material change of use', target_weeks: 8 },
-      { type: 'Lawful Development Certificate', use: 'Confirming lawful status', target_weeks: 8 },
+    plans: [
+      { plan: 'Free', rpm: 10, rpd: 1000, context: '8k tokens' },
+      { plan: 'Pro', rpm: 60, rpd: 50000, context: '32k tokens' },
+      { plan: 'Enterprise', rpm: 'Custom', rpd: 'Unlimited', context: '128k tokens' },
     ],
   },
   follow_up_suggestions: [
-    'Do I need planning permission for a rear extension?',
-    'How do I check if my property is in a conservation area?',
-    'What happens if my planning application is refused?',
+    'How do I increase my rate limits?',
+    'Where do I find my API key?',
+    'What happens when I hit the rate limit?',
   ],
 }
 
 export const generalDemoResponse: AgentResponse = {
   message:
-    'This playground uses mock data to demonstrate Surf Kit components. Try one of these prompts for a richer response: "council tax reduction", "missed bin collection", or "planning permission".',
+    'This playground uses mock data to demonstrate Surf Kit components. Try one of these prompts for a richer response: "pricing plans", "getting started", or "API rate limits".',
   sources: [
     {
       title: 'Surf Kit Playground Mock API',
@@ -170,7 +170,7 @@ export const generalDemoResponse: AgentResponse = {
       url: 'https://example.com/surf-kit-playground-mock',
       confidence: 1,
       snippet:
-        'Keyword-based routing is used in the playground to return deterministic demo responses for council tax, bins, and planning topics.',
+        'Keyword-based routing is used in the playground to return deterministic demo responses for pricing, onboarding, and API topics.',
     },
   ],
   confidence: {
@@ -191,9 +191,9 @@ export const generalDemoResponse: AgentResponse = {
   ui_hint: 'text',
   structured_data: null,
   follow_up_suggestions: [
-    'How can I reduce my council tax bill?',
-    'I need to report a missed bin collection',
-    'What planning application do I need?',
+    'What pricing plans are available?',
+    'How do I get started?',
+    'What are the API rate limits?',
   ],
 }
 
@@ -205,16 +205,16 @@ export function selectResponse(message: string): {
 } {
   const lower = message.toLowerCase()
 
-  if (lower.includes('council tax') || lower.includes('tax') || lower.includes('discount') || lower.includes('benefit') || lower.includes('reduction')) {
-    return { response: councilTaxSupport, agent: 'revenue-benefits', agentLabel: 'Revenue & Benefits' }
+  if (lower.includes('pricing') || lower.includes('plan') || lower.includes('discount') || lower.includes('billing') || lower.includes('subscription') || lower.includes('cost')) {
+    return { response: subscriptionPlanInfo, agent: 'billing-support', agentLabel: 'Billing Support' }
   }
 
-  if (lower.includes('bin') || lower.includes('waste') || lower.includes('recycling') || lower.includes('refuse') || lower.includes('missed collection')) {
-    return { response: wasteCollectionInfo, agent: 'environmental-services', agentLabel: 'Environmental Services' }
+  if (lower.includes('onboard') || lower.includes('getting started') || lower.includes('setup') || lower.includes('integration') || lower.includes('started') || lower.includes('start')) {
+    return { response: onboardingGuide, agent: 'onboarding-support', agentLabel: 'Onboarding Support' }
   }
 
-  if (lower.includes('planning') || lower.includes('extension') || lower.includes('application') || lower.includes('permitted development') || lower.includes('conservation area')) {
-    return { response: planningApplicationGuide, agent: 'planning-support', agentLabel: 'Planning Support' }
+  if (lower.includes('api') || lower.includes('rate limit') || lower.includes('request') || lower.includes('token') || lower.includes('enterprise')) {
+    return { response: apiUsageGuide, agent: 'developer-support', agentLabel: 'Developer Support' }
   }
 
   return {

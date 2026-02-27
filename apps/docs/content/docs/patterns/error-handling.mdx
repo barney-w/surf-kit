@@ -5,7 +5,7 @@ description: Patterns for handling network errors, API failures, and retry strat
 
 # Error Handling
 
-Robust error handling is essential for government-facing AI applications. Users must always understand what went wrong and what they can do next. This guide covers common error scenarios and recovery patterns.
+Robust error handling is essential for AI applications. Users must always understand what went wrong and what they can do next. This guide covers common error scenarios and recovery patterns.
 
 ## Error categories
 
@@ -196,7 +196,7 @@ function ConfidenceFallback({ message, confidence }) {
       <div>
         <Alert intent="warning" title="I'm not sure about this">
           I could not find a confident answer to your question. Here is what I
-          found, but I recommend contacting the organisation directly for
+          found, but I recommend contacting the service directly for
           confirmation.
         </Alert>
         <div className="mt-3 prose">{message.content}</div>
@@ -214,9 +214,9 @@ function ConfidenceFallback({ message, confidence }) {
 function ContentFilterAlert() {
   return (
     <Alert intent="info" title="I cannot help with that">
-      I am designed to help with council services. I am not able to assist with
+      I am designed to help with digital services. I am not able to assist with
       this particular request. Please try rephrasing your question or contact
-      the organisation directly.
+      the service directly.
     </Alert>
   );
 }

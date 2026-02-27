@@ -13,6 +13,7 @@ export interface AgentChatState {
   error: ChatError | null
   inputValue: string
   streamPhase: StreamState['phase']
+  streamingContent: string
 }
 
 const initialState: AgentChatState = {
@@ -22,6 +23,7 @@ const initialState: AgentChatState = {
   error: null,
   inputValue: '',
   streamPhase: 'idle',
+  streamingContent: '',
 }
 
 // ── Actions ────────────────────────────────────────────────────────────
@@ -31,7 +33,7 @@ type Action =
   | { type: 'SEND_START'; message: ChatMessage }
   | { type: 'STREAM_PHASE'; phase: StreamState['phase'] }
   | { type: 'STREAM_CONTENT'; content: string }
-  | { type: 'SEND_SUCCESS'; message: ChatMessage }
+  | { type: 'SEND_SUCCESS'; message: ChatMessage; streamingContent: string }
   | { type: 'SEND_ERROR'; error: ChatError }
   | { type: 'LOAD_CONVERSATION'; conversationId: string; messages: ChatMessage[] }
   | { type: 'RESET' }
@@ -50,13 +52,14 @@ function reducer(state: AgentChatState, action: Action): AgentChatState {
         error: null,
         inputValue: '',
         streamPhase: 'thinking',
+        streamingContent: '',
       }
 
     case 'STREAM_PHASE':
       return { ...state, streamPhase: action.phase }
 
     case 'STREAM_CONTENT':
-      return state // Content is tracked by the streaming hook, not duplicated here
+      return { ...state, streamingContent: state.streamingContent + action.content }
 
     case 'SEND_SUCCESS':
       return {
@@ -64,6 +67,7 @@ function reducer(state: AgentChatState, action: Action): AgentChatState {
         messages: [...state.messages, action.message],
         isLoading: false,
         streamPhase: 'idle',
+        streamingContent: '',
       }
 
     case 'SEND_ERROR':
@@ -72,6 +76,7 @@ function reducer(state: AgentChatState, action: Action): AgentChatState {
         isLoading: false,
         error: action.error,
         streamPhase: 'idle',
+        streamingContent: '',
       }
 
     case 'LOAD_CONVERSATION':
@@ -201,6 +206,7 @@ export function useAgentChat(config: AgentChatConfig) {
                   break
                 case 'delta':
                   accumulatedContent += event.content
+                  dispatch({ type: 'STREAM_CONTENT', content: event.content as string })
                   break
                 case 'done':
                   agentResponse = event.response
@@ -224,7 +230,7 @@ export function useAgentChat(config: AgentChatConfig) {
           timestamp: new Date(),
         }
 
-        dispatch({ type: 'SEND_SUCCESS', message: assistantMessage })
+        dispatch({ type: 'SEND_SUCCESS', message: assistantMessage, streamingContent: accumulatedContent })
       } catch (err: unknown) {
         clearTimeout(timeoutId)
         if ((err as Error).name === 'AbortError') {

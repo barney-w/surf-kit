@@ -35,22 +35,22 @@ const handlers = [
     return HttpResponse.json([
       {
         id: 'conv-1',
-        title: 'Council Tax Reduction',
-        lastMessage: 'Can I get single person discount and CTR together?',
+        title: 'Pricing Plans',
+        lastMessage: 'What is included in the Pro plan?',
         updatedAt: new Date().toISOString(),
         messageCount: 4,
       },
       {
         id: 'conv-2',
-        title: 'Missed Bin Collection',
-        lastMessage: 'My recycling was missed yesterday - what should I do?',
+        title: 'Getting Started',
+        lastMessage: 'How do I connect my first integration?',
         updatedAt: new Date(Date.now() - 86400000).toISOString(),
         messageCount: 2,
       },
       {
         id: 'conv-3',
-        title: 'Planning Permission',
-        lastMessage: 'Do I need permission for a rear extension?',
+        title: 'API Rate Limits',
+        lastMessage: 'How do I increase requests per minute?',
         updatedAt: new Date(Date.now() - 172800000).toISOString(),
         messageCount: 6,
       },

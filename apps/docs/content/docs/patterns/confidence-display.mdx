@@ -49,7 +49,7 @@ Show a detailed breakdown of confidence by category or source.
 ### When to use
 
 - Expert users who need detailed information
-- Internal tools for council staff
+- Internal tools for specialist staff
 - When the model provides per-source confidence scores
 
 ### Implementation
@@ -162,7 +162,7 @@ function SmartRouter({ message, confidence }) {
 />
 ```
 
-For government use, consider higher thresholds (e.g., `medium: 0.8`) to ensure only well-supported answers are shown as "high confidence".
+For high-stakes deployments, consider higher thresholds (e.g., `medium: 0.8`) to ensure only well-supported answers are shown as "high confidence".
 
 ## Accessibility
 

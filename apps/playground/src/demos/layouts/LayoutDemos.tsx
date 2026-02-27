@@ -12,22 +12,22 @@ const DEMO_ENDPOINT = '/api/v1'
 const sampleConversations: ConversationSummary[] = [
   {
     id: '1',
-    title: 'Council tax reduction check',
-    lastMessage: 'Can I apply online if I already receive Universal Credit?',
+    title: 'Pricing plan comparison',
+    lastMessage: 'What is included in the Pro plan?',
     updatedAt: new Date('2026-02-24'),
     messageCount: 4,
   },
   {
     id: '2',
-    title: 'Missed recycling collection',
-    lastMessage: 'Bin was out by 6am but not collected',
+    title: 'API rate limit question',
+    lastMessage: 'How do I increase my requests per minute?',
     updatedAt: new Date('2026-02-23'),
     messageCount: 6,
   },
   {
     id: '3',
-    title: 'Rear extension planning advice',
-    lastMessage: 'Do we need full planning or householder permission?',
+    title: 'Onboarding assistance',
+    lastMessage: 'How do I connect a Slack integration?',
     updatedAt: new Date('2026-02-22'),
     messageCount: 2,
   },

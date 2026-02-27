@@ -6,9 +6,9 @@
 [![React Aria](https://img.shields.io/badge/React_Aria-3-E1251B?logo=adobe&logoColor=white)](https://react-spectrum.adobe.com/react-aria/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 
-**AI-first design system for government agent interfaces.**
+**AI-first design system for agent interfaces.**
 
-surf-kit provides accessible, themeable React components purpose-built for conversational AI experiences in the public sector. From chat interfaces and status dashboards to form wizards and document viewers, surf-kit delivers the building blocks for trustworthy, human-centered agent UIs.
+surf-kit provides accessible, themeable React components purpose-built for conversational AI experiences. From chat interfaces and status dashboards to form wizards and document viewers, surf-kit delivers the building blocks for trustworthy, human-centered agent UIs.
 
 ---
 

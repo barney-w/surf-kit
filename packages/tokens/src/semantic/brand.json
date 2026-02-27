@@ -1,0 +1,55 @@
+{
+  "color": {
+    "$type": "color",
+    "bg": {
+      "canvas": { "$value": "{color.brand.dark}" },
+      "surface": { "$value": "{color.brand.dark-panel}" },
+      "surface-raised": { "$value": "#0D3F50" },
+      "surface-sunken": { "$value": "#031519" }
+    },
+    "text": {
+      "primary": { "$value": "{color.brand.cream}" },
+      "secondary": { "$value": "rgba(241,240,227,0.60)" },
+      "muted": { "$value": "rgba(241,240,227,0.40)" },
+      "inverse": { "$value": "{color.brand.dark}" }
+    },
+    "accent": {
+      "primary": { "$value": "{color.brand.blue}" },
+      "primary-hover": { "$value": "{color.brand.cyan}" },
+      "primary-active": { "$value": "#2AA8BC" },
+      "primary-subtle": { "$value": "rgba(0,145,165,0.15)" },
+      "primary-subtlest": { "$value": "rgba(0,145,165,0.08)" }
+    },
+    "border": {
+      "default": { "$value": "rgba(225,185,137,0.15)" },
+      "strong": { "$value": "rgba(225,185,137,0.30)" },
+      "interactive": { "$value": "rgba(225,185,137,0.50)" }
+    },
+    "status": {
+      "success": { "$value": "{color.brand.cyan}" },
+      "success-subtle": { "$value": "rgba(56,189,208,0.15)" },
+      "warning": { "$value": "{color.brand.gold}" },
+      "warning-subtle": { "$value": "rgba(225,185,137,0.10)" },
+      "error": { "$value": "{color.brand.watermelon}" },
+      "error-subtle": { "$value": "rgba(232,17,82,0.10)" },
+      "info": { "$value": "{color.brand.blue}" }
+    }
+  },
+  "confidence": {
+    "high": {
+      "bg": { "$type": "color", "$value": "rgba(56,189,208,0.15)" },
+      "text": { "$type": "color", "$value": "{color.brand.cyan}" },
+      "border": { "$type": "color", "$value": "{color.brand.cyan}" }
+    },
+    "medium": {
+      "bg": { "$type": "color", "$value": "rgba(225,185,137,0.10)" },
+      "text": { "$type": "color", "$value": "{color.brand.gold}" },
+      "border": { "$type": "color", "$value": "{color.brand.gold}" }
+    },
+    "low": {
+      "bg": { "$type": "color", "$value": "rgba(232,17,82,0.10)" },
+      "text": { "$type": "color", "$value": "{color.brand.watermelon}" },
+      "border": { "$type": "color", "$value": "{color.brand.watermelon}" }
+    }
+  }
+}

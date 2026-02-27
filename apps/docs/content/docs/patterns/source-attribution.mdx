@@ -5,13 +5,13 @@ description: Approaches for displaying source citations in AI agent responses â€
 
 # Source Attribution
 
-Transparency is critical for AI agent interfaces in government. Users must be able to verify information by checking the sources. This guide covers three approaches to displaying source citations.
+Transparency is critical for AI agent interfaces. Users must be able to verify information by checking the sources. This guide covers three approaches to displaying source citations.
 
 ## Why source attribution matters
 
 - **Trust**: Users are more likely to trust AI responses when they can verify the information.
-- **Accountability**: Digital services must be traceable to authoritative sources.
-- **Compliance**: Many councils require that AI-generated answers cite official documents.
+- **Accountability**: AI responses should be traceable to authoritative sources.
+- **Compliance**: Many deployments require that AI-generated answers cite official documents.
 
 ## Inline sources
 
@@ -165,7 +165,7 @@ function ChatWithDrawer() {
         layout="full-page"
         messages={messages}
         onSendMessage={sendMessage}
-        agentName="Council Assistant"
+        agentName="AI Assistant"
       />
       <Sheet
         isOpen={drawerOpen}
