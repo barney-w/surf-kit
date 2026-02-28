@@ -10,7 +10,7 @@
     "dark-mode",
     "design-system"
   ],
-  "license": "MIT",
+  "license": "0BSD",
   "files": [
     "dist",
     "README.md",

@@ -44,4 +44,4 @@ function CopyButton({ text }: { text: string }) {
 
 ## License
 
-[MIT](./LICENSE)
+[0BSD](./LICENSE)

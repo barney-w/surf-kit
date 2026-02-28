@@ -34,7 +34,7 @@
   "bugs": {
     "url": "https://github.com/barney-w/surf-kit/issues"
   },
-  "license": "MIT",
+  "license": "0BSD",
   "scripts": {
     "build": "tsx src/config.ts",
     "clean": "rm -rf dist"
