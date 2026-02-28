@@ -1,7 +1,12 @@
+/* ── Layer ordering for deterministic specificity ── */
+@layer surf.tokens, surf.reset, surf.base, surf.components, surf.utilities;
+
 /* ── Google Fonts loaded via index.html link tags ── */
 
 @import "tailwindcss";
 @import "@surf-kit/tokens/css";
+@import "@surf-kit/tokens/css/light";
+@import "@surf-kit/tokens/css/dark";
 @import "@surf-kit/tokens/css/brand";
 @source "../**/*.{ts,tsx}";
 @source "../../../packages/core/src/**/*.{ts,tsx}";
@@ -34,6 +39,62 @@
   --color-brand-dark-panel:   #0A3642;
   --color-brand-charcoal:     #414142;
   --color-brand-watermelon:   #E81152;
+}
+
+/* ══════════════════════════════════════════
+   Semantic color utilities (from surfKitPreset)
+
+   Use @theme inline so Tailwind inlines the var(--surf-*)
+   references directly into utility classes. This avoids
+   an intermediate --color-* custom property that Tailwind
+   would register via @property, which resolves var() at
+   :root scope — breaking [data-color-mode] overrides.
+══════════════════════════════════════════ */
+@theme inline {
+  /* Surfaces */
+  --color-surface:         var(--surf-color-bg-surface);
+  --color-surface-raised:  var(--surf-color-bg-surface-raised);
+  --color-surface-sunken:  var(--surf-color-bg-surface-sunken);
+  --color-canvas:          var(--surf-color-bg-canvas);
+
+  /* Text */
+  --color-text-primary:    var(--surf-color-text-primary);
+  --color-text-secondary:  var(--surf-color-text-secondary);
+  --color-text-muted:      var(--surf-color-text-muted);
+
+  /* Accent */
+  --color-accent:          var(--surf-color-accent-primary);
+  --color-accent-hover:    var(--surf-color-accent-primary-hover);
+  --color-accent-active:   var(--surf-color-accent-primary-active);
+  --color-accent-subtle:   var(--surf-color-accent-primary-subtle);
+  --color-accent-subtlest: var(--surf-color-accent-primary-subtlest);
+
+  /* Border */
+  --color-border:            var(--surf-color-border-default);
+  --color-border-strong:     var(--surf-color-border-strong);
+  --color-border-interactive: var(--surf-color-border-interactive);
+
+  /* Status */
+  --color-status-success:        var(--surf-color-status-success);
+  --color-status-success-subtle: var(--surf-color-status-success-subtle);
+  --color-status-warning:        var(--surf-color-status-warning);
+  --color-status-warning-subtle: var(--surf-color-status-warning-subtle);
+  --color-status-error:          var(--surf-color-status-error);
+  --color-status-error-subtle:   var(--surf-color-status-error-subtle);
+  --color-status-info:           var(--surf-color-status-info);
+
+  /* Confidence */
+  --color-confidence-high:       var(--surf-confidence-high-text);
+  --color-confidence-high-bg:    var(--surf-confidence-high-bg);
+  --color-confidence-medium:     var(--surf-confidence-medium-text);
+  --color-confidence-medium-bg:  var(--surf-confidence-medium-bg);
+  --color-confidence-low:        var(--surf-confidence-low-text);
+  --color-confidence-low-bg:     var(--surf-confidence-low-bg);
+
+  /* Verification */
+  --color-verification-passed:   var(--surf-verification-passed-icon);
+  --color-verification-flagged:  var(--surf-verification-flagged-icon);
+  --color-verification-failed:   var(--surf-verification-failed-icon);
 
   /* Agent identities */
   --color-agent-coordinator: var(--surf-agent-coordinator-accent);

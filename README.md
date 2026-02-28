@@ -3,7 +3,7 @@
   <h1>surf-kit</h1>
   <strong>The AI-first design system for agent interfaces</strong>
   <br />
-  <em>90+ accessible React components for conversational AI</em>
+  <em>73 accessible React components for conversational AI</em>
   <br /><br />
 
 [![npm](https://img.shields.io/npm/v/@surf-kit/core?color=0091A5&label=npm)](https://www.npmjs.com/package/@surf-kit/core)
@@ -92,7 +92,7 @@ function MyApp() {
 | -------------- | ------------------------------------------------------------------------------------------ |
 | **Layout**     | Box, Stack, Grid, Separator, Card, Accordion                                               |
 | **Inputs**     | Button, IconButton, TextInput, TextArea, Select, Checkbox, RadioGroup, Switch, SearchInput |
-| **Feedback**   | Badge, Spinner, Skeleton, Alert, Toast, ProgressBar                                        |
+| **Feedback**   | Badge, Spinner, Skeleton, Alert, Toast, ProgressBar, AvatarGenerationLoader, AvatarRings   |
 | **Overlays**   | Dialog, Popover, Tooltip, Sheet, DropdownMenu                                              |
 | **Navigation** | Tabs, Breadcrumb, Sidebar                                                                  |
 | **Data**       | Table, DataList                                                                            |

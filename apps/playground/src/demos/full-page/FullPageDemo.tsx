@@ -5,7 +5,6 @@ import {
   TypewriterText,
   type ChatMessage,
 } from "@surf-kit/agent";
-import { motion, AnimatePresence } from "framer-motion";
 
 export const LIVE_API_URL = import.meta.env.VITE_SURF_API_URL as
   | string
@@ -80,25 +79,17 @@ function MessageBubble({
 
   if (isUser) {
     return (
-      <motion.div
-        className="flex justify-end mb-1 mt-4"
-        initial={{ opacity: 0, x: 20, y: 4 }}
-        animate={{ opacity: 1, x: 0, y: 0 }}
-        transition={{ duration: 0.25, ease: "easeOut" }}
-      >
+      <div className="flex justify-end mb-1 mt-4 anim-slide-right">
         <div className="max-w-[70%] px-4 py-2.5 rounded-[18px] rounded-br-[4px] bg-brand-blue text-brand-cream text-sm leading-relaxed whitespace-pre-wrap break-words">
           {msg.content}
         </div>
-      </motion.div>
+      </div>
     );
   }
 
   return (
-    <motion.div
-      className="flex flex-col items-start gap-1.5 mb-1"
-      initial={noEntryAnimation ? false : { opacity: 0, x: -16, y: 8 }}
-      animate={{ opacity: 1, x: 0, y: 0 }}
-      transition={{ type: "spring", damping: 28, stiffness: 220 }}
+    <div
+      className={`flex flex-col items-start gap-1.5 mb-1${noEntryAnimation ? "" : " anim-spring-left"}`}
     >
       {msg.agent && (
         <div className="text-[11px] font-display font-semibold uppercase tracking-[0.08em] text-brand-gold/55 px-1">
@@ -129,7 +120,7 @@ function MessageBubble({
           ))}
         </div>
       )}
-    </motion.div>
+    </div>
   );
 }
 
@@ -157,25 +148,20 @@ function StreamingBubble({
   if (!displayedContent) return null;
 
   return (
-    <motion.div
-      className="flex flex-col items-start gap-1.5 mb-1"
-      initial={{ opacity: 0, x: -16, y: 8 }}
-      animate={{ opacity: 1, x: 0, y: 0 }}
-      transition={{ type: "spring", damping: 28, stiffness: 220 }}
-    >
+    <div className="flex flex-col items-start gap-1.5 mb-1 anim-spring-left">
       <div className="w-full max-w-[88%] px-4 py-3 rounded-[18px] rounded-tl-[4px] bg-brand-dark-panel border border-brand-gold/15">
         <p className="text-sm text-brand-cream leading-relaxed m-0">
           {displayedContent}
           <span className="typewriter-cursor" aria-hidden="true" />
         </p>
       </div>
-    </motion.div>
+    </div>
   );
 }
 
 /* ------------------------------------------------------------------ */
 /*  Background slideshow — isolated so state changes don't re-render  */
-/*  the chat UI and re-trigger framer-motion animations.              */
+/*  the chat UI and re-trigger entry animations.                      */
 /* ------------------------------------------------------------------ */
 
 function BackgroundSlideshow() {
@@ -266,15 +252,9 @@ export function FullPageDemo() {
         ref={threadRef}
         className="flex-1 overflow-y-auto overflow-x-hidden py-6"
       >
-        <AnimatePresence mode="wait">
-          {isEmpty ? (
-            <motion.div
-              key="welcome"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
-              className="flex flex-1 flex-col items-center justify-center gap-8 text-center h-full"
+        {isEmpty ? (
+            <div
+              className="flex flex-1 flex-col items-center justify-center gap-8 text-center h-full anim-fade-up"
             >
               {/* Pulsing icon */}
               <img
@@ -314,14 +294,9 @@ export function FullPageDemo() {
                   </button>
                 ))}
               </div>
-            </motion.div>
+            </div>
           ) : (
-            <motion.div
-              key="thread"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.2 }}
-            >
+            <div className="anim-fade-in">
               {state.messages.map((msg, i) => {
                 // Hide the final assistant message while the drain animation
                 // is still typing it out — prevents the jump from streaming
@@ -344,49 +319,33 @@ export function FullPageDemo() {
                   />
                 );
               })}
-            </motion.div>
+            </div>
           )}
-        </AnimatePresence>
 
-        <AnimatePresence>
-          {state.isLoading &&
-            !state.streamingContent && (
-              <motion.div
-                key="phase"
-                initial={{ opacity: 0, y: 6 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -4 }}
-                transition={{ duration: 0.2 }}
-              >
-                <PhaseIndicator phase={state.streamPhase} />
-              </motion.div>
-            )}
-          {state.error && (
-            <motion.div
-              key="error"
-              initial={{ opacity: 0, y: 4 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className="px-4 py-3 rounded-xl bg-brand-watermelon/10 border border-brand-watermelon/30 text-sm mb-4"
-            >
-              <span className="font-display font-semibold text-brand-watermelon">
-                Error:{" "}
-              </span>
-              <span className="text-brand-watermelon/80">
-                {state.error.message}
-              </span>
-              {state.error.retryable && (
-                <button
-                  onClick={() => actions.retry()}
-                  className="ml-3 px-3 py-1 rounded-lg text-sm border border-brand-watermelon/40 text-brand-watermelon hover:bg-brand-watermelon/10 transition-colors duration-200"
-                >
-                  Retry
-                </button>
-              )}
-            </motion.div>
+        {state.isLoading &&
+          !state.streamingContent && (
+            <div className="anim-fade-slide-up">
+              <PhaseIndicator phase={state.streamPhase} />
+            </div>
           )}
-        </AnimatePresence>
+        {state.error && (
+          <div className="px-4 py-3 rounded-xl bg-brand-watermelon/10 border border-brand-watermelon/30 text-sm mb-4 anim-fade-slide-up">
+            <span className="font-display font-semibold text-brand-watermelon">
+              Error:{" "}
+            </span>
+            <span className="text-brand-watermelon/80">
+              {state.error.message}
+            </span>
+            {state.error.retryable && (
+              <button
+                onClick={() => actions.retry()}
+                className="ml-3 px-3 py-1 rounded-lg text-sm border border-brand-watermelon/40 text-brand-watermelon hover:bg-brand-watermelon/10 transition-colors duration-200"
+              >
+                Retry
+              </button>
+            )}
+          </div>
+        )}
 
         {(state.streamingContent || isDraining) && (
           <StreamingBubble
@@ -396,15 +355,9 @@ export function FullPageDemo() {
         )}
 
         {state.streamPhase === "verifying" && state.streamingContent && (
-          <motion.div
-            key="verifying"
-            initial={{ opacity: 0, y: 6 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -4 }}
-            transition={{ duration: 0.2 }}
-          >
+          <div className="anim-fade-slide-up">
             <PhaseIndicator phase="verifying" />
-          </motion.div>
+          </div>
         )}
       </div>
 
