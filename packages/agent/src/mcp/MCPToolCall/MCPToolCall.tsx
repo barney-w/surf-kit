@@ -30,8 +30,8 @@ const container = cva(
   {
     variants: {
       status: {
-        pending: 'border-neutral-200 bg-neutral-50',
-        running: 'border-sky-200 bg-sky-50',
+        pending: 'border-border bg-surface',
+        running: 'border-status-info-subtle bg-status-info-subtle/30',
         success: 'border-status-success-subtle bg-status-success-subtle/30',
         error: 'border-status-error-subtle bg-status-error-subtle/30',
       },
@@ -138,7 +138,7 @@ function MCPToolCall({ call, isExpanded = false, onToggleExpand, className }: MC
             <div>
               <h4 className="text-xs font-medium text-text-secondary mb-1">Result</h4>
               <pre
-                className="text-xs font-mono text-text-primary bg-neutral-100 rounded p-2 overflow-x-auto whitespace-pre-wrap"
+                className="text-xs font-mono text-text-primary bg-surface-sunken rounded p-2 overflow-x-auto whitespace-pre-wrap"
                 data-testid="mcp-tool-result"
               >
                 {typeof call.result === 'string' ? call.result : JSON.stringify(call.result, null, 2)}

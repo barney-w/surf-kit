@@ -16,6 +16,10 @@
 ### Minor Changes
 
 - Add MCP components: MCPToolCall, MCPResourceView, MCPServerStatus, MCPApprovalDialog
+
+### Patch Changes
+
+- Fix MCPToolCall and MCPResourceView using hardcoded `bg-neutral-*` colors that break in brand theme — now use semantic surface tokens
 - Add MCP type definitions and `./mcp` subpath export
 - Add per-category subpath exports: `./chat`, `./response`, `./sources`, `./confidence`, `./agent-identity`, `./streaming`, `./layouts`, `./feedback`
 - Move `react-aria` from devDependencies to dependencies (required at runtime by MCPApprovalDialog)

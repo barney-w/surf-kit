@@ -58,7 +58,7 @@ export function OverlaysSection() {
         <Separator />
 
         {/* Popover */}
-        <div>
+        <div className="relative">
           <Text size="sm" color="muted" weight="semibold" className="mb-2">
             Popover
           </Text>
