@@ -11,10 +11,12 @@ export const LIVE_API_URL = import.meta.env.VITE_SURF_API_URL as
   | string
   | undefined;
 
+const base = import.meta.env.BASE_URL;
+
 const BG_IMAGES = [
-  "/branding/bg.jpg",
-  "/branding/bg2.jpg",
-  "/branding/bg3.jpg",
+  `${base}branding/bg.jpg`,
+  `${base}branding/bg2.jpg`,
+  `${base}branding/bg3.jpg`,
 ];
 
 const CHAT_CONFIG = {
@@ -276,7 +278,7 @@ export function FullPageDemo() {
             >
               {/* Pulsing icon */}
               <img
-                src="/surf.png"
+                src={`${base}surf.png`}
                 alt="Surf Kit"
                 className="w-32 h-30 rounded-md"
               />

@@ -16,7 +16,7 @@ export function App() {
           {/* Left — logo */}
           <div className="flex items-center gap-3">
             <img
-              src="/surf.png"
+              src={`${import.meta.env.BASE_URL}surf.png`}
               alt="Surf Kit"
               className="w-7 h-7 rounded-md"
             />
