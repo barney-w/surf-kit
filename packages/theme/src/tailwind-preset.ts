@@ -115,12 +115,38 @@ export const surfKitPreset: Partial<Config> = {
         'brand-spin': {
           to: { transform: 'rotate(360deg)' },
         },
+        slideFromRight: {
+          from: { opacity: '0', transform: 'translate(20px, 4px)' },
+          to: { opacity: '1', transform: 'translate(0, 0)' },
+        },
+        springFromLeft: {
+          '0%': { opacity: '0', transform: 'translate(-16px, 8px)' },
+          '60%': { opacity: '1', transform: 'translate(2px, -1px)' },
+          '100%': { opacity: '1', transform: 'translate(0, 0)' },
+        },
+        fadeUp: {
+          from: { opacity: '0', transform: 'translateY(20px)' },
+          to: { opacity: '1', transform: 'translateY(0)' },
+        },
+        fadeIn: {
+          from: { opacity: '0' },
+          to: { opacity: '1' },
+        },
+        fadeSlideUpSm: {
+          from: { opacity: '0', transform: 'translateY(6px)' },
+          to: { opacity: '1', transform: 'translateY(0)' },
+        },
       },
       animation: {
         blink: 'blink 1s step-end infinite',
         fadeSlideIn: 'fadeSlideIn 0.4s ease-out both',
         pulseGlow: 'pulseGlow 2s ease-in-out infinite',
         'brand-spin': 'brand-spin 1.2s linear infinite',
+        slideFromRight: 'slideFromRight 0.25s ease-out both',
+        springFromLeft: 'springFromLeft 0.35s cubic-bezier(0.22, 1, 0.36, 1) both',
+        fadeUp: 'fadeUp 0.5s ease-out both',
+        fadeIn: 'fadeIn 0.2s ease-out both',
+        fadeSlideUpSm: 'fadeSlideUpSm 0.2s ease-out both',
       },
     },
   },

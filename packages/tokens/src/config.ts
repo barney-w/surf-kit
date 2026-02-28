@@ -19,6 +19,39 @@ const primitives = [
 const componentTokens = resolve(root, "src/component/components.json");
 const brandComponentTokens = resolve(root, "src/component/components-brand.json");
 
+// Register custom format for light (default) tokens wrapped in @layer surf.tokens
+StyleDictionary.registerFormat({
+  name: "css/variables-layered",
+  format: ({ dictionary, options, file }) => {
+    const header = file?.destination
+      ? `/**\n * Do not edit directly, this file was auto-generated.\n */\n\n`
+      : "";
+    const vars = formattedVariables({
+      format: "css",
+      dictionary,
+      outputReferences: options?.outputReferences ?? false,
+      usesDtcg: true,
+    });
+    return `${header}@layer surf.tokens {\n  :root {\n${vars}\n  }\n}\n`;
+  },
+});
+
+// Register custom format that wraps output in [data-color-mode="light"] { ... }
+// Needed so light tokens can override inherited dark/brand values in nested ThemeProviders
+StyleDictionary.registerFormat({
+  name: "css/variables-light",
+  format: ({ dictionary, options }) => {
+    const selector = '[data-color-mode="light"]';
+    const vars = formattedVariables({
+      format: "css",
+      dictionary,
+      outputReferences: options?.outputReferences ?? false,
+      usesDtcg: true,
+    });
+    return `@layer surf.tokens {\n  ${selector} {\n${vars}\n  }\n}\n`;
+  },
+});
+
 // Register custom format that wraps output in [data-color-mode="dark"] { ... }
 StyleDictionary.registerFormat({
   name: "css/variables-dark",
@@ -30,7 +63,7 @@ StyleDictionary.registerFormat({
       outputReferences: options?.outputReferences ?? false,
       usesDtcg: true,
     });
-    return `${selector} {\n${vars}\n}\n`;
+    return `@layer surf.tokens {\n  ${selector} {\n${vars}\n  }\n}\n`;
   },
 });
 
@@ -45,7 +78,7 @@ StyleDictionary.registerFormat({
       outputReferences: options?.outputReferences ?? false,
       usesDtcg: true,
     });
-    return `${selector} {\n${vars}\n}\n`;
+    return `@layer surf.tokens {\n  ${selector} {\n${vars}\n  }\n}\n`;
   },
 });
 
@@ -65,9 +98,16 @@ async function build() {
         files: [
           {
             destination: "variables.css",
-            format: "css/variables",
+            format: "css/variables-layered",
             options: {
               outputReferences: true,
+            },
+          },
+          {
+            destination: "variables-light.css",
+            format: "css/variables-light",
+            options: {
+              outputReferences: false,
             },
           },
         ],
