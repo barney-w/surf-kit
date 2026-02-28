@@ -1,12 +1,12 @@
-name: Deploy Storybook
+name: Deploy Playground
 
 on:
   push:
     branches: [main]
     paths:
       - 'packages/**'
-      - 'apps/storybook/**'
-      - '.github/workflows/storybook-deploy.yml'
+      - 'apps/playground/**'
+      - '.github/workflows/playground-deploy.yml'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -14,7 +14,7 @@ concurrency:
 
 jobs:
   deploy:
-    name: Deploy Storybook
+    name: Deploy Playground
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -35,12 +35,12 @@ jobs:
       - name: Build packages
         run: pnpm build --filter="!@surf-kit/storybook" --filter="!docs" --filter="!playground"
 
-      - name: Build Storybook
-        run: pnpm --filter @surf-kit/storybook build
+      - name: Build Playground
+        run: pnpm --filter playground build
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: apps/storybook/dist
-          destination_dir: storybook
+          publish_dir: apps/playground/dist
+          destination_dir: playground

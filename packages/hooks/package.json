@@ -1,7 +1,9 @@
 {
   "name": "@surf-kit/hooks",
   "version": "0.1.0",
-  "private": true,
+  "description": "Shared React hooks for surf-kit — clipboard, keyboard shortcuts, media queries, and more",
+  "keywords": ["react", "hooks", "clipboard", "keyboard-shortcuts", "media-query", "accessibility"],
+  "files": ["dist", "README.md", "LICENSE"],
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

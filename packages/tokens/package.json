@@ -1,7 +1,9 @@
 {
   "name": "@surf-kit/tokens",
   "version": "0.1.0",
-  "private": true,
+  "description": "Design tokens for surf-kit — colors, spacing, typography as CSS, JSON, and TypeScript",
+  "keywords": ["design-tokens", "css-variables", "style-dictionary", "dtcg", "theming"],
+  "files": ["dist", "README.md", "LICENSE"],
   "type": "module",
   "main": "dist/ts/tokens.js",
   "types": "dist/ts/tokens.d.ts",

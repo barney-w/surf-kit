@@ -1,7 +1,9 @@
 {
   "name": "@surf-kit/icons",
   "version": "0.1.0",
-  "private": true,
+  "description": "Icon set for surf-kit — custom agent icons plus Lucide re-exports",
+  "keywords": ["react", "icons", "svg", "lucide", "agent", "design-system"],
+  "files": ["dist", "README.md", "LICENSE"],
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

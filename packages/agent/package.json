@@ -1,8 +1,10 @@
 {
   "name": "@surf-kit/agent",
   "version": "0.1.0",
-  "private": true,
+  "description": "AI agent interface components — chat, streaming, confidence, source attribution",
+  "keywords": ["react", "ai", "agent", "chat", "streaming", "llm", "design-system", "components"],
   "license": "MIT",
+  "files": ["dist", "README.md", "LICENSE"],
   "repository": {
     "type": "git",
     "url": "https://github.com/barney-w/surf-kit.git",

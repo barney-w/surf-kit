@@ -14,7 +14,7 @@ Thank you for your interest in contributing to surf-kit! This guide covers the d
 ### Getting Started
 
 ```bash
-git clone https://github.com/your-org/surf-kit.git
+git clone https://github.com/barney-w/surf-kit.git
 cd surf-kit
 pnpm install
 pnpm build
