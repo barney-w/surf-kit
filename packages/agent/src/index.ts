@@ -13,6 +13,13 @@ export type { StreamEvent, StreamState } from './types/streaming'
 
 export type { AgentChatConfig } from './types/config'
 
+export type {
+  MCPToolStatus,
+  MCPToolCallData,
+  MCPResource,
+  MCPServerInfo,
+} from './types/mcp'
+
 // Hook types (runtime hooks available via '@surf-kit/agent/hooks')
 export type { AgentChatState, AgentChatActions } from './hooks/useAgentChat'
 export type { UseStreamingOptions } from './hooks/useStreaming'
@@ -118,6 +125,18 @@ export type { VerificationProgressProps } from './streaming/VerificationProgress
 export { TypewriterText } from './streaming/TypewriterText'
 export type { TypewriterTextProps } from './streaming/TypewriterText'
 
+export { TypingIndicator } from './streaming/TypingIndicator'
+export type { TypingIndicatorProps } from './streaming/TypingIndicator'
+
+export { TextGlimmer } from './streaming/TextGlimmer'
+export type { TextGlimmerProps } from './streaming/TextGlimmer'
+
+export { StreamingList } from './streaming/StreamingList'
+export type { StreamingListProps } from './streaming/StreamingList'
+
+export { StreamingStructure } from './streaming/StreamingStructure'
+export type { StreamingStructureProps } from './streaming/StreamingStructure'
+
 // Conversation Components
 export { ConversationList } from './chat/ConversationList'
 export type { ConversationListProps } from './chat/ConversationList'
@@ -134,6 +153,19 @@ export type { AgentWidgetProps } from './layouts/AgentWidget'
 
 export { AgentEmbed } from './layouts/AgentEmbed'
 export type { AgentEmbedProps } from './layouts/AgentEmbed'
+
+// MCP Components
+export { MCPToolCall } from './mcp/MCPToolCall'
+export type { MCPToolCallProps } from './mcp/MCPToolCall'
+
+export { MCPResourceView } from './mcp/MCPResourceView'
+export type { MCPResourceViewProps } from './mcp/MCPResourceView'
+
+export { MCPServerStatus } from './mcp/MCPServerStatus'
+export type { MCPServerStatusProps } from './mcp/MCPServerStatus'
+
+export { MCPApprovalDialog } from './mcp/MCPApprovalDialog'
+export type { MCPApprovalDialogProps } from './mcp/MCPApprovalDialog'
 
 // Feedback Components
 export { ThumbsFeedback } from './feedback/ThumbsFeedback'
