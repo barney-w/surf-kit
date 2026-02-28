@@ -1,4 +1,4 @@
-name: Deploy Playground
+name: Deploy
 
 on:
   push:
@@ -6,15 +6,17 @@ on:
     paths:
       - 'packages/**'
       - 'apps/playground/**'
-      - '.github/workflows/playground-deploy.yml'
+      - 'apps/storybook/**'
+      - 'apps/docs/**'
+      - '.github/workflows/deploy.yml'
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  group: deploy-gh-pages
+  cancel-in-progress: false
 
 jobs:
   deploy:
-    name: Deploy Playground
+    name: Deploy Sites
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -35,12 +37,21 @@ jobs:
       - name: Build packages
         run: pnpm build --filter="!@surf-kit/storybook" --filter="!docs" --filter="!playground"
 
+      - name: Build Storybook
+        run: pnpm --filter @surf-kit/storybook build
+
       - name: Build Playground
         run: pnpm --filter playground build
+
+      - name: Assemble site
+        run: |
+          mkdir -p _site/storybook _site/playground
+          cp -r apps/storybook/dist/* _site/storybook/
+          cp -r apps/playground/dist/* _site/playground/
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: apps/playground/dist
-          destination_dir: playground
+          publish_dir: ./_site
+          keep_files: false
