@@ -58,5 +58,8 @@
     "tailwindcss": {
       "optional": true
     }
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

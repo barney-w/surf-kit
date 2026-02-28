@@ -43,5 +43,8 @@
     "style-dictionary": "^4.0.0",
     "tsx": "^4.0.0",
     "@surf-kit/tsconfig": "workspace:*"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
