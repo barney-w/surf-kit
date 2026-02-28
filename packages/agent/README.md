@@ -34,7 +34,7 @@ function App() {
 
 **Chat** — AgentChat, MessageThread, MessageBubble, MessageComposer, WelcomeScreen, ConversationList
 
-**Streaming** — StreamingMessage, ThinkingIndicator, ToolExecution, RetrievalProgress, VerificationProgress, TypewriterText
+**Streaming** — StreamingMessage, ThinkingIndicator, ToolExecution, RetrievalProgress, VerificationProgress, TypewriterText, TypingIndicator, TextGlimmer, StreamingList, StreamingStructure
 
 **Trust & Confidence** — ConfidenceBadge, ConfidenceMeter, ConfidenceBreakdown, VerificationBadge, VerificationDetail
 
@@ -48,7 +48,25 @@ function App() {
 
 **Layouts** — AgentFullPage, AgentPanel, AgentWidget, AgentEmbed
 
+**MCP** — MCPToolCall, MCPResourceView, MCPServerStatus, MCPApprovalDialog
+
 **Hooks** (via `@surf-kit/agent/hooks`) — useAgentChat, useStreaming, useConversation, useFeedback, useAgentTheme, useCharacterDrain
+
+## Subpath Exports
+
+Import only what you need for smaller bundles:
+
+```tsx
+import { MessageThread } from '@surf-kit/agent/chat'
+import { StreamingMessage } from '@surf-kit/agent/streaming'
+import { MCPToolCall } from '@surf-kit/agent/mcp'
+import { ConfidenceBadge } from '@surf-kit/agent/confidence'
+import { SourceCard } from '@surf-kit/agent/sources'
+import { AgentAvatar } from '@surf-kit/agent/agent-identity'
+import { FollowUpChips } from '@surf-kit/agent/response'
+import { AgentFullPage } from '@surf-kit/agent/layouts'
+import { ThumbsFeedback } from '@surf-kit/agent/feedback'
+```
 
 ## Docs
 
