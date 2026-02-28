@@ -1,17 +1,30 @@
 {
   "name": "@surf-kit/theme",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Theme provider and Tailwind preset for surf-kit — light, dark, and brand color modes",
-  "keywords": ["react", "theme", "tailwind", "color-mode", "dark-mode", "design-system"],
+  "keywords": [
+    "react",
+    "theme",
+    "tailwind",
+    "color-mode",
+    "dark-mode",
+    "design-system"
+  ],
   "license": "MIT",
-  "files": ["dist", "README.md", "LICENSE"],
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/barney-w/surf-kit.git",
     "directory": "packages/theme"
   },
   "homepage": "https://github.com/barney-w/surf-kit#readme",
-  "bugs": { "url": "https://github.com/barney-w/surf-kit/issues" },
+  "bugs": {
+    "url": "https://github.com/barney-w/surf-kit/issues"
+  },
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

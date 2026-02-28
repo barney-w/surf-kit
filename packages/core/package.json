@@ -1,17 +1,31 @@
 {
   "name": "@surf-kit/core",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Accessible React UI primitives — Button, Input, Card, Table, Dialog, and more",
-  "keywords": ["react", "components", "ui", "design-system", "accessible", "react-aria", "tailwind"],
+  "keywords": [
+    "react",
+    "components",
+    "ui",
+    "design-system",
+    "accessible",
+    "react-aria",
+    "tailwind"
+  ],
   "license": "MIT",
-  "files": ["dist", "README.md", "LICENSE"],
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/barney-w/surf-kit.git",
     "directory": "packages/core"
   },
   "homepage": "https://github.com/barney-w/surf-kit#readme",
-  "bugs": { "url": "https://github.com/barney-w/surf-kit/issues" },
+  "bugs": {
+    "url": "https://github.com/barney-w/surf-kit/issues"
+  },
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
