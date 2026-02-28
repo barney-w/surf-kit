@@ -19,6 +19,7 @@
     "@storybook/react": "^10.2.13",
     "@storybook/react-vite": "^10.2.13",
     "@surf-kit/tsconfig": "workspace:*",
+    "babel-plugin-react-compiler": "1.0.0",
     "@tailwindcss/postcss": "catalog:",
     "postcss": "catalog:",
     "storybook": "^10.2.13",

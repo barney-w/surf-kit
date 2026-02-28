@@ -5,6 +5,7 @@
 ### Patch Changes
 
 - Wrap all generated token CSS output in `@layer surf.tokens` for predictable cascade ordering
+- Fix `./ts` export pointing to `.ts` instead of `.js` — resolves module-not-found errors for consumers
 
 ## 0.1.2
 

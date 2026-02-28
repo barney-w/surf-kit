@@ -7,6 +7,7 @@
 - Add MCP components: MCPToolCall, MCPResourceView, MCPServerStatus, MCPApprovalDialog
 - Add MCP type definitions and `./mcp` subpath export
 - Add per-category subpath exports: `./chat`, `./response`, `./sources`, `./confidence`, `./agent-identity`, `./streaming`, `./layouts`, `./feedback`
+- Move `react-aria` from devDependencies to dependencies (required at runtime by MCPApprovalDialog)
 
 ## 0.3.0
 
