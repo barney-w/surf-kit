@@ -7,7 +7,6 @@ on:
       - 'packages/**'
       - 'apps/playground/**'
       - 'apps/storybook/**'
-      - 'apps/docs/**'
       - '.github/workflows/deploy.yml'
 
 concurrency:
