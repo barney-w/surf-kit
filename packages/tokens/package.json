@@ -1,9 +1,19 @@
 {
   "name": "@surf-kit/tokens",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Design tokens for surf-kit — colors, spacing, typography as CSS, JSON, and TypeScript",
-  "keywords": ["design-tokens", "css-variables", "style-dictionary", "dtcg", "theming"],
-  "files": ["dist", "README.md", "LICENSE"],
+  "keywords": [
+    "design-tokens",
+    "css-variables",
+    "style-dictionary",
+    "dtcg",
+    "theming"
+  ],
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "type": "module",
   "main": "dist/ts/tokens.js",
   "types": "dist/ts/tokens.d.ts",
@@ -21,7 +31,9 @@
     "directory": "packages/tokens"
   },
   "homepage": "https://github.com/barney-w/surf-kit#readme",
-  "bugs": { "url": "https://github.com/barney-w/surf-kit/issues" },
+  "bugs": {
+    "url": "https://github.com/barney-w/surf-kit/issues"
+  },
   "license": "MIT",
   "scripts": {
     "build": "tsx src/config.ts",

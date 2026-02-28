@@ -1,9 +1,20 @@
 {
   "name": "@surf-kit/icons",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Icon set for surf-kit — custom agent icons plus Lucide re-exports",
-  "keywords": ["react", "icons", "svg", "lucide", "agent", "design-system"],
-  "files": ["dist", "README.md", "LICENSE"],
+  "keywords": [
+    "react",
+    "icons",
+    "svg",
+    "lucide",
+    "agent",
+    "design-system"
+  ],
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -20,7 +31,9 @@
     "directory": "packages/icons"
   },
   "homepage": "https://github.com/barney-w/surf-kit#readme",
-  "bugs": { "url": "https://github.com/barney-w/surf-kit/issues" },
+  "bugs": {
+    "url": "https://github.com/barney-w/surf-kit/issues"
+  },
   "license": "MIT",
   "scripts": {
     "generate": "tsx src/scripts/generate.ts",
