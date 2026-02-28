@@ -10,7 +10,7 @@
     "dark-mode",
     "design-system"
   ],
-  "license": "MIT",
+  "license": "0BSD",
   "files": [
     "dist",
     "README.md",
@@ -58,5 +58,8 @@
     "tailwindcss": {
       "optional": true
     }
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

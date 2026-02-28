@@ -2,7 +2,7 @@
   "name": "@surf-kit/eslint-config",
   "version": "0.1.0",
   "private": true,
-  "license": "MIT",
+  "license": "0BSD",
   "type": "module",
   "main": "index.js",
   "dependencies": {

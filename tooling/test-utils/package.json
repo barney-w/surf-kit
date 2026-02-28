@@ -2,7 +2,7 @@
   "name": "@surf-kit/test-utils",
   "version": "0.1.1",
   "private": true,
-  "license": "MIT",
+  "license": "0BSD",
   "type": "module",
   "main": "src/index.ts",
   "types": "src/index.ts",

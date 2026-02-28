@@ -57,4 +57,4 @@ function App() {
 
 ## License
 
-[MIT](./LICENSE)
+[0BSD](./LICENSE)

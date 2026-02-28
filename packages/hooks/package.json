@@ -34,7 +34,7 @@
   "bugs": {
     "url": "https://github.com/barney-w/surf-kit/issues"
   },
-  "license": "MIT",
+  "license": "0BSD",
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
@@ -49,5 +49,8 @@
   },
   "peerDependencies": {
     "react": ">=18"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

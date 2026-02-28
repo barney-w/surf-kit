@@ -54,4 +54,4 @@ Three CSS builds are generated:
 
 ## License
 
-[MIT](./LICENSE)
+[0BSD](./LICENSE)
