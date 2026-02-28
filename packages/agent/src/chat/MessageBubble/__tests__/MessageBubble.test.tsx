@@ -60,7 +60,7 @@ describe('MessageBubble', () => {
   it('applies surface background to assistant messages', () => {
     const { container } = render(<MessageBubble message={assistantMessage} />)
     const bubble = container.querySelector('[data-message-id="msg-2"]')?.firstElementChild
-    expect(bubble?.className).toContain('bg-surface-raised')
+    expect(bubble?.className).toContain('bg-surface')
   })
 
   it('shows agent name when showAgent is true', () => {

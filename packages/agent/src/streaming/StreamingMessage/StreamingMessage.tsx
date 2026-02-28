@@ -12,11 +12,11 @@ type StreamingMessageProps = {
 
 const phaseLabels: Record<StreamState['phase'], string> = {
   idle: '',
-  waiting: 'Waiting',
-  thinking: 'Thinking',
-  retrieving: 'Searching',
-  generating: 'Writing',
-  verifying: 'Verifying',
+  waiting: 'Waiting...',
+  thinking: 'Thinking...',
+  retrieving: 'Searching...',
+  generating: 'Writing...',
+  verifying: 'Verifying...',
 }
 
 function StreamingMessage({
@@ -47,27 +47,29 @@ function StreamingMessage({
         {!stream.active && stream.content && 'Response complete'}
       </div>
 
-      {showPhases && stream.active && stream.phase !== 'idle' && (
-        <div
-          className="flex items-center gap-2 mb-2 text-sm text-text-secondary"
-          data-testid="phase-indicator"
-        >
-          <span aria-hidden="true">
-            <Spinner size="sm" />
-          </span>
-          <span>{phaseLabel}</span>
-        </div>
-      )}
-
-      <div className="text-text-primary whitespace-pre-wrap">
-        {displayedContent}
-        {stream.active && (
-          <span
-            className="inline-block w-0.5 h-4 bg-accent align-text-bottom animate-pulse ml-0.5"
-            aria-hidden="true"
-            data-testid="streaming-cursor"
-          />
+      <div className="max-w-[88%] px-4 py-3 rounded-[18px] rounded-tl-[4px] bg-surface border border-border motion-safe:animate-springFromLeft">
+        {showPhases && stream.active && stream.phase !== 'idle' && (
+          <div
+            className="flex items-center gap-2 mb-2 text-sm text-text-secondary"
+            data-testid="phase-indicator"
+          >
+            <span aria-hidden="true">
+              <Spinner size="sm" />
+            </span>
+            <span>{phaseLabel}</span>
+          </div>
         )}
+
+        <div className="text-sm leading-relaxed text-text-primary whitespace-pre-wrap">
+          {displayedContent}
+          {stream.active && (
+            <span
+              className="inline-block w-0.5 h-4 bg-accent align-text-bottom animate-pulse ml-0.5"
+              aria-hidden="true"
+              data-testid="streaming-cursor"
+            />
+          )}
+        </div>
       </div>
     </div>
   )

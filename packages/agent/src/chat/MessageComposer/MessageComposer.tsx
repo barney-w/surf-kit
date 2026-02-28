@@ -19,12 +19,21 @@ function MessageComposer({
 
   const canSend = value.trim().length > 0 && !isLoading
 
+  const resetHeight = useCallback(() => {
+    const el = textareaRef.current
+    if (el) {
+      el.style.height = 'auto'
+      el.style.overflowY = 'hidden'
+    }
+  }, [])
+
   const handleSend = useCallback(() => {
     if (!canSend) return
     onSend(value.trim())
     setValue('')
+    resetHeight()
     textareaRef.current?.focus()
-  }, [canSend, onSend, value])
+  }, [canSend, onSend, value, resetHeight])
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -36,26 +45,39 @@ function MessageComposer({
     [handleSend],
   )
 
+  const handleChange = useCallback(
+    (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+      setValue(e.target.value)
+      const el = e.target
+      el.style.height = 'auto'
+      const capped = Math.min(el.scrollHeight, 128)
+      el.style.height = `${capped}px`
+      el.style.overflowY = el.scrollHeight > 128 ? 'auto' : 'hidden'
+    },
+    [],
+  )
+
   return (
     <div
       className={twMerge(
-        'flex items-end gap-3 border-t border-border px-4 py-3 bg-canvas',
+        'flex items-end gap-3 shrink-0 border-t border-border px-4 py-3',
         className,
       )}
     >
       <textarea
         ref={textareaRef}
         value={value}
-        onChange={e => setValue(e.target.value)}
+        onChange={handleChange}
         onKeyDown={handleKeyDown}
         placeholder={placeholder}
         rows={1}
         disabled={isLoading}
         className={twMerge(
-          'flex-1 resize-none rounded-xl border border-border bg-surface',
+          'flex-1 resize-none rounded-xl border border-border bg-surface/80',
           'px-4 py-2.5 text-sm text-text-primary placeholder:text-text-muted',
           'focus:border-transparent focus:ring-2 focus:ring-accent/40 focus:outline-none',
           'disabled:opacity-50 disabled:cursor-not-allowed',
+          'overflow-hidden',
           'transition-all duration-200',
         )}
         style={{ colorScheme: 'dark' }}
@@ -72,7 +94,7 @@ function MessageComposer({
           'transition-all duration-200',
           'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent',
           value.trim() && !isLoading
-            ? 'bg-accent hover:bg-accent-hover hover:scale-[1.02] active:scale-[0.98]'
+            ? 'bg-accent hover:bg-accent-hover hover:scale-[1.02] hover:shadow-glow-cyan active:scale-[0.98]'
             : 'bg-accent/30 text-text-muted cursor-not-allowed',
         )}
       >

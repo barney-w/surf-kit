@@ -85,12 +85,12 @@ describe('StreamingMessage', () => {
   it('shows phase indicator when showPhases is true', () => {
     render(<StreamingMessage stream={thinkingStream} showPhases />)
     expect(screen.getByTestId('phase-indicator')).toBeDefined()
-    expect(screen.getByText('Thinking')).toBeDefined()
+    expect(screen.getByText('Thinking...')).toBeDefined()
   })
 
   it('shows Writing phase label during generating', () => {
     render(<StreamingMessage stream={generatingStream} showPhases />)
-    expect(screen.getByText('Writing')).toBeDefined()
+    expect(screen.getByText('Writing...')).toBeDefined()
   })
 
   it('hides phase indicator when showPhases is false', () => {

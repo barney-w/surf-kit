@@ -4,6 +4,7 @@ import React from 'react'
 export type WelcomeScreenProps = {
   title?: string
   message?: string
+  icon?: React.ReactNode
   suggestedQuestions?: string[]
   onQuestionSelect?: (question: string) => void
   className?: string
@@ -12,6 +13,7 @@ export type WelcomeScreenProps = {
 function WelcomeScreen({
   title = 'Welcome',
   message = 'How can I help you today?',
+  icon,
   suggestedQuestions = [],
   onQuestionSelect,
   className,
@@ -19,24 +21,24 @@ function WelcomeScreen({
   return (
     <div
       className={twMerge(
-        'flex flex-1 flex-col items-center justify-center gap-8 p-8 text-center',
+        'flex flex-1 flex-col items-center justify-center gap-8 p-8 text-center motion-safe:animate-fadeUp',
         className,
       )}
     >
-      {/* Pulsing icon */}
+      {/* Icon */}
       <div
         className="w-14 h-14 rounded-2xl bg-accent/10 border border-border flex items-center justify-center pulse-glow"
         aria-hidden="true"
       >
-        <span className="text-2xl">✦</span>
+        {icon ?? <span className="text-2xl">✦</span>}
       </div>
 
       {/* Text */}
       <div className="flex flex-col gap-2">
         {title && (
-          <h2 className="text-2xl font-semibold text-text-primary">{title}</h2>
+          <h2 className="text-3xl font-bold text-text-primary">{title}</h2>
         )}
-        <p className="text-text-secondary text-base leading-relaxed max-w-sm">{message}</p>
+        <p className="text-text-secondary text-base leading-relaxed max-w-md">{message}</p>
       </div>
 
       {/* Suggested question chips */}
@@ -53,8 +55,8 @@ function WelcomeScreen({
               onClick={() => onQuestionSelect?.(question)}
               className={twMerge(
                 'px-4 py-2 rounded-full text-sm',
-                'border border-border bg-surface text-text-primary',
-                'hover:bg-surface-raised hover:border-interactive hover:text-text-primary',
+                'border border-border bg-transparent text-text-secondary',
+                'hover:bg-accent/10 hover:border-interactive hover:text-text-primary',
                 'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent',
                 'transition-colors duration-200',
               )}

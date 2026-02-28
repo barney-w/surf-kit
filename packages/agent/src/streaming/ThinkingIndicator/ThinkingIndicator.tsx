@@ -12,7 +12,7 @@ function ThinkingIndicator({ label = 'Thinking...', className }: ThinkingIndicat
   return (
     <span
       role="status"
-      className={`inline-flex items-center gap-2 text-sm ${className ?? ''}`}
+      className={`inline-flex items-center gap-2 text-sm motion-safe:animate-fadeSlideUpSm ${className ?? ''}`}
       data-testid="thinking-indicator"
     >
       <span className="text-text-secondary">{label}</span>
