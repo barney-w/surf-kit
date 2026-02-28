@@ -40,6 +40,51 @@
       "types": "./dist/hooks.d.ts",
       "import": "./dist/hooks.js",
       "require": "./dist/hooks.cjs"
+    },
+    "./chat": {
+      "types": "./dist/chat/index.d.ts",
+      "import": "./dist/chat/index.js",
+      "require": "./dist/chat/index.cjs"
+    },
+    "./response": {
+      "types": "./dist/response/index.d.ts",
+      "import": "./dist/response/index.js",
+      "require": "./dist/response/index.cjs"
+    },
+    "./sources": {
+      "types": "./dist/sources/index.d.ts",
+      "import": "./dist/sources/index.js",
+      "require": "./dist/sources/index.cjs"
+    },
+    "./confidence": {
+      "types": "./dist/confidence/index.d.ts",
+      "import": "./dist/confidence/index.js",
+      "require": "./dist/confidence/index.cjs"
+    },
+    "./agent-identity": {
+      "types": "./dist/agent-identity/index.d.ts",
+      "import": "./dist/agent-identity/index.js",
+      "require": "./dist/agent-identity/index.cjs"
+    },
+    "./streaming": {
+      "types": "./dist/streaming/index.d.ts",
+      "import": "./dist/streaming/index.js",
+      "require": "./dist/streaming/index.cjs"
+    },
+    "./layouts": {
+      "types": "./dist/layouts/index.d.ts",
+      "import": "./dist/layouts/index.js",
+      "require": "./dist/layouts/index.cjs"
+    },
+    "./feedback": {
+      "types": "./dist/feedback/index.d.ts",
+      "import": "./dist/feedback/index.js",
+      "require": "./dist/feedback/index.cjs"
+    },
+    "./mcp": {
+      "types": "./dist/mcp/index.d.ts",
+      "import": "./dist/mcp/index.js",
+      "require": "./dist/mcp/index.cjs"
     }
   },
   "scripts": {
@@ -54,31 +99,31 @@
     "@surf-kit/hooks": "workspace:*",
     "@surf-kit/icons": "workspace:*",
     "@surf-kit/theme": "workspace:*",
-    "class-variance-authority": "^0.7.0",
+    "class-variance-authority": "catalog:",
     "react-markdown": "^10.1.0",
     "rehype-sanitize": "^6.0.0",
-    "tailwind-merge": "^2.0.0"
+    "tailwind-merge": "catalog:"
   },
   "devDependencies": {
     "@surf-kit/test-utils": "workspace:*",
     "@surf-kit/tsconfig": "workspace:*",
-    "@testing-library/jest-dom": "^6.0.0",
-    "@testing-library/react": "^16.0.0",
-    "@testing-library/user-event": "^14.0.0",
-    "@types/react": "^18.3.0",
-    "@types/react-dom": "^18.3.0",
-    "jsdom": "^25.0.0",
-    "react": "^18.3.0",
-    "react-aria": "^3.35.0",
-    "react-dom": "^18.3.0",
-    "tsup": "^8.0.0",
-    "typescript": "^5.5.0",
-    "vitest": "^2.0.0",
-    "vitest-axe": "^0.1.0"
+    "@testing-library/jest-dom": "catalog:",
+    "@testing-library/react": "catalog:",
+    "@testing-library/user-event": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "jsdom": "catalog:",
+    "react": "catalog:",
+    "react-aria": "catalog:",
+    "react-dom": "catalog:",
+    "tsup": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:",
+    "vitest-axe": "catalog:"
   },
   "peerDependencies": {
-    "react": ">=18",
-    "react-dom": ">=18"
+    "react": ">=19",
+    "react-dom": ">=19"
   },
   "publishConfig": {
     "access": "public"
