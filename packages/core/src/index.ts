@@ -41,6 +41,8 @@ export { ToastProvider, useToast } from './feedback/Toast'
 export type { ToastOptions, ToastIntent } from './feedback/Toast'
 export { ProgressBar } from './feedback/ProgressBar'
 export type { ProgressBarProps } from './feedback/ProgressBar'
+export { AvatarRings, AvatarGenerationLoader } from './feedback/AvatarGenerationLoader'
+export type { AvatarRingsProps, AvatarGenerationLoaderProps } from './feedback/AvatarGenerationLoader'
 
 export { Dialog } from './overlay/Dialog'
 export type { DialogProps } from './overlay/Dialog'
