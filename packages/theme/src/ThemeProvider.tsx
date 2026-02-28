@@ -32,12 +32,15 @@ export interface ThemeProviderProps {
   colorMode?: ColorModePreference
   /** Theme object (from createTheme). Defaults to the built-in default theme. */
   theme?: Theme
+  /** Optional className forwarded to the wrapper div. */
+  className?: string
   children: React.ReactNode
 }
 
 export function ThemeProvider({
   colorMode: colorModeProp = 'system',
   theme = DEFAULT_THEME,
+  className,
   children,
 }: ThemeProviderProps) {
   const [preference, setPreference] =
@@ -96,7 +99,7 @@ export function ThemeProvider({
 
   return (
     <ThemeContext.Provider value={contextValue}>
-      <div ref={wrapperRef} data-color-mode={resolvedMode as string} data-theme={theme.name}>
+      <div ref={wrapperRef} className={className} data-color-mode={resolvedMode as string} data-theme={theme.name}>
         {children}
       </div>
     </ThemeContext.Provider>
