@@ -1,0 +1,5 @@
+{
+  "extends": "@surf-kit/tsconfig/react.json",
+  "compilerOptions": { "outDir": "dist", "rootDir": "." },
+  "include": ["src", "vitest.setup.ts"]
+}
