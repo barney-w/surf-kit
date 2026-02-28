@@ -1,5 +1,11 @@
 # @surf-kit/theme
 
+## Unreleased
+
+### Patch Changes
+
+- Add `status-info-subtle` color to tailwind preset
+
 ## 0.1.2
 
 ### Patch Changes

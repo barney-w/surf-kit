@@ -31,7 +31,8 @@
       "warning-subtle": { "$value": "{color.golden.100}" },
       "error": { "$value": "{color.watermelon.500}" },
       "error-subtle": { "$value": "{color.watermelon.100}" },
-      "info": { "$value": "{color.sky.500}" }
+      "info": { "$value": "{color.sky.500}" },
+      "info-subtle": { "$value": "rgba(91,200,245,0.15)" }
     }
   }
 }

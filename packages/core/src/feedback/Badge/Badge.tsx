@@ -5,11 +5,11 @@ import React from 'react'
 const badge = cva('inline-flex items-center rounded-full font-medium', {
   variants: {
     intent: {
-      default: 'bg-neutral-200 text-text-secondary',
+      default: 'bg-surface-sunken text-text-secondary',
       success: 'bg-status-success-subtle text-status-success',
       warning: 'bg-status-warning-subtle text-status-warning',
       error: 'bg-status-error-subtle text-status-error',
-      info: 'bg-sky-100 text-sky-700',
+      info: 'bg-status-info-subtle text-status-info',
       // Brand-specific badge types — use brand-* color palette
       'founding-member': 'border border-[rgba(225,185,137,0.40)] bg-[rgba(225,185,137,0.20)] text-[#E1B989]',
       'hub-attendee': 'border border-[rgba(241,240,227,0.10)] bg-transparent text-[rgba(241,240,227,0.80)]',

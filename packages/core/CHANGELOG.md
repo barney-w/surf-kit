@@ -14,6 +14,11 @@
 
 - Add per-category subpath exports: `./primitives`, `./inputs`, `./feedback`, `./overlay`, `./navigation`, `./data`, `./layout`
 
+### Patch Changes
+
+- Fix Badge `default` and `info` intents using hardcoded colors that break in brand theme — now use semantic tokens
+- Fix Button not forwarding refs or extra props — now uses `forwardRef` and `mergeProps` so overlay components (DropdownMenu, Tooltip) can attach event handlers
+
 ## 0.2.0
 
 ### Minor Changes

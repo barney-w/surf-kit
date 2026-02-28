@@ -10,6 +10,7 @@
 
 ### Patch Changes
 
+- Add `status.info-subtle` token to light, dark, and brand themes for consistent info badge styling
 - Wrap all generated token CSS output in `@layer surf.tokens` for predictable cascade ordering
 - Fix `./ts` export pointing to `.ts` instead of `.js` — resolves module-not-found errors for consumers
 

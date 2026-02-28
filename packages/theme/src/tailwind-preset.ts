@@ -31,6 +31,7 @@ export const surfKitPreset: Partial<Config> = {
           error: 'var(--surf-color-status-error)',
           'error-subtle': 'var(--surf-color-status-error-subtle)',
           info: 'var(--surf-color-status-info)',
+          'info-subtle': 'var(--surf-color-status-info-subtle)',
         },
         confidence: {
           high: 'var(--surf-confidence-high-text)',

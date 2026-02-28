@@ -76,7 +76,7 @@ function MCPResourceView({ resource, className }: MCPResourceViewProps) {
             </a>
           ) : isTextMime(mimeType) ? (
             <pre
-              className="text-xs font-mono text-text-primary bg-neutral-100 rounded p-2 overflow-x-auto whitespace-pre-wrap"
+              className="text-xs font-mono text-text-primary bg-surface-sunken rounded p-2 overflow-x-auto whitespace-pre-wrap"
               data-testid="mcp-resource-code"
             >
               {typeof content === 'string' ? content : '[Binary data]'}
