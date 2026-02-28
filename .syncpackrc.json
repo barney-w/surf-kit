@@ -1,0 +1,17 @@
+{
+  "versionGroups": [
+    {
+      "label": "Use workspace protocol for internal packages",
+      "packages": ["**"],
+      "dependencies": ["@surf-kit/*"],
+      "pinVersion": "workspace:*"
+    },
+    {
+      "label": "Ignore peerDependencies (intentionally broader ranges)",
+      "packages": ["**"],
+      "dependencies": ["**"],
+      "dependencyTypes": ["peer"],
+      "isIgnored": true
+    }
+  ]
+}

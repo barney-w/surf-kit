@@ -1,7 +1,7 @@
 {
   "name": "surf-kit",
   "private": true,
-  "packageManager": "pnpm@9.15.4",
+  "packageManager": "pnpm@10.30.3",
   "scripts": {
     "build": "turbo build",
     "build:storybook": "pnpm --filter storybook build",
@@ -9,11 +9,24 @@
     "lint": "turbo lint",
     "test": "turbo test",
     "typecheck": "turbo typecheck",
-    "dev": "turbo dev"
+    "dev": "turbo dev",
+    "check-versions": "syncpack lint",
+    "fix-versions": "syncpack fix-mismatches"
   },
   "devDependencies": {
-    "turbo": "^2.0.0",
-    "typescript": "^5.5.0",
-    "@changesets/cli": "^2.27.0"
+    "@changesets/cli": "^2.29.0",
+    "babel-plugin-react-compiler": "1.0.0",
+    "syncpack": "^14.0.0",
+    "turbo": "^2.8.0",
+    "typescript": "catalog:"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "style-dictionary",
+      "sharp",
+      "msw",
+      "@bundled-es-modules/glob"
+    ]
   }
 }

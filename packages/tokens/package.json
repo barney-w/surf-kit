@@ -19,6 +19,7 @@
   "types": "dist/ts/tokens.d.ts",
   "exports": {
     "./css": "./dist/css/variables.css",
+    "./css/light": "./dist/css/variables-light.css",
     "./css/dark": "./dist/css/variables-dark.css",
     "./css/brand": "./dist/css/variables-brand.css",
     "./ts": "./dist/ts/tokens.ts",
@@ -41,7 +42,7 @@
   },
   "devDependencies": {
     "style-dictionary": "^4.0.0",
-    "tsx": "^4.0.0",
+    "tsx": "catalog:",
     "@surf-kit/tsconfig": "workspace:*"
   },
   "publishConfig": {

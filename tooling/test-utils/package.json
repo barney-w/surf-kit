@@ -10,16 +10,16 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@testing-library/react": "^16.0.0",
-    "@testing-library/jest-dom": "^6.0.0",
+    "@testing-library/react": "catalog:",
+    "@testing-library/jest-dom": "catalog:",
     "@surf-kit/theme": "workspace:*",
-    "vitest-axe": "^0.1.0"
+    "vitest-axe": "catalog:"
   },
   "devDependencies": {
-    "react": "^18.3.0",
-    "react-dom": "^18.3.0",
-    "@types/react": "^18.3.0",
-    "typescript": "^5.5.0",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "@types/react": "catalog:",
+    "typescript": "catalog:",
     "@surf-kit/tsconfig": "workspace:*"
   },
   "peerDependencies": {

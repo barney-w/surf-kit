@@ -1,5 +1,5 @@
 import { twMerge } from 'tailwind-merge'
-import React, { useMemo } from 'react'
+import React from 'react'
 
 type SortDescriptor = { column: string; direction: 'ascending' | 'descending' }
 

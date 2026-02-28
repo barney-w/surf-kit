@@ -41,14 +41,14 @@
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "react": "^18.3.0",
-    "@types/react": "^18.3.0",
-    "tsup": "^8.0.0",
-    "typescript": "^5.5.0",
+    "react": "catalog:",
+    "@types/react": "catalog:",
+    "tsup": "catalog:",
+    "typescript": "catalog:",
     "@surf-kit/tsconfig": "workspace:*"
   },
   "peerDependencies": {
-    "react": ">=18"
+    "react": ">=19"
   },
   "publishConfig": {
     "access": "public"

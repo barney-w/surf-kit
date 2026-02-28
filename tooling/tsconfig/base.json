@@ -9,6 +9,7 @@
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
+    "noUncheckedSideEffectImports": true,
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true

@@ -1,3 +1,5 @@
+@layer surf.tokens, surf.reset, surf.base, surf.components, surf.utilities;
+
 @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap");
 @import "tailwindcss";
 @import "@surf-kit/tokens/css";

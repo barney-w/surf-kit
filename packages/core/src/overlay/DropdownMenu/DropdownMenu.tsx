@@ -112,7 +112,7 @@ function DropdownMenu({
 
   return (
     <div className="relative inline-block">
-      {React.cloneElement(trigger, { ...buttonProps, ref: triggerRef })}
+      {React.cloneElement(trigger as React.ReactElement<any>, { ...buttonProps, ref: triggerRef })}
       {state.isOpen && (
         <MenuPopup
           state={treeState}

@@ -58,7 +58,7 @@ function Tooltip({
 
   return (
     <span className="relative inline-block">
-      {cloneElement(children, { ...triggerProps, ref: triggerRef })}
+      {cloneElement(children as React.ReactElement<any>, { ...triggerProps, ref: triggerRef })}
       {state.isOpen && (
         <TooltipContent
           state={state}
