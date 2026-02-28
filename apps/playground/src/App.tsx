@@ -1,13 +1,7 @@
-import React, { useState } from "react";
 import { ThemeProvider } from "@surf-kit/theme";
 import { FullPageDemo, LIVE_API_URL } from "./demos/full-page/FullPageDemo";
-import { LayoutDemos } from "./demos/layouts/LayoutDemos";
-
-type DemoView = "full-page" | "layouts";
 
 export function App() {
-  const [view, setView] = useState<DemoView>("full-page");
-
   return (
     <ThemeProvider colorMode="brand">
       <div
@@ -43,23 +37,11 @@ export function App() {
               {LIVE_API_URL ? `Live: ${LIVE_API_URL}` : "Mock API"}
             </span>
           </div>
-
-          {/* Right — view selector */}
-          <select
-            value={view}
-            onChange={(e) => setView(e.target.value as DemoView)}
-            className="px-3 py-1.5 rounded-xl bg-brand-dark-panel border border-brand-gold/15 text-brand-cream text-sm font-body cursor-pointer focus:ring-2 focus:ring-brand-gold/40 focus:outline-none transition-colors duration-200"
-            style={{ colorScheme: "dark" }}
-            aria-label="Select demo view"
-          >
-            <option value="full-page">Full Page Chat</option>
-            <option value="layouts">Layout Components</option>
-          </select>
         </header>
 
         {/* Main content */}
         <main className="flex-1 overflow-hidden">
-          {view === "full-page" ? <FullPageDemo /> : <LayoutDemos />}
+          <FullPageDemo />
         </main>
       </div>
     </ThemeProvider>

@@ -27,6 +27,7 @@ body {
 @layer utilities {
   .text-glow { text-shadow: 0 0 20px rgba(241,240,227,0.3); }
   .text-glow-gold { text-shadow: 0 0 20px rgba(225,185,137,0.4); }
+  .animation-delay-300 { animation-delay: 300ms; }
   .typewriter-cursor::after {
     content: '|';
     animation: blink 1s step-end infinite;
