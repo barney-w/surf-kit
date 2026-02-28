@@ -1,5 +1,23 @@
 # @surf-kit/core
 
+## Unreleased
+
+### Minor Changes
+
+- Add per-category subpath exports: `./primitives`, `./inputs`, `./feedback`, `./overlay`, `./navigation`, `./data`, `./layout`
+
+## 0.2.0
+
+### Minor Changes
+
+- Add layout components: AspectRatio, ScrollArea, Resizable
+- Add input components: Toggle, ToggleGroup, Slider, Calendar
+- Add data components: Collapsible, Carousel
+- Add feedback component: Avatar
+- Add overlay components: HoverCard, Drawer, ContextMenu, Command
+- Add navigation components: Pagination, NavigationMenu, Menubar
+- Add `@internationalized/date` dependency for Calendar component
+
 ## 0.1.1
 
 ### Patch Changes
