@@ -1,0 +1,5 @@
+import{j as e,r as l}from"./iframe-DfQrMS3t.js";import{a as u}from"./index-_nN3MFVB.js";import"./preload-helper-C1FmrZbK.js";import"./index-ByQMLxTz.js";const j={title:"Core/Sheet"};function d({side:s="right"}){const[h,o]=l.useState(!1);return e.jsxs(e.Fragment,{children:[e.jsxs("button",{onClick:()=>o(!0),children:["Open Sheet (",s,")"]}),e.jsx(u,{isOpen:h,onClose:()=>o(!1),side:s,title:"Sheet Title",children:e.jsx("p",{children:"Sheet content goes here."})})]})}const r={render:()=>e.jsx(d,{side:"right"})},t={render:()=>e.jsx(d,{side:"left"})};var n,a,i;r.parameters={...r.parameters,docs:{...(n=r.parameters)==null?void 0:n.docs,source:{originalSource:`{
+  render: () => <SheetDemo side="right" />
+}`,...(i=(a=r.parameters)==null?void 0:a.docs)==null?void 0:i.source}}};var c,m,p;t.parameters={...t.parameters,docs:{...(c=t.parameters)==null?void 0:c.docs,source:{originalSource:`{
+  render: () => <SheetDemo side="left" />
+}`,...(p=(m=t.parameters)==null?void 0:m.docs)==null?void 0:p.source}}};const O=["Right","Left"];export{t as Left,r as Right,O as __namedExportsOrder,j as default};
