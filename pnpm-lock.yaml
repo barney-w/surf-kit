@@ -6,6 +6,9 @@ settings:
 
 catalogs:
   default:
+    '@ai-sdk/react':
+      specifier: ^3.0.0
+      version: 3.0.107
     '@tailwindcss/postcss':
       specifier: ^4.0.0
       version: 4.2.1
@@ -30,6 +33,9 @@ catalogs:
     '@vitejs/plugin-react':
       specifier: ^5.1.0
       version: 5.1.4
+    ai:
+      specifier: ^6.0.0
+      version: 6.0.105
     class-variance-authority:
       specifier: ^0.7.0
       version: 0.7.1
@@ -239,6 +245,9 @@ importers:
       '@tailwindcss/postcss':
         specifier: 'catalog:'
         version: 4.2.1
+      babel-plugin-react-compiler:
+        specifier: 1.0.0
+        version: 1.0.0
       postcss:
         specifier: 'catalog:'
         version: 8.5.6
@@ -272,6 +281,9 @@ importers:
       class-variance-authority:
         specifier: 'catalog:'
         version: 0.7.1
+      react-aria:
+        specifier: 'catalog:'
+        version: 3.46.0(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       react-markdown:
         specifier: ^10.1.0
         version: 10.1.0(@types/react@19.2.14)(react@19.2.4)
@@ -309,9 +321,6 @@ importers:
       react:
         specifier: 'catalog:'
         version: 19.2.4
-      react-aria:
-        specifier: 'catalog:'
-        version: 3.46.0(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       react-dom:
         specifier: 'catalog:'
         version: 19.2.4(react@19.2.4)
@@ -331,13 +340,13 @@ importers:
   packages/ai:
     dependencies:
       '@ai-sdk/react':
-        specifier: ^3.0.0
+        specifier: 'catalog:'
         version: 3.0.107(react@19.2.4)(zod@4.3.6)
       '@surf-kit/agent':
         specifier: workspace:*
         version: link:../agent
       ai:
-        specifier: ^6.0.0
+        specifier: 'catalog:'
         version: 6.0.105(zod@4.3.6)
     devDependencies:
       '@surf-kit/tsconfig':

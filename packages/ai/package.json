@@ -45,8 +45,8 @@
   },
   "dependencies": {
     "@surf-kit/agent": "workspace:*",
-    "ai": "^6.0.0",
-    "@ai-sdk/react": "^3.0.0"
+    "ai": "catalog:",
+    "@ai-sdk/react": "catalog:"
   },
   "devDependencies": {
     "@surf-kit/tsconfig": "workspace:*",
