@@ -185,7 +185,7 @@ import { ConfidenceBadge } from '@surf-kit/agent/confidence'
 
 ### Token pipeline
 
-[Style Dictionary v4](https://styledictionary.com/) compiles [DTCG](https://www.designtokens.org/)-format tokens into CSS custom properties, JSON, and TypeScript. Three color modes ship out of the box: light, dark, and brand (teal/gold).
+[Style Dictionary v4](https://styledictionary.com/) compiles [DTCG](https://www.designtokens.org/)-format tokens into CSS custom properties, JSON, and TypeScript. Three colour modes ship out of the box: light, dark, and brand (teal/gold).
 
 ### Accessibility
 
