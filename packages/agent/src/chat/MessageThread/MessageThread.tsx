@@ -23,9 +23,10 @@ function MessageThread({
 }: MessageThreadProps) {
   const bottomRef = useRef<HTMLDivElement>(null)
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: intentional trigger deps — scroll to bottom when messages change or streaming slot updates
   useEffect(() => {
     bottomRef.current?.scrollIntoView?.({ behavior: 'smooth' })
-  }, [])
+  }, [messages.length, streamingSlot])
 
   return (
     <div

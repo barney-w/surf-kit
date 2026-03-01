@@ -11,7 +11,8 @@
       "!apps/playground/public/mockServiceWorker.js",
       "!apps/playground/src/styles.css",
       "!apps/storybook/.storybook/preview.css",
-      "!apps/docs/app/globals.css"
+      "!apps/docs/app/globals.css",
+      "!packages/icons/src/generated"
     ]
   },
   "formatter": {

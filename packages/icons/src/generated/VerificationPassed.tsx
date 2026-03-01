@@ -1,25 +1,11 @@
-import type { SVGProps } from 'react'
-
+import type { SVGProps } from 'react';
 interface Props extends SVGProps<SVGSVGElement> {
-  size?: number | string
-  className?: string
+  size?: number | string;
+  className?: string;
 }
-const VerificationPassed = ({ size = 24, className, ...props }: Props) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    fill="none"
-    stroke="currentColor"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    strokeWidth={2}
-    viewBox="0 0 24 24"
-    width={size}
-    height={size}
-    className={className}
-    {...props}
-  >
-    <path d="m12 2 8 4v6c0 5.25-3.5 9.75-8 11-4.5-1.25-8-5.75-8-11V6z" />
-    <path d="m9 12 2 2 4-4" />
-  </svg>
-)
-export default VerificationPassed
+const VerificationPassed = ({
+  size = 24,
+  className,
+  ...props
+}: Props) => <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} viewBox="0 0 24 24" width={size} height={size} className={className} {...props}><path d="m12 2 8 4v6c0 5.25-3.5 9.75-8 11-4.5-1.25-8-5.75-8-11V6z" /><path d="m9 12 2 2 4-4" /></svg>;
+export default VerificationPassed;
