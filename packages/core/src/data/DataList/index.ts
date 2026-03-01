@@ -1,2 +1,2 @@
+export type { DataListItem, DataListProps } from './DataList'
 export { DataList, dataList } from './DataList'
-export type { DataListProps, DataListItem } from './DataList'

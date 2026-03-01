@@ -1,11 +1,10 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { describe, it, expect, vi } from 'vitest'
-import * as vitestAxe from 'vitest-axe/matchers'
+import { describe, expect, it, vi } from 'vitest'
 import { axe } from 'vitest-axe'
-
-import { AgentResponse } from '../AgentResponse'
+import * as vitestAxe from 'vitest-axe/matchers'
 import type { AgentResponse as AgentResponseType } from '../../../types/agent'
+import { AgentResponse } from '../AgentResponse'
 
 expect.extend(vitestAxe)
 

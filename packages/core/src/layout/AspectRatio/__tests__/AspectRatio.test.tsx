@@ -1,11 +1,15 @@
 import { render, screen } from '@testing-library/react'
 import { renderToStaticMarkup } from 'react-dom/server'
-import { describe, it, expect } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import { AspectRatio } from '../AspectRatio'
 
 describe('AspectRatio', () => {
   it('renders children', () => {
-    render(<AspectRatio><span>Hello</span></AspectRatio>)
+    render(
+      <AspectRatio>
+        <span>Hello</span>
+      </AspectRatio>,
+    )
     expect(screen.getByText('Hello')).toBeDefined()
   })
   it('applies default 1:1 ratio', () => {
@@ -15,7 +19,7 @@ describe('AspectRatio', () => {
     expect(html).toContain('aspect-ratio:1')
   })
   it('applies custom ratio', () => {
-    const html = renderToStaticMarkup(<AspectRatio ratio={16/9}>Content</AspectRatio>)
+    const html = renderToStaticMarkup(<AspectRatio ratio={16 / 9}>Content</AspectRatio>)
     expect(html).toContain('aspect-ratio:')
   })
   it('merges className', () => {

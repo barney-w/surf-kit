@@ -1,7 +1,7 @@
-import { renderHook, act } from '@testing-library/react'
-import { describe, it, expect, beforeEach, vi } from 'vitest'
-import { useConversation } from '../useConversation'
+import { act, renderHook } from '@testing-library/react'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import type { ChatMessage } from '../../types/chat'
+import { useConversation } from '../useConversation'
 
 describe('useConversation', () => {
   beforeEach(() => {
@@ -9,10 +9,20 @@ describe('useConversation', () => {
     const storage: Record<string, string> = {}
     vi.stubGlobal('localStorage', {
       getItem: (key: string) => storage[key] ?? null,
-      setItem: (key: string, value: string) => { storage[key] = value },
-      removeItem: (key: string) => { delete storage[key] },
-      clear: () => { Object.keys(storage).forEach((k) => delete storage[k]) },
-      get length() { return Object.keys(storage).length },
+      setItem: (key: string, value: string) => {
+        storage[key] = value
+      },
+      removeItem: (key: string) => {
+        delete storage[key]
+      },
+      clear: () => {
+        Object.keys(storage).forEach((k) => {
+          delete storage[k]
+        })
+      },
+      get length() {
+        return Object.keys(storage).length
+      },
       key: (i: number) => Object.keys(storage)[i] ?? null,
     })
   })
@@ -27,9 +37,9 @@ describe('useConversation', () => {
   it('creates a conversation', () => {
     const { result } = renderHook(() => useConversation())
 
-    let conv: ReturnType<typeof result.current.create>
+    let _conv: ReturnType<typeof result.current.create>
     act(() => {
-      conv = result.current.create('Test Conversation')
+      _conv = result.current.create('Test Conversation')
     })
 
     expect(result.current.conversations).toHaveLength(1)

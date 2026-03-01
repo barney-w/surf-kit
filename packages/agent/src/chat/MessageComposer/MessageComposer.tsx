@@ -1,5 +1,6 @@
+import type React from 'react'
+import { useCallback, useRef, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
-import React, { useState, useRef, useCallback } from 'react'
 
 export type MessageComposerProps = {
   onSend: (content: string) => void
@@ -45,17 +46,14 @@ function MessageComposer({
     [handleSend],
   )
 
-  const handleChange = useCallback(
-    (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-      setValue(e.target.value)
-      const el = e.target
-      el.style.height = 'auto'
-      const capped = Math.min(el.scrollHeight, 128)
-      el.style.height = `${capped}px`
-      el.style.overflowY = el.scrollHeight > 128 ? 'auto' : 'hidden'
-    },
-    [],
-  )
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setValue(e.target.value)
+    const el = e.target
+    el.style.height = 'auto'
+    const capped = Math.min(el.scrollHeight, 128)
+    el.style.height = `${capped}px`
+    el.style.overflowY = el.scrollHeight > 128 ? 'auto' : 'hidden'
+  }, [])
 
   return (
     <div

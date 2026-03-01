@@ -1,6 +1,7 @@
+import type React from 'react'
+import { useRef } from 'react'
+import { DismissButton, FocusScope, useOverlay } from 'react-aria'
 import { twMerge } from 'tailwind-merge'
-import React, { useRef } from 'react'
-import { useOverlay, DismissButton, FocusScope } from 'react-aria'
 
 type PopoverProps = {
   triggerRef: React.RefObject<HTMLElement | null>
@@ -19,7 +20,7 @@ const placementStyles: Record<string, string> = {
 }
 
 function Popover({
-  triggerRef,
+  triggerRef: _triggerRef,
   isOpen,
   onClose,
   placement = 'bottom',

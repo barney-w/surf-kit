@@ -1,22 +1,22 @@
-import { useState } from "react";
 import {
-  ThinkingIndicator,
-  TypingIndicator,
-  TextGlimmer,
-  TypewriterText,
+  RetrievalProgress,
   StreamingList,
   StreamingStructure,
+  TextGlimmer,
+  ThinkingIndicator,
   ToolExecution,
-  RetrievalProgress,
+  TypewriterText,
+  TypingIndicator,
   VerificationProgress,
-} from "@surf-kit/agent";
-import { Stack, Text, Separator, Button } from "@surf-kit/core";
-import { mockSources } from "../showcase-data";
-import { SectionWrapper } from "./SectionWrapper";
+} from '@surf-kit/agent'
+import { Button, Separator, Stack, Text } from '@surf-kit/core'
+import { useState } from 'react'
+import { mockSources } from '../showcase-data'
+import { SectionWrapper } from './SectionWrapper'
 
 export function AgentStreamingSection() {
-  const [streamingActive, setStreamingActive] = useState(true);
-  const [listItems, setListItems] = useState(["Item 1", "Item 2"]);
+  const [streamingActive, setStreamingActive] = useState(true)
+  const [listItems, setListItems] = useState(['Item 1', 'Item 2'])
 
   return (
     <SectionWrapper title="Agent Streaming">
@@ -87,21 +87,12 @@ export function AgentStreamingSection() {
             <Button
               intent="ghost"
               size="sm"
-              onPress={() =>
-                setListItems((prev) => [
-                  ...prev,
-                  `Item ${prev.length + 1}`,
-                ])
-              }
+              onPress={() => setListItems((prev) => [...prev, `Item ${prev.length + 1}`])}
             >
               Add item
             </Button>
-            <Button
-              intent="ghost"
-              size="sm"
-              onPress={() => setStreamingActive((p) => !p)}
-            >
-              {streamingActive ? "Stop streaming" : "Start streaming"}
+            <Button intent="ghost" size="sm" onPress={() => setStreamingActive((p) => !p)}>
+              {streamingActive ? 'Stop streaming' : 'Start streaming'}
             </Button>
           </Stack>
         </div>
@@ -115,9 +106,9 @@ export function AgentStreamingSection() {
           </Text>
           <StreamingStructure
             data={{
-              plan: "Enterprise",
-              features: { apiCalls: "Unlimited", support: "Dedicated" },
-              pricing: "$499/month",
+              plan: 'Enterprise',
+              features: { apiCalls: 'Unlimited', support: 'Dedicated' },
+              pricing: '$499/month',
             }}
             isStreaming={streamingActive}
           />
@@ -151,12 +142,9 @@ export function AgentStreamingSection() {
           <Text size="sm" color="muted" weight="semibold" className="mb-2">
             VerificationProgress
           </Text>
-          <VerificationProgress
-            isActive={streamingActive}
-            label="Checking accuracy..."
-          />
+          <VerificationProgress isActive={streamingActive} label="Checking accuracy..." />
         </div>
       </Stack>
     </SectionWrapper>
-  );
+  )
 }

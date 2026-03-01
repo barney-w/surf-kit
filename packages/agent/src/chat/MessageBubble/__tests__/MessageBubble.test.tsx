@@ -1,11 +1,12 @@
 import { render, screen } from '@testing-library/react'
-import { describe, it, expect } from 'vitest'
-import * as vitestAxe from 'vitest-axe/matchers'
+import { describe, expect, it } from 'vitest'
 import { axe } from 'vitest-axe'
+import * as vitestAxe from 'vitest-axe/matchers'
 
 expect.extend(vitestAxe)
-import { MessageBubble } from '../MessageBubble'
+
 import type { ChatMessage } from '../../../types/chat'
+import { MessageBubble } from '../MessageBubble'
 
 const userMessage: ChatMessage = {
   id: 'msg-1',
@@ -74,9 +75,7 @@ describe('MessageBubble', () => {
   })
 
   it('applies custom className', () => {
-    const { container } = render(
-      <MessageBubble message={userMessage} className="custom-class" />,
-    )
+    const { container } = render(<MessageBubble message={userMessage} className="custom-class" />)
     const wrapper = container.querySelector('[data-message-id="msg-1"]')
     expect(wrapper?.className).toContain('custom-class')
   })

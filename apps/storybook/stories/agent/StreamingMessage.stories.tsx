@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { StreamingMessage } from '@surf-kit/agent'
 import type { StreamState } from '@surf-kit/agent'
+import { StreamingMessage } from '@surf-kit/agent'
 
 const meta: Meta<typeof StreamingMessage> = {
   title: 'Agent/StreamingMessage',
@@ -9,7 +9,7 @@ const meta: Meta<typeof StreamingMessage> = {
 export default meta
 type Story = StoryObj<typeof StreamingMessage>
 
-const idleStream: StreamState = {
+const _idleStream: StreamState = {
   active: false,
   phase: 'idle',
   content: '',

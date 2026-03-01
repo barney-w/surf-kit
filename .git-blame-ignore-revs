@@ -1,0 +1,4 @@
+# Biome formatter migration — bulk formatting changes
+# To use: git config blame.ignoreRevsFile .git-blame-ignore-revs
+# GitHub uses this file automatically.
+# Commit hash will be added after committing.

@@ -1,2 +1,2 @@
-export { AgentWidget } from './AgentWidget'
 export type { AgentWidgetProps } from './AgentWidget'
+export { AgentWidget } from './AgentWidget'

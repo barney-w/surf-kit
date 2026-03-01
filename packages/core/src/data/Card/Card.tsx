@@ -1,6 +1,6 @@
-import { cva, type VariantProps } from 'class-variance-authority'
+import { cva } from 'class-variance-authority'
+import type React from 'react'
 import { twMerge } from 'tailwind-merge'
-import React from 'react'
 
 const card = cva('rounded-xl transition-colors', {
   variants: {
@@ -20,11 +20,7 @@ type CardProps = {
 }
 
 function CardHeader({ children, className }: { children: React.ReactNode; className?: string }) {
-  return (
-    <div className={twMerge('px-6 py-4 border-b border-border', className)}>
-      {children}
-    </div>
-  )
+  return <div className={twMerge('px-6 py-4 border-b border-border', className)}>{children}</div>
 }
 
 function CardBody({ children, className }: { children: React.ReactNode; className?: string }) {
@@ -32,19 +28,11 @@ function CardBody({ children, className }: { children: React.ReactNode; classNam
 }
 
 function CardFooter({ children, className }: { children: React.ReactNode; className?: string }) {
-  return (
-    <div className={twMerge('px-6 py-4 border-t border-border', className)}>
-      {children}
-    </div>
-  )
+  return <div className={twMerge('px-6 py-4 border-t border-border', className)}>{children}</div>
 }
 
 function Card({ variant = 'default', children, className }: CardProps) {
-  return (
-    <div className={twMerge(card({ variant }), className)}>
-      {children}
-    </div>
-  )
+  return <div className={twMerge(card({ variant }), className)}>{children}</div>
 }
 
 Card.Header = CardHeader

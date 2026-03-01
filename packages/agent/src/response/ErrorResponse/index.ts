@@ -1,2 +1,2 @@
-export { ErrorResponse } from './ErrorResponse'
 export type { ErrorResponseProps } from './ErrorResponse'
+export { ErrorResponse } from './ErrorResponse'

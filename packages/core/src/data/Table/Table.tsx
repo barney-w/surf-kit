@@ -1,5 +1,5 @@
-import { twMerge } from 'tailwind-merge'
 import React from 'react'
+import { twMerge } from 'tailwind-merge'
 
 type SortDescriptor = { column: string; direction: 'ascending' | 'descending' }
 
@@ -13,13 +13,7 @@ type TableProps = {
   className?: string
 }
 
-function Table({
-  columns,
-  rows,
-  sortDescriptor,
-  onSortChange,
-  className,
-}: TableProps) {
+function Table({ columns, rows, sortDescriptor, onSortChange, className }: TableProps) {
   const [focusedRow, setFocusedRow] = React.useState<number>(-1)
   const [focusedCol, setFocusedCol] = React.useState<number>(0)
   const tableRef = React.useRef<HTMLTableElement>(null)
@@ -64,7 +58,12 @@ function Table({
 
   return (
     <div className={twMerge('overflow-auto', className)}>
-      <table ref={tableRef} role="grid" onKeyDown={handleKeyDown} className="w-full border-collapse text-sm">
+      <table
+        ref={tableRef}
+        role="grid"
+        onKeyDown={handleKeyDown}
+        className="w-full border-collapse text-sm"
+      >
         <thead>
           <tr role="row">
             {columns.map((col, colIndex) => {
@@ -73,16 +72,19 @@ function Table({
                 <th
                   key={col.key}
                   role="columnheader"
-                  aria-sort={
-                    isSorted ? sortDescriptor!.direction : undefined
-                  }
+                  aria-sort={isSorted ? sortDescriptor!.direction : undefined}
                   tabIndex={focusedRow === -1 && focusedCol === colIndex ? 0 : -1}
                   onClick={() => handleSort(col)}
-                  onFocus={() => { setFocusedRow(-1); setFocusedCol(colIndex) }}
+                  onFocus={() => {
+                    setFocusedRow(-1)
+                    setFocusedCol(colIndex)
+                  }}
                   className={twMerge(
                     'text-left px-4 py-3 font-medium text-text-primary border-b border-border bg-surface-raised',
                     col.sortable && 'cursor-pointer select-none hover:bg-surface-raised/80',
-                    focusedRow === -1 && focusedCol === colIndex && 'ring-2 ring-inset ring-accent/20',
+                    focusedRow === -1 &&
+                      focusedCol === colIndex &&
+                      'ring-2 ring-inset ring-accent/20',
                   )}
                 >
                   <span className="flex items-center gap-1">
@@ -121,10 +123,15 @@ function Table({
                   key={col.key}
                   role="gridcell"
                   tabIndex={focusedRow === rowIndex && focusedCol === colIndex ? 0 : -1}
-                  onFocus={() => { setFocusedRow(rowIndex); setFocusedCol(colIndex) }}
+                  onFocus={() => {
+                    setFocusedRow(rowIndex)
+                    setFocusedCol(colIndex)
+                  }}
                   className={twMerge(
                     'px-4 py-3 text-text-secondary',
-                    focusedRow === rowIndex && focusedCol === colIndex && 'ring-2 ring-inset ring-accent/20',
+                    focusedRow === rowIndex &&
+                      focusedCol === colIndex &&
+                      'ring-2 ring-inset ring-accent/20',
                   )}
                 >
                   {row[col.key]}

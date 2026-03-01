@@ -1,8 +1,6 @@
-export { ThumbsFeedback } from './ThumbsFeedback'
-export type { ThumbsFeedbackProps, FeedbackRating } from './ThumbsFeedback'
-
-export { FeedbackDialog } from './FeedbackDialog'
-export type { FeedbackDialogProps } from './FeedbackDialog'
-
-export { FeedbackConfirmation } from './FeedbackConfirmation'
 export type { FeedbackConfirmationProps } from './FeedbackConfirmation'
+export { FeedbackConfirmation } from './FeedbackConfirmation'
+export type { FeedbackDialogProps } from './FeedbackDialog'
+export { FeedbackDialog } from './FeedbackDialog'
+export type { FeedbackRating, ThumbsFeedbackProps } from './ThumbsFeedback'
+export { ThumbsFeedback } from './ThumbsFeedback'

@@ -1,4 +1,4 @@
-import type { Source, ConfidenceBreakdown, VerificationResult, AgentResponse } from './agent'
+import type { AgentResponse, ConfidenceBreakdown, Source, VerificationResult } from './agent'
 import type { ChatError } from './chat'
 
 export type StreamEvent =

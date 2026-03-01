@@ -1,13 +1,6 @@
-import React, {
-  createContext,
-  useContext,
-  useState,
-  useCallback,
-  useRef,
-  useEffect,
-} from 'react'
-import { twMerge } from 'tailwind-merge'
 import { cva } from 'class-variance-authority'
+import type React from 'react'
+import { createContext, useCallback, useContext, useRef, useState } from 'react'
 
 type ToastIntent = 'info' | 'success' | 'warning' | 'error'
 
@@ -33,12 +26,9 @@ const toastStyle = cva(
     variants: {
       intent: {
         info: 'bg-sky-100 text-sky-700 border-sky-300',
-        success:
-          'bg-status-success-subtle text-status-success border-status-success',
-        warning:
-          'bg-status-warning-subtle text-status-warning border-status-warning',
-        error:
-          'bg-status-error-subtle text-status-error border-status-error',
+        success: 'bg-status-success-subtle text-status-success border-status-success',
+        warning: 'bg-status-warning-subtle text-status-warning border-status-warning',
+        error: 'bg-status-error-subtle text-status-error border-status-error',
       },
     },
     defaultVariants: { intent: 'info' },
@@ -68,10 +58,7 @@ function ToastProvider({ children }: { children: React.ReactNode }) {
   return (
     <ToastContext.Provider value={{ toast }}>
       {children}
-      <div
-        aria-live="polite"
-        className="fixed top-4 right-4 z-50 flex flex-col gap-2"
-      >
+      <div aria-live="polite" className="fixed top-4 right-4 z-50 flex flex-col gap-2">
         {toasts.map((t) => (
           <div key={t.id} className={toastStyle({ intent: t.intent ?? 'info' })}>
             <span className="flex-1">{t.message}</span>

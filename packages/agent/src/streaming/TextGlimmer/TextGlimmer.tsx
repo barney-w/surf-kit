@@ -1,6 +1,5 @@
-import React from 'react'
-import { twMerge } from 'tailwind-merge'
 import { useReducedMotion } from '@surf-kit/hooks'
+import { twMerge } from 'tailwind-merge'
 
 type TextGlimmerProps = {
   lines?: number

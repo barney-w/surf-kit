@@ -1,15 +1,15 @@
-import { twMerge } from 'tailwind-merge'
 import React, {
-  useState,
-  useRef,
-  useEffect,
-  useCallback,
   createContext,
+  useCallback,
   useContext,
+  useEffect,
   useId,
   useMemo,
+  useRef,
+  useState,
 } from 'react'
-import { useDialog, FocusScope } from 'react-aria'
+import { FocusScope, useDialog } from 'react-aria'
+import { twMerge } from 'tailwind-merge'
 
 type CommandProps = {
   isOpen: boolean
@@ -54,10 +54,7 @@ const CommandContext = createContext<CommandContextValue>({
  * filtering by query match. This gives us a stable ordered list of visible items
  * that matches render order, without needing effect-based registration.
  */
-function collectItemValues(
-  children: React.ReactNode,
-  query: string,
-): string[] {
+function collectItemValues(children: React.ReactNode, query: string): string[] {
   const values: string[] = []
   React.Children.forEach(children, (child) => {
     if (!React.isValidElement(child)) return
@@ -71,10 +68,7 @@ function collectItemValues(
     // Recurse into children (for CommandGroup wrappers)
     if (child.props && (child.props as { children?: React.ReactNode }).children) {
       values.push(
-        ...collectItemValues(
-          (child.props as { children: React.ReactNode }).children,
-          query,
-        ),
+        ...collectItemValues((child.props as { children: React.ReactNode }).children, query),
       )
     }
   })
@@ -121,9 +115,7 @@ function CommandItem({
       className={twMerge(
         'flex cursor-pointer items-center gap-2 rounded-md px-3 py-2 text-sm transition-colors',
         isFocused && !isDisabled && 'bg-surface-raised',
-        isDisabled
-          ? 'cursor-not-allowed text-text-tertiary'
-          : 'text-text-primary',
+        isDisabled ? 'cursor-not-allowed text-text-tertiary' : 'text-text-primary',
         className,
       )}
       onClick={() => {
@@ -158,15 +150,9 @@ function Command({
   const { dialogProps } = useDialog({ role: 'dialog' }, ref)
 
   // Collect visible item values by traversing children
-  const visibleValues = useMemo(
-    () => collectItemValues(children, query),
-    [children, query],
-  )
+  const visibleValues = useMemo(() => collectItemValues(children, query), [children, query])
 
-  const getItemIndex = useCallback(
-    (value: string) => visibleValues.indexOf(value),
-    [visibleValues],
-  )
+  const getItemIndex = useCallback((value: string) => visibleValues.indexOf(value), [visibleValues])
 
   const selectItem = useCallback(
     (value: string, onItemSelect?: () => void) => {
@@ -266,9 +252,7 @@ function Command({
             onKeyDown={handleKeyDown}
           />
           <div role="listbox" className="max-h-72 overflow-y-auto p-2">
-            <CommandContext.Provider value={contextValue}>
-              {children}
-            </CommandContext.Provider>
+            <CommandContext.Provider value={contextValue}>{children}</CommandContext.Provider>
           </div>
         </div>
       </FocusScope>

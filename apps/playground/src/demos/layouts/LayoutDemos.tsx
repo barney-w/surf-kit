@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
 import {
+  AgentEmbed,
   AgentPanel,
   AgentWidget,
-  AgentEmbed,
   ConversationList,
   type ConversationSummary,
 } from '@surf-kit/agent'
+import { useState } from 'react'
 
 const DEMO_ENDPOINT = '/api/v1'
 
@@ -61,14 +61,22 @@ export function LayoutDemos() {
         </div>
         <div className="flex gap-3">
           <button
+            type="button"
             className="px-4 py-2 rounded-xl text-sm font-display font-medium border border-brand-gold/25 text-brand-gold/80 hover:border-brand-gold hover:text-brand-gold hover:bg-brand-gold/10 transition-all duration-200"
-            onClick={() => { setPanelSide('right'); setPanelOpen(true) }}
+            onClick={() => {
+              setPanelSide('right')
+              setPanelOpen(true)
+            }}
           >
             Open Right Panel
           </button>
           <button
+            type="button"
             className="px-4 py-2 rounded-xl text-sm font-display font-medium border border-brand-gold/25 text-brand-gold/80 hover:border-brand-gold hover:text-brand-gold hover:bg-brand-gold/10 transition-all duration-200"
-            onClick={() => { setPanelSide('left'); setPanelOpen(true) }}
+            onClick={() => {
+              setPanelSide('left')
+              setPanelOpen(true)
+            }}
           >
             Open Left Panel
           </button>

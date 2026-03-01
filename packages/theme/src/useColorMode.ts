@@ -1,12 +1,10 @@
 import { useCallback, useEffect, useState } from 'react'
-import { useTheme } from './useTheme'
 import type { ColorMode, ColorModePreference } from './types'
+import { useTheme } from './useTheme'
 
 function getSystemPreference(): ColorMode {
   if (typeof window === 'undefined') return 'light'
-  return window.matchMedia('(prefers-color-scheme: dark)').matches
-    ? 'dark'
-    : 'light'
+  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
 }
 
 export interface UseColorModeReturn {
@@ -25,9 +23,7 @@ export interface UseColorModeReturn {
  */
 export function useColorMode(): UseColorModeReturn {
   const { colorMode, setColorMode } = useTheme()
-  const [systemPreference, setSystemPreference] = useState<ColorMode>(
-    getSystemPreference,
-  )
+  const [systemPreference, setSystemPreference] = useState<ColorMode>(getSystemPreference)
 
   useEffect(() => {
     if (typeof window === 'undefined') return

@@ -1,10 +1,11 @@
 import { render, screen } from '@testing-library/react'
-import { describe, it, expect, vi } from 'vitest'
 import userEvent from '@testing-library/user-event'
-import * as vitestAxe from 'vitest-axe/matchers'
+import { describe, expect, it, vi } from 'vitest'
 import { axe } from 'vitest-axe'
+import * as vitestAxe from 'vitest-axe/matchers'
 
 expect.extend(vitestAxe)
+
 import { AgentWidget } from '../AgentWidget'
 
 // Mock useAgentChat
@@ -36,9 +37,7 @@ describe('AgentWidget', () => {
   })
 
   it('renders with custom trigger label', () => {
-    render(
-      <AgentWidget endpoint="https://api.test.com" triggerLabel="Ask AI" />,
-    )
+    render(<AgentWidget endpoint="https://api.test.com" triggerLabel="Ask AI" />)
     expect(screen.getByRole('button', { name: 'Ask AI' })).toBeDefined()
   })
 
@@ -68,9 +67,7 @@ describe('AgentWidget', () => {
     await user.click(trigger)
     // After open, the trigger label changes
     const floatingButtons = screen.getAllByRole('button')
-    const expandedButton = floatingButtons.find(
-      (b) => b.getAttribute('aria-expanded') === 'true',
-    )
+    const expandedButton = floatingButtons.find((b) => b.getAttribute('aria-expanded') === 'true')
     expect(expandedButton).toBeDefined()
   })
 
@@ -82,9 +79,7 @@ describe('AgentWidget', () => {
   })
 
   it('positions on the bottom-left when configured', () => {
-    render(
-      <AgentWidget endpoint="https://api.test.com" position="bottom-left" />,
-    )
+    render(<AgentWidget endpoint="https://api.test.com" position="bottom-left" />)
     const trigger = screen.getByRole('button', { name: 'Chat' })
     expect(trigger.className).toContain('left-4')
     expect(trigger.className).toContain('bottom-4')

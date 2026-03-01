@@ -1,5 +1,4 @@
 import { twMerge } from 'tailwind-merge'
-import React from 'react'
 import type { ConversationSummary } from '../../types/chat'
 
 export type ConversationListProps = {

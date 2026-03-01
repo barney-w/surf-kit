@@ -1,4 +1,4 @@
-import React from 'react'
+import type React from 'react'
 
 function VisuallyHidden({ children }: { children: React.ReactNode }) {
   return <span className="sr-only">{children}</span>

@@ -1,6 +1,6 @@
 import { cva, type VariantProps } from 'class-variance-authority'
+import type React from 'react'
 import { twMerge } from 'tailwind-merge'
-import React from 'react'
 
 const text = cva('', {
   variants: {

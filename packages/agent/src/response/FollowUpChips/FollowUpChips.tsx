@@ -1,4 +1,3 @@
-import React from 'react'
 import { twMerge } from 'tailwind-merge'
 
 type FollowUpChipsProps = {
@@ -17,7 +16,7 @@ function FollowUpChips({ suggestions, onSelect, className }: FollowUpChipsProps)
       aria-label="Follow-up suggestions"
       data-testid="follow-up-chips"
     >
-      {suggestions.map(suggestion => (
+      {suggestions.map((suggestion) => (
         <button
           key={suggestion}
           type="button"

@@ -1,4 +1,16 @@
 {
   "title": "Core",
-  "pages": ["button", "text-input", "select", "badge", "spinner", "alert", "dialog", "tabs", "table", "card", "accordion"]
+  "pages": [
+    "button",
+    "text-input",
+    "select",
+    "badge",
+    "spinner",
+    "alert",
+    "dialog",
+    "tabs",
+    "table",
+    "card",
+    "accordion"
+  ]
 }

@@ -1,19 +1,19 @@
-import { useState } from "react";
 import {
-  Tabs,
   Breadcrumb,
-  Pagination,
-  NavigationMenu,
   Menubar,
-  Stack,
-  Text,
+  NavigationMenu,
+  Pagination,
   Separator,
-} from "@surf-kit/core";
-import { breadcrumbItems } from "../showcase-data";
-import { SectionWrapper } from "./SectionWrapper";
+  Stack,
+  Tabs,
+  Text,
+} from '@surf-kit/core'
+import { useState } from 'react'
+import { breadcrumbItems } from '../showcase-data'
+import { SectionWrapper } from './SectionWrapper'
 
 export function NavigationSection() {
-  const [page, setPage] = useState(3);
+  const [page, setPage] = useState(3)
 
   return (
     <SectionWrapper title="Navigation">
@@ -25,9 +25,21 @@ export function NavigationSection() {
           </Text>
           <Tabs
             items={[
-              { key: "overview", title: "Overview", content: <Text size="sm">Overview content — the main dashboard view.</Text> },
-              { key: "analytics", title: "Analytics", content: <Text size="sm">Analytics content — charts and metrics.</Text> },
-              { key: "settings", title: "Settings", content: <Text size="sm">Settings content — configure your preferences.</Text> },
+              {
+                key: 'overview',
+                title: 'Overview',
+                content: <Text size="sm">Overview content — the main dashboard view.</Text>,
+              },
+              {
+                key: 'analytics',
+                title: 'Analytics',
+                content: <Text size="sm">Analytics content — charts and metrics.</Text>,
+              },
+              {
+                key: 'settings',
+                title: 'Settings',
+                content: <Text size="sm">Settings content — configure your preferences.</Text>,
+              },
             ]}
           />
         </div>
@@ -49,11 +61,7 @@ export function NavigationSection() {
           <Text size="sm" color="muted" weight="semibold" className="mb-2">
             Pagination
           </Text>
-          <Pagination
-            totalPages={10}
-            currentPage={page}
-            onPageChange={setPage}
-          />
+          <Pagination totalPages={10} currentPage={page} onPageChange={setPage} />
         </div>
 
         <Separator />
@@ -100,5 +108,5 @@ export function NavigationSection() {
         </div>
       </Stack>
     </SectionWrapper>
-  );
+  )
 }

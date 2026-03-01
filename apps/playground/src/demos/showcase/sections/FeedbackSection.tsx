@@ -1,24 +1,24 @@
-import { useState } from "react";
 import {
-  Badge,
-  Spinner,
-  Skeleton,
   Alert,
-  ProgressBar,
   Avatar,
-  AvatarRings,
   AvatarGenerationLoader,
-  ToastProvider,
+  AvatarRings,
+  Badge,
+  Button,
+  ProgressBar,
+  Separator,
+  Skeleton,
+  Spinner,
   Stack,
   Text,
-  Separator,
-  Button,
-} from "@surf-kit/core";
-import { SectionWrapper } from "./SectionWrapper";
-import { ToastTrigger } from "./ToastTrigger";
+  ToastProvider,
+} from '@surf-kit/core'
+import { useState } from 'react'
+import { SectionWrapper } from './SectionWrapper'
+import { ToastTrigger } from './ToastTrigger'
 
 export function FeedbackSection() {
-  const [showAlert, setShowAlert] = useState(true);
+  const [showAlert, setShowAlert] = useState(true)
 
   return (
     <SectionWrapper title="Feedback">
@@ -94,20 +94,12 @@ export function FeedbackSection() {
               Please review before continuing.
             </Alert>
             {showAlert && (
-              <Alert
-                intent="error"
-                title="Error"
-                onDismiss={() => setShowAlert(false)}
-              >
+              <Alert intent="error" title="Error" onDismiss={() => setShowAlert(false)}>
                 Something went wrong. Click the dismiss button to close.
               </Alert>
             )}
             {!showAlert && (
-              <Button
-                intent="ghost"
-                size="sm"
-                onPress={() => setShowAlert(true)}
-              >
+              <Button intent="ghost" size="sm" onPress={() => setShowAlert(true)}>
                 Show error alert again
               </Button>
             )}
@@ -151,10 +143,7 @@ export function FeedbackSection() {
           </Text>
           <Stack direction="horizontal" gap={6} align="center">
             <AvatarRings />
-            <AvatarGenerationLoader
-              primaryText="Creating avatar..."
-              secondaryText="Almost done"
-            />
+            <AvatarGenerationLoader primaryText="Creating avatar..." secondaryText="Almost done" />
           </Stack>
         </div>
 
@@ -171,5 +160,5 @@ export function FeedbackSection() {
         </div>
       </Stack>
     </SectionWrapper>
-  );
+  )
 }

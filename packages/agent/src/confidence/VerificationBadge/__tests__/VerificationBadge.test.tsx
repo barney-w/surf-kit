@@ -1,10 +1,9 @@
 import { render, screen } from '@testing-library/react'
-import { describe, it, expect } from 'vitest'
-import * as vitestAxe from 'vitest-axe/matchers'
+import { describe, expect, it } from 'vitest'
 import { axe } from 'vitest-axe'
-
-import { VerificationBadge } from '../VerificationBadge'
+import * as vitestAxe from 'vitest-axe/matchers'
 import type { VerificationResult } from '../../../types/agent'
+import { VerificationBadge } from '../VerificationBadge'
 
 expect.extend(vitestAxe)
 
@@ -52,9 +51,7 @@ describe('VerificationBadge', () => {
   })
 
   it('has no accessibility violations', async () => {
-    const { container } = render(
-      <VerificationBadge verification={makeVerification('passed')} />,
-    )
+    const { container } = render(<VerificationBadge verification={makeVerification('passed')} />)
     const results = await axe(container)
     expect(results).toHaveNoViolations()
   })

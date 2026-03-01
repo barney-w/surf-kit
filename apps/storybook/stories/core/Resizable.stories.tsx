@@ -26,8 +26,12 @@ export const Default: Story = {
     direction: 'horizontal',
     defaultSize: 50,
     children: [
-      <div key="left" style={{ padding: 16 }}>Left Panel</div>,
-      <div key="right" style={{ padding: 16 }}>Right Panel</div>,
+      <div key="left" style={{ padding: 16 }}>
+        Left Panel
+      </div>,
+      <div key="right" style={{ padding: 16 }}>
+        Right Panel
+      </div>,
     ],
   },
 }
@@ -37,8 +41,12 @@ export const Vertical: Story = {
     direction: 'vertical',
     defaultSize: 40,
     children: [
-      <div key="top" style={{ padding: 16 }}>Top Panel</div>,
-      <div key="bottom" style={{ padding: 16 }}>Bottom Panel</div>,
+      <div key="top" style={{ padding: 16 }}>
+        Top Panel
+      </div>,
+      <div key="bottom" style={{ padding: 16 }}>
+        Bottom Panel
+      </div>,
     ],
   },
 }

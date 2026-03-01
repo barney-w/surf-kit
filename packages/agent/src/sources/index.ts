@@ -1,14 +1,10 @@
-export { SourceCard } from './SourceCard'
-export type { SourceCardProps } from './SourceCard'
-
-export { SourceList } from './SourceList'
-export type { SourceListProps } from './SourceList'
-
-export { SourceInline } from './SourceInline'
-export type { SourceInlineProps } from './SourceInline'
-
-export { SourceDrawer } from './SourceDrawer'
-export type { SourceDrawerProps } from './SourceDrawer'
-
-export { SourceBadge } from './SourceBadge'
 export type { SourceBadgeProps } from './SourceBadge'
+export { SourceBadge } from './SourceBadge'
+export type { SourceCardProps } from './SourceCard'
+export { SourceCard } from './SourceCard'
+export type { SourceDrawerProps } from './SourceDrawer'
+export { SourceDrawer } from './SourceDrawer'
+export type { SourceInlineProps } from './SourceInline'
+export { SourceInline } from './SourceInline'
+export type { SourceListProps } from './SourceList'
+export { SourceList } from './SourceList'

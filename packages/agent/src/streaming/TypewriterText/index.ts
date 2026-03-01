@@ -1,2 +1,2 @@
-export { TypewriterText } from './TypewriterText'
 export type { TypewriterTextProps } from './TypewriterText'
+export { TypewriterText } from './TypewriterText'

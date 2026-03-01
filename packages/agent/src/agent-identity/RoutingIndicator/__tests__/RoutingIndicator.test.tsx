@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react'
-import { describe, it, expect } from 'vitest'
-import * as vitestAxe from 'vitest-axe/matchers'
+import { describe, expect, it } from 'vitest'
 import { axe } from 'vitest-axe'
+import * as vitestAxe from 'vitest-axe/matchers'
 
 import { RoutingIndicator } from '../RoutingIndicator'
 
@@ -20,20 +20,12 @@ describe('RoutingIndicator', () => {
   })
 
   it('renders reason when provided', () => {
-    render(
-      <RoutingIndicator
-        from="coordinator"
-        to="hr_agent"
-        reason="leave question detected"
-      />,
-    )
+    render(<RoutingIndicator from="coordinator" to="hr_agent" reason="leave question detected" />)
     expect(screen.getByText('(leave question detected)')).toBeDefined()
   })
 
   it('does not render reason when not provided', () => {
-    const { container } = render(
-      <RoutingIndicator from="coordinator" to="hr_agent" />,
-    )
+    const { container } = render(<RoutingIndicator from="coordinator" to="hr_agent" />)
     expect(container.textContent).not.toContain('(')
   })
 

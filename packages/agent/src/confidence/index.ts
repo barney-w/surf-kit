@@ -1,14 +1,10 @@
-export { ConfidenceBadge } from './ConfidenceBadge'
 export type { ConfidenceBadgeProps } from './ConfidenceBadge'
-
-export { ConfidenceBreakdown } from './ConfidenceBreakdown'
+export { ConfidenceBadge } from './ConfidenceBadge'
 export type { ConfidenceBreakdownProps } from './ConfidenceBreakdown'
-
-export { ConfidenceMeter } from './ConfidenceMeter'
+export { ConfidenceBreakdown } from './ConfidenceBreakdown'
 export type { ConfidenceMeterProps } from './ConfidenceMeter'
-
-export { VerificationBadge } from './VerificationBadge'
+export { ConfidenceMeter } from './ConfidenceMeter'
 export type { VerificationBadgeProps } from './VerificationBadge'
-
-export { VerificationDetail } from './VerificationDetail'
+export { VerificationBadge } from './VerificationBadge'
 export type { VerificationDetailProps } from './VerificationDetail'
+export { VerificationDetail } from './VerificationDetail'

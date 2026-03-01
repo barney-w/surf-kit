@@ -34,15 +34,13 @@ export const Disconnected: Story = {
       name: 'database',
       version: '0.8.3',
       status: 'disconnected',
-      tools: [
-        { name: 'query', description: 'Execute a SQL query' },
-      ],
+      tools: [{ name: 'query', description: 'Execute a SQL query' }],
       resources: [],
     },
   },
 }
 
-export const Error: Story = {
+export const ErrorState: Story = {
   args: {
     server: {
       name: 'web-scraper',
@@ -58,12 +56,8 @@ export const NoVersion: Story = {
     server: {
       name: 'custom-server',
       status: 'connected',
-      tools: [
-        { name: 'process' },
-      ],
-      resources: [
-        { uri: 'custom://data', name: 'Data feed' },
-      ],
+      tools: [{ name: 'process' }],
+      resources: [{ uri: 'custom://data', name: 'Data feed' }],
       lastPing: new Date(),
     },
   },

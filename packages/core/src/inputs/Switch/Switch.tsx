@@ -1,7 +1,7 @@
-import { twMerge } from 'tailwind-merge'
-import React, { useRef } from 'react'
+import { useRef } from 'react'
 import { useSwitch } from 'react-aria'
 import { useToggleState } from 'react-stately'
+import { twMerge } from 'tailwind-merge'
 
 type SwitchProps = {
   label: string
@@ -11,13 +11,7 @@ type SwitchProps = {
   className?: string
 }
 
-function Switch({
-  label,
-  isSelected,
-  onChange,
-  isDisabled,
-  className,
-}: SwitchProps) {
+function Switch({ label, isSelected, onChange, isDisabled, className }: SwitchProps) {
   const ref = useRef<HTMLInputElement>(null)
   const state = useToggleState({ isSelected, onChange, isDisabled })
   const { inputProps } = useSwitch(

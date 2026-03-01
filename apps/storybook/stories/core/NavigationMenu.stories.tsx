@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { NavigationMenu } from '@surf-kit/core'
-import React from 'react'
 
 const meta: Meta<typeof NavigationMenu> = {
   title: 'Core/Navigation/NavigationMenu',
@@ -28,7 +27,9 @@ export const WithMultipleDropdowns: Story = {
     <NavigationMenu>
       <NavigationMenu.Item label="Home" href="#" />
       <NavigationMenu.Item label="Products">
-        <div style={{ padding: '1rem', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+        <div
+          style={{ padding: '1rem', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}
+        >
           <div>
             <strong>Category A</strong>
             <ul>

@@ -1,10 +1,9 @@
 import { render, screen } from '@testing-library/react'
-import { describe, it, expect } from 'vitest'
-import * as vitestAxe from 'vitest-axe/matchers'
+import { describe, expect, it } from 'vitest'
 import { axe } from 'vitest-axe'
-
-import { SourceInline } from '../SourceInline'
+import * as vitestAxe from 'vitest-axe/matchers'
 import type { Source } from '../../../types/agent'
+import { SourceInline } from '../SourceInline'
 
 expect.extend(vitestAxe)
 
@@ -42,9 +41,7 @@ describe('SourceInline', () => {
   })
 
   it('has no accessibility violations', async () => {
-    const { container } = render(
-      <SourceInline source={mockSource} index={1} />,
-    )
+    const { container } = render(<SourceInline source={mockSource} index={1} />)
     const results = await axe(container)
     expect(results).toHaveNoViolations()
   })

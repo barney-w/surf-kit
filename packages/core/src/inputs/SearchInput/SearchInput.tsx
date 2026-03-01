@@ -1,7 +1,7 @@
-import { twMerge } from 'tailwind-merge'
-import React, { useRef } from 'react'
-import { useSearchField, useButton } from 'react-aria'
+import { useRef } from 'react'
+import { useButton, useSearchField } from 'react-aria'
 import { useSearchFieldState } from 'react-stately'
+import { twMerge } from 'tailwind-merge'
 
 type SearchInputProps = {
   label: string
@@ -85,7 +85,13 @@ function SearchInput({
             ref={clearRef}
             className="absolute right-2 top-1/2 -translate-y-1/2 p-1 rounded hover:bg-surface-raised text-text-secondary"
           >
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <svg
+              className="w-4 h-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
+            >
               <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>

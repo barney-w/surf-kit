@@ -1,7 +1,8 @@
-import { cva, type VariantProps } from 'class-variance-authority'
-import { twMerge } from 'tailwind-merge'
-import React, { useRef } from 'react'
+import { cva } from 'class-variance-authority'
+import type React from 'react'
+import { useRef } from 'react'
 import { useButton } from 'react-aria'
+import { twMerge } from 'tailwind-merge'
 
 const pageButton = cva(
   'inline-flex items-center justify-center rounded-lg h-10 w-10 text-sm font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent',
@@ -26,7 +27,7 @@ type PaginationProps = {
 }
 
 function PageButton({
-  page,
+  page: _page,
   isActive,
   isDisabled,
   onPress,
@@ -41,10 +42,7 @@ function PageButton({
   children: React.ReactNode
 }) {
   const ref = useRef<HTMLButtonElement>(null)
-  const { buttonProps } = useButton(
-    { onPress, isDisabled, 'aria-label': ariaLabel },
-    ref,
-  )
+  const { buttonProps } = useButton({ onPress, isDisabled, 'aria-label': ariaLabel }, ref)
 
   return (
     <button

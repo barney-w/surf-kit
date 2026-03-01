@@ -1,5 +1,3 @@
-import React from 'react'
-
 export type RoutingIndicatorProps = {
   from: string
   to: string
@@ -15,7 +13,9 @@ function RoutingIndicator({ from, to, reason, className }: RoutingIndicatorProps
     >
       <span className="opacity-60">Routed:</span>
       <span>{from}</span>
-      <span className="opacity-40" aria-hidden="true">{'\u2192'}</span>
+      <span className="opacity-40" aria-hidden="true">
+        {'\u2192'}
+      </span>
       <span>{to}</span>
       {reason && (
         <span className="opacity-50 ml-1" title={reason}>

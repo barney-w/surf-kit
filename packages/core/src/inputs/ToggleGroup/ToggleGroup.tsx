@@ -1,5 +1,6 @@
+import type React from 'react'
+import { useCallback, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
-import React, { useCallback, useState } from 'react'
 import { ToggleGroupCtx } from '../Toggle'
 
 type ToggleGroupProps = {

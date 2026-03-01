@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import React, { useState } from 'react'
 import { AgentPanel } from '@surf-kit/agent'
+import type React from 'react'
+import { useState } from 'react'
 
 const meta: Meta<typeof AgentPanel> = {
   title: 'Agent/Layouts/AgentPanel',
@@ -16,7 +17,9 @@ const PanelWrapper = (args: React.ComponentProps<typeof AgentPanel>) => {
   const [isOpen, setIsOpen] = useState(true)
   return (
     <div style={{ padding: 24 }}>
-      <button onClick={() => setIsOpen(true)}>Open Panel</button>
+      <button type="button" onClick={() => setIsOpen(true)}>
+        Open Panel
+      </button>
       <AgentPanel {...args} isOpen={isOpen} onClose={() => setIsOpen(false)} />
     </div>
   )

@@ -1,2 +1,2 @@
+export type { FeedbackRating, ThumbsFeedbackProps } from './ThumbsFeedback'
 export { ThumbsFeedback } from './ThumbsFeedback'
-export type { ThumbsFeedbackProps, FeedbackRating } from './ThumbsFeedback'

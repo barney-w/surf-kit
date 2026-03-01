@@ -1,11 +1,10 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { describe, it, expect, vi, beforeAll } from 'vitest'
-import * as vitestAxe from 'vitest-axe/matchers'
+import { beforeAll, describe, expect, it, vi } from 'vitest'
 import { axe } from 'vitest-axe'
-
-import { MCPToolCall } from '../MCPToolCall'
+import * as vitestAxe from 'vitest-axe/matchers'
 import type { MCPToolCallData } from '../../../types/mcp'
+import { MCPToolCall } from '../MCPToolCall'
 
 expect.extend(vitestAxe)
 
@@ -68,11 +67,7 @@ describe('MCPToolCall', () => {
   })
 
   it('renders error status badge', () => {
-    render(
-      <MCPToolCall
-        call={{ ...baseTool, status: 'error', error: 'File not found' }}
-      />,
-    )
+    render(<MCPToolCall call={{ ...baseTool, status: 'error', error: 'File not found' }} />)
     const badge = screen.getByTestId('mcp-tool-status')
     expect(badge.textContent).toBe('Error')
   })

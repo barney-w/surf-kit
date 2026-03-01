@@ -1,6 +1,6 @@
 import { cva } from 'class-variance-authority'
-import { twMerge } from 'tailwind-merge'
 import React from 'react'
+import { twMerge } from 'tailwind-merge'
 
 const dataList = cva('', {
   variants: {

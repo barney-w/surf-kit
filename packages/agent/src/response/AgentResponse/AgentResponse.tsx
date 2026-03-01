@@ -1,10 +1,9 @@
-import React from 'react'
 import { Badge } from '@surf-kit/core'
+import { SourceList } from '../../sources/SourceList'
 import type { AgentResponse as AgentResponseType } from '../../types/agent'
+import { FollowUpChips } from '../FollowUpChips'
 import { ResponseMessage } from '../ResponseMessage'
 import { StructuredResponse } from '../StructuredResponse'
-import { SourceList } from '../../sources/SourceList'
-import { FollowUpChips } from '../FollowUpChips'
 
 type AgentResponseProps = {
   response: AgentResponseType
@@ -60,19 +59,14 @@ function AgentResponse({
       {(showConfidence || showVerification) && (
         <div className="flex flex-wrap items-center gap-2 mt-1" data-testid="response-meta">
           {showConfidence && (
-            <Badge
-              intent={getConfidenceIntent(response.confidence.overall)}
-              size="sm"
-            >
+            <Badge intent={getConfidenceIntent(response.confidence.overall)} size="sm">
               {response.confidence.overall} confidence
             </Badge>
           )}
           {showVerification && (
-            <Badge
-              intent={getVerificationIntent(response.verification.status)}
-              size="sm"
-            >
-              {getVerificationLabel(response.verification.status)} ({response.verification.claims_verified}/{response.verification.claims_checked})
+            <Badge intent={getVerificationIntent(response.verification.status)} size="sm">
+              {getVerificationLabel(response.verification.status)} (
+              {response.verification.claims_verified}/{response.verification.claims_checked})
             </Badge>
           )}
         </div>
@@ -91,10 +85,7 @@ function AgentResponse({
 
       {/* Follow-up suggestions */}
       {response.follow_up_suggestions.length > 0 && onFollowUp && (
-        <FollowUpChips
-          suggestions={response.follow_up_suggestions}
-          onSelect={onFollowUp}
-        />
+        <FollowUpChips suggestions={response.follow_up_suggestions} onSelect={onFollowUp} />
       )}
     </div>
   )

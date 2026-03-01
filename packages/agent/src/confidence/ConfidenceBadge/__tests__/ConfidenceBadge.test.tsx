@@ -1,10 +1,9 @@
 import { render, screen } from '@testing-library/react'
-import { describe, it, expect } from 'vitest'
-import * as vitestAxe from 'vitest-axe/matchers'
+import { describe, expect, it } from 'vitest'
 import { axe } from 'vitest-axe'
-
-import { ConfidenceBadge } from '../ConfidenceBadge'
+import * as vitestAxe from 'vitest-axe/matchers'
 import type { ConfidenceBreakdown } from '../../../types/agent'
+import { ConfidenceBadge } from '../ConfidenceBadge'
 
 expect.extend(vitestAxe)
 
@@ -54,9 +53,7 @@ describe('ConfidenceBadge', () => {
   })
 
   it('has no accessibility violations', async () => {
-    const { container } = render(
-      <ConfidenceBadge confidence={makeConfidence('high')} />,
-    )
+    const { container } = render(<ConfidenceBadge confidence={makeConfidence('high')} />)
     const results = await axe(container)
     expect(results).toHaveNoViolations()
   })

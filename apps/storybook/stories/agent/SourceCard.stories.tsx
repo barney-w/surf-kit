@@ -17,7 +17,8 @@ const source = {
   document_id: 'ea-2024-001',
   url: 'https://internal.example.com/docs/ea-2024',
   confidence: 0.95,
-  snippet: 'All full-time employees are entitled to four weeks (20 days) of paid annual leave per year of service. Part-time employees receive a pro-rata entitlement.',
+  snippet:
+    'All full-time employees are entitled to four weeks (20 days) of paid annual leave per year of service. Part-time employees receive a pro-rata entitlement.',
 }
 
 export const Compact: Story = {

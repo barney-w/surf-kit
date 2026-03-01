@@ -1,5 +1,3 @@
-import React from 'react'
-
 type FeedbackConfirmationProps = {
   variant?: 'inline' | 'toast'
   className?: string

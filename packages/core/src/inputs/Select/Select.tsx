@@ -1,8 +1,8 @@
-import { twMerge } from 'tailwind-merge'
-import React, { useRef } from 'react'
-import { useSelect, useListBox, useOption, useButton, HiddenSelect } from 'react-aria'
-import { useSelectState, Item } from 'react-stately'
+import { useRef } from 'react'
+import { HiddenSelect, useButton, useListBox, useOption, useSelect } from 'react-aria'
 import type { Node } from 'react-stately'
+import { Item, useSelectState } from 'react-stately'
+import { twMerge } from 'tailwind-merge'
 
 type SelectItem = { key: string; label: string }
 
@@ -70,18 +70,17 @@ function Select({
     label,
     items,
     selectedKey,
-    onSelectionChange: onSelectionChange
-      ? (key) => onSelectionChange(String(key))
-      : undefined,
+    onSelectionChange: onSelectionChange ? (key) => onSelectionChange(String(key)) : undefined,
     isDisabled,
     children: (item: SelectItem) => <Item key={item.key}>{item.label}</Item>,
   })
 
-  const { labelProps, triggerProps, valueProps, menuProps } = useSelect(
-    { label, isDisabled },
-    state,
-    triggerRef,
-  )
+  const {
+    labelProps,
+    triggerProps,
+    valueProps,
+    menuProps: _menuProps,
+  } = useSelect({ label, isDisabled }, state, triggerRef)
 
   const { buttonProps } = useButton(triggerProps, triggerRef)
 
@@ -125,9 +124,7 @@ function Select({
           <ListBox state={state} />
         </div>
       )}
-      {errorMessage && (
-        <div className="text-xs text-status-error">{errorMessage}</div>
-      )}
+      {errorMessage && <div className="text-xs text-status-error">{errorMessage}</div>}
     </div>
   )
 }

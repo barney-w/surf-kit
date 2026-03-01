@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react'
-import { describe, it, expect, vi } from 'vitest'
-import * as vitestAxe from 'vitest-axe/matchers'
+import { describe, expect, it, vi } from 'vitest'
 import { axe } from 'vitest-axe'
+import * as vitestAxe from 'vitest-axe/matchers'
 
 import { ThinkingIndicator } from '../ThinkingIndicator'
 
@@ -13,6 +13,7 @@ vi.mock('@surf-kit/hooks', () => ({
 }))
 
 import { useReducedMotion } from '@surf-kit/hooks'
+
 const mockUseReducedMotion = vi.mocked(useReducedMotion)
 
 describe('ThinkingIndicator', () => {

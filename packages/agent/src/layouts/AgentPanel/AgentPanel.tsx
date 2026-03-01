@@ -1,5 +1,5 @@
+import { useEffect, useRef } from 'react'
 import { twMerge } from 'tailwind-merge'
-import React, { useRef, useEffect } from 'react'
 import { AgentChat } from '../../chat/AgentChat'
 
 export type AgentPanelProps = {
@@ -76,7 +76,18 @@ function AgentPanel({
             aria-label="Close panel"
             className="rounded-xl p-2 text-brand-cream/40 hover:text-brand-cream/80 hover:bg-brand-cream/5 transition-colors duration-200"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
               <line x1="18" y1="6" x2="6" y2="18" />
               <line x1="6" y1="6" x2="18" y2="18" />
             </svg>

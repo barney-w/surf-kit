@@ -1,7 +1,7 @@
-import { transform } from '@svgr/core'
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { transform } from '@svgr/core'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const svgsDir = path.resolve(__dirname, '../svgs')
@@ -81,14 +81,12 @@ export default ${variables.componentName}
 
     const outputPath = path.join(generatedDir, `${componentName}.tsx`)
     fs.writeFileSync(outputPath, tsxCode, 'utf-8')
-    exports.push(
-      `export { default as ${componentName} } from './${componentName}'`,
-    )
+    exports.push(`export { default as ${componentName} } from './${componentName}'`)
     console.log(`Generated: ${componentName}.tsx`)
   }
 
   // Write barrel index
-  const indexContent = exports.join('\n') + '\n'
+  const indexContent = `${exports.join('\n')}\n`
   fs.writeFileSync(path.join(generatedDir, 'index.ts'), indexContent, 'utf-8')
   console.log(`\nGenerated ${svgFiles.length} icon components`)
 }

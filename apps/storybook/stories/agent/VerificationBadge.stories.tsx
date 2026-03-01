@@ -16,12 +16,22 @@ export const Passed: Story = {
 
 export const Flagged: Story = {
   args: {
-    verification: { status: 'flagged', flags: ['Outdated source'], claims_checked: 5, claims_verified: 3 },
+    verification: {
+      status: 'flagged',
+      flags: ['Outdated source'],
+      claims_checked: 5,
+      claims_verified: 3,
+    },
   },
 }
 
 export const Failed: Story = {
   args: {
-    verification: { status: 'failed', flags: ['Could not verify claim'], claims_checked: 5, claims_verified: 1 },
+    verification: {
+      status: 'failed',
+      flags: ['Could not verify claim'],
+      claims_checked: 5,
+      claims_verified: 1,
+    },
   },
 }

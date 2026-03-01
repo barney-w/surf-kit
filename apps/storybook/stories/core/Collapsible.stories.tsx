@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { Collapsible } from '@surf-kit/core'
-import React from 'react'
 
 const meta: Meta<typeof Collapsible> = {
   title: 'Core/Data/Collapsible',

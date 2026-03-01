@@ -1,10 +1,9 @@
 import { render, screen } from '@testing-library/react'
-import { describe, it, expect } from 'vitest'
-import * as vitestAxe from 'vitest-axe/matchers'
+import { describe, expect, it } from 'vitest'
 import { axe } from 'vitest-axe'
-
-import { AgentAvatar } from '../AgentAvatar'
+import * as vitestAxe from 'vitest-axe/matchers'
 import type { AgentInfo } from '../../../types/agent'
+import { AgentAvatar } from '../AgentAvatar'
 
 expect.extend(vitestAxe)
 
@@ -53,12 +52,7 @@ describe('AgentAvatar', () => {
   })
 
   it('works with agentId and agentThemes', () => {
-    render(
-      <AgentAvatar
-        agentId="hr-agent"
-        agentThemes={{ 'hr-agent': mockAgent }}
-      />,
-    )
+    render(<AgentAvatar agentId="hr-agent" agentThemes={{ 'hr-agent': mockAgent }} />)
     expect(screen.getByText('H')).toBeDefined()
   })
 

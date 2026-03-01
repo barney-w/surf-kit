@@ -1,6 +1,6 @@
 import { cva, type VariantProps } from 'class-variance-authority'
+import type React from 'react'
 import { twMerge } from 'tailwind-merge'
-import React from 'react'
 
 const scrollArea = cva(
   'overflow-auto [scrollbar-width:thin] [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-border [&::-webkit-scrollbar-track]:bg-transparent',

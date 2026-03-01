@@ -1,11 +1,10 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { describe, it, expect, vi, beforeAll } from 'vitest'
-import * as vitestAxe from 'vitest-axe/matchers'
+import { beforeAll, describe, expect, it, vi } from 'vitest'
 import { axe } from 'vitest-axe'
-
-import { MCPServerStatus } from '../MCPServerStatus'
+import * as vitestAxe from 'vitest-axe/matchers'
 import type { MCPServerInfo } from '../../../types/mcp'
+import { MCPServerStatus } from '../MCPServerStatus'
 
 expect.extend(vitestAxe)
 
@@ -33,9 +32,7 @@ const connectedServer: MCPServerInfo = {
     { name: 'read_file', description: 'Read a file from disk' },
     { name: 'write_file', description: 'Write content to a file' },
   ],
-  resources: [
-    { uri: 'file:///src', name: 'Source directory' },
-  ],
+  resources: [{ uri: 'file:///src', name: 'Source directory' }],
   lastPing: new Date('2026-01-15T10:30:00Z'),
 }
 
@@ -53,21 +50,13 @@ describe('MCPServerStatus', () => {
   })
 
   it('renders disconnected status dot', () => {
-    render(
-      <MCPServerStatus
-        server={{ ...connectedServer, status: 'disconnected' }}
-      />,
-    )
+    render(<MCPServerStatus server={{ ...connectedServer, status: 'disconnected' }} />)
     const dot = screen.getByTestId('mcp-server-status-dot')
     expect(dot.getAttribute('aria-label')).toBe('Disconnected')
   })
 
   it('renders error status dot', () => {
-    render(
-      <MCPServerStatus
-        server={{ ...connectedServer, status: 'error' }}
-      />,
-    )
+    render(<MCPServerStatus server={{ ...connectedServer, status: 'error' }} />)
     const dot = screen.getByTestId('mcp-server-status-dot')
     expect(dot.getAttribute('aria-label')).toBe('Error')
   })
@@ -97,11 +86,7 @@ describe('MCPServerStatus', () => {
   })
 
   it('hides version when not provided', () => {
-    render(
-      <MCPServerStatus
-        server={{ ...connectedServer, version: undefined }}
-      />,
-    )
+    render(<MCPServerStatus server={{ ...connectedServer, version: undefined }} />)
     expect(screen.queryByTestId('mcp-server-version')).toBeNull()
   })
 

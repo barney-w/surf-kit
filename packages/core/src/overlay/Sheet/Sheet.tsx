@@ -1,7 +1,8 @@
 import { cva } from 'class-variance-authority'
-import { twMerge } from 'tailwind-merge'
-import React, { useRef, useEffect } from 'react'
+import type React from 'react'
+import { useEffect, useRef } from 'react'
 import { FocusScope } from 'react-aria'
+import { twMerge } from 'tailwind-merge'
 
 const sheetPanel = cva(
   'fixed top-0 h-full bg-surface border-border shadow-xl flex flex-col transition-transform duration-300 ease-in-out outline-none z-50',
@@ -55,18 +56,12 @@ function Sheet({
 
   if (!isOpen) return null
 
-  const translateClass =
-    side === 'left'
-      ? 'translate-x-0'
-      : 'translate-x-0'
+  const translateClass = side === 'left' ? 'translate-x-0' : 'translate-x-0'
 
   return (
     <div className="fixed inset-0 z-50">
       {/* Backdrop */}
-      <div
-        className="fixed inset-0 bg-black/50 transition-opacity"
-        onClick={onClose}
-      />
+      <div className="fixed inset-0 bg-black/50 transition-opacity" onClick={onClose} />
       <FocusScope contain restoreFocus autoFocus>
         <div
           ref={ref}
@@ -76,9 +71,7 @@ function Sheet({
         >
           {title && (
             <div className="flex items-center justify-between border-b border-border px-6 py-4">
-              <h2 className="text-lg font-semibold text-text-primary">
-                {title}
-              </h2>
+              <h2 className="text-lg font-semibold text-text-primary">{title}</h2>
               <button
                 type="button"
                 onClick={onClose}

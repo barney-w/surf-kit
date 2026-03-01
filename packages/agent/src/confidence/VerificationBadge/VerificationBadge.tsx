@@ -1,4 +1,3 @@
-import React from 'react'
 import { Badge } from '@surf-kit/core'
 import type { VerificationResult } from '../../types/agent'
 
@@ -32,14 +31,10 @@ function VerificationBadge({ verification, className }: VerificationBadgeProps) 
   const { intent, label, icon, ariaLabel } = config[verification.status]
 
   return (
-    <Badge
-      intent={intent}
-      size="sm"
-      role="status"
-      aria-label={ariaLabel}
-      className={className}
-    >
-      <span aria-hidden="true" className="mr-1">{icon}</span>
+    <Badge intent={intent} size="sm" role="status" aria-label={ariaLabel} className={className}>
+      <span aria-hidden="true" className="mr-1">
+        {icon}
+      </span>
       {label}
     </Badge>
   )

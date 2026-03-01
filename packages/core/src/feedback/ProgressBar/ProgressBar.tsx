@@ -1,7 +1,6 @@
-import { cva, type VariantProps } from 'class-variance-authority'
-import { twMerge } from 'tailwind-merge'
-import React from 'react'
+import { cva } from 'class-variance-authority'
 import { useProgressBar } from 'react-aria'
+import { twMerge } from 'tailwind-merge'
 
 const track = cva('w-full overflow-hidden rounded-full bg-neutral-200', {
   variants: {

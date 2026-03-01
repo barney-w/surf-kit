@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { MessageBubble } from '@surf-kit/agent'
 import type { ChatMessage } from '@surf-kit/agent'
+import { MessageBubble } from '@surf-kit/agent'
 
 const meta: Meta<typeof MessageBubble> = {
   title: 'Agent/MessageBubble',

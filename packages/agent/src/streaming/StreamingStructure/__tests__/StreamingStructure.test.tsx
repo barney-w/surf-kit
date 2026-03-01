@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react'
-import { describe, it, expect, vi } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 
 import { StreamingStructure } from '../StreamingStructure'
 
@@ -28,11 +28,7 @@ describe('StreamingStructure', () => {
   })
 
   it('handles nested objects', () => {
-    render(
-      <StreamingStructure
-        data={{ address: { city: 'Sydney', country: 'Australia' } }}
-      />,
-    )
+    render(<StreamingStructure data={{ address: { city: 'Sydney', country: 'Australia' } }} />)
     expect(screen.getByText('city')).toBeDefined()
     expect(screen.getByText('Sydney')).toBeDefined()
     expect(screen.getByTestId('streaming-structure-nested')).toBeDefined()
@@ -62,9 +58,7 @@ describe('StreamingStructure', () => {
   })
 
   it('merges className', () => {
-    render(
-      <StreamingStructure data={{ a: 1 }} className="custom-class" />,
-    )
+    render(<StreamingStructure data={{ a: 1 }} className="custom-class" />)
     const el = screen.getByTestId('streaming-structure')
     expect(el.className).toContain('custom-class')
   })

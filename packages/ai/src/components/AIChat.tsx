@@ -1,5 +1,4 @@
-import React from 'react'
-import { MessageThread, MessageComposer, WelcomeScreen, StreamingMessage } from '@surf-kit/agent'
+import { MessageComposer, MessageThread, StreamingMessage, WelcomeScreen } from '@surf-kit/agent'
 import { useAIChat } from '../hooks/useAIChat'
 import type { UseAIChatOptions } from '../types'
 
@@ -61,9 +60,7 @@ export function AIChat({
       {hasMessages ? (
         <MessageThread
           messages={messages}
-          streamingSlot={
-            streamState.active ? <StreamingMessage stream={streamState} /> : undefined
-          }
+          streamingSlot={streamState.active ? <StreamingMessage stream={streamState} /> : undefined}
           showSources={showSources}
           showConfidence={showConfidence}
         />

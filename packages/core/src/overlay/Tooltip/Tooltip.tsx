@@ -1,7 +1,8 @@
-import { twMerge } from 'tailwind-merge'
-import React, { useRef, cloneElement } from 'react'
-import { useTooltip, useTooltipTrigger, mergeProps } from 'react-aria'
+import type React from 'react'
+import { cloneElement, useRef } from 'react'
+import { useTooltip, useTooltipTrigger } from 'react-aria'
 import { useTooltipTriggerState } from 'react-stately'
+import { twMerge } from 'tailwind-merge'
 
 type TooltipProps = {
   content: string
@@ -18,13 +19,7 @@ const placementStyles: Record<string, string> = {
   right: 'left-full top-1/2 -translate-y-1/2 ml-2',
 }
 
-function TooltipContent({
-  state,
-  className,
-  placement = 'top',
-  content,
-  ...props
-}: any) {
+function TooltipContent({ state, className, placement = 'top', content, ...props }: any) {
   const { tooltipProps } = useTooltip(props, state)
 
   return (
@@ -41,20 +36,10 @@ function TooltipContent({
   )
 }
 
-function Tooltip({
-  content,
-  placement = 'top',
-  delay = 700,
-  children,
-  className,
-}: TooltipProps) {
+function Tooltip({ content, placement = 'top', delay = 700, children, className }: TooltipProps) {
   const state = useTooltipTriggerState({ delay })
   const triggerRef = useRef<HTMLElement>(null)
-  const { triggerProps, tooltipProps } = useTooltipTrigger(
-    { delay },
-    state,
-    triggerRef,
-  )
+  const { triggerProps, tooltipProps } = useTooltipTrigger({ delay }, state, triggerRef)
 
   return (
     <span className="relative inline-block">

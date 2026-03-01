@@ -1,12 +1,5 @@
-import {
-  Box,
-  Text,
-  Stack,
-  Grid,
-  Separator,
-  VisuallyHidden,
-} from "@surf-kit/core";
-import { SectionWrapper } from "./SectionWrapper";
+import { Box, Grid, Separator, Stack, Text, VisuallyHidden } from '@surf-kit/core'
+import { SectionWrapper } from './SectionWrapper'
 
 export function PrimitivesSection() {
   return (
@@ -99,12 +92,12 @@ export function PrimitivesSection() {
             Separator (above) &amp; VisuallyHidden
           </Text>
           <Text size="sm">
-            There is a{" "}
+            There is a{' '}
             <VisuallyHidden>screen-reader-only text here saying: secret message</VisuallyHidden>
             VisuallyHidden element in this sentence (inspect the DOM to see it).
           </Text>
         </div>
       </Stack>
     </SectionWrapper>
-  );
+  )
 }

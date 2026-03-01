@@ -1,12 +1,16 @@
-export { Table } from './Table'
-export type { TableProps, TableColumn, SortDescriptor } from './Table'
-export { DataList, dataList } from './DataList'
-export type { DataListProps, DataListItem } from './DataList'
-export { Card, card } from './Card'
-export type { CardProps } from './Card'
+export type { AccordionItem, AccordionProps } from './Accordion'
 export { Accordion } from './Accordion'
-export type { AccordionProps, AccordionItem } from './Accordion'
-export { Collapsible } from './Collapsible'
-export type { CollapsibleProps, CollapsibleTriggerProps, CollapsibleContentProps } from './Collapsible'
-export { Carousel } from './Carousel'
+export type { CardProps } from './Card'
+export { Card, card } from './Card'
 export type { CarouselProps } from './Carousel'
+export { Carousel } from './Carousel'
+export type {
+  CollapsibleContentProps,
+  CollapsibleProps,
+  CollapsibleTriggerProps,
+} from './Collapsible'
+export { Collapsible } from './Collapsible'
+export type { DataListItem, DataListProps } from './DataList'
+export { DataList, dataList } from './DataList'
+export type { SortDescriptor, TableColumn, TableProps } from './Table'
+export { Table } from './Table'

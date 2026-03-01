@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 export interface CharacterDrainResult {
   displayed: string
@@ -41,7 +41,6 @@ export function useCharacterDrain(target: string, msPerChar = 15): CharacterDrai
 
   // Tick function stored in ref so the long-lived RAF loop always reads the
   // latest drainTarget and msPerChar without being cancelled/recreated.
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
   const tickRef = useRef<(now: number) => void>(() => {})
   tickRef.current = (now: number) => {
     const currentTarget = drainTargetRef.current
@@ -79,7 +78,7 @@ export function useCharacterDrain(target: string, msPerChar = 15): CharacterDrai
     ) {
       rafRef.current = requestAnimationFrame((t) => tickRef.current(t))
     }
-  }, [drainTarget]) // drainTarget change = new content; check if loop needs kicking
+  }, []) // drainTarget change = new content; check if loop needs kicking
 
   // Once drain completes and source stream is already done, reset all state
   useEffect(() => {

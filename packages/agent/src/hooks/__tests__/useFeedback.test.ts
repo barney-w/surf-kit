@@ -1,5 +1,5 @@
-import { renderHook, act } from '@testing-library/react'
-import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { act, renderHook } from '@testing-library/react'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { useFeedback } from '../useFeedback'
 
 describe('useFeedback', () => {
@@ -8,22 +8,16 @@ describe('useFeedback', () => {
   })
 
   it('starts in idle state', () => {
-    const { result } = renderHook(() =>
-      useFeedback({ url: 'https://api.test.com/feedback' }),
-    )
+    const { result } = renderHook(() => useFeedback({ url: 'https://api.test.com/feedback' }))
 
     expect(result.current.state).toBe('idle')
     expect(result.current.error).toBeNull()
   })
 
   it('submits feedback successfully', async () => {
-    vi.spyOn(globalThis, 'fetch').mockResolvedValueOnce(
-      new Response('OK', { status: 200 }),
-    )
+    vi.spyOn(globalThis, 'fetch').mockResolvedValueOnce(new Response('OK', { status: 200 }))
 
-    const { result } = renderHook(() =>
-      useFeedback({ url: 'https://api.test.com/feedback' }),
-    )
+    const { result } = renderHook(() => useFeedback({ url: 'https://api.test.com/feedback' }))
 
     await act(async () => {
       await result.current.submit('msg-1', 'positive', 'Great answer!')
@@ -48,9 +42,7 @@ describe('useFeedback', () => {
       new Response('Error', { status: 500, statusText: 'Internal Server Error' }),
     )
 
-    const { result } = renderHook(() =>
-      useFeedback({ url: 'https://api.test.com/feedback' }),
-    )
+    const { result } = renderHook(() => useFeedback({ url: 'https://api.test.com/feedback' }))
 
     await act(async () => {
       await result.current.submit('msg-1', 'negative')
@@ -63,9 +55,7 @@ describe('useFeedback', () => {
   it('handles network errors', async () => {
     vi.spyOn(globalThis, 'fetch').mockRejectedValueOnce(new Error('Network error'))
 
-    const { result } = renderHook(() =>
-      useFeedback({ url: 'https://api.test.com/feedback' }),
-    )
+    const { result } = renderHook(() => useFeedback({ url: 'https://api.test.com/feedback' }))
 
     await act(async () => {
       await result.current.submit('msg-1', 'positive')
@@ -78,9 +68,7 @@ describe('useFeedback', () => {
   it('resets to idle state', async () => {
     vi.spyOn(globalThis, 'fetch').mockRejectedValueOnce(new Error('Network error'))
 
-    const { result } = renderHook(() =>
-      useFeedback({ url: 'https://api.test.com/feedback' }),
-    )
+    const { result } = renderHook(() => useFeedback({ url: 'https://api.test.com/feedback' }))
 
     await act(async () => {
       await result.current.submit('msg-1', 'positive')
@@ -97,13 +85,9 @@ describe('useFeedback', () => {
   })
 
   it('submits with optional comment omitted', async () => {
-    vi.spyOn(globalThis, 'fetch').mockResolvedValueOnce(
-      new Response('OK', { status: 200 }),
-    )
+    vi.spyOn(globalThis, 'fetch').mockResolvedValueOnce(new Response('OK', { status: 200 }))
 
-    const { result } = renderHook(() =>
-      useFeedback({ url: 'https://api.test.com/feedback' }),
-    )
+    const { result } = renderHook(() => useFeedback({ url: 'https://api.test.com/feedback' }))
 
     await act(async () => {
       await result.current.submit('msg-1', 'negative')

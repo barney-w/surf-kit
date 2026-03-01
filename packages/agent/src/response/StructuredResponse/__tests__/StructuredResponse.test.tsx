@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react'
-import { describe, it, expect } from 'vitest'
-import * as vitestAxe from 'vitest-axe/matchers'
+import { describe, expect, it } from 'vitest'
 import { axe } from 'vitest-axe'
+import * as vitestAxe from 'vitest-axe/matchers'
 
 import { StructuredResponse } from '../StructuredResponse'
 
@@ -9,27 +9,18 @@ expect.extend(vitestAxe)
 
 describe('StructuredResponse', () => {
   it('renders null when data is null', () => {
-    const { container } = render(
-      <StructuredResponse uiHint="text" data={null} />,
-    )
+    const { container } = render(<StructuredResponse uiHint="text" data={null} />)
     expect(container.firstChild).toBeNull()
   })
 
   it('renders text hint as paragraph', () => {
-    render(
-      <StructuredResponse uiHint="text" data={{ text: 'Hello world' }} />,
-    )
+    render(<StructuredResponse uiHint="text" data={{ text: 'Hello world' }} />)
     expect(screen.getByTestId('structured-text')).toBeDefined()
     expect(screen.getByText('Hello world')).toBeDefined()
   })
 
   it('renders table hint with key-value data', () => {
-    render(
-      <StructuredResponse
-        uiHint="table"
-        data={{ name: 'John', age: 30 }}
-      />,
-    )
+    render(<StructuredResponse uiHint="table" data={{ name: 'John', age: 30 }} />)
     expect(screen.getByRole('table')).toBeDefined()
     expect(screen.getByText('name')).toBeDefined()
     expect(screen.getByText('John')).toBeDefined()
@@ -55,20 +46,14 @@ describe('StructuredResponse', () => {
 
   it('renders nothing for unknown hints', () => {
     const { container } = render(
-      <StructuredResponse
-        uiHint={'unknown' as any}
-        data={{ key: 'value' }}
-      />,
+      <StructuredResponse uiHint={'unknown' as any} data={{ key: 'value' }} />,
     )
     expect(container.firstChild).toBeNull()
   })
 
   it('has no accessibility violations', async () => {
     const { container } = render(
-      <StructuredResponse
-        uiHint="table"
-        data={{ name: 'John', age: 30 }}
-      />,
+      <StructuredResponse uiHint="table" data={{ name: 'John', age: 30 }} />,
     )
     const results = await axe(container)
     expect(results).toHaveNoViolations()

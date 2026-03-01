@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { Avatar } from '@surf-kit/core'
-import React from 'react'
 
 const meta: Meta<typeof Avatar> = {
   title: 'Core/Feedback/Avatar',

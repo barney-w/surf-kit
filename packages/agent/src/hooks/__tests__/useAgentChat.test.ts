@@ -1,10 +1,10 @@
-import { renderHook, act } from '@testing-library/react'
-import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { useAgentChat } from '../useAgentChat'
+import { act, renderHook } from '@testing-library/react'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import type { AgentChatConfig } from '../../types/config'
+import { useAgentChat } from '../useAgentChat'
 
 function createMockSSEResponse(events: Array<{ type: string; [key: string]: unknown }>) {
-  const lines = events.map((e) => `data: ${JSON.stringify(e)}`).join('\n') + '\n'
+  const lines = `${events.map((e) => `data: ${JSON.stringify(e)}`).join('\n')}\n`
   const encoder = new TextEncoder()
   const stream = new ReadableStream({
     start(controller) {
@@ -149,7 +149,25 @@ describe('useAgentChat', () => {
 
   it('resets state', async () => {
     const mockResponse = createMockSSEResponse([
-      { type: 'done', response: { message: 'Hi', sources: [], confidence: { overall: 'high', retrieval_quality: 0.9, source_authority: 0.9, answer_groundedness: 0.9, recency: 0.9, reasoning: '' }, verification: { status: 'passed', flags: [], claims_checked: 0, claims_verified: 0 }, ui_hint: 'text', structured_data: null, follow_up_suggestions: [] } },
+      {
+        type: 'done',
+        response: {
+          message: 'Hi',
+          sources: [],
+          confidence: {
+            overall: 'high',
+            retrieval_quality: 0.9,
+            source_authority: 0.9,
+            answer_groundedness: 0.9,
+            recency: 0.9,
+            reasoning: '',
+          },
+          verification: { status: 'passed', flags: [], claims_checked: 0, claims_verified: 0 },
+          ui_hint: 'text',
+          structured_data: null,
+          follow_up_suggestions: [],
+        },
+      },
     ])
 
     vi.spyOn(globalThis, 'fetch').mockResolvedValueOnce(mockResponse)
@@ -173,10 +191,46 @@ describe('useAgentChat', () => {
 
   it('retries the last message', async () => {
     const mockResponse1 = createMockSSEResponse([
-      { type: 'done', response: { message: 'First', sources: [], confidence: { overall: 'high', retrieval_quality: 0.9, source_authority: 0.9, answer_groundedness: 0.9, recency: 0.9, reasoning: '' }, verification: { status: 'passed', flags: [], claims_checked: 0, claims_verified: 0 }, ui_hint: 'text', structured_data: null, follow_up_suggestions: [] } },
+      {
+        type: 'done',
+        response: {
+          message: 'First',
+          sources: [],
+          confidence: {
+            overall: 'high',
+            retrieval_quality: 0.9,
+            source_authority: 0.9,
+            answer_groundedness: 0.9,
+            recency: 0.9,
+            reasoning: '',
+          },
+          verification: { status: 'passed', flags: [], claims_checked: 0, claims_verified: 0 },
+          ui_hint: 'text',
+          structured_data: null,
+          follow_up_suggestions: [],
+        },
+      },
     ])
     const mockResponse2 = createMockSSEResponse([
-      { type: 'done', response: { message: 'Retry', sources: [], confidence: { overall: 'high', retrieval_quality: 0.9, source_authority: 0.9, answer_groundedness: 0.9, recency: 0.9, reasoning: '' }, verification: { status: 'passed', flags: [], claims_checked: 0, claims_verified: 0 }, ui_hint: 'text', structured_data: null, follow_up_suggestions: [] } },
+      {
+        type: 'done',
+        response: {
+          message: 'Retry',
+          sources: [],
+          confidence: {
+            overall: 'high',
+            retrieval_quality: 0.9,
+            source_authority: 0.9,
+            answer_groundedness: 0.9,
+            recency: 0.9,
+            reasoning: '',
+          },
+          verification: { status: 'passed', flags: [], claims_checked: 0, claims_verified: 0 },
+          ui_hint: 'text',
+          structured_data: null,
+          follow_up_suggestions: [],
+        },
+      },
     ])
 
     vi.spyOn(globalThis, 'fetch')

@@ -1,4 +1,3 @@
-import React from 'react'
 import { Spinner } from '@surf-kit/core'
 import type { Source } from '../../types/agent'
 
@@ -38,7 +37,10 @@ function RetrievalProgress({ sources, isActive, className }: RetrievalProgressPr
               style={{ animationDelay: `${index * 100}ms`, animationFillMode: 'both' }}
               data-testid="retrieval-source-item"
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-accent flex-shrink-0" aria-hidden="true" />
+              <span
+                className="w-1.5 h-1.5 rounded-full bg-accent flex-shrink-0"
+                aria-hidden="true"
+              />
               <span className="truncate">{source.title}</span>
             </li>
           ))}

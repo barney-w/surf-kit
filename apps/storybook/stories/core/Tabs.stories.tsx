@@ -29,8 +29,6 @@ export const Vertical: Story = {
 export const Controlled: Story = {
   render: () => {
     const [selected, setSelected] = React.useState('details')
-    return (
-      <Tabs items={items} selectedKey={selected} onSelectionChange={setSelected} />
-    )
+    return <Tabs items={items} selectedKey={selected} onSelectionChange={setSelected} />
   },
 }

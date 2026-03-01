@@ -1,8 +1,11 @@
-import { useState, useCallback } from 'react'
+import { useCallback, useState } from 'react'
 
 type SetValue<T> = T | ((prev: T) => T)
 
-export function useLocalStorage<T>(key: string, initialValue: T): [T, (value: SetValue<T>) => void] {
+export function useLocalStorage<T>(
+  key: string,
+  initialValue: T,
+): [T, (value: SetValue<T>) => void] {
   const [storedValue, setStoredValue] = useState<T>(() => {
     if (typeof window === 'undefined') return initialValue
     try {

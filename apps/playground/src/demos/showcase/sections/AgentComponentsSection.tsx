@@ -1,35 +1,35 @@
-import { useState } from "react";
 import {
   AgentAvatar,
-  AgentLabel,
   AgentHandoff,
+  AgentLabel,
+  ConfidenceBadge,
+  ConfidenceBreakdownView,
+  ConfidenceMeter,
+  FeedbackDialog,
   RoutingIndicator,
+  SourceBadge,
   SourceCard,
   SourceList,
-  SourceBadge,
-  ConfidenceBadge,
-  ConfidenceMeter,
-  ConfidenceBreakdownView,
+  ThumbsFeedback,
   VerificationBadge,
   VerificationDetail,
-  ThumbsFeedback,
-  FeedbackDialog,
-} from "@surf-kit/agent";
-import { Stack, Text, Separator } from "@surf-kit/core";
+} from '@surf-kit/agent'
+import { Separator, Stack, Text } from '@surf-kit/core'
+import { useState } from 'react'
 import {
   mockAgents,
-  mockSources,
   mockConfidenceHigh,
-  mockConfidenceMedium,
   mockConfidenceLow,
-  mockVerificationPassed,
-  mockVerificationFlagged,
+  mockConfidenceMedium,
+  mockSources,
   mockVerificationFailed,
-} from "../showcase-data";
-import { SectionWrapper } from "./SectionWrapper";
+  mockVerificationFlagged,
+  mockVerificationPassed,
+} from '../showcase-data'
+import { SectionWrapper } from './SectionWrapper'
 
 export function AgentComponentsSection() {
-  const [feedbackDialogOpen, setFeedbackDialogOpen] = useState(false);
+  const [feedbackDialogOpen, setFeedbackDialogOpen] = useState(false)
 
   return (
     <SectionWrapper title="Agent Components">
@@ -92,11 +92,7 @@ export function AgentComponentsSection() {
           </Text>
           <Stack gap={3}>
             <SourceCard source={mockSources[0]} variant="expanded" />
-            <SourceList
-              sources={mockSources}
-              collapsible
-              defaultExpanded={false}
-            />
+            <SourceList sources={mockSources} collapsible defaultExpanded={false} />
             <Stack direction="horizontal" gap={2} align="center">
               <Text size="xs" color="muted">
                 SourceBadge:
@@ -124,10 +120,7 @@ export function AgentComponentsSection() {
               <ConfidenceMeter value={0.72} label="Source authority" />
               <ConfidenceMeter value={0.35} label="Groundedness" />
             </Stack>
-            <ConfidenceBreakdownView
-              confidence={mockConfidenceHigh}
-              defaultExpanded
-            />
+            <ConfidenceBreakdownView confidence={mockConfidenceHigh} defaultExpanded />
           </Stack>
         </div>
 
@@ -144,10 +137,7 @@ export function AgentComponentsSection() {
               <VerificationBadge verification={mockVerificationFlagged} />
               <VerificationBadge verification={mockVerificationFailed} />
             </Stack>
-            <VerificationDetail
-              verification={mockVerificationFlagged}
-              defaultExpanded
-            />
+            <VerificationDetail verification={mockVerificationFlagged} defaultExpanded />
           </Stack>
         </div>
 
@@ -161,22 +151,20 @@ export function AgentComponentsSection() {
           <Stack gap={3}>
             <ThumbsFeedback
               messageId="demo-msg-1"
-              onFeedback={(id, rating) =>
-                console.log("Feedback:", id, rating)
-              }
+              onFeedback={(id, rating) => console.log('Feedback:', id, rating)}
               onNegative={() => setFeedbackDialogOpen(true)}
             />
             <FeedbackDialog
               isOpen={feedbackDialogOpen}
               onClose={() => setFeedbackDialogOpen(false)}
               onSubmit={(comment) => {
-                console.log("Feedback submitted:", comment);
-                setFeedbackDialogOpen(false);
+                console.log('Feedback submitted:', comment)
+                setFeedbackDialogOpen(false)
               }}
             />
           </Stack>
         </div>
       </Stack>
     </SectionWrapper>
-  );
+  )
 }

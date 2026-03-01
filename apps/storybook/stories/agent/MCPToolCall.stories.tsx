@@ -47,7 +47,7 @@ export const Success: Story = {
   },
 }
 
-export const Error: Story = {
+export const ErrorState: Story = {
   args: {
     call: {
       id: 'call-4',

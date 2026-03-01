@@ -1,5 +1,6 @@
+import type React from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
-import React, { useState, useRef, useCallback, useEffect } from 'react'
 
 type ResizableProps = {
   children: [React.ReactNode, React.ReactNode]
@@ -87,17 +88,9 @@ function Resizable({
   return (
     <div
       ref={containerRef}
-      className={twMerge(
-        'flex',
-        isHorizontal ? 'flex-row' : 'flex-col',
-        'h-full',
-        className,
-      )}
+      className={twMerge('flex', isHorizontal ? 'flex-row' : 'flex-col', 'h-full', className)}
     >
-      <div
-        style={{ [isHorizontal ? 'width' : 'height']: `${size}%` }}
-        className="overflow-auto"
-      >
+      <div style={{ [isHorizontal ? 'width' : 'height']: `${size}%` }} className="overflow-auto">
         {children[0]}
       </div>
       <div

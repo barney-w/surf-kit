@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { Drawer } from '@surf-kit/core'
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 const meta: Meta = {
   title: 'Core/Drawer',
@@ -11,13 +11,10 @@ function DrawerDemo({ side = 'bottom' }: { side?: 'bottom' | 'left' | 'right' })
   const [open, setOpen] = useState(false)
   return (
     <>
-      <button onClick={() => setOpen(true)}>Open Drawer ({side})</button>
-      <Drawer
-        isOpen={open}
-        onClose={() => setOpen(false)}
-        side={side}
-        title="Drawer Title"
-      >
+      <button type="button" onClick={() => setOpen(true)}>
+        Open Drawer ({side})
+      </button>
+      <Drawer isOpen={open} onClose={() => setOpen(false)} side={side} title="Drawer Title">
         <p>Drawer content goes here.</p>
       </Drawer>
     </>

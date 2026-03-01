@@ -1,14 +1,14 @@
-import { twMerge } from 'tailwind-merge'
-import React, { useRef } from 'react'
-import { useCalendar, useCalendarGrid, useCalendarCell, useButton, useLocale } from 'react-aria'
-import { useCalendarState } from 'react-stately'
 import {
-  createCalendar,
   CalendarDate,
-  today,
-  getLocalTimeZone,
+  createCalendar,
   type DateValue,
+  getLocalTimeZone,
+  today,
 } from '@internationalized/date'
+import { useRef } from 'react'
+import { useButton, useCalendar, useCalendarCell, useCalendarGrid, useLocale } from 'react-aria'
+import { useCalendarState } from 'react-stately'
+import { twMerge } from 'tailwind-merge'
 
 type CalendarProps = {
   value?: Date
@@ -80,13 +80,11 @@ function CalendarGrid({ state }: { state: ReturnType<typeof useCalendarState> })
       <tbody>
         {Array.from({ length: weeksInMonth }, (_, weekIndex) => (
           <tr key={weekIndex}>
-            {state.getDatesInWeek(weekIndex).map((date, i) =>
-              date ? (
-                <CalendarCell key={i} state={state} date={date} />
-              ) : (
-                <td key={i} />
-              ),
-            )}
+            {state
+              .getDatesInWeek(weekIndex)
+              .map((date, i) =>
+                date ? <CalendarCell key={i} state={state} date={date} /> : <td key={i} />,
+              )}
           </tr>
         ))}
       </tbody>
@@ -131,8 +129,12 @@ function Calendar({
     createCalendar,
   })
 
-  const { calendarProps: ariaCalendarProps, prevButtonProps, nextButtonProps, title } =
-    useCalendar(calendarProps, state)
+  const {
+    calendarProps: ariaCalendarProps,
+    prevButtonProps,
+    nextButtonProps,
+    title,
+  } = useCalendar(calendarProps, state)
 
   const prevRef = useRef<HTMLButtonElement>(null)
   const nextRef = useRef<HTMLButtonElement>(null)

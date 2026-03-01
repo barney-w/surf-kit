@@ -1,10 +1,9 @@
 import { render, screen } from '@testing-library/react'
-import { describe, it, expect, vi, beforeAll } from 'vitest'
-import * as vitestAxe from 'vitest-axe/matchers'
+import { beforeAll, describe, expect, it, vi } from 'vitest'
 import { axe } from 'vitest-axe'
-
-import { RetrievalProgress } from '../RetrievalProgress'
+import * as vitestAxe from 'vitest-axe/matchers'
 import type { Source } from '../../../types/agent'
+import { RetrievalProgress } from '../RetrievalProgress'
 
 expect.extend(vitestAxe)
 
@@ -70,9 +69,7 @@ describe('RetrievalProgress', () => {
     render(<RetrievalProgress sources={mockSources} isActive />)
     const status = screen.getByTestId('retrieval-progress')
     expect(status.getAttribute('role')).toBe('status')
-    expect(status.getAttribute('aria-label')).toBe(
-      'Retrieving sources, 2 found so far',
-    )
+    expect(status.getAttribute('aria-label')).toBe('Retrieving sources, 2 found so far')
   })
 
   it('has status role with descriptive label when inactive', () => {
@@ -83,9 +80,7 @@ describe('RetrievalProgress', () => {
   })
 
   it('has no accessibility violations', async () => {
-    const { container } = render(
-      <RetrievalProgress sources={mockSources} isActive />,
-    )
+    const { container } = render(<RetrievalProgress sources={mockSources} isActive />)
     const results = await axe(container)
     expect(results).toHaveNoViolations()
   })

@@ -205,15 +205,43 @@ export function selectResponse(message: string): {
 } {
   const lower = message.toLowerCase()
 
-  if (lower.includes('pricing') || lower.includes('plan') || lower.includes('discount') || lower.includes('billing') || lower.includes('subscription') || lower.includes('cost')) {
-    return { response: subscriptionPlanInfo, agent: 'billing-support', agentLabel: 'Billing Support' }
+  if (
+    lower.includes('pricing') ||
+    lower.includes('plan') ||
+    lower.includes('discount') ||
+    lower.includes('billing') ||
+    lower.includes('subscription') ||
+    lower.includes('cost')
+  ) {
+    return {
+      response: subscriptionPlanInfo,
+      agent: 'billing-support',
+      agentLabel: 'Billing Support',
+    }
   }
 
-  if (lower.includes('onboard') || lower.includes('getting started') || lower.includes('setup') || lower.includes('integration') || lower.includes('started') || lower.includes('start')) {
-    return { response: onboardingGuide, agent: 'onboarding-support', agentLabel: 'Onboarding Support' }
+  if (
+    lower.includes('onboard') ||
+    lower.includes('getting started') ||
+    lower.includes('setup') ||
+    lower.includes('integration') ||
+    lower.includes('started') ||
+    lower.includes('start')
+  ) {
+    return {
+      response: onboardingGuide,
+      agent: 'onboarding-support',
+      agentLabel: 'Onboarding Support',
+    }
   }
 
-  if (lower.includes('api') || lower.includes('rate limit') || lower.includes('request') || lower.includes('token') || lower.includes('enterprise')) {
+  if (
+    lower.includes('api') ||
+    lower.includes('rate limit') ||
+    lower.includes('request') ||
+    lower.includes('token') ||
+    lower.includes('enterprise')
+  ) {
     return { response: apiUsageGuide, agent: 'developer-support', agentLabel: 'Developer Support' }
   }
 

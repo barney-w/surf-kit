@@ -1,17 +1,6 @@
-import React, {
-  createContext,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react'
-import type {
-  ColorMode,
-  ColorModePreference,
-  Theme,
-  ThemeContextValue,
-} from './types'
+import type React from 'react'
+import { createContext, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import type { ColorMode, ColorModePreference, Theme, ThemeContextValue } from './types'
 
 const DEFAULT_THEME: Theme = {
   name: 'default',
@@ -22,9 +11,7 @@ export const ThemeContext = createContext<ThemeContextValue | null>(null)
 
 function getSystemPreference(): ColorMode {
   if (typeof window === 'undefined') return 'light'
-  return window.matchMedia('(prefers-color-scheme: dark)').matches
-    ? 'dark'
-    : 'light'
+  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
 }
 
 export interface ThemeProviderProps {
@@ -43,8 +30,7 @@ export function ThemeProvider({
   className,
   children,
 }: ThemeProviderProps) {
-  const [preference, setPreference] =
-    useState<ColorModePreference>(colorModeProp)
+  const [preference, setPreference] = useState<ColorModePreference>(colorModeProp)
   const [systemPref, setSystemPref] = useState<ColorMode>(getSystemPreference)
   const wrapperRef = useRef<HTMLDivElement>(null)
 
@@ -65,8 +51,7 @@ export function ThemeProvider({
     return () => mql.removeEventListener('change', handler)
   }, [])
 
-  const resolvedMode: ColorMode =
-    preference === 'system' ? systemPref : (preference as ColorMode)
+  const resolvedMode: ColorMode = preference === 'system' ? systemPref : (preference as ColorMode)
 
   // Apply data attributes and CSS variable overrides to wrapper div
   useEffect(() => {
@@ -99,7 +84,12 @@ export function ThemeProvider({
 
   return (
     <ThemeContext.Provider value={contextValue}>
-      <div ref={wrapperRef} className={className} data-color-mode={resolvedMode as string} data-theme={theme.name}>
+      <div
+        ref={wrapperRef}
+        className={className}
+        data-color-mode={resolvedMode as string}
+        data-theme={theme.name}
+      >
         {children}
       </div>
     </ThemeContext.Provider>

@@ -1,7 +1,8 @@
-import { twMerge } from 'tailwind-merge'
-import React, { useRef } from 'react'
+import type React from 'react'
+import { useRef } from 'react'
 import { useSlider, useSliderThumb, VisuallyHidden } from 'react-aria'
 import { useSliderState } from 'react-stately'
+import { twMerge } from 'tailwind-merge'
 
 type SliderProps = {
   label: string
@@ -98,11 +99,7 @@ function Slider({
           {state.getThumbValueLabel(0)}
         </output>
       </div>
-      <div
-        {...trackProps}
-        ref={trackRef}
-        className="relative h-6 flex items-center cursor-pointer"
-      >
+      <div {...trackProps} ref={trackRef} className="relative h-6 flex items-center cursor-pointer">
         <div className="h-1.5 w-full rounded-full bg-border">
           <div
             className="h-full rounded-full bg-accent"

@@ -1,6 +1,6 @@
 import { cva } from 'class-variance-authority'
+import type React from 'react'
 import { twMerge } from 'tailwind-merge'
-import React from 'react'
 
 const sidebar = cva(
   'flex flex-col bg-surface border-r border-border h-full transition-all duration-200',
@@ -32,7 +32,9 @@ function Sidebar({
   className,
   'aria-label': ariaLabel = 'Sidebar navigation',
 }: SidebarProps) {
-  const widthStyle = collapsed ? undefined : { width: typeof width === 'number' ? `${width}px` : width }
+  const widthStyle = collapsed
+    ? undefined
+    : { width: typeof width === 'number' ? `${width}px` : width }
 
   return (
     <nav
@@ -48,7 +50,10 @@ function Sidebar({
           className="self-end p-2 m-2 rounded hover:bg-surface-raised transition-colors outline-none focus-visible:ring-2 focus-visible:ring-accent/20"
         >
           <svg
-            className={twMerge('w-4 h-4 text-text-secondary transition-transform', collapsed && 'rotate-180')}
+            className={twMerge(
+              'w-4 h-4 text-text-secondary transition-transform',
+              collapsed && 'rotate-180',
+            )}
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -58,9 +63,7 @@ function Sidebar({
           </svg>
         </button>
       )}
-      <div className="flex-1 overflow-y-auto">
-        {children}
-      </div>
+      <div className="flex-1 overflow-y-auto">{children}</div>
     </nav>
   )
 }

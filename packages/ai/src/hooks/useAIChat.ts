@@ -1,7 +1,7 @@
 import { useChat } from '@ai-sdk/react'
-import { DefaultChatTransport } from 'ai'
-import type { UIMessage } from 'ai'
 import type { ChatMessage, StreamState } from '@surf-kit/agent'
+import type { UIMessage } from 'ai'
+import { DefaultChatTransport } from 'ai'
 import type { UseAIChatOptions, UseAIChatReturn } from '../types'
 
 /**
@@ -38,9 +38,8 @@ export function useAIChat(options: UseAIChatOptions = {}): UseAIChatReturn {
   }))
 
   const isStreaming = chat.status === 'streaming'
-  const lastMessageContent = chat.messages.length > 0
-    ? getTextContent(chat.messages[chat.messages.length - 1])
-    : ''
+  const lastMessageContent =
+    chat.messages.length > 0 ? getTextContent(chat.messages[chat.messages.length - 1]) : ''
 
   const streamState: StreamState = {
     active: isStreaming,

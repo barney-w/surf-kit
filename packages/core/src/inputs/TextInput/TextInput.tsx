@@ -1,6 +1,6 @@
-import { twMerge } from 'tailwind-merge'
-import React, { useRef } from 'react'
+import { useRef } from 'react'
 import { useTextField } from 'react-aria'
+import { twMerge } from 'tailwind-merge'
 
 type TextInputProps = {
   label: string

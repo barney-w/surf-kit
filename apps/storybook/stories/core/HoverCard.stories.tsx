@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { HoverCard } from '@surf-kit/core'
-import React from 'react'
 
 const meta: Meta = {
   title: 'Core/HoverCard',
@@ -20,7 +19,7 @@ export const Default: StoryObj = {
           </div>
         }
       >
-        <a href="#" className="text-brand underline">
+        <a href="https://example.com" className="text-brand underline">
           @barney
         </a>
       </HoverCard>

@@ -1,5 +1,4 @@
-import React from 'react'
-import { Sheet, Badge } from '@surf-kit/core'
+import { Badge, Sheet } from '@surf-kit/core'
 import type { Source } from '../../types/agent'
 
 type SourceDrawerProps = {
@@ -19,17 +18,9 @@ function SourceDrawer({ source, isOpen, onClose, className }: SourceDrawerProps)
   if (!source) return null
 
   return (
-    <Sheet
-      isOpen={isOpen}
-      onClose={onClose}
-      title={source.title}
-      size="md"
-      className={className}
-    >
+    <Sheet isOpen={isOpen} onClose={onClose} title={source.title} size="md" className={className}>
       <div data-testid="source-drawer" data-document-id={source.document_id}>
-        {source.section && (
-          <p className="text-sm text-text-secondary mb-4">{source.section}</p>
-        )}
+        {source.section && <p className="text-sm text-text-secondary mb-4">{source.section}</p>}
 
         <div className="flex items-center gap-2 mb-4">
           <span className="text-sm text-text-secondary">Confidence:</span>

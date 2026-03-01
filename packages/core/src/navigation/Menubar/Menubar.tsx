@@ -1,5 +1,6 @@
+import type React from 'react'
+import { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
-import React, { useState, useRef, useEffect, useCallback, createContext, useContext } from 'react'
 
 type MenubarProps = {
   children: React.ReactNode
@@ -60,20 +61,13 @@ function MenubarItem({ label, shortcut, onSelect, isDisabled = false }: MenubarI
       )}
     >
       <span>{label}</span>
-      {shortcut && (
-        <span className="text-xs text-text-tertiary ml-auto">{shortcut}</span>
-      )}
+      {shortcut && <span className="text-xs text-text-tertiary ml-auto">{shortcut}</span>}
     </div>
   )
 }
 
 function MenubarSeparator({ className }: MenubarSeparatorProps) {
-  return (
-    <hr
-      role="separator"
-      className={twMerge('my-1 border-t border-border', className)}
-    />
-  )
+  return <hr className={twMerge('my-1 border-t border-border', className)} />
 }
 
 function MenubarMenu({ label, children }: MenubarMenuProps) {
@@ -81,7 +75,7 @@ function MenubarMenu({ label, children }: MenubarMenuProps) {
   const isOpen = openMenu === label
   const triggerRef = useRef<HTMLButtonElement>(null)
   const menuContentRef = useRef<HTMLDivElement>(null)
-  const itemsRef = useRef<HTMLDivElement[]>([])
+  const _itemsRef = useRef<HTMLDivElement[]>([])
 
   useEffect(() => {
     if (triggerRef.current) {
@@ -99,7 +93,9 @@ function MenubarMenu({ label, children }: MenubarMenuProps) {
     if (!isOpen) return
     // Focus first menu item when opening
     const timer = setTimeout(() => {
-      const items = menuContentRef.current?.querySelectorAll('[role="menuitem"]:not([aria-disabled])')
+      const items = menuContentRef.current?.querySelectorAll(
+        '[role="menuitem"]:not([aria-disabled])',
+      )
       if (items && items.length > 0) {
         ;(items[0] as HTMLElement).focus()
       }
@@ -162,7 +158,7 @@ function MenubarMenu({ label, children }: MenubarMenuProps) {
       )
       if (!items) return
 
-      const currentIdx = Array.from(items).findIndex((el) => el === document.activeElement)
+      const currentIdx = Array.from(items).indexOf(document.activeElement as Element)
 
       if (e.key === 'ArrowDown') {
         e.preventDefault()
@@ -242,7 +238,10 @@ function Menubar({ children, className }: MenubarProps) {
     <MenubarContext.Provider value={{ openMenu, setOpenMenu, menuRefs, menuLabels }}>
       <div
         role="menubar"
-        className={twMerge('inline-flex items-center gap-1 rounded-lg border border-border bg-surface px-1 py-1', className)}
+        className={twMerge(
+          'inline-flex items-center gap-1 rounded-lg border border-border bg-surface px-1 py-1',
+          className,
+        )}
       >
         {children}
       </div>

@@ -1,2 +1,2 @@
-export { AgentChat } from './AgentChat'
 export type { AgentChatProps } from './AgentChat'
+export { AgentChat } from './AgentChat'

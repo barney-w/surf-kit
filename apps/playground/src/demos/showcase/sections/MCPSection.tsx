@@ -1,23 +1,18 @@
-import { useState } from "react";
+import { MCPApprovalDialog, MCPResourceView, MCPServerStatus, MCPToolCall } from '@surf-kit/agent'
+import { Button, Separator, Stack, Text } from '@surf-kit/core'
+import { useState } from 'react'
 import {
-  MCPToolCall,
-  MCPResourceView,
-  MCPServerStatus,
-  MCPApprovalDialog,
-} from "@surf-kit/agent";
-import { Stack, Text, Separator, Button } from "@surf-kit/core";
-import {
-  mockMCPToolCall,
-  mockMCPToolCallPending,
   mockMCPResource,
   mockMCPServer,
   mockMCPServerDisconnected,
-} from "../showcase-data";
-import { SectionWrapper } from "./SectionWrapper";
+  mockMCPToolCall,
+  mockMCPToolCallPending,
+} from '../showcase-data'
+import { SectionWrapper } from './SectionWrapper'
 
 export function MCPSection() {
-  const [approvalOpen, setApprovalOpen] = useState(false);
-  const [toolExpanded, setToolExpanded] = useState(false);
+  const [approvalOpen, setApprovalOpen] = useState(false)
+  const [toolExpanded, setToolExpanded] = useState(false)
 
   return (
     <SectionWrapper title="MCP Components">
@@ -67,11 +62,7 @@ export function MCPSection() {
           <Text size="sm" color="muted" weight="semibold" className="mb-2">
             MCPApprovalDialog
           </Text>
-          <Button
-            intent="secondary"
-            size="sm"
-            onPress={() => setApprovalOpen(true)}
-          >
+          <Button intent="secondary" size="sm" onPress={() => setApprovalOpen(true)}>
             Open Approval Dialog
           </Button>
           <MCPApprovalDialog
@@ -79,16 +70,16 @@ export function MCPSection() {
             riskLevel="medium"
             isOpen={approvalOpen}
             onApprove={() => {
-              console.log("Approved");
-              setApprovalOpen(false);
+              console.log('Approved')
+              setApprovalOpen(false)
             }}
             onDeny={() => {
-              console.log("Denied");
-              setApprovalOpen(false);
+              console.log('Denied')
+              setApprovalOpen(false)
             }}
           />
         </div>
       </Stack>
     </SectionWrapper>
-  );
+  )
 }

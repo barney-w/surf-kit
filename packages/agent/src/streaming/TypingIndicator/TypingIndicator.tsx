@@ -1,6 +1,5 @@
-import React from 'react'
-import { twMerge } from 'tailwind-merge'
 import { useReducedMotion } from '@surf-kit/hooks'
+import { twMerge } from 'tailwind-merge'
 
 type TypingIndicatorProps = {
   label?: string
@@ -15,11 +14,7 @@ const bounceKeyframes = `
 }
 `
 
-function TypingIndicator({
-  label,
-  dotCount = 3,
-  className,
-}: TypingIndicatorProps) {
+function TypingIndicator({ label, dotCount = 3, className }: TypingIndicatorProps) {
   const reducedMotion = useReducedMotion()
 
   return (
@@ -30,9 +25,7 @@ function TypingIndicator({
       data-testid="typing-indicator"
     >
       {!reducedMotion && <style>{bounceKeyframes}</style>}
-      {label && (
-        <span className="text-sm text-text-secondary">{label}</span>
-      )}
+      {label && <span className="text-sm text-text-secondary">{label}</span>}
       <span className="flex gap-1" data-testid="typing-dots">
         {Array.from({ length: dotCount }, (_, i) => (
           <span

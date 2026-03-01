@@ -1,11 +1,10 @@
 import { render, screen } from '@testing-library/react'
-import { describe, it, expect, vi } from 'vitest'
-import * as vitestAxe from 'vitest-axe/matchers'
-import { axe } from 'vitest-axe'
 import { OverlayProvider } from 'react-aria'
-
-import { SourceDrawer } from '../SourceDrawer'
+import { describe, expect, it } from 'vitest'
+import { axe } from 'vitest-axe'
+import * as vitestAxe from 'vitest-axe/matchers'
 import type { Source } from '../../../types/agent'
+import { SourceDrawer } from '../SourceDrawer'
 
 expect.extend(vitestAxe)
 
@@ -24,7 +23,7 @@ function renderWithProvider(ui: React.ReactElement) {
 
 describe('SourceDrawer', () => {
   it('renders nothing when source is null', () => {
-    const { container } = renderWithProvider(
+    const { container: _container } = renderWithProvider(
       <SourceDrawer source={null} isOpen onClose={() => {}} />,
     )
     // OverlayProvider wraps in a div, so check for drawer content
@@ -32,25 +31,19 @@ describe('SourceDrawer', () => {
   })
 
   it('renders source details when open', () => {
-    renderWithProvider(
-      <SourceDrawer source={mockSource} isOpen onClose={() => {}} />,
-    )
+    renderWithProvider(<SourceDrawer source={mockSource} isOpen onClose={() => {}} />)
     expect(screen.getByText('Enterprise Agreement 2024')).toBeDefined()
     expect(screen.getByText('Section 12 — Leave Entitlements')).toBeDefined()
     expect(screen.getByText(mockSource.snippet)).toBeDefined()
   })
 
   it('renders confidence percentage', () => {
-    renderWithProvider(
-      <SourceDrawer source={mockSource} isOpen onClose={() => {}} />,
-    )
+    renderWithProvider(<SourceDrawer source={mockSource} isOpen onClose={() => {}} />)
     expect(screen.getByText('95%')).toBeDefined()
   })
 
   it('renders source URL', () => {
-    renderWithProvider(
-      <SourceDrawer source={mockSource} isOpen onClose={() => {}} />,
-    )
+    renderWithProvider(<SourceDrawer source={mockSource} isOpen onClose={() => {}} />)
     const link = screen.getByText(mockSource.url)
     expect(link.tagName).toBe('A')
     expect(link.getAttribute('href')).toBe(mockSource.url)
@@ -58,9 +51,7 @@ describe('SourceDrawer', () => {
   })
 
   it('has data-document-id attribute', () => {
-    renderWithProvider(
-      <SourceDrawer source={mockSource} isOpen onClose={() => {}} />,
-    )
+    renderWithProvider(<SourceDrawer source={mockSource} isOpen onClose={() => {}} />)
     const drawerContent = screen.getByTestId('source-drawer')
     expect(drawerContent.getAttribute('data-document-id')).toBe('ea-2024-001')
   })

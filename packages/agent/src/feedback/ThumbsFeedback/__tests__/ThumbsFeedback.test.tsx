@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { describe, it, expect, vi } from 'vitest'
-import * as vitestAxe from 'vitest-axe/matchers'
+import { describe, expect, it, vi } from 'vitest'
 import { axe } from 'vitest-axe'
+import * as vitestAxe from 'vitest-axe/matchers'
 
 import { ThumbsFeedback } from '../ThumbsFeedback'
 
@@ -36,13 +36,7 @@ describe('ThumbsFeedback', () => {
   it('calls onNegative when thumbs down is clicked', async () => {
     const user = userEvent.setup()
     const onNegative = vi.fn()
-    render(
-      <ThumbsFeedback
-        messageId="msg-1"
-        onFeedback={vi.fn()}
-        onNegative={onNegative}
-      />,
-    )
+    render(<ThumbsFeedback messageId="msg-1" onFeedback={vi.fn()} onNegative={onNegative} />)
 
     await user.click(screen.getByLabelText('Thumbs down'))
     expect(onNegative).toHaveBeenCalledOnce()
@@ -65,9 +59,7 @@ describe('ThumbsFeedback', () => {
   })
 
   it('has no accessibility violations', async () => {
-    const { container } = render(
-      <ThumbsFeedback messageId="msg-1" onFeedback={vi.fn()} />,
-    )
+    const { container } = render(<ThumbsFeedback messageId="msg-1" onFeedback={vi.fn()} />)
     const results = await axe(container)
     expect(results).toHaveNoViolations()
   })

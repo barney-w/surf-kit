@@ -26,7 +26,7 @@ export const Warning: Story = {
   args: { intent: 'warning', title: 'Warning', children: 'Please review before continuing.' },
 }
 
-export const Error: Story = {
+export const ErrorState: Story = {
   args: { intent: 'error', title: 'Error', children: 'Something went wrong.' },
 }
 

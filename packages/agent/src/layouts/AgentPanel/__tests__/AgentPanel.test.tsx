@@ -1,10 +1,11 @@
 import { render, screen } from '@testing-library/react'
-import { describe, it, expect, vi } from 'vitest'
 import userEvent from '@testing-library/user-event'
-import * as vitestAxe from 'vitest-axe/matchers'
+import { describe, expect, it, vi } from 'vitest'
 import { axe } from 'vitest-axe'
+import * as vitestAxe from 'vitest-axe/matchers'
 
 expect.extend(vitestAxe)
+
 import { AgentPanel } from '../AgentPanel'
 
 // Mock useAgentChat
@@ -32,11 +33,7 @@ vi.mock('../../../hooks/useAgentChat', () => ({
 describe('AgentPanel', () => {
   it('renders panel hidden when not open', () => {
     const { container } = render(
-      <AgentPanel
-        endpoint="https://api.test.com"
-        isOpen={false}
-        onClose={vi.fn()}
-      />,
+      <AgentPanel endpoint="https://api.test.com" isOpen={false} onClose={vi.fn()} />,
     )
     // Panel is always in the DOM but hidden via CSS transforms and aria-hidden
     const root = container.firstElementChild as HTMLElement
@@ -60,13 +57,7 @@ describe('AgentPanel', () => {
   it('calls onClose when close button is clicked', async () => {
     const user = userEvent.setup()
     const onClose = vi.fn()
-    render(
-      <AgentPanel
-        endpoint="https://api.test.com"
-        isOpen={true}
-        onClose={onClose}
-      />,
-    )
+    render(<AgentPanel endpoint="https://api.test.com" isOpen={true} onClose={onClose} />)
     await user.click(screen.getByLabelText('Close panel'))
     expect(onClose).toHaveBeenCalled()
   })
@@ -74,13 +65,7 @@ describe('AgentPanel', () => {
   it('calls onClose when backdrop is clicked', async () => {
     const user = userEvent.setup()
     const onClose = vi.fn()
-    render(
-      <AgentPanel
-        endpoint="https://api.test.com"
-        isOpen={true}
-        onClose={onClose}
-      />,
-    )
+    render(<AgentPanel endpoint="https://api.test.com" isOpen={true} onClose={onClose} />)
     await user.click(screen.getByTestId('panel-backdrop'))
     expect(onClose).toHaveBeenCalled()
   })
@@ -88,37 +73,20 @@ describe('AgentPanel', () => {
   it('calls onClose when Escape is pressed', async () => {
     const user = userEvent.setup()
     const onClose = vi.fn()
-    render(
-      <AgentPanel
-        endpoint="https://api.test.com"
-        isOpen={true}
-        onClose={onClose}
-      />,
-    )
+    render(<AgentPanel endpoint="https://api.test.com" isOpen={true} onClose={onClose} />)
     await user.keyboard('{Escape}')
     expect(onClose).toHaveBeenCalled()
   })
 
   it('renders on the right side by default', () => {
-    render(
-      <AgentPanel
-        endpoint="https://api.test.com"
-        isOpen={true}
-        onClose={vi.fn()}
-      />,
-    )
+    render(<AgentPanel endpoint="https://api.test.com" isOpen={true} onClose={vi.fn()} />)
     const dialog = screen.getByRole('dialog')
     expect(dialog.className).toContain('right-0')
   })
 
   it('renders on the left side when side="left"', () => {
     render(
-      <AgentPanel
-        endpoint="https://api.test.com"
-        isOpen={true}
-        onClose={vi.fn()}
-        side="left"
-      />,
+      <AgentPanel endpoint="https://api.test.com" isOpen={true} onClose={vi.fn()} side="left" />,
     )
     const dialog = screen.getByRole('dialog')
     expect(dialog.className).toContain('left-0')
@@ -126,12 +94,7 @@ describe('AgentPanel', () => {
 
   it('applies custom width', () => {
     render(
-      <AgentPanel
-        endpoint="https://api.test.com"
-        isOpen={true}
-        onClose={vi.fn()}
-        width={500}
-      />,
+      <AgentPanel endpoint="https://api.test.com" isOpen={true} onClose={vi.fn()} width={500} />,
     )
     const dialog = screen.getByRole('dialog')
     expect(dialog.style.width).toBe('500px')

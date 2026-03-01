@@ -1,14 +1,10 @@
-export { AgentResponse } from './AgentResponse'
 export type { AgentResponseProps } from './AgentResponse'
-
-export { ResponseMessage } from './ResponseMessage'
-export type { ResponseMessageProps } from './ResponseMessage'
-
-export { StructuredResponse } from './StructuredResponse'
-export type { StructuredResponseProps } from './StructuredResponse'
-
-export { FollowUpChips } from './FollowUpChips'
-export type { FollowUpChipsProps } from './FollowUpChips'
-
-export { ErrorResponse } from './ErrorResponse'
+export { AgentResponse } from './AgentResponse'
 export type { ErrorResponseProps } from './ErrorResponse'
+export { ErrorResponse } from './ErrorResponse'
+export type { FollowUpChipsProps } from './FollowUpChips'
+export { FollowUpChips } from './FollowUpChips'
+export type { ResponseMessageProps } from './ResponseMessage'
+export { ResponseMessage } from './ResponseMessage'
+export type { StructuredResponseProps } from './StructuredResponse'
+export { StructuredResponse } from './StructuredResponse'

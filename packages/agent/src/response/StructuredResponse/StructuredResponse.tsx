@@ -1,4 +1,4 @@
-import React from 'react'
+import type React from 'react'
 import type { AgentResponse } from '../../types/agent'
 
 type StructuredResponseProps = {
@@ -47,7 +47,10 @@ function renderTable(data: Record<string, unknown>) {
 
   if (columns && rawRows && Array.isArray(columns) && Array.isArray(rawRows)) {
     return (
-      <div className="overflow-x-auto rounded-lg border border-border" data-testid="structured-table">
+      <div
+        className="overflow-x-auto rounded-lg border border-border"
+        data-testid="structured-table"
+      >
         <table role="table" className="w-full border-collapse text-sm">
           <thead className="bg-surface-raised">
             <tr>
@@ -125,8 +128,18 @@ function renderCard(data: Record<string, unknown>) {
           className="mt-1 inline-flex items-center gap-1 text-xs font-medium text-accent hover:text-accent/80 underline-offset-2 hover:underline transition-colors"
         >
           {linkLabel}
-          <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+          <svg
+            className="h-3 w-3"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={2}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+            />
           </svg>
         </a>
       )}
@@ -142,12 +155,17 @@ function renderList(data: Record<string, unknown>) {
   return (
     <div className="flex flex-col gap-1.5" data-testid="structured-list">
       {title && (
-        <p className="text-xs font-semibold uppercase tracking-wider text-text-secondary mb-1">{title}</p>
+        <p className="text-xs font-semibold uppercase tracking-wider text-text-secondary mb-1">
+          {title}
+        </p>
       )}
       <ul className="flex flex-col gap-1.5">
         {items.map((item, i) => (
           <li key={i} className="flex items-start gap-2.5">
-            <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" aria-hidden="true" />
+            <span
+              className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent"
+              aria-hidden="true"
+            />
             <span className="text-sm text-text-primary leading-relaxed">{item}</span>
           </li>
         ))}
@@ -179,16 +197,24 @@ function renderWarning(data: Record<string, unknown>) {
         stroke="currentColor"
         strokeWidth={2}
       >
-        <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"
+        />
       </svg>
       <div className="flex flex-col gap-1">
         {action && (
-          <p className={`text-sm font-semibold ${isHigh ? 'text-red-700 dark:text-red-300' : 'text-amber-700 dark:text-amber-300'}`}>
+          <p
+            className={`text-sm font-semibold ${isHigh ? 'text-red-700 dark:text-red-300' : 'text-amber-700 dark:text-amber-300'}`}
+          >
             {action}
           </p>
         )}
         {details && (
-          <p className={`text-sm ${isHigh ? 'text-red-600 dark:text-red-400' : 'text-amber-600 dark:text-amber-400'}`}>
+          <p
+            className={`text-sm ${isHigh ? 'text-red-600 dark:text-red-400' : 'text-amber-600 dark:text-amber-400'}`}
+          >
             {details}
           </p>
         )}
@@ -219,9 +245,8 @@ function StructuredResponse({ uiHint, data, className }: StructuredResponseProps
       content = renderWarning(data)
       break
     case 'text':
-      content = typeof data.text === 'string'
-        ? <p data-testid="structured-text">{data.text}</p>
-        : null
+      content =
+        typeof data.text === 'string' ? <p data-testid="structured-text">{data.text}</p> : null
       break
     default:
       content = null

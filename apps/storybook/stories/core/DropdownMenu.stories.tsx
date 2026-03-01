@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { DropdownMenu } from '@surf-kit/core'
-import React from 'react'
 
 const meta: Meta = {
   title: 'Core/DropdownMenu',
@@ -17,7 +16,7 @@ const items = [
 export const Default: StoryObj = {
   render: () => (
     <DropdownMenu
-      trigger={<button>Actions</button>}
+      trigger={<button type="button">Actions</button>}
       items={items}
       onAction={(key) => console.log('Selected:', key)}
       aria-label="Actions menu"

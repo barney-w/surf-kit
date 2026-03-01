@@ -1,6 +1,6 @@
-import { cva, type VariantProps } from 'class-variance-authority'
+import { cva } from 'class-variance-authority'
+import { useState } from 'react'
 import { twMerge } from 'tailwind-merge'
-import React, { useState } from 'react'
 
 const avatar = cva(
   'inline-flex items-center justify-center rounded-full bg-surface-raised text-text-primary font-medium overflow-hidden',

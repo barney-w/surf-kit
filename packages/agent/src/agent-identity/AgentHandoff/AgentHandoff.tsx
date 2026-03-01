@@ -1,4 +1,3 @@
-import React from 'react'
 import type { AgentInfo } from '../../types/agent'
 import { AgentAvatar } from '../AgentAvatar'
 
@@ -19,7 +18,9 @@ function AgentHandoff({ from, to, className }: AgentHandoffProps) {
         <span className="text-xs text-text-secondary">{from.label}</span>
       </div>
 
-      <span className="text-text-secondary text-xs" aria-hidden="true">{'\u2192'}</span>
+      <span className="text-text-secondary text-xs" aria-hidden="true">
+        {'\u2192'}
+      </span>
 
       <div className="flex items-center gap-2 animate-in fade-in slide-in-from-right-2 duration-300">
         <AgentAvatar agent={to} size="sm" />

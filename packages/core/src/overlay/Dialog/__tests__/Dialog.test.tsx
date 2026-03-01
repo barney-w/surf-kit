@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react'
-import { describe, it, expect, vi } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import { Dialog } from '../Dialog'
 
 describe('Dialog', () => {
@@ -28,7 +28,7 @@ describe('Dialog', () => {
         isOpen={true}
         onClose={() => {}}
         title="Test"
-        footer={<button>Save</button>}
+        footer={<button type="button">Save</button>}
       >
         Body
       </Dialog>,

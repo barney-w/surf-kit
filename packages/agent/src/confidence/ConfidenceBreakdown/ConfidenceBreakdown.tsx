@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import type { ConfidenceBreakdown as ConfidenceBreakdownType } from '../../types/agent'
 import { ConfidenceBadge } from '../ConfidenceBadge'
 import { ConfidenceMeter } from '../ConfidenceMeter'
@@ -10,7 +10,13 @@ export type ConfidenceBreakdownProps = {
   className?: string
 }
 
-const dimensions: { key: keyof Pick<ConfidenceBreakdownType, 'retrieval_quality' | 'source_authority' | 'answer_groundedness' | 'recency'>; label: string }[] = [
+const dimensions: {
+  key: keyof Pick<
+    ConfidenceBreakdownType,
+    'retrieval_quality' | 'source_authority' | 'answer_groundedness' | 'recency'
+  >
+  label: string
+}[] = [
   { key: 'retrieval_quality', label: 'Retrieval Quality' },
   { key: 'source_authority', label: 'Source Authority' },
   { key: 'answer_groundedness', label: 'Answer Groundedness' },
@@ -28,7 +34,10 @@ function ConfidenceBreakdown({
   const isExpanded = expandable ? expanded : true
 
   return (
-    <div className={`rounded-xl border border-border bg-surface ${className ?? ''}`} data-testid="confidence-breakdown">
+    <div
+      className={`rounded-xl border border-border bg-surface ${className ?? ''}`}
+      data-testid="confidence-breakdown"
+    >
       <button
         type="button"
         className="flex w-full items-center justify-between px-4 py-3 text-left"
@@ -46,11 +55,7 @@ function ConfidenceBreakdown({
           data-testid="confidence-breakdown-details"
         >
           {dimensions.map((dim) => (
-            <ConfidenceMeter
-              key={dim.key}
-              value={confidence[dim.key]}
-              label={dim.label}
-            />
+            <ConfidenceMeter key={dim.key} value={confidence[dim.key]} label={dim.label} />
           ))}
           {confidence.reasoning && (
             <p className="text-xs text-text-secondary mt-2">{confidence.reasoning}</p>

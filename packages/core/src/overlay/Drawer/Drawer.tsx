@@ -1,7 +1,8 @@
-import { cva, type VariantProps } from 'class-variance-authority'
+import { cva } from 'class-variance-authority'
+import type React from 'react'
+import { useEffect, useRef } from 'react'
+import { FocusScope, useDialog } from 'react-aria'
 import { twMerge } from 'tailwind-merge'
-import React, { useRef, useEffect } from 'react'
-import { useDialog, FocusScope } from 'react-aria'
 
 const drawer = cva('fixed z-50 bg-surface border-border shadow-xl', {
   variants: {
@@ -23,14 +24,7 @@ type DrawerProps = {
   className?: string
 }
 
-function Drawer({
-  isOpen,
-  onClose,
-  title,
-  children,
-  side = 'bottom',
-  className,
-}: DrawerProps) {
+function Drawer({ isOpen, onClose, title, children, side = 'bottom', className }: DrawerProps) {
   const ref = useRef<HTMLDivElement>(null)
   const { dialogProps, titleProps } = useDialog({ role: 'dialog' }, ref)
 
@@ -58,14 +52,9 @@ function Drawer({
           ref={ref}
           className={twMerge(drawer({ side }), 'p-6 outline-none', className)}
         >
-          {side === 'bottom' && (
-            <div className="mx-auto mb-4 h-1.5 w-12 rounded-full bg-border" />
-          )}
+          {side === 'bottom' && <div className="mx-auto mb-4 h-1.5 w-12 rounded-full bg-border" />}
           {title && (
-            <h2
-              {...titleProps}
-              className="text-lg font-semibold text-text-primary mb-4"
-            >
+            <h2 {...titleProps} className="text-lg font-semibold text-text-primary mb-4">
               {title}
             </h2>
           )}

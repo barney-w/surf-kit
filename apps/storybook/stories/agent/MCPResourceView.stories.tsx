@@ -14,7 +14,8 @@ export const TextContent: Story = {
       uri: 'file:///src/index.ts',
       name: 'index.ts',
       mimeType: 'text/typescript',
-      content: 'export const hello = "world"\nexport function add(a: number, b: number) {\n  return a + b\n}',
+      content:
+        'export const hello = "world"\nexport function add(a: number, b: number) {\n  return a + b\n}',
     },
   },
 }

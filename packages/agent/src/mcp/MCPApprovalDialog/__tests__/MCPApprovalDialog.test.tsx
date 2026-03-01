@@ -1,11 +1,10 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { describe, it, expect, vi, beforeAll } from 'vitest'
-import * as vitestAxe from 'vitest-axe/matchers'
+import { beforeAll, describe, expect, it, vi } from 'vitest'
 import { axe } from 'vitest-axe'
-
-import { MCPApprovalDialog } from '../MCPApprovalDialog'
+import * as vitestAxe from 'vitest-axe/matchers'
 import type { MCPToolCallData } from '../../../types/mcp'
+import { MCPApprovalDialog } from '../MCPApprovalDialog'
 
 expect.extend(vitestAxe)
 
@@ -36,39 +35,20 @@ const baseCall: MCPToolCallData = {
 describe('MCPApprovalDialog', () => {
   it('renders nothing when isOpen is false', () => {
     render(
-      <MCPApprovalDialog
-        call={baseCall}
-        isOpen={false}
-        onApprove={vi.fn()}
-        onDeny={vi.fn()}
-      />,
+      <MCPApprovalDialog call={baseCall} isOpen={false} onApprove={vi.fn()} onDeny={vi.fn()} />,
     )
     expect(screen.queryByTestId('mcp-approval-dialog')).toBeNull()
   })
 
   it('renders dialog with tool name when isOpen is true', () => {
-    render(
-      <MCPApprovalDialog
-        call={baseCall}
-        isOpen
-        onApprove={vi.fn()}
-        onDeny={vi.fn()}
-      />,
-    )
+    render(<MCPApprovalDialog call={baseCall} isOpen onApprove={vi.fn()} onDeny={vi.fn()} />)
     expect(screen.getByTestId('mcp-approval-dialog')).toBeDefined()
     expect(screen.getByTestId('mcp-approval-tool-name').textContent).toBe('write_file')
     expect(screen.getByTestId('mcp-approval-server').textContent).toContain('filesystem')
   })
 
   it('displays arguments', () => {
-    render(
-      <MCPApprovalDialog
-        call={baseCall}
-        isOpen
-        onApprove={vi.fn()}
-        onDeny={vi.fn()}
-      />,
-    )
+    render(<MCPApprovalDialog call={baseCall} isOpen onApprove={vi.fn()} onDeny={vi.fn()} />)
     const args = screen.getByTestId('mcp-approval-arguments')
     expect(args).toBeDefined()
     expect(args.textContent).toContain('path')
@@ -78,14 +58,7 @@ describe('MCPApprovalDialog', () => {
   it('calls onApprove when Approve is clicked', async () => {
     const user = userEvent.setup()
     const onApprove = vi.fn()
-    render(
-      <MCPApprovalDialog
-        call={baseCall}
-        isOpen
-        onApprove={onApprove}
-        onDeny={vi.fn()}
-      />,
-    )
+    render(<MCPApprovalDialog call={baseCall} isOpen onApprove={onApprove} onDeny={vi.fn()} />)
     await user.click(screen.getByRole('button', { name: /approve/i }))
     expect(onApprove).toHaveBeenCalledTimes(1)
   })
@@ -93,27 +66,13 @@ describe('MCPApprovalDialog', () => {
   it('calls onDeny when Deny is clicked', async () => {
     const user = userEvent.setup()
     const onDeny = vi.fn()
-    render(
-      <MCPApprovalDialog
-        call={baseCall}
-        isOpen
-        onApprove={vi.fn()}
-        onDeny={onDeny}
-      />,
-    )
+    render(<MCPApprovalDialog call={baseCall} isOpen onApprove={vi.fn()} onDeny={onDeny} />)
     await user.click(screen.getByRole('button', { name: /deny/i }))
     expect(onDeny).toHaveBeenCalledTimes(1)
   })
 
   it('shows low risk badge by default', () => {
-    render(
-      <MCPApprovalDialog
-        call={baseCall}
-        isOpen
-        onApprove={vi.fn()}
-        onDeny={vi.fn()}
-      />,
-    )
+    render(<MCPApprovalDialog call={baseCall} isOpen onApprove={vi.fn()} onDeny={vi.fn()} />)
     const badge = screen.getByTestId('mcp-approval-risk-badge')
     expect(badge.textContent).toBe('Low Risk')
   })
@@ -150,14 +109,7 @@ describe('MCPApprovalDialog', () => {
     const user = userEvent.setup()
     const onApprove = vi.fn()
     const onDeny = vi.fn()
-    render(
-      <MCPApprovalDialog
-        call={baseCall}
-        isOpen
-        onApprove={onApprove}
-        onDeny={onDeny}
-      />,
-    )
+    render(<MCPApprovalDialog call={baseCall} isOpen onApprove={onApprove} onDeny={onDeny} />)
     await user.keyboard('{Escape}')
     expect(screen.getByTestId('mcp-approval-dialog')).toBeDefined()
     expect(onApprove).not.toHaveBeenCalled()
@@ -166,12 +118,7 @@ describe('MCPApprovalDialog', () => {
 
   it('has no accessibility violations', async () => {
     const { container } = render(
-      <MCPApprovalDialog
-        call={baseCall}
-        isOpen
-        onApprove={vi.fn()}
-        onDeny={vi.fn()}
-      />,
+      <MCPApprovalDialog call={baseCall} isOpen onApprove={vi.fn()} onDeny={vi.fn()} />,
     )
     const results = await axe(container)
     expect(results).toHaveNoViolations()

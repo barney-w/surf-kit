@@ -1,12 +1,12 @@
 import { render, screen } from '@testing-library/react'
-import { describe, it, expect, vi } from 'vitest'
-import userEvent from '@testing-library/user-event'
-import * as vitestAxe from 'vitest-axe/matchers'
+import { describe, expect, it, vi } from 'vitest'
 import { axe } from 'vitest-axe'
+import * as vitestAxe from 'vitest-axe/matchers'
 
 expect.extend(vitestAxe)
-import { AgentFullPage } from '../AgentFullPage'
+
 import type { ConversationSummary } from '../../../types/chat'
+import { AgentFullPage } from '../AgentFullPage'
 
 // Mock useAgentChat
 vi.mock('../../../hooks/useAgentChat', () => ({
@@ -90,9 +90,7 @@ describe('AgentFullPage', () => {
   })
 
   it('applies custom className', () => {
-    render(
-      <AgentFullPage endpoint="https://api.test.com" className="custom-class" />,
-    )
+    render(<AgentFullPage endpoint="https://api.test.com" className="custom-class" />)
     const container = screen.getByTestId('agent-full-page')
     expect(container.className).toContain('custom-class')
   })

@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { Menubar } from '@surf-kit/core'
-import React from 'react'
 
 const meta: Meta<typeof Menubar> = {
   title: 'Core/Navigation/Menubar',

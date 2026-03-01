@@ -1,10 +1,11 @@
 import { render, screen } from '@testing-library/react'
-import { describe, it, expect, vi, beforeEach } from 'vitest'
 import userEvent from '@testing-library/user-event'
-import * as vitestAxe from 'vitest-axe/matchers'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { axe } from 'vitest-axe'
+import * as vitestAxe from 'vitest-axe/matchers'
 
 expect.extend(vitestAxe)
+
 import { AgentChat } from '../AgentChat'
 
 // Mock useAgentChat to avoid real fetch calls
@@ -89,12 +90,7 @@ describe('AgentChat', () => {
 
   it('calls sendMessage when a suggested question chip is clicked', async () => {
     const user = userEvent.setup()
-    render(
-      <AgentChat
-        endpoint="https://api.test.com"
-        suggestedQuestions={['Tell me about X']}
-      />,
-    )
+    render(<AgentChat endpoint="https://api.test.com" suggestedQuestions={['Tell me about X']} />)
     await user.click(screen.getByText('Tell me about X'))
     expect(mockSendMessage).toHaveBeenCalledWith('Tell me about X')
   })

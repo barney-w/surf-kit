@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Dialog, Button, TextArea } from '@surf-kit/core'
+import { Button, Dialog, TextArea } from '@surf-kit/core'
+import { useState } from 'react'
 
 type FeedbackDialogProps = {
   isOpen: boolean

@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { DataList } from '@surf-kit/core'
-import React from 'react'
 
 const meta: Meta<typeof DataList> = {
   title: 'Core/DataList',

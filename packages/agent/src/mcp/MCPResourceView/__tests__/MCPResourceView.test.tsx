@@ -1,10 +1,9 @@
 import { render, screen } from '@testing-library/react'
-import { describe, it, expect, vi, beforeAll } from 'vitest'
-import * as vitestAxe from 'vitest-axe/matchers'
+import { beforeAll, describe, expect, it, vi } from 'vitest'
 import { axe } from 'vitest-axe'
-
-import { MCPResourceView } from '../MCPResourceView'
+import * as vitestAxe from 'vitest-axe/matchers'
 import type { MCPResource } from '../../../types/mcp'
+import { MCPResourceView } from '../MCPResourceView'
 
 expect.extend(vitestAxe)
 

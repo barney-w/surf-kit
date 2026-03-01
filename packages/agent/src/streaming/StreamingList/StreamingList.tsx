@@ -1,6 +1,6 @@
-import React from 'react'
-import { twMerge } from 'tailwind-merge'
 import { useReducedMotion } from '@surf-kit/hooks'
+import type React from 'react'
+import { twMerge } from 'tailwind-merge'
 import { TypingIndicator } from '../TypingIndicator'
 
 type StreamingListProps<T> = {
@@ -29,7 +29,10 @@ function StreamingList<T>({
 
   if (items.length === 0 && !isStreaming) {
     return emptyMessage ? (
-      <p className={twMerge('text-sm text-text-secondary', className)} data-testid="streaming-list-empty">
+      <p
+        className={twMerge('text-sm text-text-secondary', className)}
+        data-testid="streaming-list-empty"
+      >
         {emptyMessage}
       </p>
     ) : null
@@ -45,11 +48,7 @@ function StreamingList<T>({
       {items.map((item, index) => (
         <li
           key={index}
-          style={
-            reducedMotion
-              ? undefined
-              : { animation: 'fadeSlideIn 0.3s ease-out' }
-          }
+          style={reducedMotion ? undefined : { animation: 'fadeSlideIn 0.3s ease-out' }}
           data-testid="streaming-list-item"
         >
           {renderItem(item, index)}

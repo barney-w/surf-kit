@@ -1,38 +1,33 @@
-import { useState } from "react";
 import {
-  Table,
-  DataList,
-  Card,
   Accordion,
-  Collapsible,
-  Carousel,
-  Stack,
-  Text,
-  Separator,
   Button,
+  Card,
+  Carousel,
+  Collapsible,
+  DataList,
+  Separator,
   type SortDescriptor,
-} from "@surf-kit/core";
-import {
-  tableColumns,
-  tableRows,
-  dataListItems,
-  accordionItems,
-} from "../showcase-data";
-import { SectionWrapper } from "./SectionWrapper";
+  Stack,
+  Table,
+  Text,
+} from '@surf-kit/core'
+import { useState } from 'react'
+import { accordionItems, dataListItems, tableColumns, tableRows } from '../showcase-data'
+import { SectionWrapper } from './SectionWrapper'
 
 export function DataDisplaySection() {
   const [sortDescriptor, setSortDescriptor] = useState<SortDescriptor>({
-    column: "name",
-    direction: "ascending",
-  });
+    column: 'name',
+    direction: 'ascending',
+  })
 
   const sortedRows = [...tableRows].sort((a, b) => {
-    const col = sortDescriptor.column as keyof (typeof tableRows)[0];
-    const aVal = String(a[col]);
-    const bVal = String(b[col]);
-    const cmp = aVal.localeCompare(bVal);
-    return sortDescriptor.direction === "ascending" ? cmp : -cmp;
-  });
+    const col = sortDescriptor.column as keyof (typeof tableRows)[0]
+    const aVal = String(a[col])
+    const bVal = String(b[col])
+    const cmp = aVal.localeCompare(bVal)
+    return sortDescriptor.direction === 'ascending' ? cmp : -cmp
+  })
 
   return (
     <SectionWrapper title="Data Display">
@@ -70,26 +65,38 @@ export function DataDisplaySection() {
           <Stack direction="horizontal" gap={3}>
             <Card variant="default" className="flex-1">
               <Card.Header>
-                <Text weight="semibold" size="sm">Default</Text>
+                <Text weight="semibold" size="sm">
+                  Default
+                </Text>
               </Card.Header>
               <Card.Body>
-                <Text size="xs" color="muted">A standard card.</Text>
+                <Text size="xs" color="muted">
+                  A standard card.
+                </Text>
               </Card.Body>
             </Card>
             <Card variant="elevated" className="flex-1">
               <Card.Header>
-                <Text weight="semibold" size="sm">Elevated</Text>
+                <Text weight="semibold" size="sm">
+                  Elevated
+                </Text>
               </Card.Header>
               <Card.Body>
-                <Text size="xs" color="muted">With shadow.</Text>
+                <Text size="xs" color="muted">
+                  With shadow.
+                </Text>
               </Card.Body>
             </Card>
             <Card variant="outlined" className="flex-1">
               <Card.Header>
-                <Text weight="semibold" size="sm">Outlined</Text>
+                <Text weight="semibold" size="sm">
+                  Outlined
+                </Text>
               </Card.Header>
               <Card.Body>
-                <Text size="xs" color="muted">With border.</Text>
+                <Text size="xs" color="muted">
+                  With border.
+                </Text>
               </Card.Body>
             </Card>
           </Stack>
@@ -121,8 +128,8 @@ export function DataDisplaySection() {
             <Collapsible.Content>
               <div className="mt-2 p-3 rounded-lg border border-brand-gold/15">
                 <Text size="sm">
-                  This content can be toggled open and closed. It supports
-                  controlled and uncontrolled modes.
+                  This content can be toggled open and closed. It supports controlled and
+                  uncontrolled modes.
                 </Text>
               </div>
             </Collapsible.Content>
@@ -151,5 +158,5 @@ export function DataDisplaySection() {
         </div>
       </Stack>
     </SectionWrapper>
-  );
+  )
 }

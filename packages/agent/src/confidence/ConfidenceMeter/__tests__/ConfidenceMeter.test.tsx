@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react'
-import { describe, it, expect } from 'vitest'
-import * as vitestAxe from 'vitest-axe/matchers'
+import { describe, expect, it } from 'vitest'
 import { axe } from 'vitest-axe'
+import * as vitestAxe from 'vitest-axe/matchers'
 
 import { ConfidenceMeter } from '../ConfidenceMeter'
 
@@ -46,9 +46,7 @@ describe('ConfidenceMeter', () => {
   })
 
   it('has no accessibility violations', async () => {
-    const { container } = render(
-      <ConfidenceMeter value={0.75} label="Retrieval Quality" />,
-    )
+    const { container } = render(<ConfidenceMeter value={0.75} label="Retrieval Quality" />)
     const results = await axe(container)
     expect(results).toHaveNoViolations()
   })

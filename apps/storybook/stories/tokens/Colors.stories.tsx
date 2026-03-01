@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import React from 'react'
 
 const colorPalette: Record<string, Record<string, string>> = {
   Teal: {
@@ -78,13 +77,13 @@ function Swatch({ name, hex }: { name: string; hex: string }) {
           justifyContent: 'center',
         }}
       >
-        <span style={{ fontSize: '10px', color: isDark ? '#fff' : '#333', fontFamily: 'monospace' }}>
+        <span
+          style={{ fontSize: '10px', color: isDark ? '#fff' : '#333', fontFamily: 'monospace' }}
+        >
           {name}
         </span>
       </div>
-      <span style={{ fontSize: '11px', fontFamily: 'monospace', color: '#666' }}>
-        {hex}
-      </span>
+      <span style={{ fontSize: '11px', fontFamily: 'monospace', color: '#666' }}>{hex}</span>
     </div>
   )
 }

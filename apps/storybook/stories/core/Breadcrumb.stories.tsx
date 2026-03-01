@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { Breadcrumb } from '@surf-kit/core'
-import React from 'react'
 
 const meta: Meta<typeof Breadcrumb> = {
   title: 'Core/Breadcrumb',
@@ -23,11 +22,6 @@ export const Default: Story = {
 
 export const TwoLevels: Story = {
   render: () => (
-    <Breadcrumb
-      items={[
-        { label: 'Dashboard', href: '/dashboard' },
-        { label: 'Settings' },
-      ]}
-    />
+    <Breadcrumb items={[{ label: 'Dashboard', href: '/dashboard' }, { label: 'Settings' }]} />
   ),
 }

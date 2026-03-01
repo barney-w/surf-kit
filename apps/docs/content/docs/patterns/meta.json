@@ -1,4 +1,12 @@
 {
   "title": "Patterns",
-  "pages": ["agent-chat", "source-attribution", "confidence-display", "multi-agent", "streaming", "error-handling", "accessibility"]
+  "pages": [
+    "agent-chat",
+    "source-attribution",
+    "confidence-display",
+    "multi-agent",
+    "streaming",
+    "error-handling",
+    "accessibility"
+  ]
 }

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { MessageThread } from '@surf-kit/agent'
 import type { ChatMessage } from '@surf-kit/agent'
+import { MessageThread } from '@surf-kit/agent'
 
 const meta: Meta<typeof MessageThread> = {
   title: 'Agent/MessageThread',
@@ -21,7 +21,8 @@ const messages: ChatMessage[] = [
   {
     id: '4',
     role: 'assistant',
-    content: "I'm a text-based assistant, so I can't check real-time weather. But I recommend checking a weather service.",
+    content:
+      "I'm a text-based assistant, so I can't check real-time weather. But I recommend checking a weather service.",
     timestamp: new Date(),
   },
 ]

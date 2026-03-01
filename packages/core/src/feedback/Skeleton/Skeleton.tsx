@@ -1,6 +1,5 @@
-import React from 'react'
-import { twMerge } from 'tailwind-merge'
 import { useReducedMotion } from '@surf-kit/hooks'
+import { twMerge } from 'tailwind-merge'
 
 type SkeletonProps = {
   width?: string | number
@@ -29,9 +28,7 @@ function Skeleton({ width, height, className, variant = 'text' }: SkeletonProps)
       )}
       style={{
         ...(width != null ? { width: typeof width === 'number' ? `${width}px` : width } : {}),
-        ...(height != null
-          ? { height: typeof height === 'number' ? `${height}px` : height }
-          : {}),
+        ...(height != null ? { height: typeof height === 'number' ? `${height}px` : height } : {}),
       }}
     />
   )

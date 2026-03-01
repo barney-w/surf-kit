@@ -1,12 +1,13 @@
-import { render, screen, within } from '@testing-library/react'
-import { describe, it, expect, vi } from 'vitest'
+import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import * as vitestAxe from 'vitest-axe/matchers'
+import { describe, expect, it, vi } from 'vitest'
 import { axe } from 'vitest-axe'
+import * as vitestAxe from 'vitest-axe/matchers'
 
 expect.extend(vitestAxe)
-import { ConversationList } from '../ConversationList'
+
 import type { ConversationSummary } from '../../../types/chat'
+import { ConversationList } from '../ConversationList'
 
 const mockConversations: ConversationSummary[] = [
   {
@@ -27,12 +28,7 @@ const mockConversations: ConversationSummary[] = [
 
 describe('ConversationList', () => {
   it('renders conversation titles and previews', () => {
-    render(
-      <ConversationList
-        conversations={mockConversations}
-        onSelect={vi.fn()}
-      />,
-    )
+    render(<ConversationList conversations={mockConversations} onSelect={vi.fn()} />)
     expect(screen.getByText('First conversation')).toBeDefined()
     expect(screen.getByText('Hello world')).toBeDefined()
     expect(screen.getByText('Second conversation')).toBeDefined()
@@ -40,32 +36,21 @@ describe('ConversationList', () => {
   })
 
   it('renders empty state when no conversations', () => {
-    render(
-      <ConversationList conversations={[]} onSelect={vi.fn()} />,
-    )
+    render(<ConversationList conversations={[]} onSelect={vi.fn()} />)
     expect(screen.getByText('No conversations yet')).toBeDefined()
   })
 
   it('calls onSelect when a conversation is clicked', async () => {
     const user = userEvent.setup()
     const onSelect = vi.fn()
-    render(
-      <ConversationList
-        conversations={mockConversations}
-        onSelect={onSelect}
-      />,
-    )
+    render(<ConversationList conversations={mockConversations} onSelect={onSelect} />)
     await user.click(screen.getByText('First conversation'))
     expect(onSelect).toHaveBeenCalledWith('conv-1')
   })
 
   it('highlights the active conversation', () => {
     render(
-      <ConversationList
-        conversations={mockConversations}
-        activeId="conv-1"
-        onSelect={vi.fn()}
-      />,
+      <ConversationList conversations={mockConversations} activeId="conv-1" onSelect={vi.fn()} />,
     )
     const activeButton = screen.getByText('First conversation').closest('button')
     expect(activeButton?.getAttribute('aria-current')).toBe('true')
@@ -78,13 +63,7 @@ describe('ConversationList', () => {
   it('renders "New conversation" button when onNew is provided', async () => {
     const user = userEvent.setup()
     const onNew = vi.fn()
-    render(
-      <ConversationList
-        conversations={mockConversations}
-        onSelect={vi.fn()}
-        onNew={onNew}
-      />,
-    )
+    render(<ConversationList conversations={mockConversations} onSelect={vi.fn()} onNew={onNew} />)
     const newButton = screen.getByText('New conversation')
     expect(newButton).toBeDefined()
     await user.click(newButton)
@@ -95,11 +74,7 @@ describe('ConversationList', () => {
     const user = userEvent.setup()
     const onDelete = vi.fn()
     render(
-      <ConversationList
-        conversations={mockConversations}
-        onSelect={vi.fn()}
-        onDelete={onDelete}
-      />,
+      <ConversationList conversations={mockConversations} onSelect={vi.fn()} onDelete={onDelete} />,
     )
     const deleteButton = screen.getByLabelText('Delete First conversation')
     await user.click(deleteButton)
@@ -123,9 +98,7 @@ describe('ConversationList', () => {
   })
 
   it('has an accessible navigation landmark', () => {
-    render(
-      <ConversationList conversations={mockConversations} onSelect={vi.fn()} />,
-    )
+    render(<ConversationList conversations={mockConversations} onSelect={vi.fn()} />)
     expect(screen.getByRole('navigation', { name: 'Conversation list' })).toBeDefined()
   })
 

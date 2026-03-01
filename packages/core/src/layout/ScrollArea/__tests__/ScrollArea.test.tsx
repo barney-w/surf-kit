@@ -1,10 +1,14 @@
 import { render, screen } from '@testing-library/react'
-import { describe, it, expect } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import { ScrollArea } from '../ScrollArea'
 
 describe('ScrollArea', () => {
   it('renders children', () => {
-    render(<ScrollArea><span>Hello</span></ScrollArea>)
+    render(
+      <ScrollArea>
+        <span>Hello</span>
+      </ScrollArea>,
+    )
     expect(screen.getByText('Hello')).toBeDefined()
   })
   it('applies vertical orientation by default', () => {

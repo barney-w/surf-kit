@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { Text, Stack, Grid } from '@surf-kit/core'
-import React from 'react'
+import { Grid, Stack, Text } from '@surf-kit/core'
 
 const meta: Meta = {
   title: 'Core/Primitives',
@@ -48,7 +47,9 @@ export const StackDirections: StoryObj = {
   render: () => (
     <Stack gap={6}>
       <div>
-        <Text weight="semibold" size="sm">Vertical (default)</Text>
+        <Text weight="semibold" size="sm">
+          Vertical (default)
+        </Text>
         <Stack direction="vertical" gap={2}>
           <div style={{ padding: '8px 16px', background: '#e0f5f7' }}>Item 1</div>
           <div style={{ padding: '8px 16px', background: '#e0f5f7' }}>Item 2</div>
@@ -56,7 +57,9 @@ export const StackDirections: StoryObj = {
         </Stack>
       </div>
       <div>
-        <Text weight="semibold" size="sm">Horizontal</Text>
+        <Text weight="semibold" size="sm">
+          Horizontal
+        </Text>
         <Stack direction="horizontal" gap={2}>
           <div style={{ padding: '8px 16px', background: '#e0f5f7' }}>Item 1</div>
           <div style={{ padding: '8px 16px', background: '#e0f5f7' }}>Item 2</div>
@@ -71,7 +74,9 @@ export const GridColumns: StoryObj = {
   render: () => (
     <Stack gap={6}>
       <div>
-        <Text weight="semibold" size="sm">2 Columns</Text>
+        <Text weight="semibold" size="sm">
+          2 Columns
+        </Text>
         <Grid columns={2} gap={4}>
           <div style={{ padding: '16px', background: '#e0f5f7', textAlign: 'center' }}>1</div>
           <div style={{ padding: '16px', background: '#e0f5f7', textAlign: 'center' }}>2</div>
@@ -80,7 +85,9 @@ export const GridColumns: StoryObj = {
         </Grid>
       </div>
       <div>
-        <Text weight="semibold" size="sm">3 Columns</Text>
+        <Text weight="semibold" size="sm">
+          3 Columns
+        </Text>
         <Grid columns={3} gap={4}>
           <div style={{ padding: '16px', background: '#e0f5f7', textAlign: 'center' }}>1</div>
           <div style={{ padding: '16px', background: '#e0f5f7', textAlign: 'center' }}>2</div>
@@ -91,7 +98,9 @@ export const GridColumns: StoryObj = {
         </Grid>
       </div>
       <div>
-        <Text weight="semibold" size="sm">4 Columns</Text>
+        <Text weight="semibold" size="sm">
+          4 Columns
+        </Text>
         <Grid columns={4} gap={4}>
           <div style={{ padding: '16px', background: '#e0f5f7', textAlign: 'center' }}>1</div>
           <div style={{ padding: '16px', background: '#e0f5f7', textAlign: 'center' }}>2</div>

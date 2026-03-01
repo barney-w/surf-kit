@@ -1,11 +1,10 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { describe, it, expect } from 'vitest'
-import * as vitestAxe from 'vitest-axe/matchers'
+import { describe, expect, it } from 'vitest'
 import { axe } from 'vitest-axe'
-
-import { SourceList } from '../SourceList'
+import * as vitestAxe from 'vitest-axe/matchers'
 import type { Source } from '../../../types/agent'
+import { SourceList } from '../SourceList'
 
 expect.extend(vitestAxe)
 
@@ -42,13 +41,7 @@ describe('SourceList', () => {
 
   it('renders collapsible list', async () => {
     const user = userEvent.setup()
-    render(
-      <SourceList
-        sources={mockSources}
-        collapsible
-        defaultExpanded={false}
-      />,
-    )
+    render(<SourceList sources={mockSources} collapsible defaultExpanded={false} />)
 
     // Collapsed: items should not be visible
     expect(screen.queryByText('Enterprise Agreement 2024')).toBeNull()
@@ -59,20 +52,12 @@ describe('SourceList', () => {
   })
 
   it('renders collapsible list that is expanded by default', () => {
-    render(
-      <SourceList
-        sources={mockSources}
-        collapsible
-        defaultExpanded
-      />,
-    )
+    render(<SourceList sources={mockSources} collapsible defaultExpanded />)
     expect(screen.getByText('Enterprise Agreement 2024')).toBeDefined()
   })
 
   it('has no accessibility violations', async () => {
-    const { container } = render(
-      <SourceList sources={mockSources} />,
-    )
+    const { container } = render(<SourceList sources={mockSources} />)
     const results = await axe(container)
     expect(results).toHaveNoViolations()
   })

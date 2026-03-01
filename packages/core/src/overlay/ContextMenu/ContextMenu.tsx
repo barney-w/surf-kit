@@ -1,5 +1,6 @@
+import type React from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
-import React, { useState, useRef, useEffect, useCallback } from 'react'
 
 type ContextMenuItem = {
   key: string
@@ -32,12 +33,7 @@ function findNextEnabledIndex(
   return current
 }
 
-function ContextMenu({
-  children,
-  items,
-  onAction,
-  className,
-}: ContextMenuProps) {
+function ContextMenu({ children, items, onAction, className }: ContextMenuProps) {
   const [isOpen, setIsOpen] = useState(false)
   const [position, setPosition] = useState({ x: 0, y: 0 })
   const [focusedIndex, setFocusedIndex] = useState(-1)
@@ -124,9 +120,7 @@ function ContextMenu({
                   : item.isDanger
                     ? 'text-status-error hover:bg-status-error/10 focus:bg-status-error/10'
                     : 'text-text-primary hover:bg-surface-raised focus:bg-surface-raised',
-                index === focusedIndex &&
-                  !item.isDisabled &&
-                  'bg-surface-raised',
+                index === focusedIndex && !item.isDisabled && 'bg-surface-raised',
               )}
               onClick={() => {
                 if (item.isDisabled) return

@@ -1,9 +1,10 @@
 import { render, screen } from '@testing-library/react'
-import { describe, it, expect, vi } from 'vitest'
-import * as vitestAxe from 'vitest-axe/matchers'
+import { describe, expect, it, vi } from 'vitest'
 import { axe } from 'vitest-axe'
+import * as vitestAxe from 'vitest-axe/matchers'
 
 expect.extend(vitestAxe)
+
 import { AgentEmbed } from '../AgentEmbed'
 
 // Mock useAgentChat
@@ -51,9 +52,7 @@ describe('AgentEmbed', () => {
   })
 
   it('applies custom className', () => {
-    render(
-      <AgentEmbed endpoint="https://api.test.com" className="my-embed" />,
-    )
+    render(<AgentEmbed endpoint="https://api.test.com" className="my-embed" />)
     const container = screen.getByTestId('agent-embed')
     expect(container.className).toContain('my-embed')
   })

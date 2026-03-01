@@ -1,7 +1,7 @@
-import React, { useEffect, useRef } from 'react'
 import { Spinner } from '@surf-kit/core'
-import type { StreamState } from '../../types/streaming'
+import { useEffect, useRef } from 'react'
 import { useCharacterDrain } from '../../hooks/useCharacterDrain'
+import type { StreamState } from '../../types/streaming'
 
 type StreamingMessageProps = {
   stream: StreamState

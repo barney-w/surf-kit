@@ -1,4 +1,3 @@
-import React from 'react'
 import { useReducedMotion } from '@surf-kit/hooks'
 
 type ThinkingIndicatorProps = {

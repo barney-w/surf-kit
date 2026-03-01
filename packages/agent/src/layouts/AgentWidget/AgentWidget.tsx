@@ -1,5 +1,5 @@
+import { useCallback, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
-import React, { useState, useCallback } from 'react'
 import { AgentChat } from '../../chat/AgentChat'
 
 export type AgentWidgetProps = {
@@ -24,7 +24,8 @@ function AgentWidget({
   }, [])
 
   const positionClasses = position === 'bottom-left' ? 'left-4 bottom-4' : 'right-4 bottom-4'
-  const popoverPositionClasses = position === 'bottom-left' ? 'left-4 bottom-20' : 'right-4 bottom-20'
+  const popoverPositionClasses =
+    position === 'bottom-left' ? 'left-4 bottom-20' : 'right-4 bottom-20'
   const popoverOrigin = position === 'bottom-left' ? 'origin-bottom-left' : 'origin-bottom-right'
 
   return (
@@ -56,7 +57,18 @@ function AgentWidget({
             aria-label="Minimize chat"
             className="rounded-lg p-1.5 text-brand-cream/40 hover:text-brand-cream/70 transition-colors duration-200"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
               <line x1="18" y1="6" x2="6" y2="18" />
               <line x1="6" y1="6" x2="18" y2="18" />
             </svg>
@@ -88,12 +100,34 @@ function AgentWidget({
         )}
       >
         {isOpen ? (
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+          >
             <line x1="18" y1="6" x2="6" y2="18" />
             <line x1="6" y1="6" x2="18" y2="18" />
           </svg>
         ) : (
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+          >
             <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
           </svg>
         )}

@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 export type TypewriterTextProps = {
   text: string
-  speed?: number          // ms per char, default 30
-  delay?: number          // ms to wait before starting, default 0
+  speed?: number // ms per char, default 30
+  delay?: number // ms to wait before starting, default 0
   onComplete?: () => void
   className?: string
-  showCursor?: boolean    // default true
+  showCursor?: boolean // default true
 }
 
 export function TypewriterText({
@@ -46,9 +46,7 @@ export function TypewriterText({
   return (
     <span className={className}>
       {displayedText}
-      {showCursor && !isComplete && (
-        <span className="typewriter-cursor" aria-hidden="true" />
-      )}
+      {showCursor && !isComplete && <span className="typewriter-cursor" aria-hidden="true" />}
     </span>
   )
 }

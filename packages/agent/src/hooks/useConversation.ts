@@ -1,6 +1,5 @@
-import { useState, useCallback } from 'react'
-import type { ChatMessage } from '../types/chat'
-import type { ConversationSummary } from '../types/chat'
+import { useCallback, useState } from 'react'
+import type { ChatMessage, ConversationSummary } from '../types/chat'
 
 export interface Conversation {
   id: string
@@ -33,7 +32,10 @@ function loadFromStorage(storageKey: string): Conversation[] {
       ...c,
       createdAt: new Date(c.createdAt),
       updatedAt: new Date(c.updatedAt),
-      messages: c.messages.map((m) => ({ ...m, timestamp: new Date(m.timestamp as unknown as string) })),
+      messages: c.messages.map((m) => ({
+        ...m,
+        timestamp: new Date(m.timestamp as unknown as string),
+      })),
     }))
   } catch {
     return []

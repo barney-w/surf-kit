@@ -1,5 +1,6 @@
+import type React from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
-import React, { useState, useRef, useEffect, useCallback } from 'react'
 
 type NavigationMenuProps = {
   children: React.ReactNode

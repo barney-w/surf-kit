@@ -1,7 +1,8 @@
 import { cva } from 'class-variance-authority'
+import type React from 'react'
+import { useEffect, useRef } from 'react'
+import { FocusScope, useDialog } from 'react-aria'
 import { twMerge } from 'tailwind-merge'
-import React, { useRef, useEffect } from 'react'
-import { useDialog, FocusScope } from 'react-aria'
 
 const dialogPanel = cva(
   'relative bg-surface rounded-xl shadow-xl border border-border p-6 outline-none',
@@ -41,20 +42,10 @@ function DialogBody({ children, className }: { children: React.ReactNode; classN
 }
 
 function DialogFooter({ children, className }: { children: React.ReactNode; className?: string }) {
-  return (
-    <div className={twMerge('mt-6 flex justify-end gap-3', className)}>{children}</div>
-  )
+  return <div className={twMerge('mt-6 flex justify-end gap-3', className)}>{children}</div>
 }
 
-function Dialog({
-  isOpen,
-  onClose,
-  title,
-  children,
-  footer,
-  size = 'md',
-  className,
-}: DialogProps) {
+function Dialog({ isOpen, onClose, title, children, footer, size = 'md', className }: DialogProps) {
   const ref = useRef<HTMLDivElement>(null)
   const { dialogProps, titleProps } = useDialog({ role: 'dialog' }, ref)
 
@@ -79,18 +70,12 @@ function Dialog({
       }}
     >
       <FocusScope contain restoreFocus autoFocus>
-        <div
-          {...dialogProps}
-          ref={ref}
-          className={twMerge(dialogPanel({ size }), className)}
-        >
+        <div {...dialogProps} ref={ref} className={twMerge(dialogPanel({ size }), className)}>
           <h2 {...titleProps} className="text-lg font-semibold text-text-primary mb-4">
             {title}
           </h2>
           <div className="text-text-secondary">{children}</div>
-          {footer && (
-            <div className="mt-6 flex justify-end gap-3">{footer}</div>
-          )}
+          {footer && <div className="mt-6 flex justify-end gap-3">{footer}</div>}
         </div>
       </FocusScope>
     </div>

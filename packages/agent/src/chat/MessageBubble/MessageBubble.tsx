@@ -1,8 +1,7 @@
 import { twMerge } from 'tailwind-merge'
-import React from 'react'
-import type { ChatMessage } from '../../types/chat'
 import { AgentResponse } from '../../response/AgentResponse'
 import { ResponseMessage } from '../../response/ResponseMessage'
+import type { ChatMessage } from '../../types/chat'
 
 export type MessageBubbleProps = {
   message: ChatMessage
@@ -27,10 +26,7 @@ function MessageBubble({
 
   if (isUser) {
     return (
-      <div
-        data-message-id={message.id}
-        className={twMerge('flex w-full justify-end', className)}
-      >
+      <div data-message-id={message.id} className={twMerge('flex w-full justify-end', className)}>
         <div
           className={twMerge(
             'max-w-[70%] rounded-[18px] rounded-br-[4px] px-4 py-2.5 bg-accent text-brand-cream break-words whitespace-pre-wrap text-sm leading-relaxed',

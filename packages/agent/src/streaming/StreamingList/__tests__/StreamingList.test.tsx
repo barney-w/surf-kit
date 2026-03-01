@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react'
-import { describe, it, expect, vi } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 
 import { StreamingList } from '../StreamingList'
 
@@ -35,10 +35,7 @@ describe('StreamingList', () => {
 
   it('returns null when no items and no emptyMessage', () => {
     const { container } = render(
-      <StreamingList
-        items={[]}
-        renderItem={(item) => <span>{item}</span>}
-      />,
+      <StreamingList items={[]} renderItem={(item) => <span>{item}</span>} />,
     )
     expect(container.innerHTML).toBe('')
   })
@@ -79,12 +76,7 @@ describe('StreamingList', () => {
   })
 
   it('renders as ul with li elements', () => {
-    render(
-      <StreamingList
-        items={['a', 'b']}
-        renderItem={(item) => <span>{item}</span>}
-      />,
-    )
+    render(<StreamingList items={['a', 'b']} renderItem={(item) => <span>{item}</span>} />)
     const ul = screen.getByTestId('streaming-list')
     expect(ul.tagName).toBe('UL')
     const items = screen.getAllByTestId('streaming-list-item')

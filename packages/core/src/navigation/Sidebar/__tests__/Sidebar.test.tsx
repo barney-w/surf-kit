@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { describe, it, expect, vi } from 'vitest'
-import * as vitestAxe from 'vitest-axe/matchers'
+import { describe, expect, it, vi } from 'vitest'
 import { axe } from 'vitest-axe'
+import * as vitestAxe from 'vitest-axe/matchers'
 
 import { Sidebar } from '../Sidebar'
 
@@ -33,7 +33,11 @@ describe('Sidebar', () => {
   })
 
   it('shows expand label when collapsed', () => {
-    render(<Sidebar collapsed onToggle={() => {}}>Content</Sidebar>)
+    render(
+      <Sidebar collapsed onToggle={() => {}}>
+        Content
+      </Sidebar>,
+    )
     expect(screen.getByRole('button', { name: 'Expand sidebar' })).toBeDefined()
   })
 

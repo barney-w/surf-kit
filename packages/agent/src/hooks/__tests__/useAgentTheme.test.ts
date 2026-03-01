@@ -1,7 +1,7 @@
 import { renderHook } from '@testing-library/react'
-import { describe, it, expect } from 'vitest'
-import { useAgentTheme } from '../useAgentTheme'
+import { describe, expect, it } from 'vitest'
 import type { AgentInfo } from '../../types/agent'
+import { useAgentTheme } from '../useAgentTheme'
 
 describe('useAgentTheme', () => {
   const themes: Record<string, AgentInfo> = {

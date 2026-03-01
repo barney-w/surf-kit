@@ -1,12 +1,6 @@
-import { Text } from "@surf-kit/core";
+import { Text } from '@surf-kit/core'
 
-export function SectionWrapper({
-  title,
-  children,
-}: {
-  title: string;
-  children: React.ReactNode;
-}) {
+export function SectionWrapper({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div className="p-5 rounded-2xl bg-surface/50 border border-border">
       <Text
@@ -19,5 +13,5 @@ export function SectionWrapper({
       </Text>
       {children}
     </div>
-  );
+  )
 }

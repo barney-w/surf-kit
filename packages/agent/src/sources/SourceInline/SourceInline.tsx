@@ -1,4 +1,3 @@
-import React from 'react'
 import { Tooltip } from '@surf-kit/core'
 
 import type { Source } from '../../types/agent'

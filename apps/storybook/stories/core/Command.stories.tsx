@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { Command } from '@surf-kit/core'
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 const meta: Meta<typeof Command> = {
   title: 'Core/Overlay/Command',
@@ -14,7 +14,9 @@ export const Default: Story = {
     const [isOpen, setIsOpen] = useState(true)
     return (
       <div>
-        <button onClick={() => setIsOpen(true)}>Open Command Palette</button>
+        <button type="button" onClick={() => setIsOpen(true)}>
+          Open Command Palette
+        </button>
         <Command
           isOpen={isOpen}
           onClose={() => setIsOpen(false)}
@@ -52,13 +54,15 @@ export const WithIcons: Story = {
   render: () => {
     const [isOpen, setIsOpen] = useState(true)
     const Icon = () => (
-      <svg viewBox="0 0 16 16" fill="currentColor" className="h-4 w-4">
+      <svg viewBox="0 0 16 16" fill="currentColor" className="h-4 w-4" aria-hidden="true">
         <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0Z" />
       </svg>
     )
     return (
       <div>
-        <button onClick={() => setIsOpen(true)}>Open Command Palette</button>
+        <button type="button" onClick={() => setIsOpen(true)}>
+          Open Command Palette
+        </button>
         <Command
           isOpen={isOpen}
           onClose={() => setIsOpen(false)}

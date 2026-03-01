@@ -1,13 +1,15 @@
 import { render, screen } from '@testing-library/react'
-import { describe, it, expect } from 'vitest'
-import React, { useRef } from 'react'
+import { useRef } from 'react'
+import { describe, expect, it } from 'vitest'
 import { Popover } from '../Popover'
 
 function TestPopover({ isOpen }: { isOpen: boolean }) {
   const ref = useRef<HTMLButtonElement>(null)
   return (
     <div>
-      <button ref={ref}>Trigger</button>
+      <button type="button" ref={ref}>
+        Trigger
+      </button>
       <Popover triggerRef={ref} isOpen={isOpen} onClose={() => {}}>
         Popover content
       </Popover>

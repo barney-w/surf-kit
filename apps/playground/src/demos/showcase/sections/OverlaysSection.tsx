@@ -1,29 +1,29 @@
-import { useState, useRef } from "react";
 import {
+  Button,
+  Command,
+  ContextMenu,
   Dialog,
-  Popover,
-  Tooltip,
-  Sheet,
+  Drawer,
   DropdownMenu,
   HoverCard,
-  Drawer,
-  ContextMenu,
-  Command,
-  Button,
-  Text,
-  Stack,
+  Popover,
   Separator,
-} from "@surf-kit/core";
-import { Settings, Copy, ExternalLink } from "@surf-kit/icons";
-import { SectionWrapper } from "./SectionWrapper";
+  Sheet,
+  Stack,
+  Text,
+  Tooltip,
+} from '@surf-kit/core'
+import { Copy, ExternalLink, Settings } from '@surf-kit/icons'
+import { useRef, useState } from 'react'
+import { SectionWrapper } from './SectionWrapper'
 
 export function OverlaysSection() {
-  const [dialogOpen, setDialogOpen] = useState(false);
-  const [sheetOpen, setSheetOpen] = useState(false);
-  const [drawerOpen, setDrawerOpen] = useState(false);
-  const [commandOpen, setCommandOpen] = useState(false);
-  const [popoverOpen, setPopoverOpen] = useState(false);
-  const popoverRef = useRef<HTMLButtonElement>(null);
+  const [dialogOpen, setDialogOpen] = useState(false)
+  const [sheetOpen, setSheetOpen] = useState(false)
+  const [drawerOpen, setDrawerOpen] = useState(false)
+  const [commandOpen, setCommandOpen] = useState(false)
+  const [popoverOpen, setPopoverOpen] = useState(false)
+  const popoverRef = useRef<HTMLButtonElement>(null)
 
   return (
     <SectionWrapper title="Overlays">
@@ -63,6 +63,7 @@ export function OverlaysSection() {
             Popover
           </Text>
           <button
+            type="button"
             ref={popoverRef}
             onClick={() => setPopoverOpen(!popoverOpen)}
             className="px-3 py-1.5 rounded-lg text-sm border border-brand-gold/20 text-brand-cream/70 hover:bg-brand-gold/10 transition-colors"
@@ -152,11 +153,11 @@ export function OverlaysSection() {
               </Button>
             }
             items={[
-              { key: "edit", label: "Edit" },
-              { key: "duplicate", label: "Duplicate" },
-              { key: "delete", label: "Delete" },
+              { key: 'edit', label: 'Edit' },
+              { key: 'duplicate', label: 'Duplicate' },
+              { key: 'delete', label: 'Delete' },
             ]}
-            onAction={(key) => console.log("Action:", key)}
+            onAction={(key) => console.log('Action:', key)}
           />
         </div>
 
@@ -216,12 +217,12 @@ export function OverlaysSection() {
           </Text>
           <ContextMenu
             items={[
-              { key: "copy", label: "Copy", icon: <Copy size={14} /> },
-              { key: "open", label: "Open in new tab", icon: <ExternalLink size={14} /> },
-              { key: "settings", label: "Settings", icon: <Settings size={14} /> },
-              { key: "delete", label: "Delete", isDanger: true },
+              { key: 'copy', label: 'Copy', icon: <Copy size={14} /> },
+              { key: 'open', label: 'Open in new tab', icon: <ExternalLink size={14} /> },
+              { key: 'settings', label: 'Settings', icon: <Settings size={14} /> },
+              { key: 'delete', label: 'Delete', isDanger: true },
             ]}
-            onAction={(key) => console.log("Context:", key)}
+            onAction={(key) => console.log('Context:', key)}
           >
             <div className="p-6 border border-dashed border-brand-gold/30 rounded-xl text-center">
               <Text size="sm" color="muted">
@@ -238,19 +239,15 @@ export function OverlaysSection() {
           <Text size="sm" color="muted" weight="semibold" className="mb-2">
             Command Palette
           </Text>
-          <Button
-            intent="secondary"
-            size="sm"
-            onPress={() => setCommandOpen(true)}
-          >
+          <Button intent="secondary" size="sm" onPress={() => setCommandOpen(true)}>
             Open Command Palette
           </Button>
           <Command
             isOpen={commandOpen}
             onClose={() => setCommandOpen(false)}
             onSelect={(value) => {
-              console.log("Command:", value);
-              setCommandOpen(false);
+              console.log('Command:', value)
+              setCommandOpen(false)
             }}
             placeholder="Search commands..."
           >
@@ -264,10 +261,7 @@ export function OverlaysSection() {
               <Command.Item value="copy" icon={<Copy size={14} />} shortcut="⌘C">
                 Copy
               </Command.Item>
-              <Command.Item
-                value="export"
-                icon={<ExternalLink size={14} />}
-              >
+              <Command.Item value="export" icon={<ExternalLink size={14} />}>
                 Export
               </Command.Item>
             </Command.Group>
@@ -275,5 +269,5 @@ export function OverlaysSection() {
         </div>
       </Stack>
     </SectionWrapper>
-  );
+  )
 }

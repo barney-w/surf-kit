@@ -1,8 +1,8 @@
-import React, { useRef, useEffect } from 'react'
+import { Badge, Button } from '@surf-kit/core'
 import { cva } from 'class-variance-authority'
+import { useEffect, useRef } from 'react'
+import { FocusScope, useDialog } from 'react-aria'
 import { twMerge } from 'tailwind-merge'
-import { useDialog, FocusScope } from 'react-aria'
-import { Button, Badge } from '@surf-kit/core'
 import type { MCPToolCallData } from '../../types/mcp'
 
 export type MCPApprovalDialogProps = {
@@ -26,16 +26,19 @@ const riskLabel: Record<string, string> = {
   high: 'High Risk',
 }
 
-const riskBorder = cva('relative bg-surface rounded-xl shadow-xl border p-6 outline-none w-full max-w-lg', {
-  variants: {
-    risk: {
-      low: 'border-status-success-subtle',
-      medium: 'border-status-warning-subtle',
-      high: 'border-status-error-subtle',
+const riskBorder = cva(
+  'relative bg-surface rounded-xl shadow-xl border p-6 outline-none w-full max-w-lg',
+  {
+    variants: {
+      risk: {
+        low: 'border-status-success-subtle',
+        medium: 'border-status-warning-subtle',
+        high: 'border-status-error-subtle',
+      },
     },
+    defaultVariants: { risk: 'low' },
   },
-  defaultVariants: { risk: 'low' },
-})
+)
 
 function formatValue(value: unknown): string {
   if (typeof value === 'string') return value
@@ -135,18 +138,10 @@ function MCPApprovalDialog({
 
           {/* Actions */}
           <div className="mt-6 flex justify-end gap-3">
-            <Button
-              intent="secondary"
-              onPress={onDeny}
-              aria-label="Deny tool execution"
-            >
+            <Button intent="secondary" onPress={onDeny} aria-label="Deny tool execution">
               Deny
             </Button>
-            <Button
-              intent="primary"
-              onPress={onApprove}
-              aria-label="Approve tool execution"
-            >
+            <Button intent="primary" onPress={onApprove} aria-label="Approve tool execution">
               Approve
             </Button>
           </div>

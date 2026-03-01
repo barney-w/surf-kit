@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { Toggle, ToggleGroup } from '@surf-kit/core'
-import React from 'react'
 
 const meta: Meta<typeof ToggleGroup> = {
   title: 'Core/ToggleGroup',

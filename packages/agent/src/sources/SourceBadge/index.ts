@@ -1,2 +1,2 @@
-export { SourceBadge } from './SourceBadge'
 export type { SourceBadgeProps } from './SourceBadge'
+export { SourceBadge } from './SourceBadge'

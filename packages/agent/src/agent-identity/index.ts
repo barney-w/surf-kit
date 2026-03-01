@@ -1,11 +1,8 @@
-export { AgentAvatar } from './AgentAvatar'
 export type { AgentAvatarProps } from './AgentAvatar'
-
-export { AgentLabel } from './AgentLabel'
-export type { AgentLabelProps } from './AgentLabel'
-
-export { AgentHandoff } from './AgentHandoff'
+export { AgentAvatar } from './AgentAvatar'
 export type { AgentHandoffProps } from './AgentHandoff'
-
-export { RoutingIndicator } from './RoutingIndicator'
+export { AgentHandoff } from './AgentHandoff'
+export type { AgentLabelProps } from './AgentLabel'
+export { AgentLabel } from './AgentLabel'
 export type { RoutingIndicatorProps } from './RoutingIndicator'
+export { RoutingIndicator } from './RoutingIndicator'

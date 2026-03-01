@@ -1,2 +1,2 @@
-export { RoutingIndicator } from './RoutingIndicator'
 export type { RoutingIndicatorProps } from './RoutingIndicator'
+export { RoutingIndicator } from './RoutingIndicator'

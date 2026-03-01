@@ -1,11 +1,10 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { describe, it, expect } from 'vitest'
-import * as vitestAxe from 'vitest-axe/matchers'
+import { describe, expect, it } from 'vitest'
 import { axe } from 'vitest-axe'
-
-import { VerificationDetail } from '../VerificationDetail'
+import * as vitestAxe from 'vitest-axe/matchers'
 import type { VerificationResult } from '../../../types/agent'
+import { VerificationDetail } from '../VerificationDetail'
 
 expect.extend(vitestAxe)
 

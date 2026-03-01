@@ -1,6 +1,6 @@
 import { cva, type VariantProps } from 'class-variance-authority'
+import type React from 'react'
 import { twMerge } from 'tailwind-merge'
-import React from 'react'
 
 const stack = cva('flex', {
   variants: {
@@ -46,7 +46,9 @@ type StackProps = {
   Omit<React.ComponentPropsWithoutRef<'div'>, 'className' | 'children'>
 
 function Stack({ direction, align, justify, gap, className, ...props }: StackProps) {
-  return <div className={twMerge(stack({ direction, align, justify, gap }), className)} {...props} />
+  return (
+    <div className={twMerge(stack({ direction, align, justify, gap }), className)} {...props} />
+  )
 }
 
 export { Stack, stack }

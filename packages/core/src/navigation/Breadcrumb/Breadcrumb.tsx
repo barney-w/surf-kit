@@ -1,6 +1,7 @@
+import type React from 'react'
+import { useRef } from 'react'
+import { useBreadcrumbItem, useBreadcrumbs } from 'react-aria'
 import { twMerge } from 'tailwind-merge'
-import React, { useRef } from 'react'
-import { useBreadcrumbs, useBreadcrumbItem } from 'react-aria'
 
 type BreadcrumbItem = { label: string; href?: string }
 
@@ -9,13 +10,7 @@ type BreadcrumbProps = {
   className?: string
 }
 
-function BreadcrumbLink({
-  item,
-  isCurrent,
-}: {
-  item: BreadcrumbItem
-  isCurrent: boolean
-}) {
+function BreadcrumbLink({ item, isCurrent }: { item: BreadcrumbItem; isCurrent: boolean }) {
   const ref = useRef<HTMLAnchorElement>(null)
   const { itemProps } = useBreadcrumbItem(
     { children: item.label, isCurrent, elementType: isCurrent ? 'span' : 'a' },

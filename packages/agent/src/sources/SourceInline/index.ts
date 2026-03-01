@@ -1,2 +1,2 @@
-export { SourceInline } from './SourceInline'
 export type { SourceInlineProps } from './SourceInline'
+export { SourceInline } from './SourceInline'

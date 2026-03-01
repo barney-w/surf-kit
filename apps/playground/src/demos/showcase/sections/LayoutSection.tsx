@@ -1,5 +1,5 @@
-import { AspectRatio, ScrollArea, Resizable, Stack, Text } from "@surf-kit/core";
-import { SectionWrapper } from "./SectionWrapper";
+import { AspectRatio, Resizable, ScrollArea, Stack, Text } from '@surf-kit/core'
+import { SectionWrapper } from './SectionWrapper'
 
 export function LayoutSection() {
   return (
@@ -55,5 +55,5 @@ export function LayoutSection() {
         </div>
       </Stack>
     </SectionWrapper>
-  );
+  )
 }

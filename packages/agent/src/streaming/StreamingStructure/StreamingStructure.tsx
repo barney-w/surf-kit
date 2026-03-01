@@ -1,6 +1,6 @@
-import React from 'react'
-import { twMerge } from 'tailwind-merge'
 import { useReducedMotion } from '@surf-kit/hooks'
+import type React from 'react'
+import { twMerge } from 'tailwind-merge'
 import { TextGlimmer } from '../TextGlimmer'
 
 type StreamingStructureProps = {
@@ -40,21 +40,14 @@ function renderValue(value: unknown, reducedMotion: boolean): React.ReactNode {
   return String(value)
 }
 
-function renderNestedDl(
-  data: Record<string, unknown>,
-  reducedMotion: boolean,
-): React.ReactNode {
+function renderNestedDl(data: Record<string, unknown>, reducedMotion: boolean): React.ReactNode {
   const entries = Object.entries(data)
   return (
     <dl className="pl-4 m-0" data-testid="streaming-structure-nested">
       {entries.map(([key, value]) => (
         <div
           key={key}
-          style={
-            reducedMotion
-              ? undefined
-              : { animation: 'fadeSlideIn 0.3s ease-out' }
-          }
+          style={reducedMotion ? undefined : { animation: 'fadeSlideIn 0.3s ease-out' }}
         >
           <dt className="font-medium text-text-primary text-sm">{key}</dt>
           <dd className="text-text-secondary text-sm ml-0 mb-3">
@@ -66,29 +59,17 @@ function renderNestedDl(
   )
 }
 
-function StreamingStructure({
-  data,
-  isStreaming = false,
-  className,
-}: StreamingStructureProps) {
+function StreamingStructure({ data, isStreaming = false, className }: StreamingStructureProps) {
   const reducedMotion = useReducedMotion()
   const entries = Object.entries(data)
 
   return (
-    <dl
-      aria-live="polite"
-      className={twMerge('m-0', className)}
-      data-testid="streaming-structure"
-    >
+    <dl aria-live="polite" className={twMerge('m-0', className)} data-testid="streaming-structure">
       {!reducedMotion && <style>{fadeSlideInKeyframes}</style>}
       {entries.map(([key, value]) => (
         <div
           key={key}
-          style={
-            reducedMotion
-              ? undefined
-              : { animation: 'fadeSlideIn 0.3s ease-out' }
-          }
+          style={reducedMotion ? undefined : { animation: 'fadeSlideIn 0.3s ease-out' }}
           data-testid="streaming-structure-entry"
         >
           <dt className="font-medium text-text-primary text-sm">{key}</dt>

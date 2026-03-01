@@ -1,5 +1,5 @@
+import { useCallback, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
-import React, { useState, useCallback } from 'react'
 import { AgentChat } from '../../chat/AgentChat'
 import { ConversationList } from '../../chat/ConversationList'
 import type { ConversationSummary } from '../../types/chat'
@@ -107,11 +107,7 @@ function AgentFullPage({
           </div>
         )}
 
-        <AgentChat
-          endpoint={endpoint}
-          title={title}
-          className="flex-1 rounded-none border-0"
-        />
+        <AgentChat endpoint={endpoint} title={title} className="flex-1 rounded-none border-0" />
       </div>
     </div>
   )

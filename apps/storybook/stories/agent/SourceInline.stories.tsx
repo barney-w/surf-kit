@@ -16,7 +16,8 @@ export const Default: Story = {
       document_id: 'ea-2024-001',
       url: 'https://example.com/ea',
       confidence: 0.95,
-      snippet: 'All full-time employees are entitled to four weeks (20 days) of paid annual leave per year of service.',
+      snippet:
+        'All full-time employees are entitled to four weeks (20 days) of paid annual leave per year of service.',
     },
     index: 1,
   },
@@ -36,8 +37,8 @@ export const InContext: Story = {
           snippet: 'All full-time employees are entitled to four weeks of paid annual leave.',
         }}
         index={1}
-      />
-      {' '}and ten days of personal leave
+      />{' '}
+      and ten days of personal leave
       <SourceInline
         source={{
           title: 'HR Policy Manual',
@@ -45,7 +46,7 @@ export const InContext: Story = {
           document_id: 'hr-policy-005',
           url: 'https://example.com/hr',
           confidence: 0.88,
-          snippet: 'Personal leave entitlements include sick leave and carer\'s leave.',
+          snippet: "Personal leave entitlements include sick leave and carer's leave.",
         }}
         index={2}
       />

@@ -1,13 +1,12 @@
-import { render, screen, act } from '@testing-library/react'
-import { describe, it, expect, vi } from 'vitest'
+import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import React from 'react'
+import { describe, expect, it, vi } from 'vitest'
 import { ToastProvider, useToast } from '../Toast'
 
 function TestComponent() {
   const toast = useToast()
   return (
-    <button onClick={() => toast({ message: 'Hello toast', intent: 'success' })}>
+    <button type="button" onClick={() => toast({ message: 'Hello toast', intent: 'success' })}>
       Show Toast
     </button>
   )
@@ -35,9 +34,7 @@ describe('Toast', () => {
 
   it('throws when useToast is used outside provider', () => {
     const spy = vi.spyOn(console, 'error').mockImplementation(() => {})
-    expect(() => render(<TestComponent />)).toThrow(
-      'useToast must be used within a ToastProvider',
-    )
+    expect(() => render(<TestComponent />)).toThrow('useToast must be used within a ToastProvider')
     spy.mockRestore()
   })
 })

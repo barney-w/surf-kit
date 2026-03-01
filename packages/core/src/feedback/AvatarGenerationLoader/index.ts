@@ -1,2 +1,2 @@
-export { AvatarRings, AvatarGenerationLoader } from './AvatarGenerationLoader'
-export type { AvatarRingsProps, AvatarGenerationLoaderProps } from './AvatarGenerationLoader'
+export type { AvatarGenerationLoaderProps, AvatarRingsProps } from './AvatarGenerationLoader'
+export { AvatarGenerationLoader, AvatarRings } from './AvatarGenerationLoader'

@@ -1,4 +1,3 @@
-import React from 'react'
 import ReactMarkdown from 'react-markdown'
 import rehypeSanitize from 'rehype-sanitize'
 import { twMerge } from 'tailwind-merge'
@@ -49,7 +48,11 @@ function ResponseMessage({ content, className }: ResponseMessageProps) {
           h1: ({ children }) => <h1 className="text-base font-bold mt-4 mb-2">{children}</h1>,
           h2: ({ children }) => <h2 className="text-sm font-bold mt-3 mb-1">{children}</h2>,
           h3: ({ children }) => <h3 className="text-sm font-semibold mt-2 mb-1">{children}</h3>,
-          code: ({ children }) => <code className="bg-surface-sunken rounded px-1 py-0.5 text-xs font-mono">{children}</code>,
+          code: ({ children }) => (
+            <code className="bg-surface-sunken rounded px-1 py-0.5 text-xs font-mono">
+              {children}
+            </code>
+          ),
         }}
       >
         {normalizeMarkdownLists(content)}

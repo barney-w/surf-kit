@@ -91,14 +91,14 @@ export const surfKitPreset: Partial<Config> = {
         'surf-sm': 'var(--surf-shadow-sm)',
         'surf-md': 'var(--surf-shadow-md)',
         'surf-lg': 'var(--surf-shadow-lg)',
-        'glow': '0 0 20px rgba(225,185,137,0.4)',
+        glow: '0 0 20px rgba(225,185,137,0.4)',
         'glow-strong': '0 0 30px rgba(225,185,137,0.6), 0 0 60px rgba(225,185,137,0.3)',
         'glow-cyan': '0 0 15px rgba(56,189,208,0.5)',
         'glow-watermelon': '0 0 15px rgba(232,17,82,0.5)',
-        'card': '0 4px 24px rgba(4,31,38,0.8)',
+        card: '0 4px 24px rgba(4,31,38,0.8)',
       },
       backdropBlur: {
-        'glass': '12px',
+        glass: '12px',
       },
       keyframes: {
         blink: {

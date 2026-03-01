@@ -1,11 +1,10 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { describe, it, expect, vi } from 'vitest'
-import * as vitestAxe from 'vitest-axe/matchers'
+import { describe, expect, it, vi } from 'vitest'
 import { axe } from 'vitest-axe'
-
-import { SourceCard } from '../SourceCard'
+import * as vitestAxe from 'vitest-axe/matchers'
 import type { Source } from '../../../types/agent'
+import { SourceCard } from '../SourceCard'
 
 expect.extend(vitestAxe)
 
@@ -70,9 +69,7 @@ describe('SourceCard', () => {
   })
 
   it('has no accessibility violations', async () => {
-    const { container } = render(
-      <SourceCard source={mockSource} variant="expanded" />,
-    )
+    const { container } = render(<SourceCard source={mockSource} variant="expanded" />)
     const results = await axe(container)
     expect(results).toHaveNoViolations()
   })

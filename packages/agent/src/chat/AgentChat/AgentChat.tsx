@@ -1,11 +1,10 @@
 import { twMerge } from 'tailwind-merge'
-import React from 'react'
 import { useAgentChat } from '../../hooks/useAgentChat'
-import { MessageThread } from '../MessageThread'
-import { MessageComposer } from '../MessageComposer'
-import { WelcomeScreen } from '../WelcomeScreen'
 import { StreamingMessage } from '../../streaming/StreamingMessage'
 import type { ChatMessage } from '../../types/chat'
+import { MessageComposer } from '../MessageComposer'
+import { MessageThread } from '../MessageThread'
+import { WelcomeScreen } from '../WelcomeScreen'
 
 export type AgentChatProps = {
   endpoint: string

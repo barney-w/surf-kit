@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { Dialog } from '@surf-kit/core'
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 const meta: Meta<typeof Dialog> = {
   title: 'Core/Dialog',
@@ -16,7 +16,9 @@ function DialogDemo({ size = 'md' }: { size?: 'sm' | 'md' | 'lg' | 'full' }) {
   const [open, setOpen] = useState(false)
   return (
     <>
-      <button onClick={() => setOpen(true)}>Open Dialog</button>
+      <button type="button" onClick={() => setOpen(true)}>
+        Open Dialog
+      </button>
       <Dialog
         isOpen={open}
         onClose={() => setOpen(false)}
@@ -24,8 +26,12 @@ function DialogDemo({ size = 'md' }: { size?: 'sm' | 'md' | 'lg' | 'full' }) {
         size={size}
         footer={
           <>
-            <button onClick={() => setOpen(false)}>Cancel</button>
-            <button onClick={() => setOpen(false)}>Confirm</button>
+            <button type="button" onClick={() => setOpen(false)}>
+              Cancel
+            </button>
+            <button type="button" onClick={() => setOpen(false)}>
+              Confirm
+            </button>
           </>
         }
       >

@@ -1,5 +1,5 @@
+import type React from 'react'
 import { twMerge } from 'tailwind-merge'
-import React from 'react'
 
 type BoxProps<C extends React.ElementType = 'div'> = {
   as?: C

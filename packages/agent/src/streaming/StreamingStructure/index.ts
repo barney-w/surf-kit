@@ -1,2 +1,2 @@
-export { StreamingStructure } from './StreamingStructure'
 export type { StreamingStructureProps } from './StreamingStructure'
+export { StreamingStructure } from './StreamingStructure'

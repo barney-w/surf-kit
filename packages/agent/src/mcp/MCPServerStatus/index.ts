@@ -1,2 +1,2 @@
-export { MCPServerStatus } from './MCPServerStatus'
 export type { MCPServerStatusProps } from './MCPServerStatus'
+export { MCPServerStatus } from './MCPServerStatus'

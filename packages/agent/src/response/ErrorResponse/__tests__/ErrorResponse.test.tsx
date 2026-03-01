@@ -1,11 +1,10 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { describe, it, expect, vi } from 'vitest'
-import * as vitestAxe from 'vitest-axe/matchers'
+import { describe, expect, it, vi } from 'vitest'
 import { axe } from 'vitest-axe'
-
-import { ErrorResponse } from '../ErrorResponse'
+import * as vitestAxe from 'vitest-axe/matchers'
 import type { ChatError } from '../../../types/chat'
+import { ErrorResponse } from '../ErrorResponse'
 
 expect.extend(vitestAxe)
 
@@ -57,9 +56,7 @@ describe('ErrorResponse', () => {
   })
 
   it('has no accessibility violations', async () => {
-    const { container } = render(
-      <ErrorResponse error={retryableError} onRetry={() => {}} />,
-    )
+    const { container } = render(<ErrorResponse error={retryableError} onRetry={() => {}} />)
     const results = await axe(container)
     expect(results).toHaveNoViolations()
   })

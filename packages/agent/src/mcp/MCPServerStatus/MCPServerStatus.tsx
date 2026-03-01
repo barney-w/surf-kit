@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
 import { cva } from 'class-variance-authority'
+import { useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 import type { MCPServerInfo } from '../../types/mcp'
 

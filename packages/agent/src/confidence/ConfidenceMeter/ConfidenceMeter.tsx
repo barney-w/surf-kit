@@ -1,5 +1,3 @@
-import React from 'react'
-
 export type ConfidenceMeterProps = {
   value: number // 0-1
   label: string

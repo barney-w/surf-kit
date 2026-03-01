@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react'
 import type { Meta, StoryObj } from '@storybook/react'
 import { StreamingStructure } from '@surf-kit/agent'
+import { useEffect, useState } from 'react'
 
 const meta: Meta<typeof StreamingStructure> = {
   title: 'Agent/StreamingStructure',

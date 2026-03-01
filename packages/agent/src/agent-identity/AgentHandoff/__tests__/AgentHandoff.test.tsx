@@ -1,10 +1,9 @@
 import { render, screen } from '@testing-library/react'
-import { describe, it, expect } from 'vitest'
-import * as vitestAxe from 'vitest-axe/matchers'
+import { describe, expect, it } from 'vitest'
 import { axe } from 'vitest-axe'
-
-import { AgentHandoff } from '../AgentHandoff'
+import * as vitestAxe from 'vitest-axe/matchers'
 import type { AgentInfo } from '../../../types/agent'
+import { AgentHandoff } from '../AgentHandoff'
 
 expect.extend(vitestAxe)
 
@@ -44,9 +43,7 @@ describe('AgentHandoff', () => {
   })
 
   it('has no accessibility violations', async () => {
-    const { container } = render(
-      <AgentHandoff from={fromAgent} to={toAgent} />,
-    )
+    const { container } = render(<AgentHandoff from={fromAgent} to={toAgent} />)
     const results = await axe(container)
     expect(results).toHaveNoViolations()
   })

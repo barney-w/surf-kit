@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react'
 import { TypewriterText } from '@surf-kit/agent'
+import { useState } from 'react'
 
 const meta: Meta<typeof TypewriterText> = {
   title: 'Agent/TypewriterText',
@@ -43,11 +43,7 @@ export const OnComplete: Story = {
           speed={20}
           onComplete={() => setCompleted(true)}
         />
-        {completed && (
-          <p className="mt-4 text-sm text-text-secondary">
-            Animation complete!
-          </p>
-        )}
+        {completed && <p className="mt-4 text-sm text-text-secondary">Animation complete!</p>}
       </div>
     )
   },

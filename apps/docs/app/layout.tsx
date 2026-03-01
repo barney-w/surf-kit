@@ -1,8 +1,8 @@
-import { RootProvider } from 'fumadocs-ui/provider';
-import 'fumadocs-ui/style.css';
-import './globals.css';
-import type { ReactNode } from 'react';
-import type { Metadata } from 'next';
+import { RootProvider } from 'fumadocs-ui/provider'
+import 'fumadocs-ui/style.css'
+import './globals.css'
+import type { Metadata } from 'next'
+import type { ReactNode } from 'react'
 
 export const metadata: Metadata = {
   title: {
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   },
   description:
     'Purpose-built component library for agent interfaces. Trust, transparency, and accessibility by default.',
-};
+}
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
@@ -20,5 +20,5 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <RootProvider>{children}</RootProvider>
       </body>
     </html>
-  );
+  )
 }

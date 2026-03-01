@@ -1,8 +1,8 @@
-import { twMerge } from 'tailwind-merge'
-import React, { createContext, useContext, useRef } from 'react'
-import { useRadioGroup, useRadio } from 'react-aria'
-import { useRadioGroupState } from 'react-stately'
+import { createContext, useContext, useRef } from 'react'
+import { useRadio, useRadioGroup } from 'react-aria'
 import type { RadioGroupState } from 'react-stately'
+import { useRadioGroupState } from 'react-stately'
+import { twMerge } from 'tailwind-merge'
 
 type RadioItem = { value: string; label: string }
 
@@ -51,7 +51,10 @@ function RadioGroup({
   className,
 }: RadioGroupProps) {
   const state = useRadioGroupState({ label, value, onChange })
-  const { radioGroupProps, labelProps } = useRadioGroup({ label, value, onChange, orientation }, state)
+  const { radioGroupProps, labelProps } = useRadioGroup(
+    { label, value, onChange, orientation },
+    state,
+  )
 
   return (
     <div {...radioGroupProps} className={twMerge('flex flex-col gap-2', className)}>
@@ -59,7 +62,9 @@ function RadioGroup({
         {label}
       </span>
       <RadioContext.Provider value={state}>
-        <div className={twMerge('flex gap-3', orientation === 'vertical' ? 'flex-col' : 'flex-row')}>
+        <div
+          className={twMerge('flex gap-3', orientation === 'vertical' ? 'flex-col' : 'flex-row')}
+        >
           {items.map((item) => (
             <Radio key={item.value} value={item.value} label={item.label} />
           ))}

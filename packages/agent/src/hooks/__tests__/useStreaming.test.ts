@@ -1,9 +1,9 @@
-import { renderHook, act } from '@testing-library/react'
-import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { act, renderHook } from '@testing-library/react'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { useStreaming } from '../useStreaming'
 
 function createMockSSEResponse(events: Array<{ type: string; [key: string]: unknown }>) {
-  const lines = events.map((e) => `data: ${JSON.stringify(e)}`).join('\n') + '\n'
+  const lines = `${events.map((e) => `data: ${JSON.stringify(e)}`).join('\n')}\n`
   const encoder = new TextEncoder()
   const stream = new ReadableStream({
     start(controller) {
@@ -23,9 +23,7 @@ describe('useStreaming', () => {
   })
 
   it('returns initial idle state', () => {
-    const { result } = renderHook(() =>
-      useStreaming({ url: 'https://api.test.com/stream' }),
-    )
+    const { result } = renderHook(() => useStreaming({ url: 'https://api.test.com/stream' }))
 
     expect(result.current.state.active).toBe(false)
     expect(result.current.state.phase).toBe('idle')
@@ -44,7 +42,14 @@ describe('useStreaming', () => {
         response: {
           message: 'Hello world!',
           sources: [],
-          confidence: { overall: 'high', retrieval_quality: 0.9, source_authority: 0.9, answer_groundedness: 0.9, recency: 0.9, reasoning: '' },
+          confidence: {
+            overall: 'high',
+            retrieval_quality: 0.9,
+            source_authority: 0.9,
+            answer_groundedness: 0.9,
+            recency: 0.9,
+            reasoning: '',
+          },
           verification: { status: 'passed', flags: [], claims_checked: 0, claims_verified: 0 },
           ui_hint: 'text',
           structured_data: null,
@@ -86,7 +91,14 @@ describe('useStreaming', () => {
         response: {
           message: 'done',
           sources: [mockSource],
-          confidence: { overall: 'high', retrieval_quality: 0.9, source_authority: 0.9, answer_groundedness: 0.9, recency: 0.9, reasoning: '' },
+          confidence: {
+            overall: 'high',
+            retrieval_quality: 0.9,
+            source_authority: 0.9,
+            answer_groundedness: 0.9,
+            recency: 0.9,
+            reasoning: '',
+          },
           verification: { status: 'passed', flags: [], claims_checked: 0, claims_verified: 0 },
           ui_hint: 'text',
           structured_data: null,
@@ -97,9 +109,7 @@ describe('useStreaming', () => {
 
     vi.spyOn(globalThis, 'fetch').mockResolvedValueOnce(mockResponse)
 
-    const { result } = renderHook(() =>
-      useStreaming({ url: 'https://api.test.com/stream' }),
-    )
+    const { result } = renderHook(() => useStreaming({ url: 'https://api.test.com/stream' }))
 
     await act(async () => {
       await result.current.start({ message: 'hi' })
@@ -151,7 +161,14 @@ describe('useStreaming', () => {
         response: {
           message: 'done',
           sources: [],
-          confidence: { overall: 'high', retrieval_quality: 0.9, source_authority: 0.9, answer_groundedness: 0.9, recency: 0.9, reasoning: '' },
+          confidence: {
+            overall: 'high',
+            retrieval_quality: 0.9,
+            source_authority: 0.9,
+            answer_groundedness: 0.9,
+            recency: 0.9,
+            reasoning: '',
+          },
           verification: { status: 'passed', flags: [], claims_checked: 0, claims_verified: 0 },
           ui_hint: 'text',
           structured_data: null,
@@ -162,9 +179,7 @@ describe('useStreaming', () => {
 
     vi.spyOn(globalThis, 'fetch').mockResolvedValueOnce(mockResponse)
 
-    const { result } = renderHook(() =>
-      useStreaming({ url: 'https://api.test.com/stream' }),
-    )
+    const { result } = renderHook(() => useStreaming({ url: 'https://api.test.com/stream' }))
 
     await act(async () => {
       await result.current.start({ message: 'hi' })

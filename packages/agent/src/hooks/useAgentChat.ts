@@ -1,8 +1,8 @@
-import { useReducer, useCallback, useRef } from 'react'
-import type { ChatMessage, ChatError } from '../types/chat'
+import { useCallback, useReducer, useRef } from 'react'
 import type { AgentResponse } from '../types/agent'
-import type { StreamState } from '../types/streaming'
+import type { ChatError, ChatMessage } from '../types/chat'
 import type { AgentChatConfig } from '../types/config'
+import type { StreamState } from '../types/streaming'
 
 // ── State ──────────────────────────────────────────────────────────────
 
@@ -33,7 +33,12 @@ type Action =
   | { type: 'SEND_START'; message: ChatMessage }
   | { type: 'STREAM_PHASE'; phase: StreamState['phase'] }
   | { type: 'STREAM_CONTENT'; content: string }
-  | { type: 'SEND_SUCCESS'; message: ChatMessage; streamingContent: string; conversationId: string | null }
+  | {
+      type: 'SEND_SUCCESS'
+      message: ChatMessage
+      streamingContent: string
+      conversationId: string | null
+    }
   | { type: 'SEND_ERROR'; error: ChatError }
   | { type: 'LOAD_CONVERSATION'; conversationId: string; messages: ChatMessage[] }
   | { type: 'RESET' }
@@ -110,7 +115,11 @@ export interface AgentChatActions {
   sendMessage: (content: string) => Promise<void>
   setInputValue: (value: string) => void
   loadConversation: (conversationId: string, messages: ChatMessage[]) => void
-  submitFeedback: (messageId: string, rating: 'positive' | 'negative', comment?: string) => Promise<void>
+  submitFeedback: (
+    messageId: string,
+    rating: 'positive' | 'negative',
+    comment?: string,
+  ) => Promise<void>
   retry: () => Promise<void>
   reset: () => void
 }
@@ -123,7 +132,12 @@ export function useAgentChat(config: AgentChatConfig) {
 
   const sendMessage = useCallback(
     async (content: string) => {
-      const { apiUrl, streamPath = '/chat/stream', headers = {}, timeout = 30000 } = configRef.current
+      const {
+        apiUrl,
+        streamPath = '/chat/stream',
+        headers = {},
+        timeout = 30000,
+      } = configRef.current
 
       lastUserMessageRef.current = content
 

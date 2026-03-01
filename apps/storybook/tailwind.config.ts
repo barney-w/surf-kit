@@ -1,5 +1,5 @@
-import type { Config } from 'tailwindcss';
-import { surfKitPreset } from '@surf-kit/theme';
+import { surfKitPreset } from '@surf-kit/theme'
+import type { Config } from 'tailwindcss'
 
 const config: Config = {
   content: [
@@ -9,6 +9,6 @@ const config: Config = {
     '../../packages/agent/src/**/*.{ts,tsx}',
   ],
   presets: [surfKitPreset],
-};
+}
 
-export default config;
+export default config

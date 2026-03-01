@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from 'react'
+import { useCallback, useRef, useState } from 'react'
 
 export function useClipboard(): { copy: (text: string) => Promise<void>; copied: boolean } {
   const [copied, setCopied] = useState(false)

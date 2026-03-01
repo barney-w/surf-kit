@@ -1,7 +1,6 @@
-import React from 'react'
+import { useReducedMotion } from '@surf-kit/hooks'
 import { twMerge } from 'tailwind-merge'
 import { VisuallyHidden } from '../../primitives/VisuallyHidden'
-import { useReducedMotion } from '@surf-kit/hooks'
 
 type AvatarRingsProps = {
   className?: string

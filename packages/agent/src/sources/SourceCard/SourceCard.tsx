@@ -1,5 +1,5 @@
-import React from 'react'
 import { Badge } from '@surf-kit/core'
+import type React from 'react'
 import { twMerge } from 'tailwind-merge'
 import type { Source } from '../../types/agent'
 
@@ -60,19 +60,14 @@ function SourceCard({ source, variant = 'compact', onNavigate, className }: Sour
       >
         <div className="flex items-start justify-between gap-2">
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium text-text-primary truncate">
-              {source.title}
-            </p>
+            <p className="text-sm font-medium text-text-primary truncate">{source.title}</p>
             {source.section && (
               <p className="text-[11px] font-semibold uppercase tracking-wider text-text-secondary truncate mt-0.5">
                 {source.section}
               </p>
             )}
           </div>
-          <Badge
-            intent={getConfidenceIntent(source.confidence)}
-            size="sm"
-          >
+          <Badge intent={getConfidenceIntent(source.confidence)} size="sm">
             {getConfidenceLabel(source.confidence)}
           </Badge>
         </div>

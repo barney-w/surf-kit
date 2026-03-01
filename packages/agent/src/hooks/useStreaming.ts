@@ -1,6 +1,5 @@
-import { useState, useCallback, useRef, useEffect } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import type { StreamEvent, StreamState } from '../types/streaming'
-import type { Source } from '../types/agent'
 
 export interface UseStreamingOptions {
   /** SSE endpoint URL */
@@ -23,7 +22,7 @@ const initialState: StreamState = {
 }
 
 export function useStreaming(options: UseStreamingOptions) {
-  const { url, headers, onDone, onError } = options
+  const { url, headers, onDone: _onDone, onError: _onError } = options
   const [state, setState] = useState<StreamState>(initialState)
   const abortRef = useRef<AbortController | null>(null)
   const optionsRef = useRef(options)

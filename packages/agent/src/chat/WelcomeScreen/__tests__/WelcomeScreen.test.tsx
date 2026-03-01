@@ -1,10 +1,11 @@
 import { render, screen } from '@testing-library/react'
-import { describe, it, expect, vi } from 'vitest'
 import userEvent from '@testing-library/user-event'
-import * as vitestAxe from 'vitest-axe/matchers'
+import { describe, expect, it, vi } from 'vitest'
 import { axe } from 'vitest-axe'
+import * as vitestAxe from 'vitest-axe/matchers'
 
 expect.extend(vitestAxe)
+
 import { WelcomeScreen } from '../WelcomeScreen'
 
 describe('WelcomeScreen', () => {
@@ -30,12 +31,7 @@ describe('WelcomeScreen', () => {
   it('calls onQuestionSelect when a chip is clicked', async () => {
     const onSelect = vi.fn()
     const user = userEvent.setup()
-    render(
-      <WelcomeScreen
-        suggestedQuestions={['What is X?']}
-        onQuestionSelect={onSelect}
-      />,
-    )
+    render(<WelcomeScreen suggestedQuestions={['What is X?']} onQuestionSelect={onSelect} />)
     await user.click(screen.getByText('What is X?'))
     expect(onSelect).toHaveBeenCalledWith('What is X?')
   })

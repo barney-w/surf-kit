@@ -1,33 +1,33 @@
-import { useState } from "react";
 import {
   Button,
+  Calendar,
+  Checkbox,
   IconButton,
+  RadioGroup,
+  SearchInput,
+  Select,
+  Separator,
+  Slider,
+  Stack,
+  Switch,
+  Text,
+  TextArea,
+  TextInput,
   Toggle,
   ToggleGroup,
-  TextInput,
-  TextArea,
-  Select,
-  Checkbox,
-  RadioGroup,
-  Switch,
-  SearchInput,
-  Slider,
-  Calendar,
-  Stack,
-  Text,
-  Separator,
-} from "@surf-kit/core";
-import { Settings, Copy, Check } from "@surf-kit/icons";
-import { SectionWrapper } from "./SectionWrapper";
+} from '@surf-kit/core'
+import { Check, Copy, Settings } from '@surf-kit/icons'
+import { useState } from 'react'
+import { SectionWrapper } from './SectionWrapper'
 
 export function ButtonsInputsSection() {
-  const [switchOn, setSwitchOn] = useState(false);
-  const [checkboxOn, setCheckboxOn] = useState(true);
-  const [radioValue, setRadioValue] = useState("light");
-  const [selectKey, setSelectKey] = useState("pro");
-  const [searchValue, setSearchValue] = useState("");
-  const [sliderValue, setSliderValue] = useState(65);
-  const [toggleOn, setToggleOn] = useState(false);
+  const [switchOn, setSwitchOn] = useState(false)
+  const [checkboxOn, setCheckboxOn] = useState(true)
+  const [radioValue, setRadioValue] = useState('light')
+  const [selectKey, setSelectKey] = useState('pro')
+  const [searchValue, setSearchValue] = useState('')
+  const [sliderValue, setSliderValue] = useState(65)
+  const [toggleOn, setToggleOn] = useState(false)
 
   return (
     <SectionWrapper title="Buttons & Inputs">
@@ -76,12 +76,7 @@ export function ButtonsInputsSection() {
             Toggle &amp; ToggleGroup
           </Text>
           <Stack direction="horizontal" gap={3} align="center">
-            <Toggle
-              isSelected={toggleOn}
-              onChange={setToggleOn}
-              aria-label="Bold"
-              size="sm"
-            >
+            <Toggle isSelected={toggleOn} onChange={setToggleOn} aria-label="Bold" size="sm">
               B
             </Toggle>
             <ToggleGroup type="single" defaultValue="left">
@@ -106,20 +101,9 @@ export function ButtonsInputsSection() {
             TextInput &amp; TextArea
           </Text>
           <Stack gap={3}>
-            <TextInput
-              label="Email"
-              placeholder="you@example.com"
-            />
-            <TextInput
-              label="With error"
-              errorMessage="This field is required"
-              value=""
-            />
-            <TextArea
-              label="Notes"
-              placeholder="Add any additional notes..."
-              rows={2}
-            />
+            <TextInput label="Email" placeholder="you@example.com" />
+            <TextInput label="With error" errorMessage="This field is required" value="" />
+            <TextArea label="Notes" placeholder="Add any additional notes..." rows={2} />
           </Stack>
         </div>
 
@@ -131,9 +115,9 @@ export function ButtonsInputsSection() {
           <Select
             label="Plan"
             items={[
-              { key: "free", label: "Free" },
-              { key: "pro", label: "Pro" },
-              { key: "enterprise", label: "Enterprise" },
+              { key: 'free', label: 'Free' },
+              { key: 'pro', label: 'Pro' },
+              { key: 'enterprise', label: 'Enterprise' },
             ]}
             selectedKey={selectKey}
             onSelectionChange={setSelectKey}
@@ -156,19 +140,15 @@ export function ButtonsInputsSection() {
             <RadioGroup
               label="Color mode"
               items={[
-                { value: "light", label: "Light" },
-                { value: "dark", label: "Dark" },
-                { value: "brand", label: "Brand" },
+                { value: 'light', label: 'Light' },
+                { value: 'dark', label: 'Dark' },
+                { value: 'brand', label: 'Brand' },
               ]}
               value={radioValue}
               onChange={setRadioValue}
               orientation="horizontal"
             />
-            <Switch
-              label="Enable notifications"
-              isSelected={switchOn}
-              onChange={setSwitchOn}
-            />
+            <Switch label="Enable notifications" isSelected={switchOn} onChange={setSwitchOn} />
           </Stack>
         </div>
 
@@ -184,7 +164,7 @@ export function ButtonsInputsSection() {
             placeholder="Search..."
             value={searchValue}
             onChange={setSearchValue}
-            onClear={() => setSearchValue("")}
+            onClear={() => setSearchValue('')}
           />
         </div>
 
@@ -211,5 +191,5 @@ export function ButtonsInputsSection() {
         </div>
       </Stack>
     </SectionWrapper>
-  );
+  )
 }

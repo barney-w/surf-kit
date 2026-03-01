@@ -15,6 +15,6 @@ type Story = StoryObj<typeof Badge>
 export const Default: Story = { args: { children: 'Default' } }
 export const Success: Story = { args: { children: 'Success', intent: 'success' } }
 export const Warning: Story = { args: { children: 'Warning', intent: 'warning' } }
-export const Error: Story = { args: { children: 'Error', intent: 'error' } }
+export const ErrorState: Story = { args: { children: 'Error', intent: 'error' } }
 export const Info: Story = { args: { children: 'Info', intent: 'info' } }
 export const Small: Story = { args: { children: 'Small', size: 'sm' } }

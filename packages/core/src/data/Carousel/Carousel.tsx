@@ -1,4 +1,5 @@
-import React, { useState, useRef, useCallback, useEffect, Children } from 'react'
+import type React from 'react'
+import { Children, useCallback, useEffect, useRef, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 
 type CarouselProps = {
@@ -25,15 +26,12 @@ function Carousel({
   const isHoveredRef = useRef(false)
   const slideCount = Children.count(children)
 
-  const scrollToSlide = useCallback(
-    (index: number) => {
-      const container = containerRef.current
-      if (!container) return
-      const slideWidth = container.offsetWidth
-      container.scrollTo({ left: slideWidth * index, behavior: 'smooth' })
-    },
-    [],
-  )
+  const scrollToSlide = useCallback((index: number) => {
+    const container = containerRef.current
+    if (!container) return
+    const slideWidth = container.offsetWidth
+    container.scrollTo({ left: slideWidth * index, behavior: 'smooth' })
+  }, [])
 
   const goToNext = useCallback(() => {
     if (currentSlide >= slideCount - 1) {

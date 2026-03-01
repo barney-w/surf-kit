@@ -1,5 +1,5 @@
+import type React from 'react'
 import { twMerge } from 'tailwind-merge'
-import React from 'react'
 
 export type WelcomeScreenProps = {
   title?: string
@@ -35,9 +35,7 @@ function WelcomeScreen({
 
       {/* Text */}
       <div className="flex flex-col gap-2">
-        {title && (
-          <h2 className="text-3xl font-bold text-text-primary">{title}</h2>
-        )}
+        {title && <h2 className="text-3xl font-bold text-text-primary">{title}</h2>}
         <p className="text-text-secondary text-base leading-relaxed max-w-md">{message}</p>
       </div>
 
@@ -48,7 +46,7 @@ function WelcomeScreen({
           role="group"
           aria-label="Suggested questions"
         >
-          {suggestedQuestions.map(question => (
+          {suggestedQuestions.map((question) => (
             <button
               key={question}
               type="button"

@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react'
-import { describe, it, expect } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import { ProgressBar } from '../ProgressBar'
 
 describe('ProgressBar', () => {
@@ -15,7 +15,7 @@ describe('ProgressBar', () => {
   })
 
   it('clamps value between 0 and 100', () => {
-    const { container } = render(<ProgressBar value={150} label="Over" />)
+    const { container: _container } = render(<ProgressBar value={150} label="Over" />)
     expect(screen.getByText('100%')).toBeDefined()
   })
 })

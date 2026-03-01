@@ -1,7 +1,7 @@
-import React from 'react'
+import { useReducedMotion } from '@surf-kit/hooks'
+import type React from 'react'
 import { twMerge } from 'tailwind-merge'
 import { VisuallyHidden } from '../../primitives/VisuallyHidden'
-import { useReducedMotion } from '@surf-kit/hooks'
 
 const sizes = {
   sm: 16,
@@ -36,10 +36,7 @@ function DualRingSpinner({
   const { outer, inner } = dualRingSizes[size]
   const borderWidth = size === 'sm' ? 2 : size === 'md' ? 3 : 4
 
-  const ringStyle = (
-    diameter: number,
-    delay?: string,
-  ): React.CSSProperties => ({
+  const ringStyle = (diameter: number, delay?: string): React.CSSProperties => ({
     width: diameter,
     height: diameter,
     borderRadius: '50%',
@@ -59,10 +56,7 @@ function DualRingSpinner({
       style={{ width: outer, height: outer }}
     >
       <span style={{ ...ringStyle(outer), position: 'absolute' }} aria-hidden="true" />
-      <span
-        style={{ ...ringStyle(inner, '-0.4s'), position: 'absolute' }}
-        aria-hidden="true"
-      />
+      <span style={{ ...ringStyle(inner, '-0.4s'), position: 'absolute' }} aria-hidden="true" />
       <VisuallyHidden>{label}</VisuallyHidden>
     </span>
   )
@@ -86,13 +80,7 @@ function Spinner({ size = 'md', label = 'Loading', className, variant = 'default
   if (reducedMotion) {
     return (
       <span role="status" className={twMerge('inline-flex', className)}>
-        <svg
-          width={px}
-          height={px}
-          viewBox="0 0 24 24"
-          fill="none"
-          aria-hidden="true"
-        >
+        <svg width={px} height={px} viewBox="0 0 24 24" fill="none" aria-hidden="true">
           <circle
             cx="12"
             cy="12"
@@ -118,14 +106,7 @@ function Spinner({ size = 'md', label = 'Loading', className, variant = 'default
         className="animate-spin"
         aria-hidden="true"
       >
-        <circle
-          cx="12"
-          cy="12"
-          r="10"
-          stroke="currentColor"
-          strokeWidth="3"
-          strokeOpacity="0.25"
-        />
+        <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" strokeOpacity="0.25" />
         <path
           d="M12 2a10 10 0 0 1 10 10"
           stroke="currentColor"

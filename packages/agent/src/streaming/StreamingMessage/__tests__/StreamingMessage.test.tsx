@@ -1,10 +1,9 @@
 import { render, screen } from '@testing-library/react'
-import { describe, it, expect, vi, beforeAll } from 'vitest'
-import * as vitestAxe from 'vitest-axe/matchers'
+import { beforeAll, describe, expect, it, vi } from 'vitest'
 import { axe } from 'vitest-axe'
-
-import { StreamingMessage } from '../StreamingMessage'
+import * as vitestAxe from 'vitest-axe/matchers'
 import type { StreamState } from '../../../types/streaming'
+import { StreamingMessage } from '../StreamingMessage'
 
 // Mock useCharacterDrain to pass through the target string directly in tests,
 // since requestAnimationFrame doesn't behave the same in jsdom.
@@ -30,7 +29,7 @@ beforeAll(() => {
   })
 })
 
-const idleStream: StreamState = {
+const _idleStream: StreamState = {
   active: false,
   phase: 'idle',
   content: '',

@@ -1,4 +1,3 @@
-import React from 'react'
 import { Alert, Button } from '@surf-kit/core'
 import type { ChatError } from '../../types/chat'
 
@@ -15,12 +14,7 @@ function ErrorResponse({ error, onRetry, className }: ErrorResponseProps) {
         <p>{error.message}</p>
         {error.retryable && onRetry && (
           <div className="mt-3">
-            <Button
-              intent="secondary"
-              size="sm"
-              onPress={onRetry}
-              aria-label="Retry"
-            >
+            <Button intent="secondary" size="sm" onPress={onRetry} aria-label="Retry">
               Retry
             </Button>
           </div>

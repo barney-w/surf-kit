@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react'
-import { describe, it, expect, vi } from 'vitest'
 import userEvent from '@testing-library/user-event'
+import { describe, expect, it } from 'vitest'
 import { DropdownMenu } from '../DropdownMenu'
 
 const items = [
@@ -10,16 +10,14 @@ const items = [
 
 describe('DropdownMenu', () => {
   it('renders trigger without crashing', () => {
-    render(
-      <DropdownMenu trigger={<button>Menu</button>} items={items} />,
-    )
+    render(<DropdownMenu trigger={<button type="button">Menu</button>} items={items} />)
     expect(screen.getByText('Menu')).toBeDefined()
   })
 
   it('opens menu on trigger click and shows items', async () => {
     render(
       <DropdownMenu
-        trigger={<button>Menu</button>}
+        trigger={<button type="button">Menu</button>}
         items={items}
         aria-label="Actions"
       />,

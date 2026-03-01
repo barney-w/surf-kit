@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { describe, it, expect, vi } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import { Toggle } from '../Toggle'
 
 describe('Toggle', () => {
@@ -24,21 +24,31 @@ describe('Toggle', () => {
     const user = userEvent.setup()
     const onChange = vi.fn()
     const { rerender } = render(
-      <Toggle isSelected={false} onChange={onChange}>Bold</Toggle>,
+      <Toggle isSelected={false} onChange={onChange}>
+        Bold
+      </Toggle>,
     )
     const btn = screen.getByRole('button', { name: 'Bold' })
     expect(btn.getAttribute('aria-pressed')).toBe('false')
     await user.click(btn)
     expect(onChange).toHaveBeenCalledWith(true)
 
-    rerender(<Toggle isSelected={true} onChange={onChange}>Bold</Toggle>)
+    rerender(
+      <Toggle isSelected={true} onChange={onChange}>
+        Bold
+      </Toggle>,
+    )
     expect(btn.getAttribute('aria-pressed')).toBe('true')
   })
 
   it('respects disabled state', async () => {
     const user = userEvent.setup()
     const onChange = vi.fn()
-    render(<Toggle isDisabled onChange={onChange}>Bold</Toggle>)
+    render(
+      <Toggle isDisabled onChange={onChange}>
+        Bold
+      </Toggle>,
+    )
     const btn = screen.getByRole('button', { name: 'Bold' })
     await user.click(btn)
     expect(onChange).not.toHaveBeenCalled()

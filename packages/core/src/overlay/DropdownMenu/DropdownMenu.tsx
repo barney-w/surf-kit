@@ -1,7 +1,7 @@
-import { twMerge } from 'tailwind-merge'
 import React, { useRef } from 'react'
-import { useMenuTrigger, useMenu, useMenuItem, useButton } from 'react-aria'
-import { useMenuTriggerState, useTreeState, Item } from 'react-stately'
+import { useButton, useMenu, useMenuItem, useMenuTrigger } from 'react-aria'
+import { Item, useMenuTriggerState, useTreeState } from 'react-stately'
+import { twMerge } from 'tailwind-merge'
 
 type DropdownMenuItem = {
   key: string
@@ -46,18 +46,8 @@ function MenuItemRow({ item, state, onAction }: any) {
   )
 }
 
-function MenuPopup({
-  state,
-  menuRef,
-  onAction,
-  className,
-  menuLabel,
-}: any) {
-  const { menuProps } = useMenu(
-    { 'aria-label': menuLabel || 'Menu' },
-    state,
-    menuRef,
-  )
+function MenuPopup({ state, menuRef, onAction, className, menuLabel }: any) {
+  const { menuProps } = useMenu({ 'aria-label': menuLabel || 'Menu' }, state, menuRef)
 
   return (
     <ul
@@ -69,12 +59,7 @@ function MenuPopup({
       )}
     >
       {[...state.collection].map((item) => (
-        <MenuItemRow
-          key={item.key}
-          item={item}
-          state={state}
-          onAction={onAction}
-        />
+        <MenuItemRow key={item.key} item={item} state={state} onAction={onAction} />
       ))}
     </ul>
   )
@@ -90,12 +75,10 @@ function DropdownMenu({
   const triggerRef = useRef<HTMLButtonElement>(null)
   const menuRef = useRef<HTMLUListElement>(null)
 
-  const disabledKeys = items
-    .filter((i) => i.isDisabled)
-    .map((i) => i.key)
+  const disabledKeys = items.filter((i) => i.isDisabled).map((i) => i.key)
 
   const state = useMenuTriggerState({})
-  const { menuTriggerProps, menuProps } = useMenuTrigger(
+  const { menuTriggerProps, menuProps: _menuProps } = useMenuTrigger(
     { type: 'menu' },
     state,
     triggerRef,
@@ -103,9 +86,7 @@ function DropdownMenu({
   const { buttonProps } = useButton(menuTriggerProps, triggerRef)
 
   const treeState = useTreeState({
-    children: items.map((item) => (
-      <Item key={item.key}>{item.label}</Item>
-    )),
+    children: items.map((item) => <Item key={item.key}>{item.label}</Item>),
     selectionMode: 'none',
     disabledKeys,
   })

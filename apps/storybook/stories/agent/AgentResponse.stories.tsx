@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { AgentResponseView } from '@surf-kit/agent'
 import type { AgentResponse } from '@surf-kit/agent'
+import { AgentResponseView } from '@surf-kit/agent'
 
 const meta: Meta<typeof AgentResponseView> = {
   title: 'Agent/AgentResponse',

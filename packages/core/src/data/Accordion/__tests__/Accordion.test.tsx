@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { describe, it, expect } from 'vitest'
-import * as vitestAxe from 'vitest-axe/matchers'
+import { describe, expect, it } from 'vitest'
 import { axe } from 'vitest-axe'
+import * as vitestAxe from 'vitest-axe/matchers'
 
 import { Accordion } from '../Accordion'
 
@@ -34,7 +34,9 @@ describe('Accordion', () => {
     const user = userEvent.setup()
     render(<Accordion items={items} />)
     await user.click(screen.getByText('Section One'))
-    expect(screen.getByText('Section One').closest('button')?.getAttribute('aria-expanded')).toBe('true')
+    expect(screen.getByText('Section One').closest('button')?.getAttribute('aria-expanded')).toBe(
+      'true',
+    )
     expect(screen.getByText('Content One')).toBeDefined()
   })
 

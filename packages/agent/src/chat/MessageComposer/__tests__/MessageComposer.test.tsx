@@ -1,10 +1,11 @@
 import { render, screen } from '@testing-library/react'
-import { describe, it, expect, vi } from 'vitest'
 import userEvent from '@testing-library/user-event'
-import * as vitestAxe from 'vitest-axe/matchers'
+import { describe, expect, it, vi } from 'vitest'
 import { axe } from 'vitest-axe'
+import * as vitestAxe from 'vitest-axe/matchers'
 
 expect.extend(vitestAxe)
+
 import { MessageComposer } from '../MessageComposer'
 
 describe('MessageComposer', () => {
@@ -27,7 +28,7 @@ describe('MessageComposer', () => {
   })
 
   it('disables send button when isLoading is true', async () => {
-    const user = userEvent.setup()
+    const _user = userEvent.setup()
     render(<MessageComposer onSend={vi.fn()} isLoading />)
     // Textarea should be disabled too
     expect(screen.getByLabelText('Message input')).toBeDisabled()
@@ -73,9 +74,7 @@ describe('MessageComposer', () => {
   })
 
   it('applies custom className', () => {
-    const { container } = render(
-      <MessageComposer onSend={vi.fn()} className="custom-composer" />,
-    )
+    const { container } = render(<MessageComposer onSend={vi.fn()} className="custom-composer" />)
     expect(container.firstElementChild?.className).toContain('custom-composer')
   })
 

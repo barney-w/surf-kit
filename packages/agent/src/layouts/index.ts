@@ -1,11 +1,8 @@
-export { AgentFullPage } from './AgentFullPage'
-export type { AgentFullPageProps } from './AgentFullPage'
-
-export { AgentPanel } from './AgentPanel'
-export type { AgentPanelProps } from './AgentPanel'
-
-export { AgentWidget } from './AgentWidget'
-export type { AgentWidgetProps } from './AgentWidget'
-
-export { AgentEmbed } from './AgentEmbed'
 export type { AgentEmbedProps } from './AgentEmbed'
+export { AgentEmbed } from './AgentEmbed'
+export type { AgentFullPageProps } from './AgentFullPage'
+export { AgentFullPage } from './AgentFullPage'
+export type { AgentPanelProps } from './AgentPanel'
+export { AgentPanel } from './AgentPanel'
+export type { AgentWidgetProps } from './AgentWidget'
+export { AgentWidget } from './AgentWidget'

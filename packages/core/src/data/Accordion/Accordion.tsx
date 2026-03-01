@@ -1,5 +1,6 @@
+import type React from 'react'
+import { useCallback, useRef, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
-import React, { useState, useRef, useCallback } from 'react'
 
 type AccordionItem = { key: string; title: string; content: React.ReactNode }
 
@@ -16,9 +17,7 @@ function Accordion({
   defaultExpandedKeys = [],
   className,
 }: AccordionProps) {
-  const [expandedKeys, setExpandedKeys] = useState<Set<string>>(
-    new Set(defaultExpandedKeys),
-  )
+  const [expandedKeys, setExpandedKeys] = useState<Set<string>>(new Set(defaultExpandedKeys))
   const headerRefs = useRef<Map<string, HTMLButtonElement>>(new Map())
 
   const toggleKey = useCallback(

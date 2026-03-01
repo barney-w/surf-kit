@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import type { Source } from '../../types/agent'
 import { SourceCard } from '../SourceCard'
 
@@ -48,7 +48,7 @@ function SourceList({
     <div className={className} data-testid="source-list">
       <button
         type="button"
-        onClick={() => setIsExpanded(prev => !prev)}
+        onClick={() => setIsExpanded((prev) => !prev)}
         aria-expanded={isExpanded}
         className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-text-secondary hover:text-accent mb-2 transition-colors duration-200"
       >

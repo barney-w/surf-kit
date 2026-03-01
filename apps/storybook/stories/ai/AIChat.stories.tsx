@@ -1,4 +1,3 @@
-import React from 'react'
 import type { Meta, StoryObj } from '@storybook/react'
 import { MessageComposer, WelcomeScreen } from '@surf-kit/agent'
 
@@ -69,10 +68,7 @@ export const WithTitle: Story = {
     <AIChatShell
       title="Research Assistant"
       welcomeMessage="I can help you find and summarize information."
-      suggestedQuestions={[
-        'Summarize recent papers on transformers',
-        'Compare React and Vue',
-      ]}
+      suggestedQuestions={['Summarize recent papers on transformers', 'Compare React and Vue']}
     />
   ),
 }

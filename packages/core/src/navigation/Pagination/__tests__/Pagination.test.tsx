@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { describe, it, expect, vi } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 
 import { Pagination } from '../Pagination'
 
@@ -84,12 +84,7 @@ describe('Pagination', () => {
 
   it('hides first/last buttons when showFirstLast is false', () => {
     render(
-      <Pagination
-        totalPages={5}
-        currentPage={1}
-        onPageChange={() => {}}
-        showFirstLast={false}
-      />,
+      <Pagination totalPages={5} currentPage={1} onPageChange={() => {}} showFirstLast={false} />,
     )
     expect(screen.queryByLabelText('First page')).toBeNull()
     expect(screen.queryByLabelText('Last page')).toBeNull()

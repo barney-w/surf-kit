@@ -1,8 +1,4 @@
-import {
-  enterpriseAgreementSource,
-  hrPolicySource,
-  itGuidelinesSource,
-} from './sources'
+import { enterpriseAgreementSource, hrPolicySource, itGuidelinesSource } from './sources'
 
 export const highConfidenceHRResponse = {
   message:

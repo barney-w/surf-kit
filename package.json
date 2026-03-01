@@ -6,7 +6,9 @@
     "build": "turbo build",
     "build:storybook": "pnpm --filter storybook build",
     "dev:storybook": "pnpm --filter storybook dev",
-    "lint": "turbo lint",
+    "lint": "biome check .",
+    "lint:fix": "biome check . --fix",
+    "format": "biome format . --write",
     "test": "turbo test",
     "typecheck": "turbo typecheck",
     "dev": "turbo dev",
@@ -14,6 +16,7 @@
     "fix-versions": "syncpack fix-mismatches"
   },
   "devDependencies": {
+    "@biomejs/biome": "^2.4.4",
     "@changesets/cli": "^2.29.0",
     "babel-plugin-react-compiler": "1.0.0",
     "syncpack": "^14.0.0",

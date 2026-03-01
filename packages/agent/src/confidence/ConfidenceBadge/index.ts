@@ -1,2 +1,2 @@
-export { ConfidenceBadge } from './ConfidenceBadge'
 export type { ConfidenceBadgeProps } from './ConfidenceBadge'
+export { ConfidenceBadge } from './ConfidenceBadge'

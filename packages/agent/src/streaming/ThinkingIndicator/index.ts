@@ -1,2 +1,2 @@
-export { ThinkingIndicator } from './ThinkingIndicator'
 export type { ThinkingIndicatorProps } from './ThinkingIndicator'
+export { ThinkingIndicator } from './ThinkingIndicator'

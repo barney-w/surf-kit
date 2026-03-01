@@ -1,9 +1,10 @@
-import { twMerge } from 'tailwind-merge'
-import React, { useRef } from 'react'
-import { useTabList, useTab, useTabPanel } from 'react-aria'
-import { useTabListState, Item } from 'react-stately'
+import type React from 'react'
+import { useRef } from 'react'
 import type { AriaTabListProps } from 'react-aria'
+import { useTab, useTabList, useTabPanel } from 'react-aria'
 import type { Node } from 'react-stately'
+import { Item, useTabListState } from 'react-stately'
+import { twMerge } from 'tailwind-merge'
 
 type TabItem = { key: string; title: string; content: React.ReactNode }
 
@@ -15,7 +16,13 @@ type TabsProps = {
   className?: string
 }
 
-function TabButton({ item, state }: { item: Node<object>; state: ReturnType<typeof useTabListState> }) {
+function TabButton({
+  item,
+  state,
+}: {
+  item: Node<object>
+  state: ReturnType<typeof useTabListState>
+}) {
   const ref = useRef<HTMLDivElement>(null)
   const { tabProps } = useTab({ key: item.key }, state, ref)
   const isSelected = state.selectedKey === item.key
@@ -60,10 +67,12 @@ function Tabs({
   const ariaProps: AriaTabListProps<TabItem> = {
     orientation,
     selectedKey,
-    onSelectionChange: onSelectionChange
-      ? (key) => onSelectionChange(String(key))
-      : undefined,
-    children: (item: TabItem) => <Item key={item.key} title={item.title}>{item.content}</Item>,
+    onSelectionChange: onSelectionChange ? (key) => onSelectionChange(String(key)) : undefined,
+    children: (item: TabItem) => (
+      <Item key={item.key} title={item.title}>
+        {item.content}
+      </Item>
+    ),
     items,
   }
 

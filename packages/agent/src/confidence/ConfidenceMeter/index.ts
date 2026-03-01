@@ -1,2 +1,2 @@
-export { ConfidenceMeter } from './ConfidenceMeter'
 export type { ConfidenceMeterProps } from './ConfidenceMeter'
+export { ConfidenceMeter } from './ConfidenceMeter'

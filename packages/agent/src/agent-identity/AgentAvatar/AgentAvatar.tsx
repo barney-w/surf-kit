@@ -1,6 +1,5 @@
-import React from 'react'
-import type { AgentInfo } from '../../types/agent'
 import { useAgentTheme } from '../../hooks/useAgentTheme'
+import type { AgentInfo } from '../../types/agent'
 
 export type AgentAvatarProps = {
   agentId?: string

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { Table } from '@surf-kit/core'
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 const meta: Meta<typeof Table> = {
   title: 'Core/Table',
@@ -31,8 +31,6 @@ export const Sortable: Story = {
       column: 'name',
       direction: 'ascending',
     })
-    return (
-      <Table columns={columns} rows={rows} sortDescriptor={sort} onSortChange={setSort} />
-    )
+    return <Table columns={columns} rows={rows} sortDescriptor={sort} onSortChange={setSort} />
   },
 }

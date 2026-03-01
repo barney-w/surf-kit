@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react'
 import type { Meta, StoryObj } from '@storybook/react'
 import { StreamingList } from '@surf-kit/agent'
+import { useEffect, useState } from 'react'
 
 const meta: Meta<typeof StreamingList> = {
   title: 'Agent/StreamingList',
@@ -32,9 +32,7 @@ export const Default: Story = {
     return (
       <StreamingList
         items={items}
-        renderItem={(item) => (
-          <span className="block py-1 text-sm text-text-primary">{item}</span>
-        )}
+        renderItem={(item) => <span className="block py-1 text-sm text-text-primary">{item}</span>}
         isStreaming={isStreaming}
       />
     )

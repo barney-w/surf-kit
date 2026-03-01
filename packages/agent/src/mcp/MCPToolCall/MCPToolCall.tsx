@@ -1,7 +1,6 @@
-import React from 'react'
+import { Badge, Spinner } from '@surf-kit/core'
 import { cva } from 'class-variance-authority'
 import { twMerge } from 'tailwind-merge'
-import { Badge, Spinner } from '@surf-kit/core'
 import type { MCPToolCallData, MCPToolStatus } from '../../types/mcp'
 
 export type MCPToolCallProps = {
@@ -25,20 +24,17 @@ const statusLabel: Record<MCPToolStatus, string> = {
   error: 'Error',
 }
 
-const container = cva(
-  'rounded-lg border text-sm',
-  {
-    variants: {
-      status: {
-        pending: 'border-border bg-surface',
-        running: 'border-status-info-subtle bg-status-info-subtle/30',
-        success: 'border-status-success-subtle bg-status-success-subtle/30',
-        error: 'border-status-error-subtle bg-status-error-subtle/30',
-      },
+const container = cva('rounded-lg border text-sm', {
+  variants: {
+    status: {
+      pending: 'border-border bg-surface',
+      running: 'border-status-info-subtle bg-status-info-subtle/30',
+      success: 'border-status-success-subtle bg-status-success-subtle/30',
+      error: 'border-status-error-subtle bg-status-error-subtle/30',
     },
-    defaultVariants: { status: 'pending' },
   },
-)
+  defaultVariants: { status: 'pending' },
+})
 
 function formatDuration(start?: Date, end?: Date): string | null {
   if (!start || !end) return null
@@ -73,9 +69,7 @@ function MCPToolCall({ call, isExpanded = false, onToggleExpand, className }: MC
             {call.name}
           </span>
           {call.serverName && (
-            <span className="text-xs text-text-secondary truncate">
-              {call.serverName}
-            </span>
+            <span className="text-xs text-text-secondary truncate">{call.serverName}</span>
           )}
         </div>
         <div className="flex items-center gap-2 shrink-0">
@@ -115,7 +109,10 @@ function MCPToolCall({ call, isExpanded = false, onToggleExpand, className }: MC
 
       {/* Expandable body */}
       {isExpanded && (
-        <div className="border-t border-inherit px-3 py-2 space-y-3" data-testid="mcp-tool-call-body">
+        <div
+          className="border-t border-inherit px-3 py-2 space-y-3"
+          data-testid="mcp-tool-call-body"
+        >
           {/* Arguments */}
           {Object.keys(call.arguments).length > 0 && (
             <div>
@@ -141,7 +138,9 @@ function MCPToolCall({ call, isExpanded = false, onToggleExpand, className }: MC
                 className="text-xs font-mono text-text-primary bg-surface-sunken rounded p-2 overflow-x-auto whitespace-pre-wrap"
                 data-testid="mcp-tool-result"
               >
-                {typeof call.result === 'string' ? call.result : JSON.stringify(call.result, null, 2)}
+                {typeof call.result === 'string'
+                  ? call.result
+                  : JSON.stringify(call.result, null, 2)}
               </pre>
             </div>
           )}

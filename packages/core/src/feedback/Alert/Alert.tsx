@@ -1,24 +1,18 @@
-import { cva, type VariantProps } from 'class-variance-authority'
+import { cva } from 'class-variance-authority'
+import type React from 'react'
 import { twMerge } from 'tailwind-merge'
-import React from 'react'
 
-const alert = cva(
-  'flex items-start gap-3 rounded-lg border p-4',
-  {
-    variants: {
-      intent: {
-        info: 'bg-sky-100 text-sky-700 border-sky-300',
-        success:
-          'bg-status-success-subtle text-status-success border-status-success',
-        warning:
-          'bg-status-warning-subtle text-status-warning border-status-warning',
-        error:
-          'bg-status-error-subtle text-status-error border-status-error',
-      },
+const alert = cva('flex items-start gap-3 rounded-lg border p-4', {
+  variants: {
+    intent: {
+      info: 'bg-sky-100 text-sky-700 border-sky-300',
+      success: 'bg-status-success-subtle text-status-success border-status-success',
+      warning: 'bg-status-warning-subtle text-status-warning border-status-warning',
+      error: 'bg-status-error-subtle text-status-error border-status-error',
     },
-    defaultVariants: { intent: 'info' },
   },
-)
+  defaultVariants: { intent: 'info' },
+})
 
 type AlertProps = {
   intent?: 'info' | 'success' | 'warning' | 'error'

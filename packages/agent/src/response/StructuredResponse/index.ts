@@ -1,2 +1,2 @@
-export { StructuredResponse } from './StructuredResponse'
 export type { StructuredResponseProps } from './StructuredResponse'
+export { StructuredResponse } from './StructuredResponse'

@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { describe, it, expect, vi } from 'vitest'
-import * as vitestAxe from 'vitest-axe/matchers'
+import { describe, expect, it, vi } from 'vitest'
 import { axe } from 'vitest-axe'
+import * as vitestAxe from 'vitest-axe/matchers'
 
 import { FollowUpChips } from '../FollowUpChips'
 
@@ -28,9 +28,7 @@ describe('FollowUpChips', () => {
   })
 
   it('renders nothing when suggestions is empty', () => {
-    const { container } = render(
-      <FollowUpChips suggestions={[]} onSelect={() => {}} />,
-    )
+    const { container } = render(<FollowUpChips suggestions={[]} onSelect={() => {}} />)
     expect(container.firstChild).toBeNull()
   })
 
@@ -40,9 +38,7 @@ describe('FollowUpChips', () => {
   })
 
   it('has no accessibility violations', async () => {
-    const { container } = render(
-      <FollowUpChips suggestions={suggestions} onSelect={() => {}} />,
-    )
+    const { container } = render(<FollowUpChips suggestions={suggestions} onSelect={() => {}} />)
     const results = await axe(container)
     expect(results).toHaveNoViolations()
   })
