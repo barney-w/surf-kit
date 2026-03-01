@@ -1,5 +1,13 @@
 # @surf-kit/ai
 
+## 0.1.1
+
+### Patch Changes
+
+- baa7b33: Add MCP components and subpath exports, fix token ts export, move deps to catalog
+- Updated dependencies [baa7b33]
+  - @surf-kit/agent@0.2.0
+
 ## 0.1.0
 
 - Move `ai` and `@ai-sdk/react` dependencies to pnpm catalog for version consistency

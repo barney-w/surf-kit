@@ -1,5 +1,16 @@
 # @surf-kit/agent
 
+## 0.2.0
+
+### Minor Changes
+
+- baa7b33: Add MCP components and subpath exports, fix token ts export, move deps to catalog
+
+### Patch Changes
+
+- @surf-kit/core@0.1.2
+- @surf-kit/theme@0.1.2
+
 ## Unreleased
 
 ### Minor Changes

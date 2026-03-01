@@ -1,5 +1,11 @@
 # @surf-kit/tokens
 
+## 0.1.2
+
+### Patch Changes
+
+- baa7b33: Add MCP components and subpath exports, fix token ts export, move deps to catalog
+
 ## Unreleased
 
 ### Patch Changes
