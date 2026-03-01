@@ -1,7 +1,0 @@
-import{j as o}from"./iframe-BsSRimq6.js";import{f as s}from"./chunk-4KH4NCSB-CDC86_-d.js";import"./preload-helper-PPVm8Dsz.js";import"./index-asa8OAme.js";const d={title:"Core/Accordion",component:s,argTypes:{type:{control:"select",options:["single","multiple"]}}},n=[{key:"faq1",title:"What is surf-kit?",content:"A design system for building agent UIs."},{key:"faq2",title:"How do I install it?",content:"Run pnpm add @surf-kit/core in your project."},{key:"faq3",title:"Is it accessible?",content:"Yes, all components follow WAI-ARIA patterns."}],e={render:()=>o.jsx(s,{items:n,type:"single"})},t={render:()=>o.jsx(s,{items:n,type:"multiple"})},r={render:()=>o.jsx(s,{items:n,defaultExpandedKeys:["faq1"]})};e.parameters={...e.parameters,docs:{...e.parameters?.docs,source:{originalSource:`{
-  render: () => <Accordion items={items} type="single" />
-}`,...e.parameters?.docs?.source}}};t.parameters={...t.parameters,docs:{...t.parameters?.docs,source:{originalSource:`{
-  render: () => <Accordion items={items} type="multiple" />
-}`,...t.parameters?.docs?.source}}};r.parameters={...r.parameters,docs:{...r.parameters?.docs,source:{originalSource:`{
-  render: () => <Accordion items={items} defaultExpandedKeys={['faq1']} />
-}`,...r.parameters?.docs?.source}}};const l=["Single","Multiple","DefaultExpanded"];export{r as DefaultExpanded,t as Multiple,e as Single,l as __namedExportsOrder,d as default};
