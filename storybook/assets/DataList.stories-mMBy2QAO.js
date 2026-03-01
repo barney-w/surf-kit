@@ -1,5 +1,0 @@
-import{j as c}from"./iframe-DfQrMS3t.js";import{i as r}from"./index-_nN3MFVB.js";import"./preload-helper-C1FmrZbK.js";import"./index-ByQMLxTz.js";const x={title:"Core/DataList",component:r,argTypes:{orientation:{control:"select",options:["horizontal","vertical"]}}},m=[{label:"Name",value:"Alice Johnson"},{label:"Email",value:"alice@example.com"},{label:"Role",value:"Administrator"},{label:"Status",value:"Active"}],e={render:()=>c.jsx(r,{items:m})},t={render:()=>c.jsx(r,{items:m,orientation:"vertical"})};var a,o,s;e.parameters={...e.parameters,docs:{...(a=e.parameters)==null?void 0:a.docs,source:{originalSource:`{
-  render: () => <DataList items={items} />
-}`,...(s=(o=e.parameters)==null?void 0:o.docs)==null?void 0:s.source}}};var i,n,l;t.parameters={...t.parameters,docs:{...(i=t.parameters)==null?void 0:i.docs,source:{originalSource:`{
-  render: () => <DataList items={items} orientation="vertical" />
-}`,...(l=(n=t.parameters)==null?void 0:n.docs)==null?void 0:l.source}}};const b=["Horizontal","Vertical"];export{e as Horizontal,t as Vertical,b as __namedExportsOrder,x as default};

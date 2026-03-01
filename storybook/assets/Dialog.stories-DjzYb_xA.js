@@ -1,0 +1,7 @@
+import{j as e,r as i}from"./iframe-BsSRimq6.js";import{D as n}from"./chunk-4KH4NCSB-CDC86_-d.js";import"./preload-helper-PPVm8Dsz.js";import"./index-asa8OAme.js";const g={title:"Core/Dialog",component:n,argTypes:{size:{control:"select",options:["sm","md","lg","full"]}}};function t({size:l="md"}){const[c,r]=i.useState(!1);return e.jsxs(e.Fragment,{children:[e.jsx("button",{onClick:()=>r(!0),children:"Open Dialog"}),e.jsx(n,{isOpen:c,onClose:()=>r(!1),title:"Example Dialog",size:l,footer:e.jsxs(e.Fragment,{children:[e.jsx("button",{onClick:()=>r(!1),children:"Cancel"}),e.jsx("button",{onClick:()=>r(!1),children:"Confirm"})]}),children:"This is the dialog body content. You can put any React content here."})]})}const o={render:()=>e.jsx(t,{})},s={render:()=>e.jsx(t,{size:"sm"})},a={render:()=>e.jsx(t,{size:"lg"})};o.parameters={...o.parameters,docs:{...o.parameters?.docs,source:{originalSource:`{
+  render: () => <DialogDemo />
+}`,...o.parameters?.docs?.source}}};s.parameters={...s.parameters,docs:{...s.parameters?.docs,source:{originalSource:`{
+  render: () => <DialogDemo size="sm" />
+}`,...s.parameters?.docs?.source}}};a.parameters={...a.parameters,docs:{...a.parameters?.docs,source:{originalSource:`{
+  render: () => <DialogDemo size="lg" />
+}`,...a.parameters?.docs?.source}}};const x=["Default","Small","Large"];export{o as Default,a as Large,s as Small,x as __namedExportsOrder,g as default};

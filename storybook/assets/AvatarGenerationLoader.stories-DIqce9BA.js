@@ -1,6 +1,0 @@
-import{j as a}from"./iframe-DfQrMS3t.js";import{e as i}from"./index-_nN3MFVB.js";import"./preload-helper-C1FmrZbK.js";import"./index-ByQMLxTz.js";const y={title:"Core/AvatarGenerationLoader",component:i,argTypes:{primaryText:{control:"text"},secondaryText:{control:"text"}},decorators:[m=>a.jsx("div",{className:"min-h-screen bg-brand-dark flex items-center justify-center p-8",children:a.jsx("div",{className:"bg-brand-dark-panel rounded-2xl border border-brand-gold/15 p-8 w-full max-w-md",children:a.jsx(m,{})})})]},r={},e={args:{primaryText:"Generating your portrait...",secondaryText:"This usually takes 15–30 seconds"}};var t,s,o;r.parameters={...r.parameters,docs:{...(t=r.parameters)==null?void 0:t.docs,source:{originalSource:"{}",...(o=(s=r.parameters)==null?void 0:s.docs)==null?void 0:o.source}}};var n,c,d;e.parameters={...e.parameters,docs:{...(n=e.parameters)==null?void 0:n.docs,source:{originalSource:`{
-  args: {
-    primaryText: 'Generating your portrait...',
-    secondaryText: 'This usually takes 15–30 seconds'
-  }
-}`,...(d=(c=e.parameters)==null?void 0:c.docs)==null?void 0:d.source}}};const T=["Default","CustomText"];export{e as CustomText,r as Default,T as __namedExportsOrder,y as default};
