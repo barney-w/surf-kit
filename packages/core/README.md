@@ -49,4 +49,4 @@ All interactive components use [React Aria](https://react-spectrum.adobe.com/rea
 
 ## License
 
-[0BSD](./LICENSE)
+[Apache-2.0](./LICENSE)

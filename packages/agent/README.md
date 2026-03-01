@@ -75,4 +75,4 @@ import { ThumbsFeedback } from '@surf-kit/agent/feedback'
 
 ## License
 
-[0BSD](./LICENSE)
+[Apache-2.0](./LICENSE)

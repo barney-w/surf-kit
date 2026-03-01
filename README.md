@@ -10,7 +10,7 @@
 [![CI](https://img.shields.io/github/actions/workflow/status/barney-w/surf-kit/ci.yml?branch=main&label=CI)](https://github.com/barney-w/surf-kit/actions)
 [![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178C6)](https://www.typescriptlang.org)
 [![WCAG 2.1 AA](https://img.shields.io/badge/a11y-WCAG_2.1_AA-0091A5)](https://www.w3.org/TR/WCAG21/)
-[![License: 0BSD](https://img.shields.io/badge/License-0BSD-blue.svg)](./LICENSE)
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](./LICENSE)
 
 [Storybook](https://barney-w.github.io/surf-kit/storybook) · [Quick Start](#quick-start) · [Packages](#packages) · [Contributing](./CONTRIBUTING.md)
 
@@ -243,7 +243,7 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md) for detailed development guidelines.
 
 ## License
 
-[0BSD](./LICENSE)
+[Apache-2.0](./LICENSE)
 
 ---
 
