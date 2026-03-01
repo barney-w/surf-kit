@@ -63,7 +63,7 @@ pnpm test
 
 - Use **class-variance-authority (CVA)** to define component variants.
 - Use **tailwind-merge** (`twMerge`) to merge class names and allow consumer overrides.
-- Design tokens come from `@surf-kit/tokens` -- never hard-code color or spacing values.
+- Design tokens come from `@surf-kit/tokens` -- never hard-code colour or spacing values.
 
 ### Testing
 
