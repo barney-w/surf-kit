@@ -43,4 +43,4 @@ All icons are tree-shakeable React components with consistent sizing props.
 
 ## License
 
-[0BSD](./LICENSE)
+[Apache-2.0](./LICENSE)

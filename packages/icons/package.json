@@ -34,7 +34,7 @@
   "bugs": {
     "url": "https://github.com/barney-w/surf-kit/issues"
   },
-  "license": "0BSD",
+  "license": "Apache-2.0",
   "scripts": {
     "generate": "tsx src/scripts/generate.ts",
     "build": "pnpm generate && tsup",

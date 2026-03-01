@@ -68,4 +68,4 @@ Both packages render the same surf-kit UI components — the difference is how t
 
 ## License
 
-0BSD
+[Apache-2.0](./LICENSE)
