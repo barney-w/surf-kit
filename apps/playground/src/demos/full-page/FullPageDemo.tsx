@@ -250,84 +250,82 @@ export function FullPageDemo() {
       {/* Message thread */}
       <div
         ref={threadRef}
-        className="flex-1 overflow-y-auto overflow-x-hidden py-6"
+        className="flex-1 overflow-y-auto overflow-x-hidden py-6 px-2"
       >
         {isEmpty ? (
-            <div
-              className="flex flex-1 flex-col items-center justify-center gap-8 text-center h-full anim-fade-up"
-            >
-              {/* Pulsing icon */}
-              <img
-                src={`${base}surf.png`}
-                alt="Surf Kit"
-                className="w-32 h-30 rounded-md"
-              />
+          <div className="flex flex-1 flex-col items-center justify-center gap-8 text-center h-full anim-fade-up">
+            {/* Pulsing icon */}
+            <img
+              src={`${base}surf.png`}
+              alt="Surf Kit"
+              className="w-32 h-30 rounded-md"
+            />
 
-              <div className="flex flex-col gap-3">
-                <h2 className="font-display text-3xl font-bold text-brand-cream">
-                  Hi, I'm Surf.
-                </h2>
-                <p className="text-brand-cream/60 text-base max-w-md leading-relaxed">
-                  <TypewriterText
-                    text="Ask me about any of my knowledge sources, or how to get started. I'll orchestrate your request with my agent team."
-                    speed={22}
-                    delay={500}
-                  />
-                </p>
-              </div>
-
-              <div className="flex flex-wrap justify-center gap-2">
-                {[
-                  "What pricing plans are available?",
-                  "How do I get started with the API?",
-                  "What are the rate limits for the Pro plan?",
-                ].map((chip) => (
-                  <button
-                    key={chip}
-                    onClick={() => {
-                      actions.setInputValue(chip);
-                      inputRef.current?.focus();
-                    }}
-                    className="px-4 py-2 rounded-full text-sm border border-brand-gold/20 bg-transparent text-brand-cream/70 hover:bg-brand-gold/10 hover:border-brand-gold/40 hover:text-brand-cream focus-visible:outline-2 focus-visible:outline-brand-cyan transition-colors duration-200 cursor-pointer"
-                  >
-                    {chip}
-                  </button>
-                ))}
-              </div>
+            <div className="flex flex-col gap-3">
+              <h2 className="font-display text-3xl font-bold text-brand-cream">
+                Hi, I'm Surf.
+              </h2>
+              <p className="text-brand-cream/60 text-base max-w-md leading-relaxed">
+                <TypewriterText
+                  text="Ask me about any of my knowledge sources, or how to get started. I'll orchestrate your request with my agent team."
+                  speed={22}
+                  delay={500}
+                />
+              </p>
             </div>
-          ) : (
-            <div className="anim-fade-in">
-              {state.messages.map((msg, i) => {
-                // Hide the final assistant message while the drain animation
-                // is still typing it out — prevents the jump from streaming
-                // bubble to fully-rendered message.
-                const isLastAssistant =
-                  i === state.messages.length - 1 && msg.role === "assistant";
-                if (isLastAssistant && isDraining) return null;
 
-                return (
-                  <MessageBubble
-                    key={msg.id}
-                    msg={msg}
-                    noEntryAnimation={
-                      (justStoppedLoading || justStoppedDraining) && isLastAssistant
-                    }
-                    onFollowUp={(text) => {
-                      actions.setInputValue(text);
-                      inputRef.current?.focus();
-                    }}
-                  />
-                );
-              })}
+            <div className="flex flex-wrap justify-center gap-2">
+              {[
+                "What pricing plans are available?",
+                "How do I get started with the API?",
+                "What are the rate limits for the Pro plan?",
+              ].map((chip) => (
+                <button
+                  key={chip}
+                  onClick={() => {
+                    actions.setInputValue(chip);
+                    inputRef.current?.focus();
+                  }}
+                  className="px-4 py-2 rounded-full text-sm border border-brand-gold/20 bg-transparent text-brand-cream/70 hover:bg-brand-gold/10 hover:border-brand-gold/40 hover:text-brand-cream focus-visible:outline-2 focus-visible:outline-brand-cyan transition-colors duration-200 cursor-pointer"
+                >
+                  {chip}
+                </button>
+              ))}
             </div>
-          )}
+          </div>
+        ) : (
+          <div className="anim-fade-in">
+            {state.messages.map((msg, i) => {
+              // Hide the final assistant message while the drain animation
+              // is still typing it out — prevents the jump from streaming
+              // bubble to fully-rendered message.
+              const isLastAssistant =
+                i === state.messages.length - 1 && msg.role === "assistant";
+              if (isLastAssistant && isDraining) return null;
 
-        {state.isLoading &&
-          !state.streamingContent && (
-            <div className="anim-fade-slide-up">
-              <PhaseIndicator phase={state.streamPhase} />
-            </div>
-          )}
+              return (
+                <MessageBubble
+                  key={msg.id}
+                  msg={msg}
+                  noEntryAnimation={
+                    (justStoppedLoading || justStoppedDraining) &&
+                    isLastAssistant
+                  }
+                  onFollowUp={(text) => {
+                    actions.setInputValue(text);
+                    inputRef.current?.focus();
+                  }}
+                />
+              );
+            })}
+          </div>
+        )}
+
+        {state.isLoading && !state.streamingContent && (
+          <div className="anim-fade-slide-up">
+            <PhaseIndicator phase={state.streamPhase} />
+          </div>
+        )}
         {state.error && (
           <div className="px-4 py-3 rounded-xl bg-brand-watermelon/10 border border-brand-watermelon/30 text-sm mb-4 anim-fade-slide-up">
             <span className="font-display font-semibold text-brand-watermelon">
@@ -375,7 +373,7 @@ export function FullPageDemo() {
           placeholder="Ask a question..."
           rows={1}
           className="flex-1 px-4 py-2.5 rounded-xl resize-none text-sm font-body bg-brand-dark-panel/80 border border-brand-gold/15 text-brand-cream placeholder:text-brand-cream/40 outline-none focus:border-transparent focus:ring-2 focus:ring-brand-gold/40 disabled:opacity-50 disabled:cursor-not-allowed overflow-x-hidden overflow-y-auto transition-all duration-200"
-          style={{ colorScheme: "dark" }}
+          style={{ colorScheme: "dark", scrollbarWidth: "none" }}
           disabled={state.isLoading}
         />
         <button
