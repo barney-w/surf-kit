@@ -1,6 +1,6 @@
 {
   "name": "@surf-kit/core",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Accessible React UI primitives — Button, Input, Card, Table, Dialog, and more",
   "keywords": [
     "react",

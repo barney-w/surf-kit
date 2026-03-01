@@ -1,5 +1,15 @@
 # playground
 
+## 0.1.3
+
+### Patch Changes
+
+- Updated dependencies [44e9673]
+  - @surf-kit/tokens@0.1.3
+  - @surf-kit/theme@0.1.3
+  - @surf-kit/core@0.1.3
+  - @surf-kit/agent@0.2.1
+
 ## 0.1.2
 
 ### Patch Changes

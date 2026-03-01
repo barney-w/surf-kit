@@ -1,5 +1,14 @@
 # @surf-kit/core
 
+## 0.1.3
+
+### Patch Changes
+
+- 44e9673: Fix colour contrast in brand theme by replacing hardcoded Tailwind colours with semantic tokens
+- Updated dependencies [44e9673]
+  - @surf-kit/tokens@0.1.3
+  - @surf-kit/theme@0.1.3
+
 ## 0.1.2
 
 ### Patch Changes

@@ -1,5 +1,12 @@
 # @surf-kit/test-utils
 
+## 0.1.3
+
+### Patch Changes
+
+- Updated dependencies [44e9673]
+  - @surf-kit/theme@0.1.3
+
 ## 0.1.2
 
 ### Patch Changes
