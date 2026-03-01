@@ -1,6 +1,6 @@
 {
   "name": "@surf-kit/theme",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Theme provider and Tailwind preset for surf-kit — light, dark, and brand color modes",
   "keywords": [
     "react",
