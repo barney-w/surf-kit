@@ -1,3 +1,5 @@
+'use client'
+
 import { useState, useCallback, useRef, useEffect } from 'react'
 import type { StreamEvent, StreamState } from '../types/streaming'
 import type { Source } from '../types/agent'

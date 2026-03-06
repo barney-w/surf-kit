@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useState } from 'react'
 import type { Source } from '../../types/agent'
 import { SourceCard } from '../SourceCard'

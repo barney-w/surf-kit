@@ -19,4 +19,5 @@ export default defineConfig((options) => ({
   sourcemap: true,
   clean: !options.watch,
   external: ['react', 'react-dom', /^@surf-kit\//],
+  banner: { js: "'use client';" },
 }))

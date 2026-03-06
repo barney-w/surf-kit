@@ -1,3 +1,5 @@
+'use client'
+
 import { twMerge } from 'tailwind-merge'
 import React, { useCallback, useState } from 'react'
 import { ToggleGroupCtx } from '../Toggle'

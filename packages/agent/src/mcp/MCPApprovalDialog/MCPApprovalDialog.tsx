@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useRef, useEffect } from 'react'
 import { cva } from 'class-variance-authority'
 import { twMerge } from 'tailwind-merge'

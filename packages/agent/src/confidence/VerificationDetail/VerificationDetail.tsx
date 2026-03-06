@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useState } from 'react'
 import type { VerificationResult } from '../../types/agent'
 import { VerificationBadge } from '../VerificationBadge'

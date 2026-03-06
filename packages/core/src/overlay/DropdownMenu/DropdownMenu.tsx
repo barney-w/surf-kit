@@ -1,3 +1,5 @@
+'use client'
+
 import { twMerge } from 'tailwind-merge'
 import React, { useRef } from 'react'
 import { useMenuTrigger, useMenu, useMenuItem, useButton } from 'react-aria'

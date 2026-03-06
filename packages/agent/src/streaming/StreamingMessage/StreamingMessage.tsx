@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useEffect, useRef } from 'react'
 import { Spinner } from '@surf-kit/core'
 import type { StreamState } from '../../types/streaming'

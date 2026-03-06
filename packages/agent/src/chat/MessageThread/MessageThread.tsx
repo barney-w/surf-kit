@@ -1,3 +1,5 @@
+'use client'
+
 import { twMerge } from 'tailwind-merge'
 import React, { useEffect, useRef } from 'react'
 import type { ChatMessage } from '../../types/chat'

@@ -1,3 +1,5 @@
+'use client'
+
 import { twMerge } from 'tailwind-merge'
 import React, { useState, useCallback } from 'react'
 import { AgentChat } from '../../chat/AgentChat'

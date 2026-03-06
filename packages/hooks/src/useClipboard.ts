@@ -1,3 +1,5 @@
+'use client'
+
 import { useState, useCallback, useRef } from 'react'
 
 export function useClipboard(): { copy: (text: string) => Promise<void>; copied: boolean } {
