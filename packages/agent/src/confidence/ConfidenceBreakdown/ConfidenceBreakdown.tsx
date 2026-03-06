@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useState } from 'react'
 import type { ConfidenceBreakdown as ConfidenceBreakdownType } from '../../types/agent'
 import { ConfidenceBadge } from '../ConfidenceBadge'

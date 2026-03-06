@@ -1,3 +1,5 @@
+'use client'
+
 import { useState, useCallback } from 'react'
 import type { ChatMessage } from '../types/chat'
 import type { ConversationSummary } from '../types/chat'

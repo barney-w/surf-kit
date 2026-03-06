@@ -1,3 +1,5 @@
+'use client'
+
 import { twMerge } from 'tailwind-merge'
 import React, { createContext, useContext, useRef } from 'react'
 import { useRadioGroup, useRadio } from 'react-aria'

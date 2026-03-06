@@ -1,3 +1,5 @@
+'use client'
+
 import { useReducer, useCallback, useRef } from 'react'
 import type { ChatMessage, ChatError } from '../types/chat'
 import type { AgentResponse } from '../types/agent'

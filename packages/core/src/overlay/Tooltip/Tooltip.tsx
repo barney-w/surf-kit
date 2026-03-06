@@ -1,3 +1,5 @@
+'use client'
+
 import { twMerge } from 'tailwind-merge'
 import React, { useRef, cloneElement } from 'react'
 import { useTooltip, useTooltipTrigger, mergeProps } from 'react-aria'

@@ -1,3 +1,5 @@
+'use client'
+
 import { useState, useCallback, useRef } from 'react'
 
 export type FeedbackState = 'idle' | 'submitting' | 'submitted' | 'error'

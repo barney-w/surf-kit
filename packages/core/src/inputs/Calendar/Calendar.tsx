@@ -1,3 +1,5 @@
+'use client'
+
 import { twMerge } from 'tailwind-merge'
 import React, { useRef } from 'react'
 import { useCalendar, useCalendarGrid, useCalendarCell, useButton, useLocale } from 'react-aria'

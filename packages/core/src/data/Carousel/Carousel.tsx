@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useState, useRef, useCallback, useEffect, Children } from 'react'
 import { twMerge } from 'tailwind-merge'
 
