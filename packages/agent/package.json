@@ -1,6 +1,6 @@
 {
   "name": "@surf-kit/agent",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "AI agent interface components — chat, streaming, confidence, source attribution",
   "keywords": [
     "react",

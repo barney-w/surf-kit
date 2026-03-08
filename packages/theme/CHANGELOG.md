@@ -1,5 +1,11 @@
 # @surf-kit/theme
 
+## 0.1.4
+
+### Patch Changes
+
+- d1b5801: Add 'use client' directives for React Server Components compatibility
+
 ## 0.1.3
 
 ### Patch Changes

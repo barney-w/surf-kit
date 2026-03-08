@@ -1,6 +1,6 @@
 {
   "name": "@surf-kit/hooks",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Shared React hooks for surf-kit — clipboard, keyboard shortcuts, media queries, and more",
   "keywords": [
     "react",
