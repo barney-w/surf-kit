@@ -1,5 +1,12 @@
 # @surf-kit/ai
 
+## 0.1.3
+
+### Patch Changes
+
+- Updated dependencies [d1b5801]
+  - @surf-kit/agent@0.2.2
+
 ## 0.1.2
 
 ### Patch Changes

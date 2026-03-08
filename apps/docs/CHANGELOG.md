@@ -1,5 +1,13 @@
 # docs
 
+## 0.1.4
+
+### Patch Changes
+
+- Updated dependencies [d1b5801]
+  - @surf-kit/core@0.1.4
+  - @surf-kit/theme@0.1.4
+
 ## 0.1.3
 
 ### Patch Changes

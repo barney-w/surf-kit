@@ -1,5 +1,15 @@
 # @surf-kit/agent
 
+## 0.2.2
+
+### Patch Changes
+
+- d1b5801: Add 'use client' directives for React Server Components compatibility
+- Updated dependencies [d1b5801]
+  - @surf-kit/core@0.1.4
+  - @surf-kit/hooks@0.1.2
+  - @surf-kit/theme@0.1.4
+
 ## 0.2.1
 
 ### Patch Changes
