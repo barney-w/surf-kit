@@ -1,0 +1,10 @@
+{
+  "expo": {
+    "name": "surf-kit-mobile",
+    "slug": "surf-kit-mobile",
+    "version": "0.0.1",
+    "scheme": "surfkit",
+    "platforms": ["ios", "android"],
+    "newArchEnabled": true
+  }
+}
