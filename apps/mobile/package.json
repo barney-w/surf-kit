@@ -1,0 +1,33 @@
+{
+  "name": "@surf-kit/mobile",
+  "version": "0.0.1",
+  "private": true,
+  "main": "expo-router/entry",
+  "scripts": {
+    "start": "expo start",
+    "ios": "expo run:ios",
+    "android": "expo run:android"
+  },
+  "dependencies": {
+    "@surf-kit/agent": "workspace:*",
+    "@surf-kit/core": "workspace:*",
+    "@surf-kit/theme": "workspace:*",
+    "@surf-kit/tokens": "workspace:*",
+    "expo": "~53.0.0",
+    "expo-router": "~5.0.0",
+    "expo-status-bar": "~3.0.0",
+    "nativewind": "catalog:",
+    "react": "catalog:",
+    "react-native": "catalog:",
+    "react-native-markdown-display": "catalog:",
+    "react-native-safe-area-context": "~5.4.0",
+    "react-native-screens": "~4.11.0",
+    "tailwind-merge": "catalog:",
+    "class-variance-authority": "catalog:"
+  },
+  "devDependencies": {
+    "@types/react": "catalog:",
+    "tailwindcss": "catalog:",
+    "typescript": "catalog:"
+  }
+}

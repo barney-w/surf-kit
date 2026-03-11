@@ -1,0 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import "@surf-kit/tokens/css";
+@import "@surf-kit/tokens/css/light";
+@import "@surf-kit/tokens/css/dark";
