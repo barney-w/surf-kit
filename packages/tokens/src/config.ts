@@ -82,6 +82,20 @@ StyleDictionary.registerFormat({
   },
 });
 
+// Register format for resolved JS objects (React Native fallback)
+StyleDictionary.registerFormat({
+  name: 'js/nested-object',
+  format: ({ dictionary }) => {
+    const tokens: Record<string, string | number> = {}
+    dictionary.allTokens.forEach((token) => {
+      const name = token.name // e.g. "surf-color-bg-surface"
+      const value = token.$value ?? token.value
+      tokens[name] = value
+    })
+    return `export const tokens = ${JSON.stringify(tokens, null, 2)} as const\n`
+  },
+})
+
 async function build() {
   // ── Light build ──────────────────────────────────────────────
   const lightSD = new StyleDictionary({
@@ -136,6 +150,17 @@ async function build() {
           },
         ],
       },
+      'react-native': {
+        transformGroup: 'js',
+        prefix: 'surf',
+        buildPath: resolve(root, 'dist/native') + '/',
+        files: [
+          {
+            destination: 'tokens-light.ts',
+            format: 'js/nested-object',
+          },
+        ],
+      },
     },
   });
 
@@ -143,7 +168,7 @@ async function build() {
   await lightSD.buildAllPlatforms();
   console.log("Light build complete.");
 
-  // ── Dark build (CSS only) ────────────────────────────────────
+  // ── Dark build ───────────────────────────────────────────────
   const darkSD = new StyleDictionary({
     include: primitives,
     source: [
@@ -165,6 +190,17 @@ async function build() {
           },
         ],
       },
+      'react-native': {
+        transformGroup: 'js',
+        prefix: 'surf',
+        buildPath: resolve(root, 'dist/native') + '/',
+        files: [
+          {
+            destination: 'tokens-dark.ts',
+            format: 'js/nested-object',
+          },
+        ],
+      },
     },
   });
 
@@ -172,7 +208,7 @@ async function build() {
   await darkSD.buildAllPlatforms();
   console.log("Dark build complete.");
 
-  // ── Brand build (CSS only) ──────────────────────────────────
+  // ── Brand build ─────────────────────────────────────────────
   const brandSD = new StyleDictionary({
     include: [...primitives, componentTokens],
     source: [
@@ -191,6 +227,17 @@ async function build() {
             options: {
               outputReferences: false,
             },
+          },
+        ],
+      },
+      'react-native': {
+        transformGroup: 'js',
+        prefix: 'surf',
+        buildPath: resolve(root, 'dist/native') + '/',
+        files: [
+          {
+            destination: 'tokens-brand.ts',
+            format: 'js/nested-object',
           },
         ],
       },
