@@ -19,6 +19,7 @@ function MessageComposer({
 }: MessageComposerProps) {
   const [value, setValue] = useState('')
   const [inputHeight, setInputHeight] = useState(40)
+  const [isFocused, setIsFocused] = useState(false)
   const inputRef = useRef<TextInput>(null)
 
   const canSend = value.trim().length > 0 && !isLoading
@@ -32,7 +33,8 @@ function MessageComposer({
 
   return (
     <View className={twMerge(
-      'relative rounded-3xl border border-border/60 bg-surface',
+      'relative rounded-3xl border bg-surface shadow-lg shadow-black/10',
+      isFocused ? 'border-accent/40' : 'border-border/60',
       className,
     )}>
       <TextInput
@@ -40,6 +42,8 @@ function MessageComposer({
         value={value}
         onChangeText={setValue}
         onSubmitEditing={handleSend}
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => setIsFocused(false)}
         placeholder={placeholder}
         multiline
         editable={!isLoading}

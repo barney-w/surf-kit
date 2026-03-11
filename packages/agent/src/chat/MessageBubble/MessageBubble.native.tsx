@@ -1,5 +1,6 @@
-import React from 'react'
-import { View, Text } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { View, Text, AccessibilityInfo } from 'react-native'
+import Animated, { FadeInRight, FadeInLeft } from 'react-native-reanimated'
 import { twMerge } from 'tailwind-merge'
 import type { ChatMessage } from '../../types/chat'
 import { AgentResponse } from '../../response/AgentResponse'
@@ -16,6 +17,16 @@ export type MessageBubbleProps = {
   className?: string
 }
 
+function useReducedMotion() {
+  const [reduced, setReduced] = useState(false)
+  useEffect(() => {
+    void AccessibilityInfo.isReduceMotionEnabled().then(setReduced)
+    const sub = AccessibilityInfo.addEventListener('reduceMotionChanged', setReduced)
+    return () => sub.remove()
+  }, [])
+  return reduced
+}
+
 function MessageBubble({
   message,
   showAgent,
@@ -27,30 +38,38 @@ function MessageBubble({
   className,
 }: MessageBubbleProps) {
   const isUser = message.role === 'user'
+  const reduceMotion = useReducedMotion()
+  const shouldAnimate = animated && !reduceMotion
+
+  const entering = shouldAnimate
+    ? (isUser ? FadeInRight.duration(300).springify() : FadeInLeft.duration(300).springify())
+    : undefined
 
   if (isUser) {
     return (
-      <View
+      <Animated.View
         testID={`message-${message.id}`}
+        entering={entering}
         className={twMerge('flex w-full flex-row justify-end', className)}
       >
         <View
           className={twMerge(
-            'max-w-[70%] rounded-[18px] rounded-br-[4px] px-4 py-2.5 bg-[#e8e8e8]',
+            'max-w-[70%] rounded-[18px] rounded-br-[4px] px-4 py-2.5 bg-accent-subtle',
             userBubbleClassName,
           )}
         >
-          <Text className="text-[#1a1a1a] text-sm leading-relaxed">
+          <Text className="text-text-primary text-sm leading-relaxed">
             {message.content}
           </Text>
         </View>
-      </View>
+      </Animated.View>
     )
   }
 
   return (
-    <View
+    <Animated.View
       testID={`message-${message.id}`}
+      entering={entering}
       className={twMerge('flex w-full flex-col items-start gap-1.5', className)}
     >
       {showAgent && message.agent && (
@@ -76,7 +95,7 @@ function MessageBubble({
           <ResponseMessage content={message.content} />
         )}
       </View>
-    </View>
+    </Animated.View>
   )
 }
 

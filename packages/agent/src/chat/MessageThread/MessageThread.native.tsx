@@ -2,7 +2,7 @@
 
 import { twMerge } from 'tailwind-merge'
 import React, { useCallback, useEffect, useRef } from 'react'
-import { ScrollView } from 'react-native'
+import { ScrollView, useColorScheme } from 'react-native'
 import type { ChatMessage } from '../../types/chat'
 import { MessageBubble } from '../MessageBubble'
 
@@ -21,6 +21,8 @@ export type MessageThreadProps = {
 function MessageThread({ messages, streamingSlot, showAgent, showSources, showConfidence, showVerification, hideLastAssistant, userBubbleClassName, className }: MessageThreadProps) {
   const scrollRef = useRef<ScrollView>(null)
   const isNearBottom = useRef(true)
+  const colorScheme = useColorScheme()
+  const indicatorStyle = colorScheme === 'dark' ? 'white' : 'black' as const
 
   const scrollToBottom = useCallback(() => {
     if (isNearBottom.current) {
@@ -42,6 +44,7 @@ function MessageThread({ messages, streamingSlot, showAgent, showSources, showCo
         isNearBottom.current = contentSize.height - contentOffset.y - layoutMeasurement.height < 80
       }}
       scrollEventThrottle={16}
+      indicatorStyle={indicatorStyle}
       accessibilityRole="adjustable"
       accessibilityLabel="Message thread"
     >
