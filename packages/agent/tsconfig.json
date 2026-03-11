@@ -1,5 +1,6 @@
 {
   "extends": "@surf-kit/tsconfig/react.json",
   "compilerOptions": { "outDir": "dist", "rootDir": "." },
-  "include": ["src", "vitest.setup.ts", "vitest-axe.d.ts"]
+  "include": ["src", "vitest.setup.ts", "vitest-axe.d.ts"],
+  "exclude": ["src/**/*.native.tsx", "src/**/*.native.ts"]
 }

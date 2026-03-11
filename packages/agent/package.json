@@ -32,56 +32,67 @@
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
+      "react-native": "./src/index.ts",
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     },
     "./hooks": {
+      "react-native": "./src/hooks.ts",
       "types": "./dist/hooks.d.ts",
       "import": "./dist/hooks.js",
       "require": "./dist/hooks.cjs"
     },
     "./chat": {
+      "react-native": "./src/chat/index.ts",
       "types": "./dist/chat/index.d.ts",
       "import": "./dist/chat/index.js",
       "require": "./dist/chat/index.cjs"
     },
     "./response": {
+      "react-native": "./src/response/index.ts",
       "types": "./dist/response/index.d.ts",
       "import": "./dist/response/index.js",
       "require": "./dist/response/index.cjs"
     },
     "./sources": {
+      "react-native": "./src/sources/index.ts",
       "types": "./dist/sources/index.d.ts",
       "import": "./dist/sources/index.js",
       "require": "./dist/sources/index.cjs"
     },
     "./confidence": {
+      "react-native": "./src/confidence/index.ts",
       "types": "./dist/confidence/index.d.ts",
       "import": "./dist/confidence/index.js",
       "require": "./dist/confidence/index.cjs"
     },
     "./agent-identity": {
+      "react-native": "./src/agent-identity/index.ts",
       "types": "./dist/agent-identity/index.d.ts",
       "import": "./dist/agent-identity/index.js",
       "require": "./dist/agent-identity/index.cjs"
     },
     "./streaming": {
+      "react-native": "./src/streaming/index.ts",
       "types": "./dist/streaming/index.d.ts",
       "import": "./dist/streaming/index.js",
       "require": "./dist/streaming/index.cjs"
     },
     "./layouts": {
+      "react-native": "./src/layouts/index.ts",
       "types": "./dist/layouts/index.d.ts",
       "import": "./dist/layouts/index.js",
       "require": "./dist/layouts/index.cjs"
     },
     "./feedback": {
+      "react-native": "./src/feedback/index.ts",
       "types": "./dist/feedback/index.d.ts",
       "import": "./dist/feedback/index.js",
       "require": "./dist/feedback/index.cjs"
     },
     "./mcp": {
+      "react-native": "./src/mcp/index.ts",
       "types": "./dist/mcp/index.d.ts",
       "import": "./dist/mcp/index.js",
       "require": "./dist/mcp/index.cjs"

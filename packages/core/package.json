@@ -31,41 +31,49 @@
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
+      "react-native": "./src/index.ts",
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     },
     "./primitives": {
+      "react-native": "./src/primitives/index.ts",
       "types": "./dist/primitives/index.d.ts",
       "import": "./dist/primitives/index.js",
       "require": "./dist/primitives/index.cjs"
     },
     "./inputs": {
+      "react-native": "./src/inputs/index.ts",
       "types": "./dist/inputs/index.d.ts",
       "import": "./dist/inputs/index.js",
       "require": "./dist/inputs/index.cjs"
     },
     "./feedback": {
+      "react-native": "./src/feedback/index.ts",
       "types": "./dist/feedback/index.d.ts",
       "import": "./dist/feedback/index.js",
       "require": "./dist/feedback/index.cjs"
     },
     "./overlay": {
+      "react-native": "./src/overlay/index.ts",
       "types": "./dist/overlay/index.d.ts",
       "import": "./dist/overlay/index.js",
       "require": "./dist/overlay/index.cjs"
     },
     "./navigation": {
+      "react-native": "./src/navigation/index.ts",
       "types": "./dist/navigation/index.d.ts",
       "import": "./dist/navigation/index.js",
       "require": "./dist/navigation/index.cjs"
     },
     "./data": {
+      "react-native": "./src/data/index.ts",
       "types": "./dist/data/index.d.ts",
       "import": "./dist/data/index.js",
       "require": "./dist/data/index.cjs"
     },
     "./layout": {
+      "react-native": "./src/layout/index.ts",
       "types": "./dist/layout/index.d.ts",
       "import": "./dist/layout/index.js",
       "require": "./dist/layout/index.cjs"

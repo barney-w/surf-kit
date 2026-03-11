@@ -18,6 +18,12 @@
     },
     "typecheck": {
       "dependsOn": ["^build"]
+    },
+    "typecheck:native": {
+      "dependsOn": ["^build"]
+    },
+    "test:native": {
+      "dependsOn": ["^build"]
     }
   }
 }
