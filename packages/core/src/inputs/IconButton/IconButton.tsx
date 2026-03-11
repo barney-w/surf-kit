@@ -14,6 +14,7 @@ const iconButton = cva(
         secondary:
           'bg-transparent border border-border text-text-primary hover:bg-surface-raised',
         ghost: 'bg-transparent text-text-primary hover:bg-surface-raised',
+        tonal: 'bg-accent-subtlest text-accent hover:bg-accent-subtle active:bg-accent-subtle/80',
         danger: 'bg-status-error text-white hover:bg-status-error/90',
       },
       size: {
