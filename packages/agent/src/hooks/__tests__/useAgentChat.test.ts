@@ -171,6 +171,31 @@ describe('useAgentChat', () => {
     expect(result.current.state.isLoading).toBe(false)
   })
 
+  it('resolves async header function before each request', async () => {
+    const getHeaders = vi.fn().mockResolvedValue({ Authorization: 'Bearer fresh-token' })
+    const config: AgentChatConfig = { apiUrl: 'https://api.test.com', headers: getHeaders }
+
+    const mockResponse = createMockSSEResponse([
+      { type: 'done', response: { message: 'OK', sources: [], confidence: { overall: 'high', retrieval_quality: 0.9, source_authority: 0.9, answer_groundedness: 0.9, recency: 0.9, reasoning: '' }, verification: { status: 'passed', flags: [], claims_checked: 0, claims_verified: 0 }, ui_hint: 'text', structured_data: null, follow_up_suggestions: [] } },
+    ])
+
+    const fetchSpy = vi.spyOn(globalThis, 'fetch').mockResolvedValueOnce(mockResponse)
+
+    const { result } = renderHook(() => useAgentChat(config))
+
+    await act(async () => {
+      await result.current.actions.sendMessage('Hi')
+    })
+
+    expect(getHeaders).toHaveBeenCalledTimes(1)
+    expect(fetchSpy).toHaveBeenCalledWith(
+      expect.any(String),
+      expect.objectContaining({
+        headers: expect.objectContaining({ Authorization: 'Bearer fresh-token' }),
+      }),
+    )
+  })
+
   it('retries the last message', async () => {
     const mockResponse1 = createMockSSEResponse([
       { type: 'done', response: { message: 'First', sources: [], confidence: { overall: 'high', retrieval_quality: 0.9, source_authority: 0.9, answer_groundedness: 0.9, recency: 0.9, reasoning: '' }, verification: { status: 'passed', flags: [], claims_checked: 0, claims_verified: 0 }, ui_hint: 'text', structured_data: null, follow_up_suggestions: [] } },

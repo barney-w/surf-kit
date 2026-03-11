@@ -16,6 +16,7 @@ export interface AgentChatState {
   inputValue: string
   streamPhase: StreamState['phase']
   streamingContent: string
+  streamingAgent: string | null
 }
 
 const initialState: AgentChatState = {
@@ -26,6 +27,7 @@ const initialState: AgentChatState = {
   inputValue: '',
   streamPhase: 'idle',
   streamingContent: '',
+  streamingAgent: null,
 }
 
 // ── Actions ────────────────────────────────────────────────────────────
@@ -35,6 +37,7 @@ type Action =
   | { type: 'SEND_START'; message: ChatMessage }
   | { type: 'STREAM_PHASE'; phase: StreamState['phase'] }
   | { type: 'STREAM_CONTENT'; content: string }
+  | { type: 'STREAM_AGENT'; agent: string }
   | { type: 'SEND_SUCCESS'; message: ChatMessage; streamingContent: string; conversationId: string | null }
   | { type: 'SEND_ERROR'; error: ChatError }
   | { type: 'LOAD_CONVERSATION'; conversationId: string; messages: ChatMessage[] }
@@ -55,6 +58,7 @@ function reducer(state: AgentChatState, action: Action): AgentChatState {
         inputValue: '',
         streamPhase: 'thinking',
         streamingContent: '',
+        streamingAgent: null,
       }
 
     case 'STREAM_PHASE':
@@ -62,6 +66,9 @@ function reducer(state: AgentChatState, action: Action): AgentChatState {
 
     case 'STREAM_CONTENT':
       return { ...state, streamingContent: state.streamingContent + action.content }
+
+    case 'STREAM_AGENT':
+      return { ...state, streamingAgent: action.agent }
 
     case 'SEND_SUCCESS':
       return {
@@ -80,6 +87,7 @@ function reducer(state: AgentChatState, action: Action): AgentChatState {
         error: action.error,
         streamPhase: 'idle',
         streamingContent: '',
+        streamingAgent: null,
       }
 
     case 'LOAD_CONVERSATION':
@@ -125,7 +133,8 @@ export function useAgentChat(config: AgentChatConfig) {
 
   const sendMessage = useCallback(
     async (content: string) => {
-      const { apiUrl, streamPath = '/chat/stream', headers = {}, timeout = 30000 } = configRef.current
+      const { apiUrl, streamPath = '/chat/stream', headers: headersOrFn, timeout = 30000 } = configRef.current
+      const headers = typeof headersOrFn === 'function' ? await headersOrFn() : (headersOrFn ?? {})
 
       lastUserMessageRef.current = content
 
@@ -204,6 +213,7 @@ export function useAgentChat(config: AgentChatConfig) {
               switch (event.type) {
                 case 'agent':
                   capturedAgent = event.agent as string
+                  dispatch({ type: 'STREAM_AGENT', agent: capturedAgent })
                   break
                 case 'phase':
                   dispatch({ type: 'STREAM_PHASE', phase: event.phase })
@@ -273,7 +283,8 @@ export function useAgentChat(config: AgentChatConfig) {
 
   const submitFeedback = useCallback(
     async (messageId: string, rating: 'positive' | 'negative', comment?: string) => {
-      const { apiUrl, feedbackPath = '/feedback', headers = {} } = configRef.current
+      const { apiUrl, feedbackPath = '/feedback', headers: headersOrFn } = configRef.current
+      const headers = typeof headersOrFn === 'function' ? await headersOrFn() : (headersOrFn ?? {})
       await fetch(`${apiUrl}${feedbackPath}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', ...headers },

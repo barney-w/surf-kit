@@ -5,6 +5,7 @@ export type WelcomeScreenProps = {
   title?: string
   message?: string
   icon?: React.ReactNode
+  iconClassName?: string
   suggestedQuestions?: string[]
   onQuestionSelect?: (question: string) => void
   className?: string
@@ -14,6 +15,7 @@ function WelcomeScreen({
   title = 'Welcome',
   message = 'How can I help you today?',
   icon,
+  iconClassName,
   suggestedQuestions = [],
   onQuestionSelect,
   className,
@@ -26,12 +28,25 @@ function WelcomeScreen({
       )}
     >
       {/* Icon */}
-      <div
-        className="w-14 h-14 rounded-2xl bg-accent/10 border border-border flex items-center justify-center pulse-glow"
-        aria-hidden="true"
-      >
-        {icon ?? <span className="text-2xl">✦</span>}
-      </div>
+      {icon ? (
+        iconClassName ? (
+          <div className={iconClassName} aria-hidden="true">
+            {icon}
+          </div>
+        ) : (
+          icon
+        )
+      ) : (
+        <div
+          className={twMerge(
+            'w-14 h-14 rounded-2xl bg-accent/10 border border-border flex items-center justify-center pulse-glow',
+            iconClassName,
+          )}
+          aria-hidden="true"
+        >
+          <span className="text-2xl">✦</span>
+        </div>
+      )}
 
       {/* Text */}
       <div className="flex flex-col gap-2">

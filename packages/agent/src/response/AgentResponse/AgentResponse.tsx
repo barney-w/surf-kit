@@ -49,12 +49,12 @@ function AgentResponse({
       <ResponseMessage content={response.message} />
 
       {/* Structured content — rendered when ui_hint is not plain text */}
-      {response.ui_hint !== 'text' && response.structured_data && (
-        <StructuredResponse
-          uiHint={response.ui_hint}
-          data={response.structured_data as Record<string, unknown>}
-        />
-      )}
+      {response.ui_hint !== 'text' && response.structured_data && (() => {
+        const parsed = typeof response.structured_data === 'string'
+          ? (() => { try { return JSON.parse(response.structured_data) as Record<string, unknown> } catch { return null } })()
+          : response.structured_data as Record<string, unknown>
+        return parsed ? <StructuredResponse uiHint={response.ui_hint} data={parsed} /> : null
+      })()}
 
       {/* Confidence & Verification badges */}
       {(showConfidence || showVerification) && (

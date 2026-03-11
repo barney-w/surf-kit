@@ -1,7 +1,7 @@
 import React from 'react'
 import { cva } from 'class-variance-authority'
 import { twMerge } from 'tailwind-merge'
-import { Badge, Spinner } from '@surf-kit/core'
+import { Badge, WaveLoader } from '@surf-kit/core'
 import type { MCPToolCallData, MCPToolStatus } from '../../types/mcp'
 
 export type MCPToolCallProps = {
@@ -81,7 +81,7 @@ function MCPToolCall({ call, isExpanded = false, onToggleExpand, className }: MC
         <div className="flex items-center gap-2 shrink-0">
           {call.status === 'running' && (
             <span aria-hidden="true">
-              <Spinner size="sm" />
+              <WaveLoader size="sm" color="#38bdf8" />
             </span>
           )}
           <Badge

@@ -72,14 +72,16 @@ describe('StreamingMessage', () => {
     expect(screen.getByText('Here is the answer so far...')).toBeDefined()
   })
 
-  it('shows pulsing cursor when active', () => {
+  it('applies cursor class when active', () => {
     render(<StreamingMessage stream={generatingStream} />)
-    expect(screen.getByTestId('streaming-cursor')).toBeDefined()
+    const msg = screen.getByTestId('response-message')
+    expect(msg.className).toContain('sk-streaming-cursor')
   })
 
-  it('hides cursor when not active', () => {
+  it('does not apply cursor class when not active', () => {
     render(<StreamingMessage stream={completedStream} />)
-    expect(screen.queryByTestId('streaming-cursor')).toBeNull()
+    const msg = screen.getByTestId('response-message')
+    expect(msg.className).not.toContain('sk-streaming-cursor')
   })
 
   it('shows phase indicator when showPhases is true', () => {
@@ -88,9 +90,10 @@ describe('StreamingMessage', () => {
     expect(screen.getByText('Thinking...')).toBeDefined()
   })
 
-  it('shows Writing phase label during generating', () => {
+  it('hides phase indicator once content is displayed', () => {
     render(<StreamingMessage stream={generatingStream} showPhases />)
-    expect(screen.getByText('Writing...')).toBeDefined()
+    expect(screen.queryByTestId('phase-indicator')).toBeNull()
+    expect(screen.getByText('Here is the answer so far...')).toBeDefined()
   })
 
   it('hides phase indicator when showPhases is false', () => {

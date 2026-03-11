@@ -1,5 +1,5 @@
 import React from 'react'
-import { Spinner } from '@surf-kit/core'
+import { WaveLoader } from '@surf-kit/core'
 
 type ToolExecutionProps = {
   tool: string
@@ -23,7 +23,7 @@ function ToolExecution({ tool, label, className }: ToolExecutionProps) {
       data-testid="tool-execution"
     >
       <span aria-hidden="true">
-        <Spinner size="sm" />
+        <WaveLoader size="sm" color="#38bdf8" />
       </span>
       <span>{displayLabel}</span>
     </div>

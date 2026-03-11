@@ -1,5 +1,5 @@
 import React from 'react'
-import { Spinner } from '@surf-kit/core'
+import { WaveLoader } from '@surf-kit/core'
 import type { Source } from '../../types/agent'
 
 type RetrievalProgressProps = {
@@ -23,7 +23,7 @@ function RetrievalProgress({ sources, isActive, className }: RetrievalProgressPr
       {isActive && (
         <div className="flex items-center gap-2 text-sm text-text-secondary">
           <span aria-hidden="true">
-            <Spinner size="sm" />
+            <WaveLoader size="sm" color="#38bdf8" />
           </span>
           <span>Retrieving sources...</span>
         </div>
