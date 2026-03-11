@@ -151,105 +151,137 @@ export function useAgentChat(config: AgentChatConfig) {
       const timeoutId = setTimeout(() => controller.abort(), timeout)
 
       try {
-        const response = await fetch(`${apiUrl}${streamPath}`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Accept: 'text/event-stream',
-            ...headers,
-          },
-          body: JSON.stringify({
-            message: content,
-            conversation_id: state.conversationId,
-          }),
-          signal: controller.signal,
+        const url = `${apiUrl}${streamPath}`
+        const mergedHeaders: Record<string, string> = {
+          'Content-Type': 'application/json',
+          Accept: 'text/event-stream',
+          ...headers,
+        }
+        const body = JSON.stringify({
+          message: content,
+          conversation_id: state.conversationId,
         })
 
-        clearTimeout(timeoutId)
-
-        if (!response.ok) {
-          dispatch({
-            type: 'SEND_ERROR',
-            error: {
-              code: 'API_ERROR',
-              message: `HTTP ${response.status}: ${response.statusText}`,
-              retryable: response.status >= 500,
-            },
-          })
-          return
+        // These variables are mutated inside handleEvent (called from async stream processing).
+        // TypeScript can't track mutations through closures, so we use a mutable context object.
+        const ctx = {
+          accumulatedContent: '',
+          agentResponse: null as AgentResponse | null,
+          capturedAgent: null as string | null,
+          capturedConversationId: null as string | null,
+          hadStreamError: false,
         }
 
-        const reader = response.body?.getReader()
-        if (!reader) {
-          dispatch({
-            type: 'SEND_ERROR',
-            error: { code: 'STREAM_ERROR', message: 'No response body', retryable: true },
-          })
-          return
+        // Shared handler for parsed SSE events (used by both adapter and default paths)
+        const handleEvent = (event: { type: string; [key: string]: unknown }) => {
+          switch (event.type) {
+            case 'agent':
+              ctx.capturedAgent = event.agent as string
+              dispatch({ type: 'STREAM_AGENT', agent: ctx.capturedAgent })
+              break
+            case 'phase':
+              dispatch({ type: 'STREAM_PHASE', phase: event.phase as StreamState['phase'] })
+              break
+            case 'delta':
+              ctx.accumulatedContent += event.content
+              dispatch({ type: 'STREAM_CONTENT', content: event.content as string })
+              break
+            case 'done':
+              ctx.agentResponse = event.response as AgentResponse
+              ctx.capturedConversationId = (event.conversation_id as string) ?? null
+              break
+            case 'error':
+              ctx.hadStreamError = true
+              dispatch({ type: 'SEND_ERROR', error: event.error as ChatError })
+              break
+          }
         }
 
-        const decoder = new TextDecoder()
-        let buffer = ''
-        let accumulatedContent = ''
-        let agentResponse: AgentResponse | null = null
-        let capturedAgent: string | null = null
-        let capturedConversationId: string | null = null
+        const { streamAdapter } = configRef.current
 
-        while (true) {
-          const { done, value } = await reader.read()
-          if (done) break
+        if (streamAdapter) {
+          // Use the custom stream adapter (e.g. React Native XHR-based SSE)
+          await streamAdapter(
+            url,
+            { method: 'POST', headers: mergedHeaders, body, signal: controller.signal },
+            handleEvent,
+          )
+          clearTimeout(timeoutId)
+        } else {
+          // Default path: fetch + ReadableStream getReader()
+          const response = await fetch(url, {
+            method: 'POST',
+            headers: mergedHeaders,
+            body,
+            signal: controller.signal,
+          })
 
-          buffer += decoder.decode(value, { stream: true })
-          const lines = buffer.split('\n')
-          buffer = lines.pop() ?? ''
+          clearTimeout(timeoutId)
 
-          for (const line of lines) {
-            if (!line.startsWith('data: ')) continue
-            const data = line.slice(6).trim()
-            if (data === '[DONE]') continue
+          if (!response.ok) {
+            dispatch({
+              type: 'SEND_ERROR',
+              error: {
+                code: 'API_ERROR',
+                message: `HTTP ${response.status}: ${response.statusText}`,
+                retryable: response.status >= 500,
+              },
+            })
+            return
+          }
 
-            try {
-              const event = JSON.parse(data)
-              switch (event.type) {
-                case 'agent':
-                  capturedAgent = event.agent as string
-                  dispatch({ type: 'STREAM_AGENT', agent: capturedAgent })
-                  break
-                case 'phase':
-                  dispatch({ type: 'STREAM_PHASE', phase: event.phase })
-                  break
-                case 'delta':
-                  accumulatedContent += event.content
-                  dispatch({ type: 'STREAM_CONTENT', content: event.content as string })
-                  break
-                case 'done':
-                  agentResponse = event.response
-                  capturedConversationId = (event.conversation_id as string) ?? null
-                  break
-                case 'error':
-                  dispatch({ type: 'SEND_ERROR', error: event.error })
-                  return
+          const reader = response.body?.getReader()
+          if (!reader) {
+            dispatch({
+              type: 'SEND_ERROR',
+              error: { code: 'STREAM_ERROR', message: 'No response body', retryable: true },
+            })
+            return
+          }
+
+          const decoder = new TextDecoder()
+          let buffer = ''
+
+          while (true) {
+            const { done, value } = await reader.read()
+            if (done) break
+
+            buffer += decoder.decode(value, { stream: true })
+            const lines = buffer.split('\n')
+            buffer = lines.pop() ?? ''
+
+            for (const line of lines) {
+              if (!line.startsWith('data: ')) continue
+              const data = line.slice(6).trim()
+              if (data === '[DONE]') continue
+
+              try {
+                const event = JSON.parse(data)
+                handleEvent(event)
+              } catch {
+                // Skip malformed events
               }
-            } catch {
-              // Skip malformed events
             }
           }
         }
 
+        // If an error event was dispatched during streaming, don't dispatch success
+        if (ctx.hadStreamError) return
+
         const assistantMessage: ChatMessage = {
           id: generateMessageId(),
           role: 'assistant',
-          content: agentResponse?.message ?? accumulatedContent,
-          response: agentResponse ?? undefined,
-          agent: capturedAgent ?? undefined,
+          content: ctx.agentResponse?.message ?? ctx.accumulatedContent,
+          response: ctx.agentResponse ?? undefined,
+          agent: ctx.capturedAgent ?? undefined,
           timestamp: new Date(),
         }
 
         dispatch({
           type: 'SEND_SUCCESS',
           message: assistantMessage,
-          streamingContent: accumulatedContent,
-          conversationId: capturedConversationId,
+          streamingContent: ctx.accumulatedContent,
+          conversationId: ctx.capturedConversationId,
         })
       } catch (err: unknown) {
         clearTimeout(timeoutId)
