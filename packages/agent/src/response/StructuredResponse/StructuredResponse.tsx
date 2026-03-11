@@ -197,7 +197,11 @@ function renderWarning(data: Record<string, unknown>) {
   )
 }
 
-function StructuredResponse({ uiHint, data, className }: StructuredResponseProps) {
+function StructuredResponse({ uiHint, data: rawData, className }: StructuredResponseProps) {
+  // Defensive: data may arrive as a JSON string from the API instead of a parsed object.
+  const data = typeof rawData === 'string'
+    ? (() => { try { return JSON.parse(rawData) as Record<string, unknown> } catch { return null } })()
+    : rawData
   if (!data) return null
 
   let content: React.ReactNode

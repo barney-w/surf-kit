@@ -9,8 +9,8 @@ export interface AgentChatConfig {
   feedbackPath?: string
   /** Conversations endpoint path (appended to apiUrl) */
   conversationsPath?: string
-  /** Request headers (e.g. Authorization) */
-  headers?: Record<string, string>
+  /** Request headers (e.g. Authorization). Can be a static object or an async function that returns headers (useful for refreshing auth tokens). */
+  headers?: Record<string, string> | (() => Promise<Record<string, string>>)
   /** Request timeout in milliseconds */
   timeout?: number
   /** Enable localStorage persistence for conversations */

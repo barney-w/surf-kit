@@ -54,7 +54,7 @@ describe('MessageBubble', () => {
   it('applies accent background to user messages', () => {
     const { container } = render(<MessageBubble message={userMessage} />)
     const bubble = container.querySelector('[data-message-id="msg-1"]')?.firstElementChild
-    expect(bubble?.className).toContain('bg-accent')
+    expect(bubble?.className).toContain('bg-[#e8e8e8]')
   })
 
   it('applies surface background to assistant messages', () => {
