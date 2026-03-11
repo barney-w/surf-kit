@@ -51,7 +51,7 @@ function BlinkingCursor() {
         opacity,
         width: 2,
         height: 14,
-        backgroundColor: '#38bdf8',
+        backgroundColor: '#e1b989',
         marginLeft: 2,
       }}
     />

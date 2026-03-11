@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { View } from 'react-native'
+import { View, useColorScheme } from 'react-native'
 import Markdown from 'react-native-markdown-display'
 
 type ResponseMessageProps = {
@@ -29,9 +29,38 @@ const markdownStyles = {
 }
 
 function ResponseMessage({ content, className }: ResponseMessageProps) {
+  const colorScheme = useColorScheme()
+  const isDark = colorScheme === 'dark'
+
+  const themedStyles = useMemo(() => ({
+    ...markdownStyles,
+    body: { color: isDark ? '#e8e8e8' : '#1a1a1a' },
+    code_inline: {
+      ...markdownStyles.code_inline,
+      backgroundColor: isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.05)',
+      color: isDark ? '#38bdf8' : '#0284c7',
+    },
+    code_block: {
+      ...markdownStyles.code_block,
+      backgroundColor: isDark ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.03)',
+      borderColor: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)',
+    },
+    blockquote: {
+      ...markdownStyles.blockquote,
+      borderLeftColor: isDark ? '#38bdf8' : '#0284c7',
+    },
+    link: {
+      ...markdownStyles.link,
+      color: isDark ? '#38bdf8' : '#0284c7',
+    },
+    heading1: { ...markdownStyles.heading1, color: isDark ? '#f0f0f0' : '#111111' },
+    heading2: { ...markdownStyles.heading2, color: isDark ? '#f0f0f0' : '#111111' },
+    heading3: { ...markdownStyles.heading3, color: isDark ? '#f0f0f0' : '#111111' },
+  }), [isDark])
+
   return (
     <View className={twMerge('text-sm', className)} data-testid="response-message">
-      <Markdown style={markdownStyles}>
+      <Markdown style={themedStyles}>
         {normalizeMarkdownLists(content)}
       </Markdown>
     </View>
