@@ -88,34 +88,34 @@ describe('ResponseMessage', () => {
     expect(heading.tagName).toBe('H3')
   })
 
-  it('renders mixed formatting in a realistic agent response', () => {
+  it('renders mixed formatting in a realistic response', () => {
     const content = [
-      'To book a community venue:',
+      'To reserve a meeting room:',
       '',
       '1. **Choose a room** — view photos and floorplans',
-      '2. **Review fees** — check the fees and charges documents',
-      '3. **Submit an enquiry** — complete the online form',
+      '2. **Review pricing** — check the schedule of fees',
+      '3. **Submit a request** — complete the online form',
       '',
-      'All bookings must be paid *before* confirmation.',
+      'All reservations must be confirmed *before* the event date.',
     ].join('\n')
     render(<ResponseMessage content={content} />)
     expect(screen.getByText(/Choose a room/).tagName).toBe('STRONG')
     expect(screen.getByText('before').tagName).toBe('EM')
-    expect(screen.getByText(/All bookings/)).toBeDefined()
+    expect(screen.getByText(/All reservations/)).toBeDefined()
   })
 
   it('strips duplicate leading numbers from ordered list items', () => {
-    // Some AI responses produce "1. 1. Step" where the first number becomes
+    // Some responses produce "1. 1. Step" where the first number becomes
     // the ol counter and the second stays as text — we strip the redundant one.
     const content = [
-      '1. 1. Choose your event type',
-      '2. 2. For attending events',
-      '3. 3. For organising on council land',
+      '1. 1. Choose your project type',
+      '2. 2. Review the requirements',
+      '3. 3. Submit your application',
     ].join('\n')
     render(<ResponseMessage content={content} />)
-    expect(screen.getByText(/Choose your event type/)).toBeDefined()
+    expect(screen.getByText(/Choose your project type/)).toBeDefined()
     // Ensure the text does NOT start with "1."
-    const item = screen.getByText(/Choose your event type/)
+    const item = screen.getByText(/Choose your project type/)
     expect(item.textContent).not.toMatch(/^\d+\./)
   })
 
