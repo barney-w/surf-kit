@@ -57,7 +57,7 @@ function WaveLoader({
       ctx.clip()
 
       const cycle = (Math.sin(t.current * 0.25) + 1) / 2
-      const animFill = 0.3 + cycle * 0.5
+      const animFill = 0.35 + cycle * 0.3
       const waterY = cy + r - animFill * 2 * r
 
       for (let layer = 0; layer < 2; layer++) {
