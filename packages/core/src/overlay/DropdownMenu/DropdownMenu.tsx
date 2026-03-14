@@ -40,7 +40,7 @@ function MenuItemRow({ item, state, onAction }: any) {
       className={twMerge(
         'px-3 py-2 text-sm outline-none cursor-pointer rounded-md transition-colors',
         isDisabled
-          ? 'text-text-tertiary cursor-not-allowed'
+          ? 'text-text-secondary cursor-default'
           : 'text-text-primary hover:bg-surface-raised focus:bg-surface-raised',
       )}
     >

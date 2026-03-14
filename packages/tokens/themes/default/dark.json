@@ -14,11 +14,11 @@
       "inverse": { "$value": "{color.charcoal.900}" }
     },
     "accent": {
-      "primary": { "$value": "{color.teal.500}" },
-      "primary-hover": { "$value": "{color.teal.600}" },
-      "primary-active": { "$value": "{color.teal.700}" },
-      "primary-subtle": { "$value": "{color.teal.100}" },
-      "primary-subtlest": { "$value": "{color.teal.50}" }
+      "primary": { "$value": "{color.teal.300}" },
+      "primary-hover": { "$value": "{color.teal.500}" },
+      "primary-active": { "$value": "{color.teal.600}" },
+      "primary-subtle": { "$value": "rgba(0, 153, 168, 0.15)" },
+      "primary-subtlest": { "$value": "rgba(0, 153, 168, 0.08)" }
     },
     "border": {
       "default": { "$value": "#404040" },
@@ -27,11 +27,11 @@
     },
     "status": {
       "success": { "$value": "{color.lime.500}" },
-      "success-subtle": { "$value": "{color.lime.100}" },
+      "success-subtle": { "$value": "rgba(141, 194, 31, 0.15)" },
       "warning": { "$value": "{color.golden.500}" },
-      "warning-subtle": { "$value": "{color.golden.100}" },
+      "warning-subtle": { "$value": "rgba(248, 184, 0, 0.15)" },
       "error": { "$value": "{color.watermelon.500}" },
-      "error-subtle": { "$value": "{color.watermelon.100}" },
+      "error-subtle": { "$value": "rgba(232, 23, 93, 0.15)" },
       "info": { "$value": "{color.sky.500}" }
     }
   }

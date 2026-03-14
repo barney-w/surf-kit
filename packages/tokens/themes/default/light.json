@@ -26,11 +26,11 @@
       "interactive": { "$value": "{color.teal.500}" }
     },
     "status": {
-      "success": { "$value": "{color.lime.500}" },
+      "success": { "$value": "{color.lime.700}" },
       "success-subtle": { "$value": "{color.lime.100}" },
-      "warning": { "$value": "{color.golden.500}" },
+      "warning": { "$value": "{color.golden.700}" },
       "warning-subtle": { "$value": "{color.golden.100}" },
-      "error": { "$value": "{color.watermelon.500}" },
+      "error": { "$value": "{color.watermelon.700}" },
       "error-subtle": { "$value": "{color.watermelon.100}" },
       "info": { "$value": "{color.sky.500}" }
     }
