@@ -21,6 +21,7 @@ export type MessageThreadProps = {
 function MessageThread({ messages, streamingSlot, showAgent, showSources, showConfidence, showVerification, hideLastAssistant, userBubbleClassName, className }: MessageThreadProps) {
   const scrollRef = useRef<ScrollView>(null)
   const isNearBottom = useRef(true)
+  const hasStreaming = !!streamingSlot
   const colorScheme = useColorScheme()
   const indicatorStyle = colorScheme === 'dark' ? 'white' : 'black' as const
 
@@ -34,10 +35,25 @@ function MessageThread({ messages, streamingSlot, showAgent, showSources, showCo
     scrollToBottom()
   }, [messages.length, scrollToBottom])
 
+  // Continuously follow streaming content growth (matches web behaviour)
+  useEffect(() => {
+    if (!hasStreaming) return
+    let raf: number
+    const tick = () => {
+      scrollToBottom()
+      raf = requestAnimationFrame(tick)
+    }
+    raf = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(raf)
+  }, [hasStreaming, scrollToBottom])
+
   return (
     <ScrollView
       ref={scrollRef}
-      className={twMerge('flex-1 px-4 py-6', className)}
+      className={twMerge('flex-1', className)}
+      contentContainerClassName="px-4 py-6 gap-4 grow"
+      keyboardDismissMode="on-drag"
+      keyboardShouldPersistTaps="handled"
       onContentSizeChange={scrollToBottom}
       onScroll={(e) => {
         const { contentOffset, contentSize, layoutMeasurement } = e.nativeEvent

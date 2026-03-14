@@ -54,11 +54,11 @@ function MessageBubble({
       >
         <View
           className={twMerge(
-            'max-w-[70%] rounded-[18px] rounded-br-[4px] px-4 py-2.5 bg-accent-subtle',
+            'max-w-[75%] rounded-[18px] rounded-br-[4px] px-4 py-2.5 bg-accent-subtle',
             userBubbleClassName,
           )}
         >
-          <Text className="text-text-primary text-sm leading-relaxed">
+          <Text className="text-text-primary text-[15px] leading-relaxed">
             {message.content}
           </Text>
         </View>
@@ -79,11 +79,7 @@ function MessageBubble({
           </Text>
         </View>
       )}
-      <View
-        className={twMerge(
-          'max-w-[88%] rounded-[18px] rounded-tl-[4px] px-4 py-3 bg-surface border border-border',
-        )}
-      >
+      <View className="max-w-[88%] rounded-[18px] rounded-tl-[4px] px-4 py-3 bg-surface border border-border">
         {message.response ? (
           <AgentResponse
             response={message.response}

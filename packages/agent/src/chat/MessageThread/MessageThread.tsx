@@ -20,16 +20,22 @@ export type MessageThreadProps = {
 function MessageThread({ messages, streamingSlot, showAgent, showSources, showConfidence, showVerification, hideLastAssistant, userBubbleClassName, className }: MessageThreadProps) {
   const scrollRef = useRef<HTMLDivElement>(null)
   const isNearBottom = useRef(true)
+  const isProgrammaticScroll = useRef(false)
   const hasStreaming = !!streamingSlot
 
   const scrollToBottom = useCallback(() => {
     const el = scrollRef.current
     if (el && isNearBottom.current) {
+      isProgrammaticScroll.current = true
       el.scrollTop = el.scrollHeight
     }
   }, [])
 
   const handleScroll = useCallback(() => {
+    if (isProgrammaticScroll.current) {
+      isProgrammaticScroll.current = false
+      return
+    }
     const el = scrollRef.current
     if (!el) return
     isNearBottom.current = el.scrollHeight - el.scrollTop - el.clientHeight < 80
