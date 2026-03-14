@@ -29,9 +29,10 @@ const phaseLabels: Record<StreamState['phase'], string> = {
 // appears inline with the final text rather than on a new line.
 // Uses steps(1) for a crisp blink that won't smooth-fade to invisible.
 const CURSOR_STYLES = `
-.sk-streaming-cursor > :not(ul,ol,blockquote):last-child::after,
+.sk-streaming-cursor > :not(ul,ol,blockquote,div:has(table)):last-child::after,
 .sk-streaming-cursor > :is(ul,ol):last-child > li:last-child::after,
-.sk-streaming-cursor > blockquote:last-child > p:last-child::after {
+.sk-streaming-cursor > blockquote:last-child > p:last-child::after,
+.sk-streaming-cursor > div:has(table):last-child table tbody tr:last-child td:last-child::after {
   content: "";
   display: inline-block;
   width: 2px;

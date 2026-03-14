@@ -37,6 +37,7 @@ type Action =
   | { type: 'SEND_START'; message: ChatMessage }
   | { type: 'STREAM_PHASE'; phase: StreamState['phase'] }
   | { type: 'STREAM_CONTENT'; content: string }
+  | { type: 'STREAM_CONTENT_RESET' }
   | { type: 'STREAM_AGENT'; agent: string }
   | { type: 'SEND_SUCCESS'; message: ChatMessage; streamingContent: string; conversationId: string | null }
   | { type: 'SEND_ERROR'; error: ChatError }
@@ -66,6 +67,9 @@ function reducer(state: AgentChatState, action: Action): AgentChatState {
 
     case 'STREAM_CONTENT':
       return { ...state, streamingContent: state.streamingContent + action.content }
+
+    case 'STREAM_CONTENT_RESET':
+      return { ...state, streamingContent: '' }
 
     case 'STREAM_AGENT':
       return { ...state, streamingAgent: action.agent }
@@ -199,6 +203,10 @@ export function useAgentChat(config: AgentChatConfig) {
             case 'delta':
               ctx.accumulatedContent += event.content
               dispatch({ type: 'STREAM_CONTENT', content: event.content as string })
+              break
+            case 'delta_reset':
+              ctx.accumulatedContent = ''
+              dispatch({ type: 'STREAM_CONTENT_RESET' })
               break
             case 'done':
               ctx.agentResponse = event.response as AgentResponse

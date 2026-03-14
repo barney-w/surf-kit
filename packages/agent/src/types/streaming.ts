@@ -4,6 +4,7 @@ import type { ChatError } from './chat'
 export type StreamEvent =
   | { type: 'phase'; phase: 'thinking' | 'retrieving' | 'generating' | 'verifying' | 'waiting' }
   | { type: 'delta'; content: string }
+  | { type: 'delta_reset' }
   | { type: 'source'; source: Source }
   | { type: 'agent'; agent: string }
   | { type: 'verification'; result: VerificationResult }
