@@ -13,11 +13,11 @@
       "inverse": { "$value": "{color.brand.dark}" }
     },
     "accent": {
-      "primary": { "$value": "{color.brand.blue}" },
-      "primary-hover": { "$value": "{color.brand.cyan}" },
+      "primary": { "$value": "{color.brand.cyan}" },
+      "primary-hover": { "$value": "#5DD4E5" },
       "primary-active": { "$value": "#2AA8BC" },
-      "primary-subtle": { "$value": "rgba(0,145,165,0.15)" },
-      "primary-subtlest": { "$value": "rgba(0,145,165,0.08)" }
+      "primary-subtle": { "$value": "rgba(56,189,208,0.15)" },
+      "primary-subtlest": { "$value": "rgba(56,189,208,0.08)" }
     },
     "border": {
       "default": { "$value": "rgba(225,185,137,0.15)" },
