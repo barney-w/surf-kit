@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactMarkdown from 'react-markdown'
 import rehypeSanitize from 'rehype-sanitize'
+import remarkGfm from 'remark-gfm'
 import { twMerge } from 'tailwind-merge'
 
 type ResponseMessageProps = {
@@ -32,12 +33,17 @@ function ResponseMessage({ content, className }: ResponseMessageProps) {
         '[&_pre]:bg-surface-raised [&_pre]:border [&_pre]:border-border [&_pre]:rounded-xl [&_pre]:p-4 [&_pre]:overflow-x-auto',
         '[&_hr]:my-3 [&_hr]:border-border',
         '[&_blockquote]:border-l-2 [&_blockquote]:border-border-strong [&_blockquote]:pl-4 [&_blockquote]:text-text-secondary',
+        '[&_table]:w-full [&_table]:text-sm [&_table]:border-collapse [&_table]:my-2',
+        '[&_thead]:border-b [&_thead]:border-border',
+        '[&_th]:text-left [&_th]:px-2 [&_th]:py-1.5 [&_th]:font-semibold',
+        '[&_td]:px-2 [&_td]:py-1.5 [&_td]:border-t [&_td]:border-border/50',
         '[&_a]:text-accent [&_a]:underline-offset-2 [&_a]:hover:text-accent/80',
         className,
       )}
       data-testid="response-message"
     >
       <ReactMarkdown
+        remarkPlugins={[remarkGfm]}
         rehypePlugins={[rehypeSanitize]}
         components={{
           script: () => null,
@@ -65,6 +71,14 @@ function ResponseMessage({ content, className }: ResponseMessageProps) {
           h3: ({ children }) => <h3 className="text-sm font-semibold mt-2 mb-1">{children}</h3>,
           hr: () => <hr className="my-3 border-border" />,
           code: ({ children }) => <code className="bg-surface-sunken rounded px-1 py-0.5 text-xs font-mono">{children}</code>,
+          table: ({ children }) => (
+            <div className="overflow-x-auto my-2">
+              <table className="w-full text-sm border-collapse">{children}</table>
+            </div>
+          ),
+          thead: ({ children }) => <thead className="border-b border-border">{children}</thead>,
+          th: ({ children }) => <th className="text-left px-2 py-1.5 font-semibold">{children}</th>,
+          td: ({ children }) => <td className="px-2 py-1.5 border-t border-border/50">{children}</td>,
         }}
       >
         {normalizeMarkdownLists(content)}

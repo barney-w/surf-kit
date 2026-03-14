@@ -119,6 +119,20 @@ describe('ResponseMessage', () => {
     expect(item.textContent).not.toMatch(/^\d+\./)
   })
 
+  it('renders GFM tables', () => {
+    const content = [
+      '| Header 1 | Header 2 |',
+      '|---|---|',
+      '| Cell A | Cell B |',
+      '| Cell C | Cell D |',
+    ].join('\n')
+    render(<ResponseMessage content={content} />)
+    expect(screen.getByRole('table')).toBeDefined()
+    expect(screen.getByText('Header 1').tagName).toBe('TH')
+    expect(screen.getByText('Cell A').tagName).toBe('TD')
+    expect(screen.getByText('Cell D').tagName).toBe('TD')
+  })
+
   it('has no accessibility violations', async () => {
     const { container } = render(
       <ResponseMessage content="This is a **test** with a [link](https://example.com)" />,
