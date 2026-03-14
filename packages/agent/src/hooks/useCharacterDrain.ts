@@ -57,7 +57,18 @@ export function useCharacterDrain(target: string, msPerChar = 15): CharacterDrai
     const charsToAdvance = Math.floor(elapsed / msPerCharRef.current)
 
     if (charsToAdvance > 0 && indexRef.current < currentTarget.length) {
-      const nextIndex = Math.min(indexRef.current + charsToAdvance, currentTarget.length)
+      let nextIndex = Math.min(indexRef.current + charsToAdvance, currentTarget.length)
+      // When the slice would end with whitespace, advance past it to include
+      // the next visible character.  This prevents trimEnd() in the streaming
+      // UI from stripping trailing newlines and causing ReactMarkdown to
+      // "jump" between block structures in a single frame (e.g. a heading
+      // suddenly gaining a following paragraph with no transition).
+      while (
+        nextIndex < currentTarget.length &&
+        currentTarget[nextIndex - 1].trim() === ''
+      ) {
+        nextIndex++
+      }
       indexRef.current = nextIndex
       lastTimeRef.current = now
       setDisplayed(currentTarget.slice(0, nextIndex))

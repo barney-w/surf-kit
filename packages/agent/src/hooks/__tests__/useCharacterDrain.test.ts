@@ -74,6 +74,40 @@ describe('useCharacterDrain', () => {
     expect(result.current.displayed).toBe('HEL')
   })
 
+  it('skips past trailing whitespace to include the next visible char', () => {
+    // Simulates "Worker\n\nAll" — drain should never pause on the newlines
+    const { result } = renderHook(() => useCharacterDrain('AB\n\nCD', 16))
+
+    act(() => { flush(0) })  // init
+    act(() => { flush(16) }) // 1 char → 'A'
+    expect(result.current.displayed).toBe('A')
+
+    act(() => { flush(16) }) // would land on 'B' → 'AB' (no trailing ws)
+    expect(result.current.displayed).toBe('AB')
+
+    // Next char is '\n' — trailing whitespace, so drain skips ahead
+    // through '\n\n' to include 'C'
+    act(() => { flush(16) }) // would land on '\n' but skips to 'C'
+    expect(result.current.displayed).toBe('AB\n\nC')
+
+    act(() => { flush(16) })
+    expect(result.current.displayed).toBe('AB\n\nCD')
+    expect(result.current.isDraining).toBe(false)
+  })
+
+  it('skips trailing spaces between words', () => {
+    const { result } = renderHook(() => useCharacterDrain('Hi there', 16))
+
+    act(() => { flush(0) })
+    act(() => { flush(16) }) // 'H'
+    act(() => { flush(16) }) // 'Hi'
+    expect(result.current.displayed).toBe('Hi')
+
+    // Next char is ' ' (space) — skip to 't'
+    act(() => { flush(16) })
+    expect(result.current.displayed).toBe('Hi t')
+  })
+
   it('does not advance more chars than the target length', () => {
     const { result } = renderHook(() => useCharacterDrain('Hi', 10))
 

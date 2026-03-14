@@ -24,11 +24,12 @@ const phaseLabels: Record<StreamState['phase'], string> = {
   verifying: 'Verifying...',
 }
 
-// Cursor styles that handle block-level last elements (ul, ol, blockquote)
-// by targeting the last text-containing child within them, so the cursor
-// always appears inline with the final text rather than on a new line.
+// Cursor styles: a catch-all targets any last-child element, with overrides
+// for ul/ol (target last li) and blockquote (target last p) so the cursor
+// appears inline with the final text rather than on a new line.
+// Uses steps(1) for a crisp blink that won't smooth-fade to invisible.
 const CURSOR_STYLES = `
-.sk-streaming-cursor > :is(p,h1,h2,h3,h4,pre):last-child::after,
+.sk-streaming-cursor > :not(ul,ol,blockquote):last-child::after,
 .sk-streaming-cursor > :is(ul,ol):last-child > li:last-child::after,
 .sk-streaming-cursor > blockquote:last-child > p:last-child::after {
   content: "";
@@ -36,13 +37,13 @@ const CURSOR_STYLES = `
   width: 2px;
   height: 1em;
   background: var(--color-accent, #38bdf8);
-  animation: sk-cursor-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  animation: sk-cursor-blink 0.8s steps(1) infinite;
   margin-left: 2px;
   vertical-align: text-bottom;
 }
-@keyframes sk-cursor-pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
+@keyframes sk-cursor-blink {
+  0%, 60% { opacity: 1; }
+  61%, 100% { opacity: 0; }
 }
 `
 

@@ -24,8 +24,8 @@ function WaveLoader({
   className,
 }: WaveLoaderProps) {
   const px = sizes[size]
-  const scaleAnim = useRef(new Animated.Value(0.6)).current
-  const opacityAnim = useRef(new Animated.Value(0.3)).current
+  const scaleAnim = useRef(new Animated.Value(0.85)).current
+  const opacityAnim = useRef(new Animated.Value(0.6)).current
 
   useEffect(() => {
     const animation = Animated.loop(
@@ -44,12 +44,12 @@ function WaveLoader({
         ]),
         Animated.parallel([
           Animated.timing(scaleAnim, {
-            toValue: 0.6,
+            toValue: 0.85,
             duration: 1000,
             useNativeDriver: true,
           }),
           Animated.timing(opacityAnim, {
-            toValue: 0.3,
+            toValue: 0.6,
             duration: 1000,
             useNativeDriver: true,
           }),
