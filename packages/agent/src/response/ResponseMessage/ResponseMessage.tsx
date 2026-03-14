@@ -30,6 +30,7 @@ function ResponseMessage({ content, className }: ResponseMessageProps) {
         '[&_h3]:text-sm [&_h3]:font-semibold [&_h3]:text-accent [&_h3]:mt-2 [&_h3]:mb-1',
         '[&_code]:bg-surface-raised [&_code]:text-accent [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded [&_code]:text-xs [&_code]:font-mono',
         '[&_pre]:bg-surface-raised [&_pre]:border [&_pre]:border-border [&_pre]:rounded-xl [&_pre]:p-4 [&_pre]:overflow-x-auto',
+        '[&_hr]:my-3 [&_hr]:border-border',
         '[&_blockquote]:border-l-2 [&_blockquote]:border-border-strong [&_blockquote]:pl-4 [&_blockquote]:text-text-secondary',
         '[&_a]:text-accent [&_a]:underline-offset-2 [&_a]:hover:text-accent/80',
         className,
@@ -44,11 +45,25 @@ function ResponseMessage({ content, className }: ResponseMessageProps) {
           p: ({ children }) => <p className="my-2">{children}</p>,
           ul: ({ children }) => <ul className="my-2 list-disc pl-6">{children}</ul>,
           ol: ({ children }) => <ol className="my-2 list-decimal pl-6">{children}</ol>,
-          li: ({ children }) => <li className="my-1">{children}</li>,
+          li: ({ children, ...props }) => {
+            let content = children
+            // Strip leading "N." or "N)" text that duplicates the ol counter
+            if ((props as Record<string, unknown>).ordered) {
+              content = React.Children.map(children, (child, i) => {
+                if (i === 0 && typeof child === 'string') {
+                  return child.replace(/^\d+[.)]\s*/, '')
+                }
+                return child
+              })
+            }
+            return <li className="my-1">{content}</li>
+          },
           strong: ({ children }) => <strong className="font-semibold">{children}</strong>,
+          em: ({ children }) => <em className="italic text-text-secondary">{children}</em>,
           h1: ({ children }) => <h1 className="text-base font-bold mt-4 mb-2">{children}</h1>,
           h2: ({ children }) => <h2 className="text-sm font-bold mt-3 mb-1">{children}</h2>,
           h3: ({ children }) => <h3 className="text-sm font-semibold mt-2 mb-1">{children}</h3>,
+          hr: () => <hr className="my-3 border-border" />,
           code: ({ children }) => <code className="bg-surface-sunken rounded px-1 py-0.5 text-xs font-mono">{children}</code>,
         }}
       >

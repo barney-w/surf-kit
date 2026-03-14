@@ -1,7 +1,8 @@
-import React, { useMemo } from 'react'
+import React, { useContext, useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { View, useColorScheme } from 'react-native'
 import Markdown from 'react-native-markdown-display'
+import { ThemeContext } from '@surf-kit/theme'
 
 type ResponseMessageProps = {
   content: string
@@ -29,8 +30,10 @@ const markdownStyles = {
 }
 
 function ResponseMessage({ content, className }: ResponseMessageProps) {
-  const colorScheme = useColorScheme()
-  const isDark = colorScheme === 'dark'
+  const systemScheme = useColorScheme()
+  const themeCtx = useContext(ThemeContext)
+  // brand and dark modes both have dark backgrounds; fall back to system scheme
+  const isDark = themeCtx?.colorMode === 'brand' || themeCtx?.colorMode === 'dark' || systemScheme === 'dark'
 
   const themedStyles = useMemo(() => ({
     ...markdownStyles,
