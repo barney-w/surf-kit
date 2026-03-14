@@ -1,5 +1,17 @@
 # @surf-kit/agent
 
+## 0.3.0
+
+### Minor Changes
+
+- 51dd8c8: Add React Native support via platform file extensions and native token builds
+
+### Patch Changes
+
+- Updated dependencies [51dd8c8]
+  - @surf-kit/core@0.2.0
+  - @surf-kit/theme@0.2.0
+
 ## 0.2.2
 
 ### Patch Changes
