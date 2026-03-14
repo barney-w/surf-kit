@@ -1,6 +1,6 @@
 {
   "name": "@surf-kit/tokens",
-  "version": "0.1.3",
+  "version": "0.2.0",
   "description": "Design tokens for surf-kit — colors, spacing, typography as CSS, JSON, and TypeScript",
   "keywords": [
     "design-tokens",
@@ -27,10 +27,22 @@
       "default": "./dist/ts/tokens.js"
     },
     "./json": "./dist/json/tokens.json",
-    "./native": { "types": "./dist/native/tokens-light.ts", "default": "./dist/native/tokens-light.ts" },
-    "./native/light": { "types": "./dist/native/tokens-light.ts", "default": "./dist/native/tokens-light.ts" },
-    "./native/dark": { "types": "./dist/native/tokens-dark.ts", "default": "./dist/native/tokens-dark.ts" },
-    "./native/brand": { "types": "./dist/native/tokens-brand.ts", "default": "./dist/native/tokens-brand.ts" },
+    "./native": {
+      "types": "./dist/native/tokens-light.ts",
+      "default": "./dist/native/tokens-light.ts"
+    },
+    "./native/light": {
+      "types": "./dist/native/tokens-light.ts",
+      "default": "./dist/native/tokens-light.ts"
+    },
+    "./native/dark": {
+      "types": "./dist/native/tokens-dark.ts",
+      "default": "./dist/native/tokens-dark.ts"
+    },
+    "./native/brand": {
+      "types": "./dist/native/tokens-brand.ts",
+      "default": "./dist/native/tokens-brand.ts"
+    },
     ".": "./dist/ts/tokens.js"
   },
   "repository": {

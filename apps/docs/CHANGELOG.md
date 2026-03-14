@@ -1,5 +1,14 @@
 # docs
 
+## 0.1.5
+
+### Patch Changes
+
+- Updated dependencies [51dd8c8]
+  - @surf-kit/core@0.2.0
+  - @surf-kit/theme@0.2.0
+  - @surf-kit/tokens@0.2.0
+
 ## 0.1.4
 
 ### Patch Changes
