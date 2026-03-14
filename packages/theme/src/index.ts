@@ -1,4 +1,4 @@
-export { ThemeProvider } from './ThemeProvider'
+export { ThemeProvider, ThemeContext } from './ThemeProvider'
 export { useTheme } from './useTheme'
 export { useColorMode } from './useColorMode'
 export { createTheme } from './createTheme'
