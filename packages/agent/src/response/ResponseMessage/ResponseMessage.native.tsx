@@ -32,34 +32,68 @@ const markdownStyles = {
 function ResponseMessage({ content, className }: ResponseMessageProps) {
   const systemScheme = useColorScheme()
   const themeCtx = useContext(ThemeContext)
-  // brand and dark modes both have dark backgrounds; fall back to system scheme
-  const isDark = themeCtx?.colorMode === 'brand' || themeCtx?.colorMode === 'dark' || systemScheme === 'dark'
+  // brand and dark modes both have dark backgrounds; when context is unavailable
+  // (e.g. cross-package symlink resolution) default to dark since native app uses brand mode
+  const isDark = themeCtx
+    ? themeCtx.colorMode === 'brand' || themeCtx.colorMode === 'dark'
+    : true
+
+  const textColor = isDark ? '#e8e8e8' : '#1a1a1a'
+  const headingColor = isDark ? '#f0f0f0' : '#111111'
+  const accentColor = isDark ? '#38bdf8' : '#0284c7'
 
   const themedStyles = useMemo(() => ({
     ...markdownStyles,
-    body: { color: isDark ? '#e8e8e8' : '#1a1a1a' },
+    body: { color: textColor },
+    text: { color: textColor },
+    textgroup: { color: textColor },
+    paragraph: { ...markdownStyles.paragraph, color: textColor },
+    strong: { ...markdownStyles.strong, color: textColor },
+    em: { fontStyle: 'italic' as const, color: textColor },
+    s: { textDecorationLine: 'line-through' as const, color: textColor },
+    bullet_list: { ...markdownStyles.bullet_list },
+    ordered_list: { ...markdownStyles.ordered_list },
+    list_item: { ...markdownStyles.list_item, color: textColor },
+    bullet_list_icon: { color: textColor, marginLeft: 10, marginRight: 10 },
+    ordered_list_icon: { color: textColor, marginLeft: 10, marginRight: 10 },
+    bullet_list_content: { flex: 1, color: textColor },
+    ordered_list_content: { flex: 1, color: textColor },
+    heading1: { ...markdownStyles.heading1, color: headingColor },
+    heading2: { ...markdownStyles.heading2, color: headingColor },
+    heading3: { ...markdownStyles.heading3, color: headingColor },
+    heading4: { fontSize: 14, fontWeight: '600' as const, color: headingColor },
+    heading5: { fontSize: 13, fontWeight: '600' as const, color: headingColor },
+    heading6: { fontSize: 12, fontWeight: '600' as const, color: headingColor },
     code_inline: {
       ...markdownStyles.code_inline,
       backgroundColor: isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.05)',
-      color: isDark ? '#38bdf8' : '#0284c7',
+      color: accentColor,
     },
     code_block: {
       ...markdownStyles.code_block,
       backgroundColor: isDark ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.03)',
       borderColor: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)',
+      color: textColor,
+    },
+    fence: {
+      ...markdownStyles.code_block,
+      backgroundColor: isDark ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.03)',
+      borderColor: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)',
+      color: textColor,
     },
     blockquote: {
       ...markdownStyles.blockquote,
-      borderLeftColor: isDark ? '#38bdf8' : '#0284c7',
+      borderLeftColor: accentColor,
+      backgroundColor: isDark ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.03)',
     },
     link: {
       ...markdownStyles.link,
-      color: isDark ? '#38bdf8' : '#0284c7',
+      color: accentColor,
     },
-    heading1: { ...markdownStyles.heading1, color: isDark ? '#f0f0f0' : '#111111' },
-    heading2: { ...markdownStyles.heading2, color: isDark ? '#f0f0f0' : '#111111' },
-    heading3: { ...markdownStyles.heading3, color: isDark ? '#f0f0f0' : '#111111' },
-  }), [isDark])
+    td: { flex: 1, padding: 5, color: textColor },
+    th: { flex: 1, padding: 5, fontWeight: '600' as const, color: headingColor },
+    hr: { backgroundColor: isDark ? 'rgba(255,255,255,0.15)' : 'rgba(0,0,0,0.15)', height: 1 },
+  }), [isDark, textColor, headingColor, accentColor])
 
   return (
     <View className={twMerge('text-sm', className)} data-testid="response-message">

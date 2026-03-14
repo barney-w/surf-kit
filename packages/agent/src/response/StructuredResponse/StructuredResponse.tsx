@@ -1,4 +1,6 @@
 import React from 'react'
+import ReactMarkdown from 'react-markdown'
+import rehypeSanitize from 'rehype-sanitize'
 import type { AgentResponse } from '../../types/agent'
 
 type StructuredResponseProps = {
@@ -20,6 +22,27 @@ function tryParse<T>(value: unknown): T | null {
   return value as T
 }
 
+/** Renders a string with inline markdown (bold, italic, links, code). */
+function InlineMarkdown({ text }: { text: string }) {
+  return (
+    <ReactMarkdown
+      rehypePlugins={[rehypeSanitize]}
+      components={{
+        // Unwrap block-level <p> so content stays inline within its parent
+        p: ({ children }) => <>{children}</>,
+        strong: ({ children }) => <strong className="font-semibold">{children}</strong>,
+        em: ({ children }) => <em className="italic">{children}</em>,
+        code: ({ children }) => <code className="bg-surface-sunken rounded px-1 py-0.5 text-xs font-mono">{children}</code>,
+        // Prevent block elements that would break layout
+        script: () => null,
+        iframe: () => null,
+      }}
+    >
+      {text}
+    </ReactMarkdown>
+  )
+}
+
 function renderSteps(data: Record<string, unknown>) {
   const steps = tryParse<string[]>(data.steps)
   if (!steps || !Array.isArray(steps)) return null
@@ -33,7 +56,9 @@ function renderSteps(data: Record<string, unknown>) {
           >
             {i + 1}
           </span>
-          <span className="text-sm text-text-primary leading-relaxed">{step}</span>
+          <span className="text-sm text-text-primary leading-relaxed">
+            <InlineMarkdown text={step} />
+          </span>
         </li>
       ))}
     </ol>
@@ -148,7 +173,9 @@ function renderList(data: Record<string, unknown>) {
         {items.map((item, i) => (
           <li key={i} className="flex items-start gap-2.5">
             <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" aria-hidden="true" />
-            <span className="text-sm text-text-primary leading-relaxed">{item}</span>
+            <span className="text-sm text-text-primary leading-relaxed">
+              <InlineMarkdown text={item} />
+            </span>
           </li>
         ))}
       </ul>
