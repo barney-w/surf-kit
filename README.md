@@ -54,7 +54,18 @@ function App() {
   return (
     <ThemeProvider defaultColorMode="system">
       <MessageThread messages={state.messages}>
-        {state.isStreaming && <StreamingMessage stream={state.stream} />}
+        {state.isLoading && (
+          <StreamingMessage
+            stream={{
+              active: state.isLoading,
+              phase: state.streamPhase,
+              content: state.streamingContent,
+              sources: [],
+              agent: null,
+              agentLabel: null,
+            }}
+          />
+        )}
       </MessageThread>
       <MessageComposer onSend={(text) => actions.sendMessage(text)} />
     </ThemeProvider>
@@ -148,14 +159,13 @@ graph LR
   tokens --> theme
   theme --> core
   core --> agent
-  hooks -.-> core
-  hooks -.-> agent
-  icons -.-> core
-  icons -.-> agent
-  ai -.optional.-> agent
+  hooks --> core
+  hooks --> agent
+  icons --> agent
+  agent -.-> ai
 ```
 
-<sup>Solid = dependency · Dotted = optional/peer</sup>
+<sup>Solid = dependency · Dotted = optional consumer</sup>
 
 ---
 
