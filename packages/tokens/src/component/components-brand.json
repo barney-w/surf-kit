@@ -1,4 +1,15 @@
 {
+  "button": {
+    "$type": "color",
+    "text": {
+      "primary": { "$value": "{color.brand.dark}" }
+    }
+  },
+  "message": {
+    "user": {
+      "text": { "$type": "color", "$value": "{color.brand.dark}" }
+    }
+  },
   "confidence": {
     "high": {
       "bg": { "$type": "color", "$value": "rgba(56,189,208,0.15)" },
