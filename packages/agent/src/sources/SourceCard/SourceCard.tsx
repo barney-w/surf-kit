@@ -60,9 +60,34 @@ function SourceCard({ source, variant = 'compact', onNavigate, className }: Sour
       >
         <div className="flex items-start justify-between gap-2">
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium text-text-primary truncate">
-              {source.title}
-            </p>
+            {source.url ? (
+              <a
+                href={source.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm font-medium text-accent hover:underline truncate block"
+                onClick={(e) => e.stopPropagation()}
+              >
+                {source.title}
+                <svg
+                  className="inline-block ml-1 w-3 h-3 opacity-60"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
+                  <polyline points="15 3 21 3 21 9" />
+                  <line x1="10" y1="14" x2="21" y2="3" />
+                </svg>
+              </a>
+            ) : (
+              <p className="text-sm font-medium text-text-primary truncate">
+                {source.title}
+              </p>
+            )}
             {source.section && (
               <p className="text-[11px] font-semibold uppercase tracking-wider text-text-secondary truncate mt-0.5">
                 {source.section}

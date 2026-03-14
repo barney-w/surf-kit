@@ -50,13 +50,30 @@ describe('SourceCard', () => {
     expect(screen.getByText(mockSource.snippet)).toBeDefined()
   })
 
-  it('calls onNavigate when clicked', async () => {
+  it('calls onNavigate when card area is clicked', async () => {
     const user = userEvent.setup()
     const onNavigate = vi.fn()
     render(<SourceCard source={mockSource} onNavigate={onNavigate} />)
 
-    await user.click(screen.getByText('Enterprise Agreement 2024'))
+    // Click on the section text (not the title link) to trigger onNavigate
+    await user.click(screen.getByText('Section 12 — Leave Entitlements'))
     expect(onNavigate).toHaveBeenCalledWith(mockSource)
+  })
+
+  it('renders title as a link when source has url', () => {
+    render(<SourceCard source={mockSource} />)
+    const link = screen.getByRole('link', { name: /Enterprise Agreement 2024/ })
+    expect(link).toBeDefined()
+    expect(link.getAttribute('href')).toBe('https://internal.example.com/docs/ea-2024')
+    expect(link.getAttribute('target')).toBe('_blank')
+    expect(link.getAttribute('rel')).toBe('noopener noreferrer')
+  })
+
+  it('renders title as plain text when source has no url', () => {
+    const sourceWithoutUrl = { ...mockSource, url: '' }
+    render(<SourceCard source={sourceWithoutUrl} />)
+    expect(screen.queryByRole('link')).toBeNull()
+    expect(screen.getByText('Enterprise Agreement 2024')).toBeDefined()
   })
 
   it('renders medium confidence badge for medium scores', () => {

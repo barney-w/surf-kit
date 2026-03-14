@@ -3,7 +3,7 @@ import React from 'react'
 
 export type WelcomeScreenProps = {
   title?: string
-  message?: string
+  message?: React.ReactNode
   icon?: React.ReactNode
   iconClassName?: string
   suggestedQuestions?: string[]
@@ -59,7 +59,7 @@ function WelcomeScreen({
       {/* Suggested question chips */}
       {suggestedQuestions.length > 0 && (
         <div
-          className="flex flex-wrap justify-center gap-2 max-w-md"
+          className="flex flex-wrap justify-center gap-2 max-w-xl"
           role="group"
           aria-label="Suggested questions"
         >
@@ -69,7 +69,7 @@ function WelcomeScreen({
               type="button"
               onClick={() => onQuestionSelect?.(question)}
               className={twMerge(
-                'px-4 py-2 rounded-full text-sm',
+                'px-3.5 py-1.5 rounded-full text-[12px]',
                 'border border-border bg-transparent text-text-secondary',
                 'hover:bg-accent/10 hover:border-interactive hover:text-text-primary',
                 'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent',
