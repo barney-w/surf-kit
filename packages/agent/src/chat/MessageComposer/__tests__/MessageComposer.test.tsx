@@ -40,7 +40,7 @@ describe('MessageComposer', () => {
     render(<MessageComposer onSend={onSend} />)
     await user.type(screen.getByLabelText('Message input'), '  Hello  ')
     await user.click(screen.getByRole('button', { name: 'Send message' }))
-    expect(onSend).toHaveBeenCalledWith('Hello')
+    expect(onSend).toHaveBeenCalledWith('Hello', undefined)
   })
 
   it('calls onSend on Enter key', async () => {
@@ -48,7 +48,7 @@ describe('MessageComposer', () => {
     const user = userEvent.setup()
     render(<MessageComposer onSend={onSend} />)
     await user.type(screen.getByLabelText('Message input'), 'Hello{Enter}')
-    expect(onSend).toHaveBeenCalledWith('Hello')
+    expect(onSend).toHaveBeenCalledWith('Hello', undefined)
   })
 
   it('does not send on Shift+Enter (newline)', async () => {
