@@ -63,6 +63,31 @@ describe('StructuredResponse', () => {
     expect(container.firstChild).toBeNull()
   })
 
+  it('renders steps with inline markdown formatting', () => {
+    render(
+      <StructuredResponse
+        uiHint="steps"
+        data={{ steps: ['**Choose a room** — View photos and capacities', 'Review fees'] }}
+      />,
+    )
+    expect(screen.getByTestId('structured-steps')).toBeDefined()
+    // Bold text should be rendered as <strong>, not literal asterisks
+    const strong = screen.getByText('Choose a room')
+    expect(strong.tagName).toBe('STRONG')
+  })
+
+  it('renders list items with inline markdown formatting', () => {
+    render(
+      <StructuredResponse
+        uiHint="list"
+        data={{ items: ['**Important** item', 'Plain item'] }}
+      />,
+    )
+    expect(screen.getByTestId('structured-list')).toBeDefined()
+    const strong = screen.getByText('Important')
+    expect(strong.tagName).toBe('STRONG')
+  })
+
   it('has no accessibility violations', async () => {
     const { container } = render(
       <StructuredResponse

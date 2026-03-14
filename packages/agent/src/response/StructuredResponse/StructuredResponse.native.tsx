@@ -1,5 +1,7 @@
-import React from 'react'
-import { View, Text, Pressable, Linking } from 'react-native'
+import React, { useContext, useMemo } from 'react'
+import { View, Text, Pressable, Linking, useColorScheme } from 'react-native'
+import Markdown from 'react-native-markdown-display'
+import { ThemeContext } from '@surf-kit/theme'
 import type { AgentResponse } from '../../types/agent'
 
 type StructuredResponseProps = {
@@ -21,7 +23,32 @@ function tryParse<T>(value: unknown): T | null {
   return value as T
 }
 
-function renderSteps(data: Record<string, unknown>) {
+function useIsDark() {
+  const systemScheme = useColorScheme()
+  const themeCtx = useContext(ThemeContext)
+  return themeCtx
+    ? themeCtx.colorMode === 'brand' || themeCtx.colorMode === 'dark'
+    : true
+}
+
+function useInlineMarkdownStyles() {
+  const isDark = useIsDark()
+  const textColor = isDark ? '#e8e8e8' : '#1a1a1a'
+  return useMemo(() => ({
+    body: { fontSize: 14, lineHeight: 22, margin: 0, padding: 0, color: textColor },
+    text: { color: textColor },
+    textgroup: { color: textColor },
+    paragraph: { marginTop: 0, marginBottom: 0, color: textColor },
+    strong: { fontWeight: '600' as const, color: textColor },
+    em: { fontStyle: 'italic' as const, color: textColor },
+    code_inline: { fontSize: 12, fontFamily: 'monospace', color: isDark ? '#38bdf8' : '#0284c7' },
+    bullet_list_icon: { color: textColor },
+    ordered_list_icon: { color: textColor },
+  }), [isDark, textColor])
+}
+
+function StepsRenderer({ data }: { data: Record<string, unknown> }) {
+  const styles = useInlineMarkdownStyles()
   const steps = tryParse<string[]>(data.steps)
   if (!steps || !Array.isArray(steps)) return null
   return (
@@ -31,7 +58,9 @@ function renderSteps(data: Record<string, unknown>) {
           <View className="mt-0.5 h-5 w-5 shrink-0 items-center justify-center rounded-full bg-accent">
             <Text className="text-[11px] font-semibold text-white">{i + 1}</Text>
           </View>
-          <Text className="text-sm text-text-primary leading-relaxed flex-1">{step}</Text>
+          <View className="flex-1">
+            <Markdown style={styles}>{step}</Markdown>
+          </View>
         </View>
       ))}
     </View>
@@ -119,7 +148,8 @@ function renderCard(data: Record<string, unknown>) {
   )
 }
 
-function renderList(data: Record<string, unknown>) {
+function ListRenderer({ data }: { data: Record<string, unknown> }) {
+  const styles = useInlineMarkdownStyles()
   const items = tryParse<string[]>(data.items)
   const title = typeof data.title === 'string' ? data.title : null
   if (!items || !Array.isArray(items)) return null
@@ -135,7 +165,9 @@ function renderList(data: Record<string, unknown>) {
         {items.map((item, i) => (
           <View key={i} className="flex-row items-start gap-2.5">
             <View className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
-            <Text className="text-sm text-text-primary leading-relaxed flex-1">{item}</Text>
+            <View className="flex-1">
+              <Markdown style={styles}>{item}</Markdown>
+            </View>
           </View>
         ))}
       </View>
@@ -199,7 +231,7 @@ function StructuredResponse({ uiHint, data: rawData, className }: StructuredResp
 
   switch (uiHint) {
     case 'steps':
-      content = renderSteps(data)
+      content = <StepsRenderer data={data} />
       break
     case 'table':
       content = renderTable(data)
@@ -208,7 +240,7 @@ function StructuredResponse({ uiHint, data: rawData, className }: StructuredResp
       content = renderCard(data)
       break
     case 'list':
-      content = renderList(data)
+      content = <ListRenderer data={data} />
       break
     case 'warning':
       content = renderWarning(data)
