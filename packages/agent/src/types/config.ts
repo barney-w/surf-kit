@@ -17,6 +17,9 @@ export interface AgentChatConfig {
   persistConversations?: boolean
   /** Map of agent IDs to their display config */
   agentThemes?: Record<string, AgentInfo>
+  /** Extra fields merged into every request body (e.g. `{ agent: "research" }`).
+   *  Keys here are shallow-merged after the default fields (message, conversation_id, attachments). */
+  bodyExtra?: Record<string, unknown>
   /** Custom stream reader for environments without ReadableStream (e.g. React Native).
    *  When provided, this function handles sending the request and parsing SSE events
    *  instead of the default fetch + getReader() approach. */

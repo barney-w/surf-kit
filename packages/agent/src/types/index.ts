@@ -6,7 +6,7 @@ export type {
   AgentInfo,
 } from './agent'
 
-export type { ChatMessage, ConversationSummary, ChatError } from './chat'
+export type { ChatMessage, ConversationSummary, ChatError, Attachment } from './chat'
 
 export type { StreamEvent, StreamState } from './streaming'
 
