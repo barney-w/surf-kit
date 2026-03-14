@@ -1,7 +1,7 @@
 'use client'
 
 import { useReducer, useCallback, useRef } from 'react'
-import type { ChatMessage, ChatError } from '../types/chat'
+import type { ChatMessage, ChatError, Attachment } from '../types/chat'
 import type { AgentResponse } from '../types/agent'
 import type { StreamState } from '../types/streaming'
 import type { AgentChatConfig } from '../types/config'
@@ -117,7 +117,7 @@ function generateMessageId(): string {
 }
 
 export interface AgentChatActions {
-  sendMessage: (content: string) => Promise<void>
+  sendMessage: (content: string, attachments?: Attachment[]) => Promise<void>
   setInputValue: (value: string) => void
   loadConversation: (conversationId: string, messages: ChatMessage[]) => void
   submitFeedback: (messageId: string, rating: 'positive' | 'negative', comment?: string) => Promise<void>
@@ -130,18 +130,21 @@ export function useAgentChat(config: AgentChatConfig) {
   const configRef = useRef(config)
   configRef.current = config
   const lastUserMessageRef = useRef<string | null>(null)
+  const lastUserAttachmentsRef = useRef<Attachment[] | undefined>(undefined)
 
   const sendMessage = useCallback(
-    async (content: string) => {
-      const { apiUrl, streamPath = '/chat/stream', headers: headersOrFn, timeout = 30000 } = configRef.current
+    async (content: string, attachments?: Attachment[]) => {
+      const { apiUrl, streamPath = '/chat/stream', headers: headersOrFn, timeout = 30000, bodyExtra } = configRef.current
       const headers = typeof headersOrFn === 'function' ? await headersOrFn() : (headersOrFn ?? {})
 
       lastUserMessageRef.current = content
+      lastUserAttachmentsRef.current = attachments
 
       const userMessage: ChatMessage = {
         id: generateMessageId(),
         role: 'user',
         content,
+        attachments,
         timestamp: new Date(),
       }
 
@@ -157,10 +160,21 @@ export function useAgentChat(config: AgentChatConfig) {
           Accept: 'text/event-stream',
           ...headers,
         }
-        const body = JSON.stringify({
+
+        // Build request body — include attachments if present
+        const requestBody: Record<string, unknown> = {
           message: content,
           conversation_id: state.conversationId,
-        })
+          ...bodyExtra,
+        }
+        if (attachments && attachments.length > 0) {
+          requestBody.attachments = attachments.map(a => ({
+            filename: a.filename,
+            content_type: a.content_type,
+            data: a.data,
+          }))
+        }
+        const body = JSON.stringify(requestBody)
 
         // These variables are mutated inside handleEvent (called from async stream processing).
         // TypeScript can't track mutations through closures, so we use a mutable context object.
@@ -328,13 +342,14 @@ export function useAgentChat(config: AgentChatConfig) {
 
   const retry = useCallback(async () => {
     if (lastUserMessageRef.current) {
-      await sendMessage(lastUserMessageRef.current)
+      await sendMessage(lastUserMessageRef.current, lastUserAttachmentsRef.current)
     }
   }, [sendMessage])
 
   const reset = useCallback(() => {
     dispatch({ type: 'RESET' })
     lastUserMessageRef.current = null
+    lastUserAttachmentsRef.current = undefined
   }, [])
 
   const actions: AgentChatActions = {
