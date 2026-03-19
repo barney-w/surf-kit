@@ -1,0 +1,98 @@
+stages:
+  - lint
+  - test
+  - build
+  - deploy
+
+workflow:
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: '$CI_COMMIT_BRANCH == "main"'
+    - if: '$CI_PIPELINE_SOURCE == "web"'
+
+default:
+  interruptible: true
+  image: node:20
+  before_script:
+    - corepack enable pnpm
+    - pnpm install --frozen-lockfile
+  cache:
+    key:
+      files: [pnpm-lock.yaml]
+    paths:
+      - .pnpm-store/
+    policy: pull-push
+
+variables:
+  PNPM_STORE_DIR: ".pnpm-store"
+
+# --- CI checks ---
+
+sk-lint:
+  stage: lint
+  script:
+    - pnpm lint
+
+sk-typecheck:
+  stage: lint
+  script:
+    - pnpm typecheck
+
+sk-test:
+  stage: test
+  needs: []
+  script:
+    - pnpm test
+
+sk-build:
+  stage: build
+  needs: []
+  script:
+    - pnpm build
+  cache:
+    - key:
+        files: [pnpm-lock.yaml]
+      paths:
+        - .pnpm-store/
+      policy: pull
+    - key: turbo-$CI_COMMIT_SHA
+      paths:
+        - .turbo/
+      fallback_keys:
+        - turbo-
+      policy: pull-push
+
+# --- GitLab Pages (Storybook + Playground) ---
+
+pages:
+  stage: deploy
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+      changes: [packages/**, apps/**, .gitlab-ci.yml]
+    - if: '$CI_PIPELINE_SOURCE == "web"'
+  needs: [sk-build]
+  script:
+    - pnpm build --filter="!@surf-kit/storybook" --filter="!docs" --filter="!playground"
+    - pnpm --filter @surf-kit/storybook build
+    - pnpm --filter playground build
+    - mkdir -p public/storybook public/playground
+    - cp -r apps/storybook/dist/* public/storybook/
+    - cp -r apps/playground/dist/* public/playground/
+  artifacts:
+    paths:
+      - public
+
+# --- npm publish (manual, main only) ---
+
+sk-publish:
+  stage: deploy
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+      when: manual
+  needs: [sk-build, sk-test, sk-lint, sk-typecheck]
+  script:
+    - pnpm build
+    - pnpm changeset publish
+  variables:
+    NPM_TOKEN: "$NPM_TOKEN"
+    NODE_AUTH_TOKEN: "$NPM_TOKEN"
