@@ -66,9 +66,10 @@ sk-build:
 
 pages:
   stage: deploy
+  interruptible: false
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'
-      changes: [packages/**, apps/**, .gitlab-ci.yml]
+      changes: [packages/**, apps/storybook/**, apps/playground/**, .gitlab-ci.yml]
     - if: '$CI_PIPELINE_SOURCE == "web"'
   needs: [sk-build]
   script:
@@ -82,17 +83,58 @@ pages:
     paths:
       - public
 
-# --- npm publish (manual, main only) ---
+# --- Changesets: version PR or npm publish (mirrors changesets/action) ---
 
-sk-publish:
+sk-release:
   stage: deploy
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'
-      when: manual
   needs: [sk-build, sk-test, sk-lint, sk-typecheck]
-  script:
-    - pnpm build
-    - pnpm changeset publish
+  interruptible: false
   variables:
+    GIT_DEPTH: 0
     NPM_TOKEN: "$NPM_TOKEN"
     NODE_AUTH_TOKEN: "$NPM_TOKEN"
+    RELEASE_BRANCH: "chore/version-packages"
+    MR_TITLE: "chore: version packages"
+  script:
+    - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+    - |
+      # Check for pending changesets
+      if pnpm changeset status 2>&1 | grep -q "No changesets present"; then
+        echo "No pending changesets — publishing to npm"
+        pnpm build
+        pnpm changeset publish
+      else
+        echo "Pending changesets found — creating/updating version MR"
+        git config user.name "gitlab-ci"
+        git config user.email "ci@gitlab.com"
+
+        # Create or reset the release branch from current main
+        git checkout -B "$RELEASE_BRANCH"
+
+        # Run changeset version to bump packages and generate changelogs
+        pnpm changeset version
+        pnpm install --no-frozen-lockfile
+
+        # Commit and push
+        git add -A
+        git commit -m "$MR_TITLE" || { echo "Nothing to commit"; exit 0; }
+        git remote set-url origin "https://gitlab-ci-token:${CI_JOB_TOKEN}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git"
+        git push --force origin "$RELEASE_BRANCH"
+
+        # Create or update the merge request via GitLab API
+        EXISTING_MR=$(curl -s --header "JOB-TOKEN: ${CI_JOB_TOKEN}" \
+          "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/merge_requests?source_branch=${RELEASE_BRANCH}&state=opened" \
+          | python3 -c "import sys,json; mrs=json.load(sys.stdin); print(mrs[0]['iid'] if mrs else '')")
+
+        if [ -n "$EXISTING_MR" ]; then
+          echo "Updating existing MR !${EXISTING_MR}"
+        else
+          curl -s --request POST --header "JOB-TOKEN: ${CI_JOB_TOKEN}" \
+            --header "Content-Type: application/json" \
+            --data "{\"source_branch\":\"${RELEASE_BRANCH}\",\"target_branch\":\"main\",\"title\":\"${MR_TITLE}\",\"remove_source_branch\":true}" \
+            "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/merge_requests" \
+            | python3 -c "import sys,json; mr=json.load(sys.stdin); print(f'Created MR !{mr[\"iid\"]}')"
+        fi
+      fi
