@@ -1,5 +1,17 @@
 # @surf-kit/agent
 
+## 0.4.0
+
+### Minor Changes
+
+- 8dc38cb: Add stop generation button and improve message thread auto-scroll behaviour
+
+### Patch Changes
+
+- 426796e: Improve conversation history sidebar styling with semantic colour tokens and edge-to-edge layout
+- Updated dependencies [426796e]
+  - @surf-kit/core@0.2.1
+
 ## 0.3.0
 
 ### Minor Changes

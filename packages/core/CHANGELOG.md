@@ -1,5 +1,11 @@
 # @surf-kit/core
 
+## 0.2.1
+
+### Patch Changes
+
+- 426796e: Improve conversation history sidebar styling with semantic colour tokens and edge-to-edge layout
+
 ## 0.2.0
 
 ### Minor Changes
