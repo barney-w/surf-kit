@@ -66,7 +66,7 @@ function Drawer({
           {title && (
             <h2
               {...titleProps}
-              className="text-lg font-semibold text-text-primary mb-4"
+              className="text-lg font-semibold text-text-primary mb-4 px-6 shrink-0"
             >
               {title}
             </h2>

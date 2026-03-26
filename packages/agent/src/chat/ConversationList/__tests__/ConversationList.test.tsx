@@ -71,7 +71,7 @@ describe('ConversationList', () => {
     expect(activeButton?.getAttribute('aria-current')).toBe('true')
     // The parent li should have the active background
     const activeLi = activeButton?.closest('li')
-    expect(activeLi?.className).toContain('bg-surface-raised')
+    expect(activeLi?.className).toContain('bg-accent-subtlest')
     expect(activeLi?.className).toContain('border-l-accent')
   })
 
