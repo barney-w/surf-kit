@@ -26,12 +26,21 @@ describe('MessageComposer', () => {
     expect(screen.getByRole('button', { name: 'Send message' })).not.toBeDisabled()
   })
 
-  it('disables send button when isLoading is true', async () => {
-    const user = userEvent.setup()
+  it('shows stop button when isLoading is true', () => {
     render(<MessageComposer onSend={vi.fn()} isLoading />)
-    // Textarea should be disabled too
+    // Textarea should be disabled
     expect(screen.getByLabelText('Message input')).toBeDisabled()
-    expect(screen.getByRole('button', { name: 'Send message' })).toBeDisabled()
+    // Button switches to "Stop generating" and is enabled
+    const stopBtn = screen.getByRole('button', { name: 'Stop generating' })
+    expect(stopBtn).not.toBeDisabled()
+  })
+
+  it('calls onStop when stop button is clicked', async () => {
+    const onStop = vi.fn()
+    const user = userEvent.setup()
+    render(<MessageComposer onSend={vi.fn()} onStop={onStop} isLoading />)
+    await user.click(screen.getByRole('button', { name: 'Stop generating' }))
+    expect(onStop).toHaveBeenCalledOnce()
   })
 
   it('calls onSend with trimmed content on button click', async () => {

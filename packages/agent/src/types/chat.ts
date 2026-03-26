@@ -28,7 +28,7 @@ export interface ConversationSummary {
 }
 
 export interface ChatError {
-  code: 'NETWORK_ERROR' | 'API_ERROR' | 'STREAM_ERROR' | 'TIMEOUT'
+  code: 'NETWORK_ERROR' | 'API_ERROR' | 'STREAM_ERROR' | 'TIMEOUT' | 'ABORTED'
   message: string
   retryable: boolean
 }

@@ -91,7 +91,7 @@ function AgentChat({
         />
       )}
 
-      <MessageComposer onSend={handleSend} isLoading={state.isLoading} />
+      <MessageComposer onSend={handleSend} onStop={actions.stop} isLoading={state.isLoading} />
     </div>
   )
 }
