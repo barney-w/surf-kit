@@ -1,5 +1,14 @@
 # @surf-kit/storybook
 
+## 0.1.6
+
+### Patch Changes
+
+- Updated dependencies [426796e]
+- Updated dependencies [8dc38cb]
+  - @surf-kit/agent@0.4.0
+  - @surf-kit/core@0.2.1
+
 ## 0.1.5
 
 ### Patch Changes
