@@ -22,14 +22,14 @@ function ConversationList({
   return (
     <nav
       aria-label="Conversation list"
-      className={twMerge('flex flex-col h-full bg-canvas', className)}
+      className={twMerge('flex flex-col flex-1 min-h-0', className)}
     >
       {onNew && (
-        <div className="p-3 border-b border-border">
+        <div className="px-3 pt-1 pb-3 border-b border-border">
           <button
             type="button"
             onClick={onNew}
-            className="w-full px-4 py-2.5 rounded-xl text-sm font-semibold bg-accent text-white hover:bg-accent-hover transition-all duration-200"
+            className="w-full px-4 py-2 rounded-lg text-sm font-medium border border-border text-text-secondary hover:text-text-primary hover:bg-surface hover:border-border-strong transition-colors duration-150"
           >
             New conversation
           </button>
@@ -43,21 +43,23 @@ function ConversationList({
             <li
               key={conversation.id}
               className={twMerge(
-                'flex items-start border-b border-border transition-colors duration-200',
-                'hover:bg-surface',
-                isActive && 'bg-surface-raised border-l-2 border-l-accent',
+                'flex items-start transition-colors duration-150',
+                'hover:bg-surface-raised',
+                isActive
+                  ? 'bg-accent-subtlest border-l-[3px] border-l-accent'
+                  : 'border-l-[3px] border-l-transparent',
               )}
             >
               <button
                 type="button"
                 onClick={() => onSelect(conversation.id)}
                 aria-current={isActive ? 'true' : undefined}
-                className="flex-1 min-w-0 text-left px-4 py-3"
+                className="flex-1 min-w-0 text-left px-4 py-2.5"
               >
-                <div className="text-sm font-medium text-brand-cream truncate">
+                <div className="text-sm font-medium text-text-primary truncate">
                   {conversation.title}
                 </div>
-                <div className="text-xs text-brand-cream/40 truncate mt-0.5 leading-relaxed">
+                <div className="text-xs text-text-muted truncate mt-0.5 leading-relaxed">
                   {conversation.lastMessage}
                 </div>
               </button>
@@ -66,7 +68,7 @@ function ConversationList({
                   type="button"
                   onClick={() => onDelete(conversation.id)}
                   aria-label={`Delete ${conversation.title}`}
-                  className="shrink-0 p-1.5 m-2 rounded-lg text-brand-cream/25 hover:text-brand-watermelon hover:bg-brand-watermelon/10 transition-colors duration-200"
+                  className="shrink-0 p-1.5 m-2 rounded-lg text-text-muted hover:text-status-error hover:bg-status-error/10 transition-colors duration-150"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -90,8 +92,8 @@ function ConversationList({
         })}
 
         {conversations.length === 0 && (
-          <li className="px-4 py-8 text-center">
-            <span className="text-sm text-brand-cream/30 font-body">No conversations yet</span>
+          <li className="px-4 py-12 text-center">
+            <span className="text-sm text-text-muted font-body">No conversations yet</span>
           </li>
         )}
       </ul>
