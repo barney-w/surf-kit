@@ -16,6 +16,7 @@ const MAX_ATTACHMENTS = 5
 
 export type MessageComposerProps = {
   onSend: (content: string, attachments?: Attachment[]) => void
+  onStop?: () => void
   isLoading?: boolean
   placeholder?: string
   className?: string
@@ -141,6 +142,7 @@ function AttachmentPreview({
 
 function MessageComposer({
   onSend,
+  onStop,
   isLoading = false,
   placeholder = 'Type a message...',
   className,
@@ -372,9 +374,9 @@ function MessageComposer({
 
         <button
           type="button"
-          onClick={handleSend}
-          disabled={!canSend}
-          aria-label="Send message"
+          onClick={isLoading && onStop ? onStop : handleSend}
+          disabled={!canSend && !isLoading}
+          aria-label={isLoading ? 'Stop generating' : 'Send message'}
           className={twMerge(
             'absolute bottom-3 right-3',
             'inline-flex items-center justify-center',
@@ -384,7 +386,7 @@ function MessageComposer({
             canSend
               ? 'bg-accent text-white hover:bg-accent-hover active:scale-90 shadow-md shadow-accent/25'
               : isLoading
-                ? 'bg-text-muted/20 text-text-secondary hover:bg-text-muted/30'
+                ? 'bg-text-muted/20 text-text-secondary hover:bg-text-muted/30 cursor-pointer'
                 : 'bg-transparent text-text-muted/40 cursor-default',
           )}
         >

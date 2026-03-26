@@ -126,6 +126,7 @@ export interface AgentChatActions {
   loadConversation: (conversationId: string, messages: ChatMessage[]) => void
   submitFeedback: (messageId: string, rating: 'positive' | 'negative', comment?: string) => Promise<void>
   retry: () => Promise<void>
+  stop: () => void
   reset: () => void
 }
 
@@ -135,6 +136,7 @@ export function useAgentChat(config: AgentChatConfig) {
   configRef.current = config
   const lastUserMessageRef = useRef<string | null>(null)
   const lastUserAttachmentsRef = useRef<Attachment[] | undefined>(undefined)
+  const abortControllerRef = useRef<AbortController | null>(null)
 
   const sendMessage = useCallback(
     async (content: string, attachments?: Attachment[]) => {
@@ -155,7 +157,19 @@ export function useAgentChat(config: AgentChatConfig) {
       dispatch({ type: 'SEND_START', message: userMessage })
 
       const controller = new AbortController()
+      abortControllerRef.current = controller
       const timeoutId = setTimeout(() => controller.abort(), timeout)
+
+      // These variables are mutated inside handleEvent (called from async stream processing).
+      // TypeScript can't track mutations through closures, so we use a mutable context object.
+      // Defined outside try so the catch block can access accumulated content for user-initiated stop.
+      const ctx = {
+        accumulatedContent: '',
+        agentResponse: null as AgentResponse | null,
+        capturedAgent: null as string | null,
+        capturedConversationId: null as string | null,
+        hadStreamError: false,
+      }
 
       try {
         const url = `${apiUrl}${streamPath}`
@@ -179,16 +193,6 @@ export function useAgentChat(config: AgentChatConfig) {
           }))
         }
         const body = JSON.stringify(requestBody)
-
-        // These variables are mutated inside handleEvent (called from async stream processing).
-        // TypeScript can't track mutations through closures, so we use a mutable context object.
-        const ctx = {
-          accumulatedContent: '',
-          agentResponse: null as AgentResponse | null,
-          capturedAgent: null as string | null,
-          capturedConversationId: null as string | null,
-          hadStreamError: false,
-        }
 
         // Shared handler for parsed SSE events (used by both adapter and default paths)
         const handleEvent = (event: { type: string; [key: string]: unknown }) => {
@@ -308,10 +312,27 @@ export function useAgentChat(config: AgentChatConfig) {
       } catch (err: unknown) {
         clearTimeout(timeoutId)
         if ((err as Error).name === 'AbortError') {
-          dispatch({
-            type: 'SEND_ERROR',
-            error: { code: 'TIMEOUT', message: 'Request timed out', retryable: true },
-          })
+          // User-initiated stop: commit whatever content we have so far
+          if (ctx.accumulatedContent) {
+            const partialMessage: ChatMessage = {
+              id: generateMessageId(),
+              role: 'assistant',
+              content: ctx.accumulatedContent,
+              agent: ctx.capturedAgent ?? undefined,
+              timestamp: new Date(),
+            }
+            dispatch({
+              type: 'SEND_SUCCESS',
+              message: partialMessage,
+              streamingContent: ctx.accumulatedContent,
+              conversationId: ctx.capturedConversationId,
+            })
+          } else {
+            dispatch({
+              type: 'SEND_ERROR',
+              error: { code: 'ABORTED', message: 'Request stopped', retryable: true },
+            })
+          }
         } else {
           dispatch({
             type: 'SEND_ERROR',
@@ -322,6 +343,8 @@ export function useAgentChat(config: AgentChatConfig) {
             },
           })
         }
+      } finally {
+        abortControllerRef.current = null
       }
     },
     [state.conversationId],
@@ -354,6 +377,10 @@ export function useAgentChat(config: AgentChatConfig) {
     }
   }, [sendMessage])
 
+  const stop = useCallback(() => {
+    abortControllerRef.current?.abort()
+  }, [])
+
   const reset = useCallback(() => {
     dispatch({ type: 'RESET' })
     lastUserMessageRef.current = null
@@ -366,6 +393,7 @@ export function useAgentChat(config: AgentChatConfig) {
     loadConversation,
     submitFeedback,
     retry,
+    stop,
     reset,
   }
 
