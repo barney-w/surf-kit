@@ -19,26 +19,54 @@ export type MessageThreadProps = {
 
 function MessageThread({ messages, streamingSlot, showAgent, showSources, showConfidence, showVerification, hideLastAssistant, userBubbleClassName, className }: MessageThreadProps) {
   const scrollRef = useRef<HTMLDivElement>(null)
-  const isNearBottom = useRef(true)
-  const isProgrammaticScroll = useRef(false)
+  const shouldAutoScroll = useRef(true)
   const hasStreaming = !!streamingSlot
 
   const scrollToBottom = useCallback(() => {
     const el = scrollRef.current
-    if (el && isNearBottom.current) {
-      isProgrammaticScroll.current = true
+    if (el && shouldAutoScroll.current) {
       el.scrollTop = el.scrollHeight
     }
   }, [])
 
-  const handleScroll = useCallback(() => {
-    if (isProgrammaticScroll.current) {
-      isProgrammaticScroll.current = false
-      return
-    }
+  // Detect user scroll-up intent via wheel events (never fired by programmatic scrolling)
+  useEffect(() => {
     const el = scrollRef.current
     if (!el) return
-    isNearBottom.current = el.scrollHeight - el.scrollTop - el.clientHeight < 80
+    const onWheel = (e: WheelEvent) => {
+      if (e.deltaY < 0) {
+        shouldAutoScroll.current = false
+      }
+    }
+    const onPointerDown = () => {
+      // If the user interacts with the scroll area (e.g. scrollbar drag),
+      // let handleScroll determine whether to pause auto-scroll
+      // by marking this as a user-initiated interaction.
+      el.dataset.userPointer = '1'
+    }
+    const onPointerUp = () => {
+      delete el.dataset.userPointer
+    }
+    el.addEventListener('wheel', onWheel, { passive: true })
+    el.addEventListener('pointerdown', onPointerDown)
+    window.addEventListener('pointerup', onPointerUp)
+    return () => {
+      el.removeEventListener('wheel', onWheel)
+      el.removeEventListener('pointerdown', onPointerDown)
+      window.removeEventListener('pointerup', onPointerUp)
+    }
+  }, [])
+
+  const handleScroll = useCallback(() => {
+    const el = scrollRef.current
+    if (!el) return
+    const nearBottom = el.scrollHeight - el.scrollTop - el.clientHeight < 80
+    if (nearBottom) {
+      shouldAutoScroll.current = true
+    } else if (el.dataset.userPointer) {
+      // User is dragging scrollbar upward
+      shouldAutoScroll.current = false
+    }
   }, [])
 
   // Scroll on new messages
@@ -55,6 +83,13 @@ function MessageThread({ messages, streamingSlot, showAgent, showSources, showCo
     raf = requestAnimationFrame(tick)
     return () => cancelAnimationFrame(raf)
   }, [hasStreaming, scrollToBottom])
+
+  // Reset auto-scroll when streaming ends so the next message auto-scrolls
+  useEffect(() => {
+    if (!hasStreaming) {
+      shouldAutoScroll.current = true
+    }
+  }, [hasStreaming])
 
   return (
     <div

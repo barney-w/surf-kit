@@ -25,7 +25,7 @@ function ConversationList({
       className={twMerge('flex flex-col flex-1 min-h-0', className)}
     >
       {onNew && (
-        <div className="px-3 pt-1 pb-3 border-b border-border">
+        <div className="px-5 pt-1 pb-3 border-b border-border">
           <button
             type="button"
             onClick={onNew}
@@ -54,7 +54,7 @@ function ConversationList({
                 type="button"
                 onClick={() => onSelect(conversation.id)}
                 aria-current={isActive ? 'true' : undefined}
-                className="flex-1 min-w-0 text-left px-4 py-2.5"
+                className="flex-1 min-w-0 text-left px-5 py-2.5"
               >
                 <div className="text-sm font-medium text-text-primary truncate">
                   {conversation.title}
@@ -92,7 +92,7 @@ function ConversationList({
         })}
 
         {conversations.length === 0 && (
-          <li className="px-4 py-12 text-center">
+          <li className="px-5 py-12 text-center">
             <span className="text-sm text-text-muted font-body">No conversations yet</span>
           </li>
         )}
