@@ -82,6 +82,21 @@ StyleDictionary.registerFormat({
   },
 });
 
+// Register custom format that wraps output in [data-color-mode="energy"] { ... }
+StyleDictionary.registerFormat({
+  name: "css/variables-energy",
+  format: ({ dictionary, options }) => {
+    const selector = '[data-color-mode="energy"]';
+    const vars = formattedVariables({
+      format: "css",
+      dictionary,
+      outputReferences: options?.outputReferences ?? false,
+      usesDtcg: true,
+    });
+    return `@layer surf.tokens {\n  ${selector} {\n${vars}\n  }\n}\n`;
+  },
+});
+
 // Register format for resolved JS objects (React Native fallback)
 StyleDictionary.registerFormat({
   name: 'js/nested-object',
@@ -247,6 +262,45 @@ async function build() {
   await brandSD.hasInitialized;
   await brandSD.buildAllPlatforms();
   console.log("Brand build complete.");
+
+  // ── Energy build ────────────────────────────────────────────
+  const energySD = new StyleDictionary({
+    include: [...primitives, componentTokens],
+    source: [
+      resolve(root, "src/semantic/energy.json"),
+    ],
+    platforms: {
+      css: {
+        transformGroup: "css",
+        prefix: "surf",
+        buildPath: resolve(root, "dist/css") + "/",
+        files: [
+          {
+            destination: "variables-energy.css",
+            format: "css/variables-energy",
+            options: {
+              outputReferences: false,
+            },
+          },
+        ],
+      },
+      'react-native': {
+        transformGroup: 'js',
+        prefix: 'surf',
+        buildPath: resolve(root, 'dist/native') + '/',
+        files: [
+          {
+            destination: 'tokens-energy.ts',
+            format: 'js/nested-object',
+          },
+        ],
+      },
+    },
+  });
+
+  await energySD.hasInitialized;
+  await energySD.buildAllPlatforms();
+  console.log("Energy build complete.");
 
   console.log("All token builds complete.");
 }
