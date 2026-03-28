@@ -1,5 +1,11 @@
 # @surf-kit/tokens
 
+## 0.3.0
+
+### Minor Changes
+
+- 2570a3c: Add energy colour mode with dedicated token set and build pipeline
+
 ## 0.2.0
 
 ### Minor Changes
