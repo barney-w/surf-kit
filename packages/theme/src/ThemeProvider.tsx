@@ -1,7 +1,6 @@
 'use client'
 
 import React, {
-  createContext,
   useCallback,
   useEffect,
   useMemo,
@@ -14,13 +13,12 @@ import type {
   Theme,
   ThemeContextValue,
 } from './types'
+import { ThemeContext } from './ThemeContext'
 
 const DEFAULT_THEME: Theme = {
   name: 'default',
   cssVars: {},
 }
-
-export const ThemeContext = createContext<ThemeContextValue | null>(null)
 
 function getSystemPreference(): ColorMode {
   if (typeof window === 'undefined') return 'light'
