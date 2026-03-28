@@ -1,6 +1,6 @@
 {
   "name": "@surf-kit/ai",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Adapter bridging surf-kit agent components with Vercel AI SDK v6",
   "keywords": [
     "react",

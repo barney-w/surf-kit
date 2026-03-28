@@ -1,6 +1,6 @@
 {
   "name": "@surf-kit/tokens",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Design tokens for surf-kit — colors, spacing, typography as CSS, JSON, and TypeScript",
   "keywords": [
     "design-tokens",
