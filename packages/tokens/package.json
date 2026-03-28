@@ -22,6 +22,7 @@
     "./css/light": "./dist/css/variables-light.css",
     "./css/dark": "./dist/css/variables-dark.css",
     "./css/brand": "./dist/css/variables-brand.css",
+    "./css/energy": "./dist/css/variables-energy.css",
     "./ts": {
       "types": "./dist/ts/tokens.d.ts",
       "default": "./dist/ts/tokens.js"
@@ -42,6 +43,10 @@
     "./native/brand": {
       "types": "./dist/native/tokens-brand.ts",
       "default": "./dist/native/tokens-brand.ts"
+    },
+    "./native/energy": {
+      "types": "./dist/native/tokens-energy.ts",
+      "default": "./dist/native/tokens-energy.ts"
     },
     ".": "./dist/ts/tokens.js"
   },
